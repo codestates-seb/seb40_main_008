@@ -36,4 +36,8 @@ yarn-error.log*
 next-env.d.ts
 
 #history
+<<<<<<< HEAD
+.history
+=======
 history
+>>>>>>> 17ebe507a89a8f61d081787218c8a0e10646a315
