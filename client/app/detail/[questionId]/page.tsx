@@ -1,7 +1,3 @@
-import React from 'react';
-
-export const dynamicParams = false;
-
 export async function generateStaticParams() {
 	const arr = new Array(10).fill(1).map((e, i) => {
 		return { questionId: i.toString() };
@@ -10,16 +6,19 @@ export async function generateStaticParams() {
 }
 
 async function fetchPost(id: any) {
-	const res = await fetch(`https://pioneroroom.com/questionlist/${id}`);
+	const res = await fetch(`https://pioneroroom.com/questionlist/${id}`, {});
 	const data = await res.json();
 
 	return data;
 }
 
+async function dummy(id: any) {
+	const res = await new Promise((resolve) => resolve(JSON.stringify('dummy')));
+	return res;
+}
+
 const DetailIdPage = async ({ params }: any) => {
-	console.log(params);
-	const post = await fetchPost(params.questionId);
-	// return <h2>heell</h2>;
+	const post = await dummy(params.questionId);
 	return <div>{JSON.stringify(post)}</div>;
 };
 
