@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^13.0.2",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
     "eslint": "8.27.0",
     "next": "^13.0.2",
+    "next-auth": "^4.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "4.8.4"
