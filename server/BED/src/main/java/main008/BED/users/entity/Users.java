@@ -12,9 +12,10 @@ import java.time.ZonedDateTime;
 @Builder
 @AllArgsConstructor
 public class Users {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private String nickname;

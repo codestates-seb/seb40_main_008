@@ -2,12 +2,12 @@ package main008.BED.content.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import main008.BED.tag.entity.Tag;
+import main008.BED.users.entity.Users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +24,11 @@ public class Content {
 
     private String title;
 
-    private String detail;
+    private String summary;
+
+    private String tutorDetail;
+
+    private String classDetail;
 
     private Boolean reserve;
 
@@ -32,12 +36,13 @@ public class Content {
 
     private ZonedDateTime createdAt;
 
-    /**
-     *     private User user;
-     *
-     *     private List<Tag> tags;
-     */
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID")
+    private Users user;
 
+    @OneToMany
+    @JoinColumn(name = "TAG_ID")
+    private List<Tag> tags;
 
     public enum Purchase {
         PURCHASED,

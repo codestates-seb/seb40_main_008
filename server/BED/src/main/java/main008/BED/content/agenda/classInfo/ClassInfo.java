@@ -1,4 +1,4 @@
-package main008.BED.tag.entity;
+package main008.BED.content.agenda.classInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,12 +10,12 @@ import javax.persistence.*;
 @Getter
 @Builder
 @AllArgsConstructor
-public class Tag {
+public class ClassInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String tag;
+    @Column(columnDefinition = "LONGTEXT")
+    private String detail;
 }
