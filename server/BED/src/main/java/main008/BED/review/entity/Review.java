@@ -3,11 +3,10 @@ package main008.BED.review.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import main008.BED.content.entity.Content;
+import main008.BED.users.entity.Users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -25,11 +24,13 @@ public class Review {
 
     private ZonedDateTime modifiedAt;
 
-    /**
-     * private User user;
-     *
-     * private Content content;
-     */
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID")
+    private Users user;
+
+    @ManyToOne
+    @JoinColumn(name = "CONTENTS_ID")
+    private Content content;
 
 
 

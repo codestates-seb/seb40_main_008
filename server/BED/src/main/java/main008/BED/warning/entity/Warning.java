@@ -2,11 +2,10 @@ package main008.BED.warning.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import main008.BED.content.entity.Content;
+import main008.BED.users.entity.Users;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -22,9 +21,12 @@ public class Warning {
 
     private ZonedDateTime createdAt;
 
-    /**
-     * private User user;
-     *
-     * private Content content;
-     */
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID")
+    private Users user;
+
+    @OneToOne
+    @JoinColumn(name = "CONTENTS_ID")
+    private Content content;
+
 }

@@ -3,6 +3,8 @@ package main008.BED.content.controller;
 import lombok.RequiredArgsConstructor;
 import main008.BED.content.mapper.ContentMapper;
 import main008.BED.content.service.ContentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
