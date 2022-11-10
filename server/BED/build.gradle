@@ -1,7 +1,8 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id 'org.asciidoctor.convert' version '1.5.8'
+//	id 'org.asciidoctor.convert' version '1.5.8'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2' // Asciidoctor를 사용하기 위한 플러그인
 	id 'java'
 }
 
@@ -13,6 +14,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	asciidoctorExtnesions // AsciiDoctor에서 사용되는 의존 그룹
 }
 
 repositories {
@@ -20,12 +22,13 @@ repositories {
 }
 
 ext {
-	set('snippetsDir', file("build/generated-snippets"))
+	set('snippetsDir', file("build/generated-snippets")) // API 문서 스니핏이 생성될 경로를 지정
 }
 
 dependencies {
 	implementation 'org.junit.jupiter:junit-jupiter:5.9.0'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	asciidoctorExtnesions 'org.springframework.restdocs:spring-restdocs-asciidoctor' // asciidoctorExtensions 그룹에 의존 라이브러리가 포함
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -56,12 +59,36 @@ dependencies {
 
 }
 
+// :test task 실행 시, API 문서 생성 스니핏 디렉토리 경로를 설정
 tasks.named('test') {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
 }
 
+//  :asciidoctor task 실행 시, Asciidoctor 기능을 사용하기 위해 :asciidoctor task에 asciidoctorExtensions 을 설정
 tasks.named('asciidoctor') {
+	configurations "asciidoctorExtensions"
 	inputs.dir snippetsDir
 	dependsOn test
 }
+
+// copy된 index.html 파일은 API 문서를 파일 형태로 외부에 제공하기 위한 용도
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("${asciidoctor.outputDir}")
+	into file("src/main/resources/static/docs")
+}
+
+// :build task가 실행되기 전에 :copyDocument task가 먼저 수행
+build {
+	dependsOn copyDocument
+}
+
+// 애플리케이션 실행 파일이 생성하는 :bootJar task 설정
+bootJar {
+	dependsOn copyDocument
+	from ("${asciidoctor.outputDir}") {
+		into 'static/docs'
+	}
+}
+// http://localhost:8080/docs/index.html 에서 API 문서 확인
