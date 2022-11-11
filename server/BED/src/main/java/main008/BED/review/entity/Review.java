@@ -3,7 +3,7 @@ package main008.BED.review.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import main008.BED.content.entity.Content;
+import main008.BED.content.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -29,8 +29,8 @@ public class Review {
     private Users user;
 
     @ManyToOne
-    @JoinColumn(name = "CONTENTS_ID")
-    private Content content;
+    @JoinColumn(name = "CONTENT_ID")
+    private Contents content;
 
 
 

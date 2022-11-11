@@ -2,7 +2,7 @@ package main008.BED.warning.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import main008.BED.content.entity.Content;
+import main008.BED.content.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -26,7 +26,7 @@ public class Warning {
     private Users user;
 
     @OneToOne
-    @JoinColumn(name = "CONTENTS_ID")
-    private Content content;
+    @JoinColumn(name = "CONTENT_ID")
+    private Contents content;
 
 }
