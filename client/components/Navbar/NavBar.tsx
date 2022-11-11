@@ -1,26 +1,28 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState } from "react";
+import Link from "next/link";
+import styles from "./NavBar.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
-	const [isLogin, setIsLogin] = useState(false);
-	console.log('isLogin', isLogin);
-	return (
-		<nav style={{ width: '100%', height: '50px', backgroundColor: 'white' }}>
-			<div
-				style={{
-					width: '100%',
-					height: '100%',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
-			>
-				{isLogin ? <Link href={'/'}>Logout</Link> : <Link href={'/login'}>Login</Link>}
-			</div>
-		</nav>
-	);
+  const [isLogin, setIsLogin] = useState(false);
+  return (
+    <nav className={styles.nav}>
+      <div>
+        <FontAwesomeIcon icon={faBars} className={styles.font} />
+        <a className={styles.logo}>clss4989</a>
+      </div>
+      <div>
+        {isLogin ? (
+          <Link href={"/"}>Logout</Link>
+        ) : (
+          <Link href={"/login"}>Login</Link>
+        )}
+      </div>
+    </nav>
+  );
 };
 
 export default NavBar;
