@@ -17,10 +17,13 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reviewId;
+    private Long id;
 
     @Column
-    private String comments;
+    private int star_rate;
+
+    @Column
+    private String comment;
 
     @Column
     private ZonedDateTime createdAt;
@@ -28,8 +31,6 @@ public class Review {
     @Column
     private ZonedDateTime modifiedAt;
 
-    @Column
-    private ReviewPoint reviewPoint;
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
@@ -37,14 +38,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "CONTENT_ID")
-    private Contents content;
+    private Contents contents;
 
-    public enum ReviewPoint {
-        ZERO,
-        ONE,
-        TWO,
-        THREE,
-        FOUR,
-        FIVE
-    }
+
 }

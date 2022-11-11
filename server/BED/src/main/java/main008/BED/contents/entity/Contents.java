@@ -30,14 +30,11 @@ public class Contents {
     @Column
     private String summary;
 
-    @Column
-    private String tutorDetail;
+    @Column(columnDefinition = "TEXT")
+    private String detail;
 
     @Column
-    private String classDetail;
-
-    @Column
-    private Boolean reserve;
+    private int wish;
 
     @Column
     private int price;
@@ -46,11 +43,14 @@ public class Contents {
     private ZonedDateTime createdAt;
 
     @Column
-    private Purchase purchase;
+    private Payment payment;
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
     private Users user;
+
+    @Column
+    private int like;
 
 /*    @OneToMany
     @JoinColumn(name = "TAGS_ID")
@@ -63,8 +63,15 @@ public class Contents {
     private Search search;
 */
 
-    public enum Purchase {
-        PURCHASED,
-        NOT_PURCHASED
+    public enum Payment {
+        PAYMENT("구매"),
+        NOT_PAYMENT("비구매");
+
+        @Getter
+        private String status;
+
+        Payment(String status) {
+            this.status = status;
+        }
     }
 }

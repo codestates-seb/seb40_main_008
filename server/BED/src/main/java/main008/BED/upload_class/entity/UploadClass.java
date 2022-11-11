@@ -26,7 +26,7 @@ public class UploadClass {
     @Column
     private String thumbnail;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String classBase;
 
     @OneToOne

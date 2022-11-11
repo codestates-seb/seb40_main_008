@@ -25,7 +25,7 @@ public class Bookmark {
     private String memo;
 
     @Column
-    private ZonedDateTime savedAt;
+    private ZonedDateTime timeLine;
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
@@ -33,5 +33,5 @@ public class Bookmark {
 
     @ManyToOne
     @JoinColumn(name = "CONTENT_ID")
-    private Contents content;
+    private Contents contents;
 }
