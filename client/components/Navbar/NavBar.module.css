@@ -1,0 +1,18 @@
+.nav {
+  display: flex;
+  width: 100%;
+  color: white;
+  height: 56px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.font {
+  width: 24px;
+  height: 24px;
+}
+.logo {
+  padding-left: 10px;
+  font-size: 16px;
+}
