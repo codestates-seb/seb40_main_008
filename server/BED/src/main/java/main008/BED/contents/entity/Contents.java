@@ -24,7 +24,7 @@ public class Contents {
     private Long id;
 
     @Column
-    private int like;
+    private int likes;
 
     @Column
     private int wish;

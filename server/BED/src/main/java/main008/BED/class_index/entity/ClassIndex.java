@@ -22,7 +22,7 @@ public class ClassIndex {
     private Long id;
 
     @Column
-    private String index;
+    private String indexes;
 
     @Column
     private String title;
