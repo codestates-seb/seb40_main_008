@@ -1,7 +1,6 @@
 package main008.BED.contents.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -10,34 +9,48 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Contents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String image;
 
+    @Column
     private String video;
 
+    @Column
     private String title;
 
+    @Column
     private String summary;
 
-    private String tutorDetail;
+    @Column(columnDefinition = "TEXT")
+    private String detail;
 
-    private String classDetail;
+    @Column
+    private int wish;
 
-    private Boolean reserve;
-
+    @Column
     private int price;
 
+    @Column
     private ZonedDateTime createdAt;
+
+    @Column
+    private Payment payment;
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
     private Users user;
+
+    @Column
+    private int like;
 
 /*    @OneToMany
     @JoinColumn(name = "TAGS_ID")
@@ -50,9 +63,15 @@ public class Contents {
     private Search search;
 */
 
+    public enum Payment {
+        PAYMENT("구매"),
+        NOT_PAYMENT("비구매");
 
-    public enum Purchase {
-        PURCHASED,
-        NOT_PURCHASED
+        @Getter
+        private String status;
+
+        Payment(String status) {
+            this.status = status;
+        }
     }
 }

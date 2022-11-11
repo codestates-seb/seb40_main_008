@@ -19,11 +19,16 @@ public class ClassIndex {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String index;
 
+    @Column
     private String title;
 
+    @Column
     private String subTitle;
+
+    @Column
 
     private String video;
 

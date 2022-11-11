@@ -3,6 +3,7 @@ package main008.BED.users.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -11,6 +12,7 @@ import java.time.ZonedDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Users {
 
     @Id

@@ -20,10 +20,13 @@ public class UploadClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String video;
 
+    @Column
     private String thumbnail;
 
+    @Column(columnDefinition = "TEXT")
     private String classBase;
 
     @OneToOne

@@ -1,8 +1,6 @@
 package main008.BED.review.entity;
 
-
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import main008.BED.contents.entity.Contents;
 import main008.BED.users.entity.Users;
 
@@ -11,18 +9,27 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reviewId;
+    private Long id;
 
-    private String comments;
+    @Column
+    private int star_rate;
 
+    @Column
+    private String comment;
+
+    @Column
     private ZonedDateTime createdAt;
 
+    @Column
     private ZonedDateTime modifiedAt;
+
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
@@ -30,16 +37,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "CONTENT_ID")
-    private Contents content;
+    private Contents contents;
 
 
-
-    public enum ReviewPoint {
-        ZERO,
-        ONE,
-        TWO,
-        THREE,
-        FOUR,
-        FIVE
-    }
 }
