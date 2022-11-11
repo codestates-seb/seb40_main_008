@@ -29,6 +29,7 @@ public class ClassIndex {
     private String subTitle;
 
     @Column
+
     private String video;
 
     @ManyToOne

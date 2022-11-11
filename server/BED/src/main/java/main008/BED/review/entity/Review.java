@@ -1,6 +1,5 @@
 package main008.BED.review.entity;
 
-
 import lombok.*;
 import main008.BED.contents.entity.Contents;
 import main008.BED.users.entity.Users;
