@@ -52,17 +52,6 @@ public class Contents {
     @Column
     private int like;
 
-/*    @OneToMany
-    @JoinColumn(name = "TAGS_ID")
-    private List<Tags> tags;*/
-
-/*
-
-    @ManyToOne
-    @JoinColumn(name = "SEARCH_ID")
-    private Search search;
-*/
-
     public enum Payment {
         PAYMENT("구매"),
         NOT_PAYMENT("비구매");
