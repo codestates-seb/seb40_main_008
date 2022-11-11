@@ -3,7 +3,7 @@ package main008.BED.bookmark.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import main008.BED.content.entity.Content;
+import main008.BED.content.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -30,6 +30,6 @@ public class Bookmark {
     private Users users;
 
     @ManyToOne
-    @JoinColumn(name = "CONTENTS_ID")
-    private Content content;
+    @JoinColumn(name = "CONTENT_ID")
+    private Contents content;
 }
