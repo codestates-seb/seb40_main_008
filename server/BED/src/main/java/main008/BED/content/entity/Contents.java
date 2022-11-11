@@ -2,7 +2,8 @@ package main008.BED.content.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import main008.BED.tag.entity.Tag;
+import main008.BED.search.entity.Search;
+import main008.BED.tag.entity.Tags;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -12,11 +13,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Content {
+public class Contents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contentId;
+    private Long id;
 
     private String image;
 
@@ -41,8 +42,16 @@ public class Content {
     private Users user;
 
     @OneToMany
-    @JoinColumn(name = "TAG_ID")
-    private List<Tag> tags;
+    @JoinColumn(name = "TAGS_ID")
+    private List<Tags> tags;
+
+/*
+
+    @ManyToOne
+    @JoinColumn(name = "SEARCH_ID")
+    private Search search;
+*/
+
 
     public enum Purchase {
         PURCHASED,
