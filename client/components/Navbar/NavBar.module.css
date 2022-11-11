@@ -1,11 +1,19 @@
 .nav {
   display: flex;
+  position: fixed;
+  border-bottom: 1px, solid, red;
   width: 100%;
   color: white;
   height: 56px;
+  background: transparent;
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
+  transition: all var(--animation-duration) ease-in-out;
+  z-index: 1;
+}
+.change_nav {
+  display: none;
 }
 
 .font {

@@ -18,8 +18,9 @@ const layout = ({ children }: any) => {
         <title>올인원 프로필 링크, 리틀리</title>
       </head>
       <body>
+        <NavBar />
         <div className="main">
-          {segment !== "login" ? <NavBar /> : null}
+          {/* {segment !== "login" ? <NavBar /> : null} */}
           {children}
         </div>
       </body>
