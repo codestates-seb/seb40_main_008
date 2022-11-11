@@ -1,10 +1,10 @@
-package main008.BED.bookmark.entity;
+package main008.BED.coin_charge.entity;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import main008.BED.contents.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -15,22 +15,17 @@ import java.time.ZonedDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bookmark {
+public class CoinCharge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(columnDefinition = "TEXT")
-    private String memo;
+    private int coinAmount;
 
-    private ZonedDateTime savedAt;
+    private ZonedDateTime boughtAt;
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
     private Users users;
-
-    @ManyToOne
-    @JoinColumn(name = "CONTENT_ID")
-    private Contents content;
 }
