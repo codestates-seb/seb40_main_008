@@ -6,9 +6,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import main008.BED.users.entity.Users;
+import main008.BED.users_page.entity.UsersPage;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,7 +29,6 @@ public class CoinCharge {
     @Column
     private ZonedDateTime boughtAt;
 
-    @ManyToOne
-    @JoinColumn(name = "USERS_ID")
-    private Users users;
+    @OneToOne(mappedBy = "coinCharge")
+    private UsersPage usersPage;
 }

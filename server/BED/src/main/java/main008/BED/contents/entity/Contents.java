@@ -1,7 +1,12 @@
 package main008.BED.contents.entity;
 
 import lombok.*;
+import main008.BED.bookmark.entity.Bookmark;
+import main008.BED.class_index.entity.ClassIndex;
+import main008.BED.my_class.entity.MyClass;
+import main008.BED.review.entity.Review;
 import main008.BED.users.entity.Users;
+import main008.BED.warning.entity.Warning;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -19,19 +24,7 @@ public class Contents {
     private Long id;
 
     @Column
-    private String image;
-
-    @Column
-    private String video;
-
-    @Column
-    private String title;
-
-    @Column
-    private String summary;
-
-    @Column(columnDefinition = "TEXT")
-    private String detail;
+    private int like;
 
     @Column
     private int wish;
@@ -43,14 +36,30 @@ public class Contents {
     private ZonedDateTime createdAt;
 
     @Column
+    private Category category;
+
+    @Column
     private Payment payment;
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
-    private Users user;
+    private Users users;
 
-    @Column
-    private int like;
+    @ManyToOne
+    @JoinColumn(name = "MY_CLASS_ID")
+    private MyClass myClass;
+
+    @OneToMany(mappedBy = "contents")
+    private List<Bookmark> bookmarkList;
+
+    @OneToMany(mappedBy = "contents")
+    private List<ClassIndex> classIndexList;
+
+    @OneToMany(mappedBy = "contents")
+    private List<Review> reviewList;
+
+    @OneToOne(mappedBy = "contents")
+    private Warning warning;
 
     public enum Payment {
         PAYMENT("구매"),
@@ -63,4 +72,20 @@ public class Contents {
             this.status = status;
         }
     }
+
+    public enum Category {
+        MUSIC("음악"),
+        SPORTS("스포츠"),
+        COOKING("요리"),
+        PROGRAMMING("프로그래밍");
+
+        @Getter
+        private String status;
+
+        Category(String status) {
+            this.status = status;
+        }
+    }
+
+
 }

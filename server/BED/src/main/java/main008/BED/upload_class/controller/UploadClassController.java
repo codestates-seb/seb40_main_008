@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class UploadClass {
+public class UploadClassController {
 
     private final UploadClassService uploadClassService;
     private final UploadClassMapper uploadClassMapper;

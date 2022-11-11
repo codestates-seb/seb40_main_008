@@ -25,7 +25,7 @@ public class Bookmark {
     private String memo;
 
     @Column
-    private ZonedDateTime timeLine;
+    private String timeLine;
 
     @ManyToOne
     @JoinColumn(name = "USERS_ID")

@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import main008.BED.contents.entity.Contents;
+import main008.BED.upload_class.entity.UploadClass;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,11 +27,11 @@ public class ClassIndex {
     @Column
     private String title;
 
-    @Column
-    private String subTitle;
+//    @Column
+//    private String subTitle;
 
-    @Column
-    private String video;
+    @OneToMany(mappedBy = "classIndex")
+    private List<UploadClass> uploadClass;
 
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")

@@ -30,14 +30,12 @@ public class Review {
     @Column
     private ZonedDateTime modifiedAt;
 
-
     @ManyToOne
     @JoinColumn(name = "USERS_ID")
-    private Users user;
+    private Users users;
 
     @ManyToOne
     @JoinColumn(name = "CONTENT_ID")
     private Contents contents;
-
 
 }

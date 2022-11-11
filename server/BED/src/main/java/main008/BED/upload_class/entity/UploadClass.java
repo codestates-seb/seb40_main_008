@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import main008.BED.class_index.entity.ClassIndex;
 import main008.BED.contents.entity.Contents;
+import main008.BED.users_page.entity.UsersPage;
 
 import javax.persistence.*;
 
@@ -21,6 +23,15 @@ public class UploadClass {
     private Long id;
 
     @Column
+    private String title;
+
+    @Column
+    private String summary;
+
+    @Column(columnDefinition = "TEXT")
+    private String detail;
+
+    @Column
     private String video;
 
     @Column
@@ -29,7 +40,11 @@ public class UploadClass {
     @Column(columnDefinition = "TEXT")
     private String classBase;
 
-    @OneToOne
-    @JoinColumn(name = "CONTENTS_ID")
-    private Contents contents;
+    @ManyToOne
+    @JoinColumn(name = "CLASS_INDEX_ID")
+    private ClassIndex classIndex;
+
+    @OneToOne(mappedBy = "uploadClass")
+    private UsersPage usersPage;
+
 }
