@@ -21,8 +21,10 @@ public class CoinCharge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
+    @Column
     private int coinAmount;
 
+    @Column
     private ZonedDateTime boughtAt;
 
     @ManyToOne

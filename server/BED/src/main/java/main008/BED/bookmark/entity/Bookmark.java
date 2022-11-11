@@ -24,6 +24,7 @@ public class Bookmark {
     @Column(columnDefinition = "TEXT")
     private String memo;
 
+    @Column
     private ZonedDateTime savedAt;
 
     @ManyToOne
