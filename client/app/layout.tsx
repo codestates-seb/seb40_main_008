@@ -1,8 +1,10 @@
-import { Roboto, Noto_Sans_KR } from '@next/font/google';
-import { getSession } from 'next-auth/react';
+import { Noto_Sans_KR } from '@next/font/google';
 import NavBar from '../components/Navbar/NavBar';
 import SessionContainer from '../components/Providers/SessionProvider';
 import '../styles/globals.css';
+import { headers } from 'next/headers';
+import { getSession } from '../utils/helper/session';
+import { unstable_getServerSession } from 'next-auth';
 
 const noto = Noto_Sans_KR({
 	weight: '400',
@@ -12,7 +14,9 @@ const noto = Noto_Sans_KR({
 
 const layout = async ({ children }: any) => {
 	const { segment } = children.props.childProp;
-	const session = await getSession();
+	const session = await getSession(headers().get('cookie') ?? '');
+	// const session = await unstable_getServerSession();
+	// console.log('🚀 ~ file: layout.tsx ~ line 17 ~ layout ~ session ', session);
 
 	return (
 		<html className={noto.className}>
