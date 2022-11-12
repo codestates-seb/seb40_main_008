@@ -1,5 +1,5 @@
 import { Roboto, Noto_Sans_KR } from "@next/font/google";
-import NavBar from "../components/Navbar/NavBar";
+import NavBar from "../components/HomeNavBar/HomeNavBar";
 import "../styles/globals.css";
 
 const noto = Noto_Sans_KR({
@@ -18,7 +18,7 @@ const layout = ({ children }: any) => {
         <title>올인원 프로필 링크, 리틀리</title>
       </head>
       <body>
-        <NavBar />
+        {/* <NavBar /> */}
         <div className="main">
           {/* {segment !== "login" ? <NavBar /> : null} */}
           {children}

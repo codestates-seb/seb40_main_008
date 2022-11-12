@@ -1,6 +1,7 @@
 import React from "react";
 import QuestionCard from "../components/Card/QuestionCard";
 import Carousel from "../components/Carousel/Carousel";
+import HomeNavBar from "../components/HomeNavBar/HomeNavBar";
 import { ICarousel } from "../types/carousel";
 
 const getGoogleSession = async () => {};
@@ -26,6 +27,7 @@ const page = async ({ Question }: any) => {
 
   return (
     <div>
+      <HomeNavBar />
       {/* <Carousel carousel={imageArr} /> */}
       {data.data.map((e: any) => {
         return <QuestionCard key={e.questionId} question={e} />;
