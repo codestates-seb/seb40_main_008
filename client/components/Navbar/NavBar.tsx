@@ -15,6 +15,7 @@ const NavBar = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", updateScroll);
+
     return () => window.removeEventListener("scroll", updateScroll);
   });
 
