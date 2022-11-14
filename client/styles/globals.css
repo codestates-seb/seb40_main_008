@@ -1,12 +1,12 @@
 :root {
   --background-color: #0a191f;
+  color: white;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-
   -webkit-text-size-adjust: 100%;
   background-color: var(--background-color);
 }
