@@ -1,30 +1,38 @@
-import { Roboto, Noto_Sans_KR } from "@next/font/google";
-import NavBar from "../components/Navbar/NavBar";
-import "../styles/globals.css";
+import { Noto_Sans_KR } from '@next/font/google';
+import NavBar from '../components/Navbar/NavBar';
+import SessionContainer from '../components/Providers/SessionProvider';
+import '../styles/globals.css';
+import { unstable_getServerSession } from 'next-auth';
+import { getSession } from '../utils/helper/session';
+import { cookies, headers } from 'next/headers';
 
 const noto = Noto_Sans_KR({
-  weight: "400",
-  fallback: ["Roboto"],
-  subsets: ["latin"],
+	weight: '400',
+	fallback: ['Roboto'],
+	subsets: ['latin'],
 });
 
-const layout = ({ children }: any) => {
-  const { segment } = children.props.childProp;
-
-  return (
-    <html className={noto.className}>
-      <head>
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>올인원 프로필 링크, 리틀리</title>
-      </head>
-      <body>
-        <div className="main">
-          {segment !== "login" ? <NavBar /> : null}
-          {children}
-        </div>
-      </body>
-    </html>
-  );
+const RootLayout = async ({ children }: any) => {
+	const { segment } = children.props.childProp;
+	const session = await getSession(headers().get('cookie') ?? '');
+	const nextCookies = cookies();
+	return (
+		<html className={noto.className}>
+			<head>
+				<meta name="viewport" content="width=device-width,initial-scale=1" />
+				<title>asdf</title>
+			</head>
+			<body>
+				<SessionContainer session={session}>
+					<div className="main">
+						{/* @ts-expect-error Server Component */}
+						{segment !== 'login' ? <NavBar /> : null}
+						{children}
+					</div>
+				</SessionContainer>
+			</body>
+		</html>
+	);
 };
 
-export default layout;
+export default RootLayout;
