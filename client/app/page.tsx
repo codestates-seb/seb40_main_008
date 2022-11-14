@@ -3,6 +3,7 @@ import QuestionCard from "../components/Card/QuestionCard";
 import Carousel from "../components/Carousel/Carousel";
 import HomeNavBar from "../components/HomeNavBar/HomeNavBar";
 import { ICarousel } from "../types/carousel";
+import TabNavigator from "../components/TabNavigator/TabNavigator";
 
 const getGoogleSession = async () => {};
 
@@ -32,6 +33,7 @@ const page = async ({ Question }: any) => {
       {data.data.map((e: any) => {
         return <QuestionCard key={e.questionId} question={e} />;
       })}
+      <TabNavigator activeLink={""} />
     </div>
   );
 };

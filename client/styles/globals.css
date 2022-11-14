@@ -1,6 +1,6 @@
 :root {
   --background-color: #0a191f;
-  color: white;
+  color: #f3f3f3;
 }
 
 html,
@@ -43,7 +43,7 @@ a {
     color-scheme: dark;
   }
   body {
-    color: white;
+    color: #f3f3f3;
     background: black;
   }
 }
