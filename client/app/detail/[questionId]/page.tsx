@@ -1,23 +1,32 @@
-import React from "react";
+import { headers } from 'next/headers';
+import React, { use } from 'react';
+import { getSession } from '../../../utils/helper/session';
 
 export async function generateStaticParams() {
-  const arr = new Array(10).fill(1).map((e, i) => {
-    return { questionId: i.toString() };
-  });
-  return arr;
+	const res = await fetch('https://pioneroroom.com/questionlist');
+	const data = await res.json();
+	const arr = data.data.map((e: any) => {
+		console.log('map', e.questionId);
+		return {
+			questionId: String(e.questionId),
+		};
+	});
+	return arr;
 }
 
-async function fetchPost(id: any) {
-  const res = await fetch(`https://pioneroroom.com/questionlist/${id}`);
-  const data = await res.json();
-
-  return data;
-}
+const fetchPost = async (id: any) => {
+	const res = await fetch(`https://pioneroroom.com/questionlist/${id}`);
+	return await res.json().then((res) => res.data);
+};
 
 const DetailIdPage = async ({ params }: any) => {
-  const post = await fetchPost(params.questionId);
-  // return <h2>heell</h2>;
-  return <div>{JSON.stringify(post)}</div>;
+	console.log('params.questionId', params.questionId);
+	const post = await fetchPost(params.questionId);
+	return (
+		<div>
+			<p>{JSON.stringify(post)}</p>
+		</div>
+	);
 };
 
 export default DetailIdPage;
