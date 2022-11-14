@@ -16,3 +16,5 @@ export default NextAuth({
 		maxAge: 30 * 24 * 60 * 60, // 30 days
 	},
 });
+
+// next cookies next-auth.session-token.

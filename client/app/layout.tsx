@@ -15,16 +15,7 @@ const noto = Noto_Sans_KR({
 const RootLayout = async ({ children }: any) => {
 	const { segment } = children.props.childProp;
 	const session = await getSession(headers().get('cookie') ?? '');
-	console.log('🚀 ~ file: layout.tsx ~ line 18 ~ RootLayout ~ session', session);
-	// const session = await unstable_getServerSession()
 	const nextCookies = cookies();
-	console.log(
-		'🚀 ~ file: layout.tsx ~ line 21 ~ RootLayout ~ nextCookies',
-		nextCookies.get('next-auth.session-token')
-	);
-
-	// console.log('🚀 ~ file: layout.tsx ~ line 18 ~ RootLayout ~ session', session);
-
 	return (
 		<html className={noto.className}>
 			<head>

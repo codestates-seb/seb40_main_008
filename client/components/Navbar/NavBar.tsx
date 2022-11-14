@@ -3,7 +3,6 @@ import Link from 'next/link';
 import styles from './NavBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { unstable_getServerSession } from 'next-auth';
 import { getSession } from '../../utils/helper/session';
 import { headers } from 'next/headers';
 
