@@ -28,11 +28,9 @@ const RootLayout = async ({ children }: any) => {
       </head>
       <body>
         <SessionContainer session={session}>
-          <div className="main">
-            {/* @ts-expect-error Server Component */}
-            {/* {segment !== "login" ? <NavBar /> : null} */}
-            {children}
-          </div>
+          {/* @ts-expect-error Server Component */}
+          {/* {segment !== "login" ? <NavBar /> : null} */}
+          {children}
         </SessionContainer>
       </body>
     </html>
