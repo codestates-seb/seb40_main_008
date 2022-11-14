@@ -22,6 +22,10 @@ body {
   max-width: 450px;
   min-height: 100%;
 }
+.contentbody {
+  margin-top: 56px;
+  margin-bottom: 54px;
+}
 /* 
 @media screen and (max-width: 550px) {
 	.main {
