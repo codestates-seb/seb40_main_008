@@ -7,6 +7,8 @@ import "../styles/globals.css";
 import { unstable_getServerSession } from "next-auth";
 import { getSession } from "../utils/helper/session";
 import { cookies, headers } from "next/headers";
+import HomeNavBar from "../components/HomeNavBar/HomeNavBar";
+import TabNavigator from "../components/TabNavigator/TabNavigator";
 
 const noto = Noto_Sans_KR({
   weight: "400",
@@ -28,7 +30,7 @@ const RootLayout = async ({ children }: any) => {
         <SessionContainer session={session}>
           <div className="main">
             {/* @ts-expect-error Server Component */}
-            {segment !== "login" ? <NavBar /> : null}
+            {/* {segment !== "login" ? <NavBar /> : null} */}
             {children}
           </div>
         </SessionContainer>
