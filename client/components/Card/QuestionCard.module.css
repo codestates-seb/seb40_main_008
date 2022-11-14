@@ -4,3 +4,7 @@
   border: 1px solid white;
   background: var(--background-color);
 }
+
+.top {
+  margin-top: 56px;
+}

@@ -1,0 +1,31 @@
+.tab {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  align-items: center;
+  width: 99.5%;
+  height: 54px;
+  background: #0a191f;
+  bottom: 0;
+}
+
+.Icon {
+  width: 20px;
+  height: 20px;
+}
+.font {
+  font-size: 0.625rem;
+  margin: 0;
+}
+
+.tabItem {
+  color: #ababab;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  width: 130px;
+}
+
+.active {
+  color: white;
+}
