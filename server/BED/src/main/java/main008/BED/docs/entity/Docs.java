@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main008.BED.uploadClass.entity.UploadClass;
 
 import javax.persistence.*;
 
@@ -23,4 +24,8 @@ public class Docs {
 
     @Column
     private String documents;
+
+    @OneToOne
+    @JoinColumn(name = "UPLOAD_CLASS_ID")
+    private UploadClass uploadClass;
 }

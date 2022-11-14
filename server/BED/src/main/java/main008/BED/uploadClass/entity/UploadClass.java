@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main008.BED.chapter.entity.Chapter;
 
 import javax.persistence.*;
 
@@ -23,4 +24,8 @@ public class UploadClass {
 
     @Column
     private String video;
+
+    @ManyToOne
+    @JoinColumn(name = "CHAPTER_ID")
+    private Chapter chapter;
 }
