@@ -18,14 +18,14 @@ const page = async ({ Question }: any) => {
   const data = await getQuestionList();
 
   return (
-    <div>
+    <>
       <HomeNavBar />
       {/* <Carousel carousel={imageArr} /> */}
       {data.data.map((e: any) => {
         return <QuestionCard key={e.questionId} question={e} />;
       })}
       <TabNavigator activeLink={""} />
-    </div>
+    </>
   );
 };
 
