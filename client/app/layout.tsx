@@ -2,9 +2,9 @@ import { Noto_Sans_KR } from '@next/font/google';
 import NavBar from '../components/Navbar/NavBar';
 import SessionContainer from '../components/Providers/SessionProvider';
 import '../styles/globals.css';
-import { headers } from 'next/headers';
-import { getSession } from '../utils/helper/session';
 import { unstable_getServerSession } from 'next-auth';
+import { getSession } from '../utils/helper/session';
+import { cookies, headers } from 'next/headers';
 
 const noto = Noto_Sans_KR({
 	weight: '400',
@@ -12,21 +12,29 @@ const noto = Noto_Sans_KR({
 	subsets: ['latin'],
 });
 
-const layout = async ({ children }: any) => {
+const RootLayout = async ({ children }: any) => {
 	const { segment } = children.props.childProp;
 	const session = await getSession(headers().get('cookie') ?? '');
-	// const session = await unstable_getServerSession();
-	// console.log('🚀 ~ file: layout.tsx ~ line 17 ~ layout ~ session ', session);
+	console.log('🚀 ~ file: layout.tsx ~ line 18 ~ RootLayout ~ session', session);
+	// const session = await unstable_getServerSession()
+	const nextCookies = cookies();
+	console.log(
+		'🚀 ~ file: layout.tsx ~ line 21 ~ RootLayout ~ nextCookies',
+		nextCookies.get('next-auth.session-token')
+	);
+
+	// console.log('🚀 ~ file: layout.tsx ~ line 18 ~ RootLayout ~ session', session);
 
 	return (
 		<html className={noto.className}>
 			<head>
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
-				<title>올인원 프로필 링크, 리틀리</title>
+				<title>asdf</title>
 			</head>
 			<body>
 				<SessionContainer session={session}>
 					<div className="main">
+						{/* @ts-expect-error Server Component */}
 						{segment !== 'login' ? <NavBar /> : null}
 						{children}
 					</div>
@@ -36,4 +44,4 @@ const layout = async ({ children }: any) => {
 	);
 };
 
-export default layout;
+export default RootLayout;

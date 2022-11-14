@@ -8,5 +8,11 @@ export default NextAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
 		}),
 	],
-	// secret: process.env.JWT_SECRET,
+	session: {
+		strategy: 'jwt',
+	},
+	secret: process.env.JWT_SECRET as string,
+	jwt: {
+		maxAge: 30 * 24 * 60 * 60, // 30 days
+	},
 });

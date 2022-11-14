@@ -4,28 +4,22 @@ import { unstable_getServerSession } from 'next-auth';
 import { getSession } from '../../utils/helper/session';
 import SignInButton from '../../components/Buttons/SignInButton';
 import { headers } from 'next/headers';
+import SessionContainer from '../../components/Providers/SessionProvider';
+import Link from 'next/link';
 
 const LoginPage = async () => {
-	// const session = await getSession(headers().get('cookie') ?? '');
-	const session = await unstable_getServerSession();
-	console.log('🚀 ~ file: page.tsx ~ line 9 ~ LoginPage ~ session', session);
-	const isSession = session?.user?.email;
+	const session = await getSession(headers().get('cookie') ?? '');
+	// console.log('🚀 ~ file: page.tsx ~ line 9 ~ LoginPage ~ session', session);
 	// BUG: expression evaluation null returns 'undefiend' is not valid JSON.
-	if (isSession) {
-		return (
-			<div>
-				<p style={{ color: 'white' }}>
-					you are not signed in
-					<SignInButton isSignIn={false} />
-				</p>
-			</div>
-		);
-	} else {
-		<div>
-			<p style={{ color: 'white' }}>welcome, {JSON.stringify(session)}</p>
+
+	return (
+		<>
+			<Link href={'/'}>Home</Link>
+			<p>User: {session?.user?.email || 'nothing'}</p>
+			<SignInButton isSignIn={false} />
 			<SignInButton isSignIn={true} />
-		</div>;
-	}
+		</>
+	);
 };
 
 export default LoginPage;
