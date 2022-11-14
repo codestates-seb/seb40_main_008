@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main008.BED.contents.entity.Contents;
+import main008.BED.uploadClass.entity.UploadClass;
+import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
 
@@ -23,4 +26,12 @@ public class Bookmark {
 
     @Column
     private String timeline;
+
+    @ManyToOne
+    @JoinColumn(name = "UPLOAD_CLASS_ID")
+    private UploadClass uploadClass;
+
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID")
+    private Users users;
 }

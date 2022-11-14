@@ -1,33 +1,32 @@
-package main008.BED.userPage.entity;
+package main008.BED.likes.entity;
 
-import lombok.*;
-import main008.BED.coinCharge.entity.CoinCharge;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import main008.BED.contents.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Entity
 @Getter
 @Setter
-@Builder
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPage {
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private int count;
 
     @OneToOne
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
     @OneToOne
-    @JoinColumn(name = "COIN_CHARGE_ID")
-    private CoinCharge coinCharge;
-
-    @OneToMany(mappedBy = "userPage")
-    private List<Contents> contentsList;
+    @JoinColumn(name = "CONTENTS_ID")
+    private Contents contents;
 }

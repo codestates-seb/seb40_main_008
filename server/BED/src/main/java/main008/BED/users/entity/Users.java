@@ -23,7 +23,7 @@ public class Users {
     private String email;
 
     @Column
-    private String displayName;
+    private String userName;
 
     @Column
     private String profileImage;

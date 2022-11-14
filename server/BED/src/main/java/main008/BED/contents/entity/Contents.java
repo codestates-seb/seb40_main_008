@@ -4,6 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main008.BED.likes.entity.Likes;
+import main008.BED.mainPage.entity.MainPage;
+import main008.BED.myUploadClass.entity.MyUploadClass;
+import main008.BED.takingClass.entity.TakingClass;
+import main008.BED.userPage.entity.UserPage;
+import main008.BED.users.entity.Users;
+import main008.BED.wishClass.entity.WishClass;
 
 import javax.persistence.*;
 
@@ -31,13 +38,16 @@ public class Contents {
     private Boolean payment;
 
     @Column
-    private int likes;
-
-    @Column
-    private int wish;
+    private Boolean wish;
 
     @Column
     private Categories categories;
+
+    @Column
+    private Boolean disclosure = false;
+
+    @Column(columnDefinition = "TEXT")
+    private String tutorDetail;
 
     public enum Categories {
         DIGITAL_DRAWING("디지털 드로잉"),
@@ -71,4 +81,31 @@ public class Contents {
             this.keyword = keyword;
         }
     }
+
+    @OneToOne(mappedBy = "contents") // 양방향
+    private Likes likes;
+
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID")
+    private Users users;
+
+    @ManyToOne // 양방향
+    @JoinColumn(name = "MAIN_PAGE_ID")
+    private MainPage mainPage;
+
+    @ManyToOne // 양방향
+    @JoinColumn(name = "TAKING_CLASS_ID")
+    private TakingClass takingClass;
+
+    @ManyToOne // 양방향
+    @JoinColumn(name = "WISH_CLASS_ID")
+    private WishClass wishClass;
+
+    @ManyToOne // 양방향
+    @JoinColumn(name = "MY_UPLOAD_CLASS_ID")
+    private MyUploadClass myUploadClass;
+
+    @ManyToOne // 양방향
+    @JoinColumn(name = "USER_PAGE_ID")
+    private UserPage userPage;
 }
