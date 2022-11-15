@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +15,7 @@ public class Docs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long docsId;
 
     @Column(columnDefinition = "TEXT")
     private String details;
@@ -29,4 +30,6 @@ public class Docs {
 //    @OneToOne
 //    @JoinColumn(name = "UPLOAD_CLASS_ID")
 //    private UploadClass uploadClass;
+
+    // TODO: 영상 길이 필드 추가
 }
