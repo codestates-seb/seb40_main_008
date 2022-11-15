@@ -27,4 +27,5 @@ public interface DocsMapper {
     }
 
     DocsDto.ReadAllDto entityToReadAllDto(Docs docs);
+
 }
