@@ -30,7 +30,7 @@ public class UploadClassController {
 
 
     /**
-     * Create - 영상 저장
+     * Create - 영상 & 강의 자료 올리기
      */
     @PostMapping()
     public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videofile,
@@ -54,7 +54,8 @@ public class UploadClassController {
     @GetMapping("stream/{file-name}")
     public Mono<ResponseEntity<byte[]>> streamVideo(@RequestHeader(value = "Range", required = false) String range,
                                                     @PathVariable("file-name") String fileName) {
-
+        // TODO 1: 클라이언트 측에서 바로 실행 중지
+        // TODO 2: {커리큘럼, 수업자료, 댓글, 메모하기} <- 포함해서 비디오까지 DTO에 담아서 한 번에 보낼 것인지 생각해봐야 함.
         return Mono.just(uploadClassService.prepareContent(fileName, range));
     }
 }
