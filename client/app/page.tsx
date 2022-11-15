@@ -9,7 +9,7 @@ import HomeContentSection from './HomeContentSection';
 
 const getHomeContents = async (): Promise<Array<Content>> => {
 	try {
-		const response = await fetch('https://run.mocky.io/v3/4ed212dd-19b1-4e36-87f2-3d2a4e1b6360', {
+		const response = await fetch('https://run.mocky.io/v3/3990c908-5af6-4850-9501-fa41adb80109', {
 			next: {
 				revalidate: 60,
 			},
