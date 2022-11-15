@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import { Content } from '../types/rootScreen/mainVideoContents';
 import { titleLengthFormatter } from '../utils/helper/titleLengthFormatter';
-import styles from './HomeSuggestionSection.module.css';
+import styles from './HomeClassesSection.module.css';
 
 interface HomeContentProps {
 	contentList: Content[];
 }
 
-const HomeSuggestionSection = ({ contentList }: HomeContentProps) => {
+const HomeClassesSection = ({ contentList }: HomeContentProps) => {
 	return (
 		<div className={styles.gridContainer}>
 			{contentList.map((e) => (
@@ -35,4 +35,4 @@ const HomeSuggestionSection = ({ contentList }: HomeContentProps) => {
 	);
 };
 
-export default HomeSuggestionSection;
+export default HomeClassesSection;

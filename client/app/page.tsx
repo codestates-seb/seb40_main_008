@@ -1,7 +1,7 @@
 import HomeNavBar from '../components/HomeNavBar/HomeNavBar';
 import TabNavigator from '../components/TabNavigator/TabNavigator';
 import { Content } from '../types/rootScreen/mainVideoContents';
-import HomeSuggestionSection from './HomeSuggestionSection';
+import HomeClassesSection from './HomeClassesSection';
 
 const getHomeContents = async (): Promise<Array<Content>> => {
 	try {
@@ -22,11 +22,11 @@ const page = async () => {
 	const contentsList = await getHomeContents();
 
 	return (
-		<div className="main">
+		<>
 			<HomeNavBar />
-			<HomeSuggestionSection contentList={contentsList} />
+			<HomeClassesSection contentList={contentsList} />
 			<TabNavigator activeLink={'home'} />
-		</div>
+		</>
 	);
 };
 
