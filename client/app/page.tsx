@@ -1,8 +1,4 @@
-import React from 'react';
-import QuestionCard from '../components/Card/QuestionCard';
-import Carousel from '../components/Carousel/Carousel';
 import HomeNavBar from '../components/HomeNavBar/HomeNavBar';
-import { ICarousel } from '../types/carousel';
 import TabNavigator from '../components/TabNavigator/TabNavigator';
 import { Content } from '../types/rootScreen/mainVideoContents';
 import HomeContentSection from './HomeContentSection';

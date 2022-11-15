@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React from 'react';
 import { Content } from '../types/rootScreen/mainVideoContents';
 import styles from './HomeContentSection.module.css';
 
