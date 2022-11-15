@@ -25,6 +25,8 @@ public class DocsController {
     private final DocsService docsService;
     private final DocsMapper docsMapper;
 
+    // TODO: 유저 권한 로직 - 회원 가입한 유저만 API 사용 가능
+
     /**
      * Create
      */
