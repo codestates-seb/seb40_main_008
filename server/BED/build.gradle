@@ -60,6 +60,9 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 
+	// webflux
+	implementation 'org.springframework.boot:spring-boot-starter-webflux:2.5.4'
+
 }
 
 tasks.named('test') {

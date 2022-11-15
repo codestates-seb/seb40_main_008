@@ -43,11 +43,11 @@ public class DocsService {
     /**
      * Create: Docs 저장
      */
-    public void saveDocs(Docs docs) throws IOException {
+    public Docs saveDocs(Docs docs) throws IOException {
         if (docsRepository.existsByName(docs.getName())) {
             throw new DocsAlreadyExistsException();
         }
-        docsRepository.save(docs);
+        return docsRepository.save(docs);
     }
 
     /**
