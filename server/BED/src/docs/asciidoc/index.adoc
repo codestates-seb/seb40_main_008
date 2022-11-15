@@ -1,0 +1,31 @@
+= CLASS 4989 API 문서
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+SEB40_main008_BE
+
+2022.11.15
+
+***
+== MainPage
+=== 로그인 전 홈 화면
+.curl-request
+include::{snippets}/get-notLoginHome/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-notLoginHome/http-request.adoc[]
+
+.request-fields
+include::{snippets}/get-notLoginHome/request-body.adoc[]
+
+.http-response
+include::{snippets}/get-notLoginHome/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-notLoginHome/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-notLoginHome/response-body.adoc[]

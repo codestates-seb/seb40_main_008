@@ -1,6 +1,7 @@
 package main008.BED.users.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 public class UsersDto {
@@ -15,5 +16,15 @@ public class UsersDto {
     @AllArgsConstructor
     public static class Patch {
 
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class Response {
+
+        private Long id;
+        private String username;
+        private String profileImage;
     }
 }
