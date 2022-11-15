@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +15,7 @@ public class Docs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long docsId;
 
     @Column(columnDefinition = "TEXT")
     private String details;
@@ -25,8 +26,11 @@ public class Docs {
     @Column
     private String name; // file name +++ 추가
 
+
 //    강의 업로드 클래스로 이동
 //    @OneToOne
 //    @JoinColumn(name = "UPLOAD_CLASS_ID")
 //    private UploadClass uploadClass;
+
+
 }

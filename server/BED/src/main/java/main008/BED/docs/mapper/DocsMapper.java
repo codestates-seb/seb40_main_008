@@ -5,6 +5,8 @@ import main008.BED.docs.entity.Docs;
 import org.mapstruct.Mapper;
 
 import java.io.IOException;
+import java.util.List;
+
 
 @Mapper(componentModel = "spring")
 public interface DocsMapper {
@@ -16,4 +18,15 @@ public interface DocsMapper {
                 .name(post.getFile().getOriginalFilename())
                 .build();
     }
+
+    default Docs patchDtoToEntity(DocsDto.Patch patch) throws IOException {
+        return new Docs().builder()
+                .data(patch.getFile().getBytes())
+                .details(patch.getDetails())
+                .name(patch.getFile().getOriginalFilename())
+                .build();
+    }
+
+    DocsDto.ReadAllDto entityToReadAllDto(Docs docs);
+
 }
