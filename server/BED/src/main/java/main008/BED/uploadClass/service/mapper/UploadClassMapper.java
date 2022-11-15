@@ -1,4 +1,4 @@
-package main008.BED.uploadClass.mapper;
+package main008.BED.uploadClass.service.mapper;
 
 import org.mapstruct.Mapper;
 

@@ -23,7 +23,7 @@ public class UploadClass {
     private String title;
 
     @Column
-    private String video;
+    private byte[] video;
 
     @ManyToOne
     @JoinColumn(name = "CHAPTER_ID")
