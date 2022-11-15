@@ -12,21 +12,21 @@ const HomeContentSection = ({ contentList }: HomeContentProps) => {
 		<div className={styles.gridContainer}>
 			{contentList.map((e) => (
 				<div key={e.id} className={styles.content}>
-					<div key={e.id} className={styles.video}>
+					<div key={e.id} className={styles.thumbnailContainer}>
 						<Image
 							src={e.thumbnail}
 							alt="home lecture content thumbnail"
 							placeholder="blur"
 							blurDataURL="../public/images/blur.png"
 							fill={true}
-							style={{ objectFit: 'cover', borderRadius: '10px' }}
+							style={{ objectFit: 'cover', borderRadius: '4px' }}
 						/>
 					</div>
 					<div className={styles.infoContainer}>
-						<p className={styles.title}>{titleLengthFormatter(e.title)}</p>
+						<span className={styles.title}>{titleLengthFormatter(e.title)}</span>
 						<div className={styles.semiInfoContainer}>
-							<p className={styles.category}>{e.categories}</p>
-							<p className={styles.username}>{e.users.username}</p>
+							<span className={styles.category}>{e.categories}</span>
+							<span className={styles.username}>{e.users.username}</span>
 						</div>
 					</div>
 				</div>
