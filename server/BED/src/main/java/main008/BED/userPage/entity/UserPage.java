@@ -18,7 +18,7 @@ public class UserPage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userPageId;
 
     @OneToOne
     @JoinColumn(name = "USERS_ID")

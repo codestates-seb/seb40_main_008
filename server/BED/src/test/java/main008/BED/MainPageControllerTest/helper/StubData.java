@@ -2,6 +2,7 @@ package main008.BED.MainPageControllerTest.helper;
 
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
+import main008.BED.userPage.dto.UserPageDto;
 import main008.BED.users.dto.UsersDto;
 import main008.BED.users.entity.Users;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,43 @@ public class StubData {
     private static Map<HttpMethod, Object> stubRequestBody;
     static {
         stubRequestBody = new HashMap<>();
+        stubRequestBody.put(HttpMethod.POST, new UsersDto.Post(
+                "User1@gmail.com", "유저1", "프로필 사진"));
+    }
+
+    public static class MockUser {
+        public static Object getRequestBody(HttpMethod method) {
+            return stubRequestBody.get(method);
+        }
+
+        public static UsersDto.UserResponseToMyPage getMyPageUser() {
+
+            return new UsersDto.UserResponseToMyPage(
+                    1L,
+                    "유저1",
+                    "User1@gmail.com",
+                    "프로필 사진",
+                    5000
+            );
+        }
+    }
+
+    public static class MockUserPage {
+        public static Object getRequestBody(HttpMethod method) {
+            return stubRequestBody.get(method);
+        }
+
+        public static UserPageDto.Response getUserPage() {
+
+            return new UserPageDto.Response(
+                    new UsersDto.UserResponseToMyPage(
+                            1L,
+                            "유저1",
+                            "user1@gmail.com",
+                            "프로필사진",
+                            5000
+                    ));
+        }
     }
 
     public static class MockContents {
@@ -32,7 +70,7 @@ public class StubData {
                             "title3",
                             "title3 thumbnail",
                             Contents.Categories.PROGRAMMING,
-                            new UsersDto.Response(
+                            new UsersDto.UserResponseToHome(
                                     1L,
                                     "testUser1",
                                     "testUser1 profileImage")),
@@ -41,7 +79,7 @@ public class StubData {
                             "title2",
                             "title2 thumbnail",
                             Contents.Categories.BAKING_DESSERT,
-                            new UsersDto.Response(
+                            new UsersDto.UserResponseToHome(
                                     2L,
                                     "testUser2",
                                     "testUser2 profileImage")),
@@ -50,7 +88,7 @@ public class StubData {
                             "title1",
                             "title1 thumbnail",
                             Contents.Categories.CRAFTS,
-                            new UsersDto.Response(
+                            new UsersDto.UserResponseToHome(
                                     3L,
                                     "testUser3",
                                     "testUser3 profileImage")));

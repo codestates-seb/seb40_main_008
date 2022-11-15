@@ -19,11 +19,11 @@ public class ContentsController {
 
     private final ContentsService contentsService;
     private final ContentsMapper contentsMapper;
-
-    @PostMapping(/*"{mypage-id}/contents"*/)
-    public ResponseEntity postContents(/*@PathVariable("mypage-id") @Positive Long userPageId,*/
-                                       @Valid @RequestBody ContentsDto.Post post) {
-
-        return null;
-    }
+//
+//    @PostMapping(/*"{mypage-id}/contents"*/)
+//    public ResponseEntity postContents(/*@PathVariable("mypage-id") @Positive Long userPageId,*/
+//                                       @Valid @RequestBody ContentsDto.Post post) {
+//
+//        return null;
+//    }
 }

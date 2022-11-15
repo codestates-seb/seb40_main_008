@@ -31,6 +31,6 @@ public class ContentsDto {
         private String title;
         private String thumbnail;
         private Contents.Categories categories;
-        private UsersDto.Response users;
+        private UsersDto.UserResponseToHome users;
     }
 }

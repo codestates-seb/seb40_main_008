@@ -1,8 +1,6 @@
 package main008.BED.users.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 public class UsersDto {
 
@@ -10,6 +8,9 @@ public class UsersDto {
     @AllArgsConstructor
     public static class Post {
 
+        private String email;
+        private String userName;
+        private String profileImage;
     }
 
     @Getter
@@ -21,10 +22,22 @@ public class UsersDto {
     @Getter
     @Builder
     @AllArgsConstructor
-    public static class Response {
+    public static class UserResponseToHome {
 
-        private Long id;
-        private String username;
+        private Long usersId;
+        private String userName;
         private String profileImage;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class UserResponseToMyPage {
+
+        private Long usersId;
+        private String userName;
+        private String email;
+        private String profileImage;
+        private int coin;
     }
 }

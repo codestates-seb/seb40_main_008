@@ -21,7 +21,7 @@ public class ContentsService {
 
         Pageable pageable =
                 PageRequest.of(page - 1, size,
-                        Sort.by("id").descending());
+                        Sort.by("contentsId").descending());
 
         return contentsRepository.findAll(pageable);
     }

@@ -11,15 +11,15 @@ SEB40_main008_BE
 
 ***
 == MainPage
-=== 로그인 전 홈 화면
+=== MainPage (로그인 전)
 .curl-request
 include::{snippets}/get-notLoginHome/curl-request.adoc[]
 
 .http-request
 include::{snippets}/get-notLoginHome/http-request.adoc[]
 
-.request-fields
-include::{snippets}/get-notLoginHome/request-body.adoc[]
+.request-body
+ Null
 
 .http-response
 include::{snippets}/get-notLoginHome/http-response.adoc[]
@@ -29,3 +29,45 @@ include::{snippets}/get-notLoginHome/response-fields.adoc[]
 
 .response-body
 include::{snippets}/get-notLoginHome/response-body.adoc[]
+
+=== MainPage (로그인 후)
+.curl-request
+include::{snippets}/get-LoginHome/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-LoginHome/http-request.adoc[]
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-LoginHome/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-LoginHome/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-LoginHome/response-body.adoc[]
+
+== My Page
+
+.curl-request
+include::{snippets}/get-mypage/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-mypage/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-mypage/path-parameters.adoc[]
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-mypage/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-mypage/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-mypage/response-body.adoc[]

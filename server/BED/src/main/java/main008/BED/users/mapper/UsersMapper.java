@@ -7,5 +7,24 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface UsersMapper {
 
-    UsersDto.Response usersToResponse(Users users);
+    UsersDto.UserResponseToHome usersToResponse(Users users);
+    default UsersDto.UserResponseToMyPage usersToMyPage(Users users) {
+
+        return UsersDto.UserResponseToMyPage.builder()
+                .usersId(users.getUsersId())
+                .userName(users.getUserName())
+                .email(users.getEmail())
+                .profileImage(users.getProfileImage())
+                .coin(users.getCoin())
+                .build();
+    }
+    default Users postToEntity(UsersDto.Post post) {
+
+        return Users.builder()
+                .userName(post.getUserName())
+                .email(post.getEmail())
+                .profileImage(post.getProfileImage())
+                .coin(5000)
+                .build();
+    }
 }
