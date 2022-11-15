@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Content } from '../types/rootScreen/mainVideoContents';
+import { titleLengthFormatter } from '../utils/helper/titleLengthFormatter';
 import styles from './HomeContentSection.module.css';
 
 interface HomeContentProps {
@@ -14,7 +15,7 @@ const HomeContentSection = ({ contentList }: HomeContentProps) => {
 					<div key={e.id} className={styles.video}>
 						<Image
 							src={e.thumbnail}
-							alt="thumbnail"
+							alt="home lecture content thumbnail"
 							placeholder="blur"
 							blurDataURL="../public/images/blur.png"
 							fill={true}
@@ -22,7 +23,7 @@ const HomeContentSection = ({ contentList }: HomeContentProps) => {
 						/>
 					</div>
 					<div className={styles.infoContainer}>
-						<p className={styles.title}>{e.title}</p>
+						<p className={styles.title}>{titleLengthFormatter(e.title)}</p>
 						<div className={styles.semiInfoContainer}>
 							<p className={styles.category}>{e.categories}</p>
 							<p className={styles.username}>{e.users.username}</p>
