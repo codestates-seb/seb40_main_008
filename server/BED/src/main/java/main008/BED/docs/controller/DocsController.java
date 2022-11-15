@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("docs")
 @RequiredArgsConstructor
@@ -25,8 +26,10 @@ public class DocsController {
     private final DocsService docsService;
     private final DocsMapper docsMapper;
 
-    // TODO: 유저 권한 로직 - 회원 가입한 유저만 API 사용 가능
 
+    // TODO: 유저 권한 로직 - 회원 가입한 유저만 API 사용 가능
+    
+    
     /**
      * Create
      */
@@ -48,6 +51,7 @@ public class DocsController {
     public ResponseEntity getDocs(@PathVariable("docs-id") Long id) {
 
         Docs docs = docsService.readDocs(id);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + docs.getName() + "\"")
@@ -92,4 +96,5 @@ public class DocsController {
         docsService.removeDocs(id);
         return new ResponseEntity<>(new DocsDto.SingleResponseDto("The Docs is removed."), HttpStatus.OK);
     }
+
 }

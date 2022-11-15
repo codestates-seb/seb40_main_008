@@ -24,11 +24,13 @@ public class DocsService {
      * Read: Docs 이름으로 조회
      */
     public Docs readDocs(Long id) {
+
         if (!docsRepository.existsById(id)) {
             throw new DocsAlreadyExistsException();
         }
         return docsRepository.findById(id).get();
     }
+
 
     /**
      * Read All: Docs 이름 목록 조회
@@ -71,4 +73,5 @@ public class DocsService {
     public void removeDocs(Long id) {
         docsRepository.deleteById(id);
     }
+
 }

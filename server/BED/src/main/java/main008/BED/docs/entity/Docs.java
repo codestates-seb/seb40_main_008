@@ -26,10 +26,11 @@ public class Docs {
     @Column
     private String name; // file name +++ 추가
 
+
 //    강의 업로드 클래스로 이동
 //    @OneToOne
 //    @JoinColumn(name = "UPLOAD_CLASS_ID")
 //    private UploadClass uploadClass;
 
-    // TODO: 영상 길이 필드 추가
+
 }
