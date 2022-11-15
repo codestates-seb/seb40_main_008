@@ -22,16 +22,14 @@ const getHomeContents = async (): Promise<Array<Content>> => {
 	}
 };
 
-const page = async ({ Question }: any) => {
-	// const imageArr = await getCarouselImages();
+const page = async () => {
 	const contentsList = await getHomeContents();
 
 	return (
 		<div className="main">
 			<HomeNavBar />
-			{/* <Carousel carousel={imageArr} /> */}
 			<HomeContentSection contentList={contentsList} />
-			<TabNavigator activeLink={''} />
+			<TabNavigator activeLink={'home'} />
 		</div>
 	);
 };

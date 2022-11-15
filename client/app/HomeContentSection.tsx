@@ -16,10 +16,8 @@ const HomeContentSection = ({ contentList }: HomeContentProps) => {
 						<Image
 							src={e.thumbnail}
 							alt="thumbnail"
-							// placeholder="blur"
-							// blurDataURL={e.thumbnail}
-							// width={150}
-							// height={150}
+							placeholder="blur"
+							blurDataURL="../public/images/blur.png"
 							fill={true}
 							style={{ objectFit: 'cover', borderRadius: '10px' }}
 						/>
