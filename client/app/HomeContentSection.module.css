@@ -1,0 +1,12 @@
+.container {
+	/* make a two column grid  */
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	/* make the grid gap 20px */
+	grid-gap: 20px;
+
+	/* make the grid responsive */
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr;
+	}
+}
