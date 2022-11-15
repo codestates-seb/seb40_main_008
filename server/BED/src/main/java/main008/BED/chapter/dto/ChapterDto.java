@@ -9,11 +9,25 @@ public class ChapterDto {
     @AllArgsConstructor
     public static class Post {
 
+//        private Long contentsId;
+        private String chapterOrder;
+        private String title;
+        private String thumbnail;
     }
 
     @Getter
     @AllArgsConstructor
     public static class Patch {
 
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class Response {
+
+        private Long chapterId;
+        private String chapterOrder;
+        private String title;
+        private String thumbnail;
     }
 }

@@ -28,4 +28,11 @@ public class MainPageController {
 
         return new ResponseEntity<>(mainPageMapper.mainPageToNotLoginResponse(mainPage, contentsMapper, usersMapper), HttpStatus.OK);
     }
+
+    // 로그인 후
+    @GetMapping("/auth/home")
+    public ResponseEntity getLoginHome() {
+
+        return null;
+    }
 }

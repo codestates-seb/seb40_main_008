@@ -13,6 +13,7 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class Post {
 
+
     }
 
     @Getter

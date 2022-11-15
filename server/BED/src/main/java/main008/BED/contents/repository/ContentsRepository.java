@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContentsRepository extends JpaRepository<Contents, Long> {
+
+    Contents findByContentsId(Long contentsId);
 }
