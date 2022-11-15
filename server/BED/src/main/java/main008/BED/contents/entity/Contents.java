@@ -11,6 +11,7 @@ import main008.BED.takingClass.entity.TakingClass;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.users.entity.Users;
 import main008.BED.wishClass.entity.WishClass;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 

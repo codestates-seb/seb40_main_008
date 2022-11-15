@@ -1,16 +1,13 @@
 package main008.BED.docs.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import main008.BED.uploadClass.entity.UploadClass;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Docs {
@@ -22,10 +19,14 @@ public class Docs {
     @Column(columnDefinition = "TEXT")
     private String details;
 
-    @Column
-    private String documents;
+    @Lob
+    private byte[] data; // file
 
-    @OneToOne
-    @JoinColumn(name = "UPLOAD_CLASS_ID")
-    private UploadClass uploadClass;
+    @Column
+    private String name; // file name +++ 추가
+
+//    강의 업로드 클래스로 이동
+//    @OneToOne
+//    @JoinColumn(name = "UPLOAD_CLASS_ID")
+//    private UploadClass uploadClass;
 }

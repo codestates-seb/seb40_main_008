@@ -19,6 +19,11 @@ spring:
     properties:
       hibernate:
         format_sql: true;
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 #  배포 서버 설정
 #  jpa:
 #    hibernate:
@@ -87,6 +92,8 @@ server:
   servlet:
     encoding:
       force-response: true
+  error:
+    include-message: always
 mail:
   address:
     admin: admin@gmail.com
