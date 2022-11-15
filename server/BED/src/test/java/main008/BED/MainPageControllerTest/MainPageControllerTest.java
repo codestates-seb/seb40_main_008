@@ -75,7 +75,7 @@ public class MainPageControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-//                .andExpect(jsonPath("$.contentsList").value(contentsResponse))
+//                .andExpect(jsonPath("$.contentsList").value(contentsResponse)) 리퀘스트가 없으므로 현재 필요 없음
                 .andDo(
                         document("get-notLoginHome",
                                 getRequestPreProcessor(),
