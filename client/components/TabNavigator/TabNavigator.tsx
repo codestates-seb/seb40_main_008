@@ -37,7 +37,7 @@ const TabNavigator = ({ activeLink }: TabNavigatorProps) => {
           <p className={styles.font}>검색</p>
         </div>
       </Link>
-      <Link href={`/myclass`}>
+      <Link href={`/upload`}>
         <div
           className={`${styles.tabItem} ${
             activeLink === "myclass" && styles.active
