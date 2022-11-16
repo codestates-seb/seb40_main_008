@@ -38,7 +38,7 @@ public class MainPageController {
     public ResponseEntity getLoginHome() {
 
         MainPage mainPage = mainPageService.getHome();
-        Users users = usersService.getUsers();
+        Users users = usersService.getUsers(1L);
 
         return new ResponseEntity<>(
                 mainPageMapper.mainPageToLoginResponse(mainPage,

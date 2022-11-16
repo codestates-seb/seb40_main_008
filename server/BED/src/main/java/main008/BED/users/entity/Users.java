@@ -1,12 +1,15 @@
 package main008.BED.users.entity;
 
 import lombok.*;
+import main008.BED.myUploadClass.entity.MyUploadClass;
+import main008.BED.userPage.entity.UserPage;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,4 +41,10 @@ public class Users {
         ROLE_ADMIN,
         ROLE_USER;
     }
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private UserPage userPage;
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private MyUploadClass myUploadClass;
 }

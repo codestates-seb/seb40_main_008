@@ -8,10 +8,7 @@ import main008.BED.users.dto.UsersDto;
 import main008.BED.users.entity.Users;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 
@@ -22,7 +19,7 @@ public class UserPageController {
     private final UserPageService userPageService;
     private final UserPageMapper userPageMapper;
 
-    // 생성
+    // 생성 UsersService에서 생성
 
     // 수정
 

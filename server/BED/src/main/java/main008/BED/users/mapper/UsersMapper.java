@@ -27,4 +27,7 @@ public interface UsersMapper {
                 .coin(5000)
                 .build();
     }
+
+    Users usersPatchDtoToUser(UsersDto.Patch userPatchDto);
+    UsersDto.Response usersToUserResponseDto(Users users);
 }

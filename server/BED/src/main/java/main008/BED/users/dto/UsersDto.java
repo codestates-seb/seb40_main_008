@@ -14,9 +14,14 @@ public class UsersDto {
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Patch {
 
+        private Long usersId;
+        private String email;
+        private String userName;
+        private String profileImage;
     }
 
     @Getter
@@ -39,5 +44,15 @@ public class UsersDto {
         private String email;
         private String profileImage;
         private int coin;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class Response {
+        private Long usersId;
+        private String email;
+        private String userName;
+        private String profileImage;
     }
 }
