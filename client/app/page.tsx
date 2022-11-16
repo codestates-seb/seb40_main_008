@@ -24,6 +24,7 @@ const getClassesContents = async (): Promise<Array<Content>> => {
 };
 //dadsadas
 //rkrkrkrk
+//dadsadsadasdasdsa
 const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
   try {
     const response = await fetch(
