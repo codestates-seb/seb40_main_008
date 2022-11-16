@@ -3,8 +3,9 @@
   flex-direction: row;
   position: fixed;
   align-items: center;
-  width: 99.5%;
+  width: 100%;
   height: 54px;
+  margin: 0 auto;
   background: #0a191f;
   bottom: 0;
 }
@@ -23,7 +24,7 @@
   flex-direction: column;
   margin: 0 auto;
   text-align: center;
-  width: 130px;
+  width: 30vw;
 }
 
 .active {
