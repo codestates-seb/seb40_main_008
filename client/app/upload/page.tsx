@@ -1,13 +1,86 @@
 "use client";
 import styles from "./upload.module.css";
-import React from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import SignInButton from "../../components/Buttons/SignInButton";
 import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
+import Image from "next/image";
+import {
+  initialClass,
+  UploadClassType,
+  UploadImage,
+} from "../../types/uploadclass";
 
 const UploadPage = () => {
   const session = useSession();
-  console.log(session);
+  const fileInput = useRef<HTMLInputElement>(null);
+
+  const [values, setValues] = useState<UploadClassType>(initialClass);
+  const [imageFile, setImageFile] = useState<UploadImage | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    setValues({
+      ...values,
+      categoryOption: e.currentTarget.value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    alert(JSON.stringify(values, null, 2));
+  };
+
+  const handleClickFileInput = () => {
+    fileInput.current?.click();
+  };
+
+  const uploadfile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+
+    if (fileList && fileList[0]) {
+      const url = URL.createObjectURL(fileList[0]);
+
+      setImageFile({
+        file: fileList[0],
+        thumbnail: url,
+        type: fileList[0].type.slice(0, 5),
+      });
+
+      setValues({
+        ...values,
+        thumbnail: fileList[0],
+      });
+      console.log(fileList);
+      console.log(fileList[0]);
+      console.log(URL);
+      console.log(url);
+    }
+  };
+
+  const showImage = useMemo(() => {
+    if (!imageFile && imageFile == null) {
+      return <p>비어있는 프로필</p>;
+    }
+    return (
+      <Image
+        className={styles.thumbnail}
+        src={imageFile.thumbnail}
+        alt={imageFile.type}
+        width={300}
+        height={220}
+        onClick={handleClickFileInput}
+        style={{ objectFit: "contain", borderRadius: "4px" }}
+      />
+    );
+  }, [imageFile]);
+
   if (session.status === "loading") return <p>loading</p>;
   if (session.status === "unauthenticated")
     return (
@@ -16,49 +89,88 @@ const UploadPage = () => {
       </>
     );
   if (!session) return <p>null</p>;
+
   if (session.status === "authenticated")
     return (
       <div className="main">
         <BaseNavbar />
         <section className={styles.uploadpage}>
-          <form className={styles.form1}>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <p className={styles.title}>클래스명</p>
-            <input className={styles.classnameinput}></input>
+            <input
+              type="text"
+              name="classname"
+              onChange={handleChange}
+              className={styles.classnameinput}
+            ></input>
             <p className={styles.title}>카테고리</p>
-            <form>
-              <select id="fruit" name="fruit" className={styles.select}>
-                <option value="">-- 선택하세요 --</option>
-                <optgroup label="봄" className={styles.label}>
-                  <option value="strawberry">딸기</option>
-                  <option value="banana">바나나</option>
-                </optgroup>
-                <optgroup label="여름" className={styles.label}>
-                  <option value="mango">망고</option>
-                  <option value="melon">멜론</option>
-                  <option value="grape">포도</option>
-                  <option value="watermelon">수박</option>
-                </optgroup>
-                <optgroup label="가을" className={styles.label}>
-                  <option value="apple">사과</option>
-                  <option value="pear">배</option>
-                </optgroup>
-                <optgroup label="겨울" className={styles.label}>
-                  <option value="mandarine">귤</option>
-                </optgroup>
-              </select>
-            </form>
+
+            <select
+              id="category"
+              name="categoryOption"
+              onChange={handleOptionChange}
+              className={styles.select}
+            >
+              <option value="choice">-- 선택하세요 --</option>
+              <optgroup
+                label="----------------개발전용----------------"
+                className={styles.label}
+              >
+                <option value="drawing">디지털드로잉</option>
+                <option value="success_mind">성공 마인드</option>
+                <option value="baking">베이킹</option>
+              </optgroup>
+              <optgroup
+                label="-------------선택하지 마세요------------"
+                className={styles.label}
+              >
+                <option value="money">금융,재테크</option>
+                <option value="startup">창업,부업</option>
+                <option value="programming">프로그래밍</option>
+                <option value="Exercise">운동</option>
+                <option value="life style">라이프스타일</option>
+                <option value="photo">사진</option>
+                <option value="music">음악</option>
+              </optgroup>
+            </select>
+
             <p className={styles.title}>강의 소개</p>
-            <textarea className={styles.introduceClass}></textarea>
+            <input
+              type="text"
+              name="introduceClass"
+              onChange={handleChange}
+              className={styles.introduceClass}
+            ></input>
             <p className={styles.title}>강사 소개</p>
-            <textarea className={styles.introduceInstructor}></textarea>
+            <input
+              type="text"
+              name="introduceInstructor"
+              onChange={handleChange}
+              className={styles.introduceInstructor}
+            ></input>
 
             <div className={styles.filebox}>
               <p className={styles.title}>클래스 썸네일 업로드</p>
-              <label htmlFor="ex_file">+</label>
-              <input type="file" id="ex_file" />
+              <input
+                type="file"
+                accept="image/jpg, image/jpeg, image/png"
+                name="thumbnail"
+                ref={fileInput}
+                id="ex_file"
+                style={{ display: "none" }}
+                onChange={uploadfile}
+              />
+              <button type="button" onClick={handleClickFileInput}>
+                업로드
+              </button>
             </div>
-            <div className={styles.uploadimg}></div>
-            <button className={styles.openclassbtn}> 강좌 개설하기</button>
+
+            <div className={styles.uploadimg}>{showImage}</div>
+
+            <button type="submit" className={styles.openclassbtn}>
+              {" "}
+              강좌 개설하기
+            </button>
           </form>
         </section>
       </div>
