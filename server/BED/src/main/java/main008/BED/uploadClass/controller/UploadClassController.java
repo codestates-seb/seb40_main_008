@@ -33,14 +33,14 @@ public class UploadClassController {
      * Create - 영상 & 강의 자료 올리기
      */
     @PostMapping()
-    public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videofile,
+    public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videoFile,
                                           @RequestParam("title") String title,
                                           @RequestParam("docsFile") MultipartFile docsFile,
                                           @RequestParam("details") String details) throws IOException {
 
         DocsDto.Post docsPost = new DocsDto.Post(docsFile, details);
         Docs docs = docsService.saveDocs(docsMapper.postDtoToEntity(docsPost));
-        UploadClassDto.Post post = new UploadClassDto.Post(videofile, title, docs);
+        UploadClassDto.Post post = new UploadClassDto.Post(videoFile, title, docs);
         uploadClassService.saveVideo(uploadClassMapper.postDtoToEntity(post));
         return new ResponseEntity(new UploadClassDto.SingleResponseDto("Uploading Lecture is completed."),
                 HttpStatus.CREATED);
@@ -56,6 +56,28 @@ public class UploadClassController {
                                                     @PathVariable("file-name") String fileName) {
         // TODO 1: 클라이언트 측에서 바로 실행 중지
         // TODO 2: {커리큘럼, 수업자료, 댓글, 메모하기} <- 포함해서 비디오까지 DTO에 담아서 한 번에 보낼 것인지 생각해봐야 함.
+        // TODO 3: 멀티 쓰레드 활용 -> 비디오 전송, 나머지 자료 전송 각각 따로
+
+//        ThreadStream threadStream = new ThreadStream();
+//        threadStream.start();
+
         return Mono.just(uploadClassService.prepareContent(fileName, range));
     }
+
+//    /**
+//     * Thread
+//     */
+//    public class ThreadStream extends Thread {
+//
+//        private String fileName;
+//        private String range;
+//        public Mono<ResponseEntity<byte[]>> run() {
+//            return Mono.just(uploadClassService.prepareContent(fileName, range));
+//        }
+//
+//        public ThreadStream(String fileName, String range) {
+//            this.fileName = fileName;
+//            this.range = range;
+//        }
+//    }
 }
