@@ -3,6 +3,7 @@ package main008.BED.myUploadClass.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import main008.BED.contents.entity.Contents;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.users.entity.Users;
@@ -11,14 +12,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Builder
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MyUploadClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long myUploadClassId;
 
     @OneToOne
     @JoinColumn(name = "USERS_ID")

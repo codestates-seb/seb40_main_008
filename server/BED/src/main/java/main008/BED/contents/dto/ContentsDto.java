@@ -27,7 +27,7 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class Response {
 
-        private Long id;
+        private Long contentsId;
         private String title;
         private String thumbnail;
         private Contents.Categories categories;

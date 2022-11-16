@@ -1,7 +1,6 @@
-package main008.BED.MainPageControllerTest;
+package main008.BED.UserPageControllerTest;
 
-import main008.BED.MainPageControllerTest.helper.StubData;
-import main008.BED.mainPage.controller.MainPageController;
+import main008.BED.helper.StubData;
 import main008.BED.userPage.controller.UserPageController;
 import main008.BED.userPage.dto.UserPageDto;
 import main008.BED.userPage.entity.UserPage;
@@ -26,8 +25,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Arrays;
 
-import static main008.BED.MainPageControllerTest.utils.ApiDocumentUtils.getRequestPreProcessor;
-import static main008.BED.MainPageControllerTest.utils.ApiDocumentUtils.getResponsePreProcessor;
+import static main008.BED.utils.ApiDocumentUtils.getRequestPreProcessor;
+import static main008.BED.utils.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;

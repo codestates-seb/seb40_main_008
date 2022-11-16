@@ -1,7 +1,8 @@
-package main008.BED.MainPageControllerTest.helper;
+package main008.BED.helper;
 
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
+import main008.BED.myUploadClass.dto.MyUploadClassDto;
 import main008.BED.userPage.dto.UserPageDto;
 import main008.BED.users.dto.UsersDto;
 import main008.BED.users.entity.Users;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpMethod;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +94,45 @@ public class StubData {
                                     3L,
                                     "testUser3",
                                     "testUser3 profileImage")));
+        }
+    }
+
+    public static class MockMyUploadClass {
+
+        public static Object getRequestBody(HttpMethod method) {
+            return stubRequestBody.get(method);
+        }
+
+        public static MyUploadClassDto.Response getMyUploadClassResponseBody() {
+
+            return new MyUploadClassDto.Response(List.of(
+                    new ContentsDto.Response(
+                            21L,
+                            "title21",
+                            "title21 thumbnail",
+                            Contents.Categories.PROGRAMMING,
+                            new UsersDto.UserResponseToHome(
+                                    1L,
+                                    "User1",
+                                    "User1 profileImage")),
+                    new ContentsDto.Response(
+                            16L,
+                            "title16",
+                            "title16 thumbnail",
+                            Contents.Categories.PROGRAMMING,
+                            new UsersDto.UserResponseToHome(
+                                    1L,
+                                    "User1",
+                                    "User1 profileImage")),
+                    new ContentsDto.Response(
+                            5L,
+                            "title15",
+                            "title5 thumbnail",
+                            Contents.Categories.PROGRAMMING,
+                            new UsersDto.UserResponseToHome(
+                                    1L,
+                                    "User1",
+                                    "User1 profileImage"))));
         }
     }
 }

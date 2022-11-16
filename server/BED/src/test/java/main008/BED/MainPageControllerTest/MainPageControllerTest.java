@@ -1,7 +1,6 @@
 package main008.BED.MainPageControllerTest;
 
-import com.google.gson.Gson;
-import main008.BED.MainPageControllerTest.helper.StubData;
+import main008.BED.helper.StubData;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.mainPage.controller.MainPageController;
@@ -9,8 +8,6 @@ import main008.BED.mainPage.dto.MainPageDto;
 import main008.BED.mainPage.entity.MainPage;
 import main008.BED.mainPage.mapper.MainPageMapper;
 import main008.BED.mainPage.service.MainPageService;
-import main008.BED.userPage.dto.UserPageDto;
-import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.mapper.UserPageMapper;
 import main008.BED.userPage.service.UserPageService;
 import main008.BED.users.dto.UsersDto;
@@ -18,8 +15,6 @@ import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
 import main008.BED.users.service.UsersService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import com.google.gson.Gson;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -28,7 +23,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -36,17 +30,14 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.Arrays;
 import java.util.List;
 
-import static main008.BED.MainPageControllerTest.utils.ApiDocumentUtils.getRequestPreProcessor;
-import static main008.BED.MainPageControllerTest.utils.ApiDocumentUtils.getResponsePreProcessor;
+import static main008.BED.utils.ApiDocumentUtils.getRequestPreProcessor;
+import static main008.BED.utils.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MainPageController.class)
@@ -105,7 +96,7 @@ public class MainPageControllerTest {
                                 responseFields(
                                         Arrays.asList(
                                                 fieldWithPath("contentsList").type(JsonFieldType.ARRAY).description("클래스 리스트"),
-                                                fieldWithPath("contentsList[].id").type(JsonFieldType.NUMBER).description("클래스 식별자"),
+                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자"),
                                                 fieldWithPath("contentsList[].title").type(JsonFieldType.STRING).description("클래스 제목"),
                                                 fieldWithPath("contentsList[].thumbnail").type(JsonFieldType.STRING).description("클래스 썸네일"),
                                                 fieldWithPath("contentsList[].categories").type(JsonFieldType.STRING).description("카테고리"),
@@ -155,7 +146,7 @@ public class MainPageControllerTest {
                                         Arrays.asList(
                                                 fieldWithPath("usersId").type(JsonFieldType.NUMBER).description("현 로그인 회원 식별자 ID"),
                                                 fieldWithPath("contentsList").type(JsonFieldType.ARRAY).description("클래스 리스트"),
-                                                fieldWithPath("contentsList[].id").type(JsonFieldType.NUMBER).description("클래스 식별자"),
+                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자"),
                                                 fieldWithPath("contentsList[].title").type(JsonFieldType.STRING).description("클래스 제목"),
                                                 fieldWithPath("contentsList[].thumbnail").type(JsonFieldType.STRING).description("클래스 썸네일"),
                                                 fieldWithPath("contentsList[].categories").type(JsonFieldType.STRING).description("카테고리"),

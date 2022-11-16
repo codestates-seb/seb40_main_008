@@ -15,7 +15,7 @@ public interface ContentsMapper {
 
         return contents.stream()
                 .map(content -> ContentsDto.Response.builder()
-                        .id(content.getContentsId())
+                        .contentsId(content.getContentsId())
                         .title(content.getTitle())
                         .thumbnail(content.getClassProfile())
                         .users(usersMapper.usersToResponse(content.getUsers()))

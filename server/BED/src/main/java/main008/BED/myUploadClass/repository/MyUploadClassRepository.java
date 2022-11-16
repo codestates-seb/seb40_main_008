@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MyUploadClassRepository extends JpaRepository<MyUploadClass, Long> {
+
+    MyUploadClass findByUsersUsersId(Long usersId);
 }

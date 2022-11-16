@@ -12,18 +12,18 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
-@RequestMapping(/*"/auth/home/mypage"*/)
+@RequestMapping("/auth/home/{users-id}")
 @RequiredArgsConstructor
 @Validated
 public class ContentsController {
 
     private final ContentsService contentsService;
     private final ContentsMapper contentsMapper;
-//
-//    @PostMapping(/*"{mypage-id}/contents"*/)
-//    public ResponseEntity postContents(/*@PathVariable("mypage-id") @Positive Long userPageId,*/
-//                                       @Valid @RequestBody ContentsDto.Post post) {
-//
-//        return null;
-//    }
+
+    @PostMapping("/uploadcontents")
+    public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
+                                       @Valid @RequestBody ContentsDto.Post post) {
+
+        return null;
+    }
 }
