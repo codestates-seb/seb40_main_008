@@ -26,6 +26,13 @@
 	border: none;
 }
 
+.adminbtn{
+	margin-bottom: 50px;
+	border-radius: 10px;
+	background-color: #FCB600;
+	border: none;
+}
+
 .naverbtnWrapper{
 	font-weight: bold;
 	font-size: 15px;
@@ -54,10 +61,23 @@
 	height: 55px;
 }
 
+.adminbtnWrapper{
+	font-weight: bold;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 55px;
+}
+
 .googlelogo{
 	margin-right: 10px;
 }
 
 .kakaologo{
+	margin-right: 10px;
+}
+
+.adminlogo{
 	margin-right: 10px;
 }

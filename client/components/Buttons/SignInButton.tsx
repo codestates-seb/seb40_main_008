@@ -6,6 +6,7 @@ import styles from './Button.module.css'
 import naverlogo from '../../public/img/naverlogo.png'
 import kakaologo from '../../public/img/kakaologo.png';
 import googlelogo from '../../public/img/googlelogo.webp';
+import adminlogo from '../../public/img/myimg.png'
 
 // *kakao login,logout 후 다시 login 시도 시 오류 발생*
 // Unhandled Runtime Error
@@ -62,6 +63,18 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 						width={50}
 					/>
 					네이버 로그인
+				</div>
+			</button>
+
+			<button className={styles.adminbtn} onClick={() => signIn()}>
+				<div className={styles.adminbtnWrapper}>
+					<Image
+						className={styles.adminlogo}
+						src={adminlogo}
+						alt='admin logo'
+						width={50}
+					/>
+					관리자 로그인
 				</div>
 			</button>
 
