@@ -4,7 +4,7 @@ import { CarouselInfo } from "../types/homeScreen/carousel";
 import { Content } from "../types/homeScreen/mainVideoContents";
 import HomeCarouselSection from "./HomeCarouselSection";
 import HomeClassesSection from "./HomeClassesSection";
-
+//adsasdas
 const getClassesContents = async (): Promise<Array<Content>> => {
   try {
     const response = await fetch(
