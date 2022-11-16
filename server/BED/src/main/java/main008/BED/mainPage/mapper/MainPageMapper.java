@@ -17,11 +17,21 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MainPageMapper {
 
-    default MainPageDto.NotLoginResponse mainPageToNotLoginResponse(MainPage mainPage, ContentsMapper contentsMapper, UsersMapper usersMapper) {
+    default MainPageDto.NotLoginResponse mainPageToNotLoginResponse(MainPage mainPage, ContentsMapper contentsMapper,
+                                                                    UsersMapper usersMapper) {
 
         return MainPageDto.NotLoginResponse.builder()
                 .contentsList(contentsMapper.contentsToResponses(mainPage.getContentsList(),usersMapper))
                 .build();
 
+    }
+
+    default MainPageDto.LoginResponse mainPageToLoginResponse(MainPage mainPage, ContentsMapper contentsMapper,
+                                                              Long usersId, UsersMapper usersMapper ) {
+
+        return MainPageDto.LoginResponse.builder()
+                .usersId(usersId)
+                .contentsList(contentsMapper.contentsToResponses(mainPage.getContentsList(), usersMapper))
+                .build();
     }
 }

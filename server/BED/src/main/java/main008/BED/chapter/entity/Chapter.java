@@ -17,7 +17,7 @@ public class Chapter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long chapterId;
 
     @Column
     private String thumbnail;

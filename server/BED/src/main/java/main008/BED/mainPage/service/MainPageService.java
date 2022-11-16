@@ -15,7 +15,7 @@ public class MainPageService {
     private final MainPageRepository mainPageRepository;
     private final ContentsService contentsService;
 
-    public MainPage getNotLoginHome() {
+    public MainPage getHome() {
 
         MainPage mainPage = new MainPage();
         mainPage.setContentsList(contentsService.getContentsPage(1, 10).getContent());
