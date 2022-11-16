@@ -46,7 +46,7 @@ const HomeNavBar = () => {
 
   return (
     <nav className={`${show ? styles.nav : styles.change_nav} ${styles.tab}`}>
-      <div className="div1">
+      <div className="logo">
         <FontAwesomeIcon icon={faBars} className={styles.font} />
         <button className={styles.logo} onClick={scrollTopBtn}>
           class4989

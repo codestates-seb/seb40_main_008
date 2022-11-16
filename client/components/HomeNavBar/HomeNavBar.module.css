@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   margin: 0 auto;
-  width: 100%;
+  width: 450px;
   color: #f3f3f3;
   height: 56px;
   background: #0a191f;
@@ -29,7 +29,7 @@
   display: none;
 }
 
-.div1 {
+.logo {
   align-items: center;
   justify-content: center;
 }
