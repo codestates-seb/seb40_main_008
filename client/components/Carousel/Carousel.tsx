@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { ICarousel } from '../../types/carousel';
+import { ICarousel } from '../../types/homeScreen/carousel';
 
 interface CarouselProp {
 	carousel: ICarousel[];

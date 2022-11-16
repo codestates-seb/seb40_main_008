@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Content } from '../types/rootScreen/mainVideoContents';
+import { Content } from '../types/homeScreen/mainVideoContents';
 import { titleLengthFormatter } from '../utils/helper/titleLengthFormatter';
 import styles from './HomeClassesSection.module.css';
 
