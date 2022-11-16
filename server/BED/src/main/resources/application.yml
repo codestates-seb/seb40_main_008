@@ -3,7 +3,7 @@ spring:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/main008?serverTimezone=Asia/Seoul&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
 #    username: root
-#    password:
+#    password: ${PASSWORD}
   h2:
     console:
       enabled: true
@@ -34,6 +34,7 @@ server:
       force-response: true
   error:
     include-message: always
+  port: 8080
 mail:
   address:
     admin: admin@gmail.com
@@ -46,5 +47,9 @@ jwt:
 cloud:
   aws:
     credentials:
-      access-key: ${AWS_ACCESS_KEY}
-      secret-key: ${AWS_SECRET_KEY}
+      access-key: ${ACCESS_KEY}
+      secret-key: ${SECRET_KEY}
+    region:
+      static: ${REGION}
+    s3:
+      bucket: ${BUCKET_NAME}
