@@ -1,14 +1,8 @@
-import { Roboto, Noto_Sans_KR } from '@next/font/google';
-import NavBar from '../components/HomeNavBar/HomeNavBar';
+import { Noto_Sans_KR } from '@next/font/google';
 import '../styles/globals.css';
-
 import SessionContainer from '../components/Providers/SessionProvider';
-import '../styles/globals.css';
-import { unstable_getServerSession } from 'next-auth';
 import { getSession } from '../utils/helper/session';
 import { cookies, headers } from 'next/headers';
-import HomeNavBar from '../components/HomeNavBar/HomeNavBar';
-import TabNavigator from '../components/TabNavigator/TabNavigator';
 
 const noto = Noto_Sans_KR({
 	weight: '400',
