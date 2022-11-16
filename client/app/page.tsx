@@ -5,7 +5,7 @@ import HomeNavBar from "../components/HomeNavBar/HomeNavBar";
 import { ICarousel } from "../types/carousel";
 import TabNavigator from "../components/TabNavigator/TabNavigator";
 
-const getGoogleSession = async () => {};
+const getGoogleSession = async () => { };
 
 const getQuestionList = async () => {
   const response = await fetch(`https://pioneroroom.com/questionlist`);

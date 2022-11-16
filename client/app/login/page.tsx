@@ -7,6 +7,7 @@ import { headers } from 'next/headers';
 import Link from 'next/link';
 
 const LoginPage = async () => {
+
 	const session = await getSession(headers().get('cookie') ?? '');
 	return (
 		<>
