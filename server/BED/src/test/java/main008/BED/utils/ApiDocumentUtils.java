@@ -1,4 +1,4 @@
-package main008.BED.MainPageControllerTest.utils;
+package main008.BED.utils;
 
 import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;

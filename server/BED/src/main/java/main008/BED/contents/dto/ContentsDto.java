@@ -13,6 +13,7 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class Post {
 
+
     }
 
     @Getter
@@ -26,10 +27,10 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class Response {
 
-        private Long id;
+        private Long contentsId;
         private String title;
         private String thumbnail;
         private Contents.Categories categories;
-        private UsersDto.Response users;
+        private UsersDto.UserResponseToHome users;
     }
 }

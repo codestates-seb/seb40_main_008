@@ -18,16 +18,16 @@ public class UserPage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userPageId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COIN_CHARGE_ID")
     private CoinCharge coinCharge;
 
-    @OneToMany(mappedBy = "userPage")
+    @OneToMany(mappedBy = "userPage", cascade = CascadeType.ALL)
     private List<Contents> contentsList;
 }
