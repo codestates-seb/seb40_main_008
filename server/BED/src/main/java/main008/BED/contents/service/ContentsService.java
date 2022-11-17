@@ -75,12 +75,12 @@ public class ContentsService {
 
             if (wish2.getContents() == null) {
 
-                wish2.setContents(contents);
-                wish2.setWished(true);
-                wishRepository.save(wish2);
-                myClass.addWish(wish2);
+                wish.setContents(contents);
+                wish.setWished(true);
+                wishRepository.save(wish);
+                myClass.addWish(wish);
                 myClassRepository.save(myClass);
-                contents.addWish(wish2);
+                contents.addWish(wish);
                 contentsRepository.save(contents);
             }
             else {
@@ -89,6 +89,13 @@ public class ContentsService {
 
                     Wish wish3 = wishRepository.findByMyClassMyClassIdAndContentsContentsId(myClass.getMyClassId(), contents.getContentsId());
 
+                    List<Wish> wishes = wishRepository.findAll();
+
+                    if (wishes.size() < 2) {
+                        Wish wish4 = new Wish();
+                        wish4.setMyClass(myClass);
+                        wishRepository.save(wish4);
+                    }
                     wishRepository.delete(wish3);
                 }
                 else {
