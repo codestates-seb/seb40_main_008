@@ -10,7 +10,7 @@ import main008.BED.uploadClass.entity.UploadClass;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "CHAPTERS")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,7 +31,8 @@ public class Chapter {
     private String thumbnail;
 
     @Column
-    private String keys;
+    private String fileKey;
+
 
 //    @ManyToOne
 //    @JoinColumn(name = "CONTENTS_ID")
