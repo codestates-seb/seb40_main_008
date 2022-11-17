@@ -17,16 +17,22 @@ public class CarouselService {
 //    private static final String FORMAT = "classpath:carousel/1.png";
     private final CarouselRepository carouselRepository;
 
-    public List<Carousel> readCarousel() {
+    public List<Carousel> readAllCarousel() {
         List<Carousel> all = carouselRepository.findAll();
         return all;
     }
 
+    public Carousel readOne(Long id) {
+        return carouselRepository.findById(id).get();
+    }
+
     public void saveCarousel(Carousel carousel) {
-        carousel.setTitle("title");
-        carousel.setSubTitle("subTitle");
-        carousel.setRedirectUrl("/redirect");
         carouselRepository.save(carousel);
+    }
+
+    public void removeCarousel(Long id) {
+        Carousel findOne = carouselRepository.findById(id).get();
+        carouselRepository.delete(findOne);
     }
 
 

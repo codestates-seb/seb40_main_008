@@ -1,14 +1,15 @@
 package main008.BED.carousel.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 public class CarouselDto {
 
     @Getter
     @AllArgsConstructor
-    public static class ResponseDto {
+    public static class Post {
 
+        private String name;
+        private String keys;
         private String imageUrl;
         private String title;
         private String subTitle;
@@ -16,10 +17,16 @@ public class CarouselDto {
     }
 
     @Getter
+    @NoArgsConstructor
+    @Setter
     @AllArgsConstructor
-    public static class Post {
+    @Builder
+    public static class ResponseDto {
 
-        private String name;
+        private Long carouselId;
         private String imageUrl;
+        private String title;
+        private String subTitle;
+        private String redirectUrl;
     }
 }

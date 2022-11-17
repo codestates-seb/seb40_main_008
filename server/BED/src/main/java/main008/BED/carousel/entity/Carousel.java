@@ -23,6 +23,9 @@ public class Carousel {
     private String name;
 
     @Column
+    private String keys;
+
+    @Column
     private String imageUrl;
 
     @Column

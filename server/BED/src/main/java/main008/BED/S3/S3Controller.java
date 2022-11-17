@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("s3")
 @RequiredArgsConstructor
@@ -24,10 +26,15 @@ public class S3Controller {
 
     // TODO 1: 유저 권한만 업로드 가능
     @PostMapping(value = "carousel/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity upload(@RequestParam("image") MultipartFile image) {
-        String url = s3Service.uploadToS3(image);
+    public ResponseEntity upload(@RequestParam("image") MultipartFile image,
+                                 @RequestParam("title") String title,
+                                 @RequestParam("subTitle") String subTitle,
+                                 @RequestParam("redirectUrl") String redirectUrl) {
+        HashMap map = s3Service.uploadToS3(image);
+        String url = map.get("url").toString();
+        String keys = map.get("keys").toString();
 
-        CarouselDto.Post post = new CarouselDto.Post(image.getOriginalFilename(), url);
+        CarouselDto.Post post = new CarouselDto.Post(image.getOriginalFilename(), keys, url, title, subTitle, redirectUrl);
         carouselService.saveCarousel(carouselMapper.postDtoToEntity(post));
         return new ResponseEntity(url, HttpStatus.CREATED);
     }
