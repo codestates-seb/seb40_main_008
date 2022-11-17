@@ -19,7 +19,7 @@ public class Chapter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long chapterId;
 
     @Column
     private String chapterOrder;
@@ -37,6 +37,6 @@ public class Chapter {
 //    @JoinColumn(name = "CONTENTS_ID")
 //    private Contents contents;
 
-    @OneToMany(mappedBy = "chapter", cascade = CascadeType.REMOVE) // 양방향
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL) // 양방향
     private List<UploadClass> uploadClassList;
 }

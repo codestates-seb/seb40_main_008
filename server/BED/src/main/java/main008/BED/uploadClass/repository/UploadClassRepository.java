@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UploadClassRepository extends JpaRepository<UploadClass, Long> {
 
     UploadClass findByName(String name);
-    boolean existsByTitle(String title);
+
+    boolean existsByName(String title);
 }

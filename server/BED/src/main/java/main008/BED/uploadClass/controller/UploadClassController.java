@@ -1,6 +1,8 @@
 package main008.BED.uploadClass.controller;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.chapter.entity.Chapter;
+import main008.BED.chapter.repository.ChapterRepository;
 import main008.BED.docs.dto.DocsDto;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
@@ -25,6 +27,7 @@ public class UploadClassController {
     private final UploadClassService uploadClassService;
     private final UploadClassMapper uploadClassMapper;
 
+    private final ChapterRepository chapterRepository;
     private final DocsService docsService;
     private final DocsMapper docsMapper;
 
@@ -32,15 +35,16 @@ public class UploadClassController {
     /**
      * Create - 영상 & 강의 자료 올리기
      */
-    @PostMapping()
+    @PostMapping("{chapter-id}")
     public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videoFile,
                                           @RequestParam("title") String title,
                                           @RequestParam("docsFile") MultipartFile docsFile,
-                                          @RequestParam("details") String details) throws IOException {
-
+                                          @RequestParam("details") String details,
+                                          @PathVariable("chapter-id") Long chapterId) throws IOException {
+        Chapter chapter = chapterRepository.findById(chapterId).get();
         DocsDto.Post docsPost = new DocsDto.Post(docsFile, details);
         Docs docs = docsService.saveDocs(docsMapper.postDtoToEntity(docsPost));
-        UploadClassDto.Post post = new UploadClassDto.Post(videoFile, title, docs);
+        UploadClassDto.Post post = new UploadClassDto.Post(videoFile, title, chapter, docs);
         uploadClassService.saveVideo(uploadClassMapper.postDtoToEntity(post));
         return new ResponseEntity(new UploadClassDto.SingleResponseDto("Uploading Lecture is completed."),
                 HttpStatus.CREATED);

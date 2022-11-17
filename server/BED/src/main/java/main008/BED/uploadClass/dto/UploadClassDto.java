@@ -1,6 +1,7 @@
 package main008.BED.uploadClass.dto;
 
 import lombok.*;
+import main008.BED.chapter.entity.Chapter;
 import main008.BED.docs.entity.Docs;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ public class UploadClassDto {
     public static class Post {
         private MultipartFile video;
         private String title;
+        private Chapter chapter;
         private Docs docs;
     }
 
@@ -37,6 +39,15 @@ public class UploadClassDto {
         private ResponseEntity<byte[]> video;
         private Docs docs;
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class ResponseDtoInChapter {
+
+        private Long uploadClassId;
+        private String title;
+    }
+
 
 
 }

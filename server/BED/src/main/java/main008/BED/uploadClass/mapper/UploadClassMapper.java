@@ -13,9 +13,12 @@ public interface UploadClassMapper {
         return new UploadClass().builder()
                 .video(post.getVideo().getBytes())
                 .title(post.getTitle())
+                .chapter(post.getChapter())
                 .docs(post.getDocs())
                 .name(post.getVideo().getOriginalFilename())
                 .build();
     }
+
+    UploadClassDto.ResponseDtoInChapter entityToResponseDtoInChapter(UploadClass uploadClass);
 
 }

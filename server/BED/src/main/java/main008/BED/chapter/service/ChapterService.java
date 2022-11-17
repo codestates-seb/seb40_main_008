@@ -14,15 +14,18 @@ public class ChapterService {
 
     /**
      * CREATE
+     *
+     * @return
      */
-    public void saveChapter(Chapter chapter) {
+    public Chapter saveChapter(Chapter chapter) {
         Chapter save = chapterRepository.save(chapter);
+        return save;
     }
 
     /**
      * READ ONE
      */
-    public Chapter findOne(Long id) {
+    public Chapter readOne(Long id) {
         return chapterRepository.findById(id).get();
     }
 

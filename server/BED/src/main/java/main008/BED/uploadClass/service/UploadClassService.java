@@ -37,7 +37,7 @@ public class UploadClassService {
      * Create - Video 저장
      */
     public UploadClass saveVideo(UploadClass uploadClass) throws IOException {
-        if (uploadClassRepository.existsByTitle(uploadClass.getTitle())) {
+        if (uploadClassRepository.existsByName(uploadClass.getName())) {
             throw new VideoAlreadyExistsException();
         }
         return uploadClassRepository.save(uploadClass);
