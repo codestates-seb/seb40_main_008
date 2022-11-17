@@ -1,7 +1,11 @@
 package main008.BED.chapter.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
+import main008.BED.uploadClass.dto.UploadClassDto;
+import main008.BED.uploadClass.entity.UploadClass;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public class ChapterDto {
 
@@ -9,10 +13,13 @@ public class ChapterDto {
     @AllArgsConstructor
     public static class Post {
 
-//        private Long contentsId;
         private String chapterOrder;
+
         private String title;
+
         private String thumbnail;
+
+        private String keys;
     }
 
     @Getter
@@ -22,12 +29,19 @@ public class ChapterDto {
     }
 
     @Getter
+    @Setter
+    @Builder
     @AllArgsConstructor
-    public static class Response {
+    @NoArgsConstructor
+    public static class ResponseDto {
 
         private Long chapterId;
         private String chapterOrder;
         private String title;
         private String thumbnail;
+        private List<UploadClassDto.ResponseDtoInChapter> uploadClassList;
+
     }
+
+
 }
