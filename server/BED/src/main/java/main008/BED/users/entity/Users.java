@@ -4,7 +4,6 @@ import lombok.*;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.userPage.entity.UserPage;
-import main008.BED.wish.entity.Wish;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;

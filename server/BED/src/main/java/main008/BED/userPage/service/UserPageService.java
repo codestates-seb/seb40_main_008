@@ -3,7 +3,6 @@ package main008.BED.userPage.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.repository.UserPageRepository;
-import main008.BED.users.entity.Users;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

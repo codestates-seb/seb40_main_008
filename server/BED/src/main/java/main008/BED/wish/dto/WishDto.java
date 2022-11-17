@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.contents.dto.ContentsDto;
-import main008.BED.myClass.dto.MyClassDto;
-import main008.BED.users.dto.UsersDto;
 
 public class WishDto {
 

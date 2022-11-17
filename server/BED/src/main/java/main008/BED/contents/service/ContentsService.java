@@ -1,7 +1,6 @@
 package main008.BED.contents.service;
 
 import lombok.RequiredArgsConstructor;
-import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.myClass.entity.MyClass;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Transactional
@@ -61,11 +59,6 @@ public class ContentsService {
         return contentsRepository.findAll(pageable);
     }
 
-    public List<Contents> getMyUploadContents(Users users) {
-
-        return contentsRepository.findByUsersUsersId(users.getUsersId());
-    }
-
     // 콘텐츠 찜 기능
     public void wishContents(Long contentsId, Long usersId, Wish wish) {
 
@@ -92,14 +85,23 @@ public class ContentsService {
             }
             else {
 
-                wish.setWished(true);
-                wish.setMyClass(myClass);
-                wish.setContents(contents);
-                wishRepository.save(wish);
-                myClass.addWish(wish);
-                myClassRepository.save(myClass);
-                contents.addWish(wish);
-                contentsRepository.save(contents);
+                if (wish2.getContents() == contents && wish2.getWished() == true) {
+
+                    Wish wish3 = wishRepository.findByMyClassMyClassIdAndContentsContentsId(myClass.getMyClassId(), contents.getContentsId());
+
+                    wishRepository.delete(wish3);
+                }
+                else {
+
+                    wish.setWished(true);
+                    wish.setMyClass(myClass);
+                    wish.setContents(contents);
+                    wishRepository.save(wish);
+                    myClass.addWish(wish);
+                    myClassRepository.save(myClass);
+                    contents.addWish(wish);
+                    contentsRepository.save(contents);
+                }
             }
         }
     }

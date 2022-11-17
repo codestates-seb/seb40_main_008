@@ -13,7 +13,6 @@ import main008.BED.users.entity.Users;
 import main008.BED.wish.entity.Wish;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

@@ -2,10 +2,7 @@ package main008.BED.contents.mapper;
 
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
-import main008.BED.users.dto.UsersDto;
-import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
-import main008.BED.wish.entity.Wish;
 import org.mapstruct.Mapper;
 
 import java.util.List;

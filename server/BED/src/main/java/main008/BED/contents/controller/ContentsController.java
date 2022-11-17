@@ -40,20 +40,6 @@ public class ContentsController {
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
     }
 
-    /*
-    // 컨텐츠 수정
-    @PatchMapping("/{users-id}/uploadcontents/{contents-id}")
-    public ResponseEntity patchContents(@PathVariable("users-id") @Positive Long userId,
-                                        @PathVariable("contents-id") @Positive Long contentsId,
-                                        @Valid @RequestBody ContentsDto.Patch patch) {
-
-
-    }
-    */
-
-    // 컨텐츠 조회
-//    @GetMapping
-
     // 컨텐츠 찜 기능
     @PostMapping("/{users-id}/{contents-id}/wish")
     public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
