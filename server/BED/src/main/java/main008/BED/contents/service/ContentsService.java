@@ -38,12 +38,12 @@ public class ContentsService {
     public Contents createContents(Contents contents, Long usersId) {
 
         contents.setWishes(new ArrayList<>());
-        contents.setLikes(new Likes());
+  //      contents.setLikes(new Likes());
 
-        Likes likes = contents.getLikes();
-        likes.setContents(contents);
-        likes.setCount(0);
-        likes.setLikesDetails(new ArrayList<>());
+  //      Likes likes = contents.getLikes();
+  //      likes.setContents(contents);
+  //      likes.setCount(0);
+  //      likes.setLikesDetails(new ArrayList<>());
 
         Contents contents1 = contentsRepository.save(contents);
 
