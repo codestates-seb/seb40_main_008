@@ -1,7 +1,7 @@
 package main008.BED.carousel.controller;
 
 import lombok.RequiredArgsConstructor;
-import main008.BED.S3.S3Service;
+import main008.BED.S3.S3ServiceImpl;
 import main008.BED.carousel.dto.CarouselDto;
 import main008.BED.carousel.entity.Carousel;
 import main008.BED.carousel.mapper.CarouselMapper;
@@ -20,7 +20,7 @@ public class CarouselController {
 
     private final CarouselService carouselService;
     private final CarouselMapper carouselMapper;
-    private final S3Service s3Service;
+    private final S3ServiceImpl s3ServiceImpl;
 
 
     @GetMapping()
@@ -37,7 +37,7 @@ public class CarouselController {
     public ResponseEntity deleteCarousel(@PathVariable("id") Long id) {
 
         Carousel carousel = carouselService.readOne(id);
-        s3Service.delete(carousel.getKeys());
+        s3ServiceImpl.delete(carousel.getKeys(), "/carousel");
         carouselService.removeCarousel(id);
         return new ResponseEntity("Successfully delete Carousel", HttpStatus.OK);
     }

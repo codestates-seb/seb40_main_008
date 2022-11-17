@@ -27,9 +27,9 @@ public class UploadClass {
     @Column
     private String name; // video name - eg: "video.mp4"
 
-//    @ManyToOne
-//    @JoinColumn(name = "CHAPTER_ID")
-//    private Chapter chapter;
+    @ManyToOne // 양방향
+    @JoinColumn(name = "CHAPTER_ID")
+    private Chapter chapter;
 
     @OneToOne
     @JoinColumn(name = "DOCS_ID")

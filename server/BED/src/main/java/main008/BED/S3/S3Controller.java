@@ -20,17 +20,21 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class S3Controller {
 
-    private final S3Service s3Service;
+    private final S3ServiceImpl s3ServiceImpl;
     private final CarouselMapper carouselMapper;
     private final CarouselService carouselService;
 
     // TODO 1: 유저 권한만 업로드 가능
+
+    /**
+     * Carousel 등록
+     */
     @PostMapping(value = "carousel/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity upload(@RequestParam("image") MultipartFile image,
                                  @RequestParam("title") String title,
                                  @RequestParam("subTitle") String subTitle,
                                  @RequestParam("redirectUrl") String redirectUrl) {
-        HashMap map = s3Service.uploadToS3(image);
+        HashMap map = s3ServiceImpl.uploadToS3(image, "/carousel");
         String url = map.get("url").toString();
         String keys = map.get("keys").toString();
 
