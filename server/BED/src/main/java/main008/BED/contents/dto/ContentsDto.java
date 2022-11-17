@@ -13,7 +13,11 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class Post {
 
-
+        private String title;
+        private Contents.Categories categories;
+        private String details;
+        private String tutorDetail;
+        private String thumbnail;
     }
 
     @Getter

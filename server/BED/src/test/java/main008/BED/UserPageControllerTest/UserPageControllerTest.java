@@ -78,6 +78,7 @@ public class UserPageControllerTest {
         // when
         ResultActions actions = mockMvc.perform(
                 get("/auth/home/{users-id}", usersId)
+//                get("/auth/home/mypage")         // principal 적용 시 이걸로 변경해야함
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON));
 
@@ -86,9 +87,9 @@ public class UserPageControllerTest {
                 .andDo(document("get-mypage",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
-                        pathParameters(
-                                parameterWithName("users-id").description("회원 식별자 ID")
-                        ),
+//                        pathParameters(
+//                                parameterWithName("users-id").description("회원 식별자 ID")
+//                        ),
                         responseFields(
                                 Arrays.asList(
                                         fieldWithPath("users").type(JsonFieldType.OBJECT).description("회원 정보"),

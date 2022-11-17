@@ -6,11 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.likes.entity.Likes;
 import main008.BED.mainPage.entity.MainPage;
+import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.users.entity.Users;
+import main008.BED.wish.entity.Wish;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,7 +31,7 @@ public class Contents {
     private String title;
 
     @Column
-    private String classProfile;
+    private String thumbnail;
 
     @Column(columnDefinition = "TEXT")
     private String details;
@@ -35,8 +39,8 @@ public class Contents {
     @Column
     private Boolean payment;
 
-    @Column
-    private Boolean wish;
+//    @Column
+//    private Boolean wish;
 
     @Column
     private Categories categories;
@@ -98,4 +102,18 @@ public class Contents {
     @ManyToOne // 양방향
     @JoinColumn(name = "USER_PAGE_ID")
     private UserPage userPage;
+
+    @ManyToOne
+    @JoinColumn(name = "MY_CLASS_ID")
+    private MyClass myClass;
+
+    @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
+    private List<Wish> wishes;
+
+    public void addWish(Wish wish) {
+        this.wishes.add(wish);
+        if (wish.getContents() != this) {
+            wish.addContents(this);
+        }
+    }
 }

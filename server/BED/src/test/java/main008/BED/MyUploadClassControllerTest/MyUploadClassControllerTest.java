@@ -75,6 +75,7 @@ public class MyUploadClassControllerTest {
         // when
         ResultActions actions = mockMvc.perform(
                 get("/auth/home/{users-id}/myuploadclass", usersId)
+//                get("/auth/home/mypage/myuploadclass", usersId)        // principal 적용 시 이걸로 변경해야함
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON));
 
@@ -83,9 +84,9 @@ public class MyUploadClassControllerTest {
                 .andDo(document("get-myuploadclass",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
-                        pathParameters(
-                                parameterWithName("users-id").description("회원 식별자 ID")
-                        ),
+//                        pathParameters(
+//                                parameterWithName("users-id").description("회원 식별자 ID")
+//                        ),
                         responseFields(
                                 Arrays.asList(
                                         fieldWithPath("contentsList").type(JsonFieldType.ARRAY).description("클래스 리스트"),

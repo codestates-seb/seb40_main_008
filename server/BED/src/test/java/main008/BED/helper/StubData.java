@@ -15,13 +15,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static main008.BED.contents.entity.Contents.Categories.PROGRAMMING;
+
 public class StubData {
 
-    private static Map<HttpMethod, Object> stubRequestBody;
+    private static final Map<HttpMethod, Object> stubRequestBody;
     static {
         stubRequestBody = new HashMap<>();
         stubRequestBody.put(HttpMethod.POST, new UsersDto.Post(
                 "User1@gmail.com", "유저1", "프로필 사진"));
+    }
+
+    private static final Map<HttpMethod, Object> stubContentsRequestBody;
+    static {
+        stubContentsRequestBody = new HashMap<>();
+        stubContentsRequestBody.put(HttpMethod.POST, new ContentsDto.Post(
+                "이건 제목이다"
+                , PROGRAMMING
+                , "이건 강좌소개이다"
+                , "이건 강사소개이다"
+                , "이건 강좌 썸네일이다"
+        ));
     }
 
     public static class MockUser {
@@ -61,7 +75,20 @@ public class StubData {
 
     public static class MockContents {
         public static Object getRequestBody(HttpMethod method) {
-            return stubRequestBody.get(method);
+            return stubContentsRequestBody.get(method);
+        }
+
+        public static ContentsDto.Response getSingleContentResponseBody() {
+
+            return new ContentsDto.Response(
+                    1L,
+                    "이건 제목이다",
+                    "이건 강좌 썸네일이다",
+                    PROGRAMMING,
+                    new UsersDto.UserResponseToHome(
+                            1L,
+                            "유저1",
+                            "프로필 사진"));
         }
 
         public static List<ContentsDto.Response> getContentResponseBody() {
@@ -71,7 +98,7 @@ public class StubData {
                             3L,
                             "title3",
                             "title3 thumbnail",
-                            Contents.Categories.PROGRAMMING,
+                            PROGRAMMING,
                             new UsersDto.UserResponseToHome(
                                     1L,
                                     "testUser1",
@@ -110,7 +137,7 @@ public class StubData {
                             21L,
                             "title21",
                             "title21 thumbnail",
-                            Contents.Categories.PROGRAMMING,
+                            PROGRAMMING,
                             new UsersDto.UserResponseToHome(
                                     1L,
                                     "User1",
@@ -119,7 +146,7 @@ public class StubData {
                             16L,
                             "title16",
                             "title16 thumbnail",
-                            Contents.Categories.PROGRAMMING,
+                            PROGRAMMING,
                             new UsersDto.UserResponseToHome(
                                     1L,
                                     "User1",
@@ -128,7 +155,7 @@ public class StubData {
                             5L,
                             "title15",
                             "title5 thumbnail",
-                            Contents.Categories.PROGRAMMING,
+                            PROGRAMMING,
                             new UsersDto.UserResponseToHome(
                                     1L,
                                     "User1",
