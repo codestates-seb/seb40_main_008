@@ -3,6 +3,8 @@ package main008.BED.contents.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
+import main008.BED.likes.entity.Likes;
+import main008.BED.likes.entity.LikesDetail;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myClass.repository.MyClassRepository;
 import main008.BED.myUploadClass.entity.MyUploadClass;
@@ -36,6 +38,13 @@ public class ContentsService {
     public Contents createContents(Contents contents, Long usersId) {
 
         contents.setWishes(new ArrayList<>());
+        contents.setLikes(new Likes());
+
+        Likes likes = contents.getLikes();
+        likes.setContents(contents);
+        likes.setCount(0);
+        likes.setLikesDetails(new ArrayList<>());
+
         Contents contents1 = contentsRepository.save(contents);
 
         Users users = usersRepository.findByUsersId(usersId);
@@ -60,7 +69,7 @@ public class ContentsService {
     }
 
     // 콘텐츠 찜 기능
-    public String wishContents(Long contentsId, Long usersId, Wish wish) {
+    public void wishContents(Long contentsId, Long usersId, Wish wish) {
 
         Contents contents = contentsRepository.findByContentsId(contentsId);
         MyClass myClass = myClassRepository.findByUsersUsersId(usersId);
@@ -112,6 +121,6 @@ public class ContentsService {
             }
         }
 
-        return "Added to wishlist.";
+//        return "Added to wishlist.";
     }
 }

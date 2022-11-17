@@ -148,7 +148,6 @@ public class ContentsControllerTest {
         WishDto.Post wishPost = (WishDto.Post) StubData.MockWish.getWishRequestBody(HttpMethod.POST);
 
         given(wishMapper.postToWish(Mockito.any(WishDto.Post.class))).willReturn(new Wish());
-        given(contentsService.wishContents(eq(responseContents.getContentsId()), eq(responseUser.getUsersId()), Mockito.any(Wish.class))).willReturn(new String());
 
         String content = gson.toJson(wishPost);
 

@@ -48,8 +48,17 @@ public class ContentsController {
 
         Wish wish = wishMapper.postToWish(post);
 
-        String response = contentsService.wishContents(contentsId, usersId, wish);
+        contentsService.wishContents(contentsId, usersId, wish);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body("Added to wishlist.");
     }
+
+//    // 컨텐츠 좋아요 기능
+//    @PostMapping("/{users-id}/{contents-id}/like")
+//    public ResponseEntity likeContents(@PathVariable("users-id") @Positive Long usersId,
+//                                       @PathVariable("contents-id") @Positive Long contentsId,
+//                                       @Valid @RequestBody ) {
+//
+//    }
 }

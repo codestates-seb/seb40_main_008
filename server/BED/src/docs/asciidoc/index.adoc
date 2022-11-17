@@ -145,7 +145,7 @@ include::{snippets}/post-wish/http-response.adoc[]
  Null
 
 .response-body
- Null
+include::{snippets}/post-wish/response-body.adoc[]
 
 == MyClass 내클래스 (엔트포인트 변경 예정)
 === MyWishClass 내가 찜한 클래스
