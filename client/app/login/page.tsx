@@ -12,6 +12,7 @@ import styles from './login.module.css'
 const LoginPage = async () => {
 
 	const session = await getSession(headers().get('cookie') ?? '');
+
 	return (
 		<div className={styles.loginWrapper}>
 			<Link href={'/'}>Home</Link>

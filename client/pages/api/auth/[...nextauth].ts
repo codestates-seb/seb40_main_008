@@ -1,3 +1,4 @@
+import { JWT } from 'next-auth/jwt';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 import KakaoProvider from "next-auth/providers/kakao"
@@ -28,3 +29,7 @@ export default NextAuth({
 });
 
 // next cookies next-auth.session-token.
+
+async function refreshAccessToken(token: JWT) {
+
+}
