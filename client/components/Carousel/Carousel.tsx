@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import React from 'react';
-import { ICarousel } from '../../types/carousel';
+import { CarouselInfo } from '../../types/homeScreen/carousel';
 
 interface CarouselProp {
-	carousel: ICarousel[];
+	carousel: CarouselInfo[];
 }
 
 const Carousel = ({ carousel }: CarouselProp) => {
 	return (
 		<>
-			{carousel.map((e: ICarousel) => (
+			{carousel.map((e: CarouselInfo) => (
 				<Image alt="carousel image" src={e.src} key={e.id} width={300} height={300} />
 			))}
 		</>

@@ -5,7 +5,7 @@ export interface UploadClassType {
   categoryOption: string;
   introduceClass: string;
   introduceInstructor: string;
-  thumbnail: File;
+  thumbnail: File | null;
 }
 
 export const initialClass = {
