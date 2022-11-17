@@ -12,36 +12,5 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MyUploadClassMapper {
 
-    default MyUploadClassDto.Response myUploadClassToResponse(MyUploadClass myUploadClass) {
-
-        return new MyUploadClassDto.Response(
-                List.of(
-                        new ContentsDto.Response(
-                                21L,
-                                "title21",
-                                "title21 thumbnail",
-                                Contents.Categories.PROGRAMMING,
-                                new UsersDto.UserResponseToHome(
-                                        1L,
-                                        "User1",
-                                        "User1 profileImage")),
-                        new ContentsDto.Response(
-                                16L,
-                                "title16",
-                                "title16 thumbnail",
-                                Contents.Categories.PROGRAMMING,
-                                new UsersDto.UserResponseToHome(
-                                        1L,
-                                        "User1",
-                                        "User1 profileImage")),
-                        new ContentsDto.Response(
-                                5L,
-                                "title15",
-                                "title5 thumbnail",
-                                Contents.Categories.PROGRAMMING,
-                                new UsersDto.UserResponseToHome(
-                                        1L,
-                                        "User1",
-                                        "User1 profileImage"))));
-    }
+    MyUploadClassDto.Response myUploadClassToResponse(MyUploadClass myUploadClass);
 }

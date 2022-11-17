@@ -75,6 +75,11 @@ public class ContentsService {
 
         for (Wish wish2 : wish1) {
 
+            if (wish2.getContents() == contents) {
+
+                wishRepository.delete(wish2);
+            }
+
             if (wish2.getContents() == null) {
 
                 wish2.setContents(contents);

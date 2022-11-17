@@ -3,15 +3,21 @@ package main008.BED.users.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
+import main008.BED.myClass.entity.MyClass;
+import main008.BED.myClass.repository.MyClassRepository;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.myUploadClass.repository.MyUploadClassRepository;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.repository.UserPageRepository;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
+import main008.BED.wish.entity.Wish;
+import main008.BED.wish.repository.WishRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +28,8 @@ public class UsersService {
     private final UsersRepository usersRepository;
     private final UserPageRepository userPageRepository;
     private final MyUploadClassRepository myUploadClassRepository;
+    private final MyClassRepository myClassRepository;
+    private final WishRepository wishRepository;
 
     public Users createUsers(Users users) {
 
@@ -33,7 +41,20 @@ public class UsersService {
 
         MyUploadClass myUploadClass = new MyUploadClass();
         myUploadClass.setUsers(users1);
+        myUploadClass.setContentsList(new ArrayList<>());
         myUploadClassRepository.save(myUploadClass);
+
+        MyClass myClass = new MyClass();
+        myClass.setWishes(new ArrayList<>());
+        myClass.setUsers(users1);
+
+        Wish wish = new Wish();
+        wish.setWished(false);
+        wish.setMyClass(myClass);
+        wishRepository.save(wish);
+
+        myClass.addWish(wish);
+        myClassRepository.save(myClass);
 
         return users1;
     }
