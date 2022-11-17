@@ -1,11 +1,40 @@
 package main008.BED.carousel.entity;
 
 
+import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Carousel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long carouselId;
+
+    @Column
+    private String name;
+
+    @Column
+    private String imageUrl;
+
+    @Column
+    private String title;
+
+    @Column
+    private String subTitle;
+
+    @Column
+    private String redirectUrl;
+
+/*  <static resources>
     @Value("classpath:carousel/1.png")
     public Resource firstImage;
 
@@ -19,5 +48,5 @@ public class Carousel {
     public Resource forthImage;
 
     @Value("classpath:carousel/5.png")
-    public Resource fifthImage;
+    public Resource fifthImage;*/
 }

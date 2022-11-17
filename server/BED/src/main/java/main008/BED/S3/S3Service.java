@@ -1,4 +1,4 @@
-package main008.BED.uploadClass.service;
+package main008.BED.S3;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
@@ -25,6 +25,7 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
     private final AmazonS3Client amazonS3Client;
+
 
     public String uploadToS3(MultipartFile image) {
         String key = UUID.randomUUID() + "_" + image.getOriginalFilename();

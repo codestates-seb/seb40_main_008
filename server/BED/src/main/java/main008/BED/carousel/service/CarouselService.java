@@ -1,23 +1,38 @@
 package main008.BED.carousel.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.ResourceLoader;
+import lombok.RequiredArgsConstructor;
+import main008.BED.carousel.entity.Carousel;
+import main008.BED.carousel.repository.CarouselRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class CarouselService {
 
-    @Autowired
-    private ResourceLoader resourceLoader;
+//    private final ResourceLoader resourceLoader;
+//    private static final String FORMAT = "classpath:carousel/1.png";
+    private final CarouselRepository carouselRepository;
 
-    private static final String FORMAT = "classpath:carousel/1.png";
+    public List<Carousel> readCarousel() {
+        List<Carousel> all = carouselRepository.findAll();
+        return all;
+    }
 
+    public void saveCarousel(Carousel carousel) {
+        carousel.setTitle("title");
+        carousel.setSubTitle("subTitle");
+        carousel.setRedirectUrl("/redirect");
+        carouselRepository.save(carousel);
+    }
+
+
+
+
+/*   <ByteArray 방식으로 전송>
     public List<byte[]> readCarousel() throws IOException {
 
         List<byte[]> imageBytesList = getBytesList();
@@ -36,6 +51,6 @@ public class CarouselService {
         }
 
         return bytesList;
-    }
+    }*/
 }
 
