@@ -2,10 +2,12 @@ package main008.BED.helper;
 
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
+import main008.BED.myClass.dto.MyClassDto;
 import main008.BED.myUploadClass.dto.MyUploadClassDto;
 import main008.BED.userPage.dto.UserPageDto;
 import main008.BED.users.dto.UsersDto;
 import main008.BED.users.entity.Users;
+import main008.BED.wish.dto.WishDto;
 import org.springframework.http.HttpMethod;
 
 import java.time.ZoneId;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static main008.BED.contents.entity.Contents.Categories.PROGRAMMING;
+import static main008.BED.contents.entity.Contents.Categories.*;
 
 public class StubData {
 
@@ -24,18 +26,6 @@ public class StubData {
         stubRequestBody = new HashMap<>();
         stubRequestBody.put(HttpMethod.POST, new UsersDto.Post(
                 "User1@gmail.com", "유저1", "프로필 사진"));
-    }
-
-    private static final Map<HttpMethod, Object> stubContentsRequestBody;
-    static {
-        stubContentsRequestBody = new HashMap<>();
-        stubContentsRequestBody.put(HttpMethod.POST, new ContentsDto.Post(
-                "이건 제목이다"
-                , PROGRAMMING
-                , "이건 강좌소개이다"
-                , "이건 강사소개이다"
-                , "이건 강좌 썸네일이다"
-        ));
     }
 
     public static class MockUser {
@@ -71,6 +61,18 @@ public class StubData {
                             5000
                     ));
         }
+    }
+
+    private static final Map<HttpMethod, Object> stubContentsRequestBody;
+    static {
+        stubContentsRequestBody = new HashMap<>();
+        stubContentsRequestBody.put(HttpMethod.POST, new ContentsDto.Post(
+                "이건 제목이다"
+                , PROGRAMMING
+                , "이건 강좌소개이다"
+                , "이건 강사소개이다"
+                , "이건 강좌 썸네일이다"
+        ));
     }
 
     public static class MockContents {
@@ -121,6 +123,73 @@ public class StubData {
                                     3L,
                                     "testUser3",
                                     "testUser3 profileImage")));
+        }
+    }
+
+    public static class MockWish {
+        private static final Map<HttpMethod, Object> stubWishContentsRequestBody;
+        static {
+            stubWishContentsRequestBody = new HashMap<>();
+            stubWishContentsRequestBody.put(HttpMethod.POST, new WishDto.Post(
+                    true
+            ));
+        }
+
+        public static Object getWishRequestBody(HttpMethod method) {
+            return stubWishContentsRequestBody.get(method);
+        }
+    }
+
+    public static class MockMyClass {
+
+        public static MyClassDto.WishClassResponse getMyWishClassResponseBody() {
+
+            return new MyClassDto.WishClassResponse(
+                    List.of(
+                            new WishDto.Response(
+                                    true,
+                                    new ContentsDto.Response(
+                                            3L,
+                                            "제목이에요",
+                                            "3번째 클래스 썸네일",
+                                            BAKING_DESSERT,
+                                            new UsersDto.UserResponseToHome(
+                                                    1L,
+                                                    "유저1",
+                                                    "프로필 사진"
+                                            )
+                                    )
+                            ),
+                            new WishDto.Response(
+                                    true,
+                                    new ContentsDto.Response(
+                                            7L,
+                                            "제목입니다",
+                                            "7번째 클래스 썸네일",
+                                            CRAFTS,
+                                            new UsersDto.UserResponseToHome(
+                                                    9L,
+                                                    "유저9",
+                                                    "프로필 사진"
+                                            )
+                                    )
+                            ),
+                            new WishDto.Response(
+                                    true,
+                                    new ContentsDto.Response(
+                                            1L,
+                                            "제목",
+                                            "1번째 클래스 썸네일",
+                                            ENGLISH,
+                                            new UsersDto.UserResponseToHome(
+                                                    2L,
+                                                    "유저2",
+                                                    "프로필 사진"
+                                            )
+                                    )
+                            )
+                    )
+            );
         }
     }
 

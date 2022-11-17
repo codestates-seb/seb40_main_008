@@ -87,9 +87,9 @@ public class UserPageControllerTest {
                 .andDo(document("get-mypage",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
-//                        pathParameters(
-//                                parameterWithName("users-id").description("회원 식별자 ID")
-//                        ),
+                        pathParameters(
+                                parameterWithName("users-id").description("회원 식별자 ID")
+                        ),
                         responseFields(
                                 Arrays.asList(
                                         fieldWithPath("users").type(JsonFieldType.OBJECT).description("회원 정보"),

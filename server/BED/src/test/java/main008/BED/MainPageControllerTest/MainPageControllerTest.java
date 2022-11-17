@@ -96,12 +96,12 @@ public class MainPageControllerTest {
                                 responseFields(
                                         Arrays.asList(
                                                 fieldWithPath("contentsList").type(JsonFieldType.ARRAY).description("클래스 리스트"),
-                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자"),
+                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자 ID"),
                                                 fieldWithPath("contentsList[].title").type(JsonFieldType.STRING).description("클래스 제목"),
                                                 fieldWithPath("contentsList[].thumbnail").type(JsonFieldType.STRING).description("클래스 썸네일"),
                                                 fieldWithPath("contentsList[].categories").type(JsonFieldType.STRING).description("카테고리"),
                                                 fieldWithPath("contentsList[].users").type(JsonFieldType.OBJECT).description("클래스 작성자"),
-                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자"),
+                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자 ID"),
                                                 fieldWithPath("contentsList[].users.userName").type(JsonFieldType.STRING).description("작성자 별칭"),
                                                 fieldWithPath("contentsList[].users.profileImage").type(JsonFieldType.STRING).description("작성자 프로필 사진")
                                         )
@@ -146,12 +146,12 @@ public class MainPageControllerTest {
                                         Arrays.asList(
                                                 fieldWithPath("usersId").type(JsonFieldType.NUMBER).description("현 로그인 회원 식별자 ID"),
                                                 fieldWithPath("contentsList").type(JsonFieldType.ARRAY).description("클래스 리스트"),
-                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자"),
+                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자 ID"),
                                                 fieldWithPath("contentsList[].title").type(JsonFieldType.STRING).description("클래스 제목"),
                                                 fieldWithPath("contentsList[].thumbnail").type(JsonFieldType.STRING).description("클래스 썸네일"),
                                                 fieldWithPath("contentsList[].categories").type(JsonFieldType.STRING).description("카테고리"),
                                                 fieldWithPath("contentsList[].users").type(JsonFieldType.OBJECT).description("클래스 작성자"),
-                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자"),
+                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자 ID"),
                                                 fieldWithPath("contentsList[].users.userName").type(JsonFieldType.STRING).description("작성자 별칭"),
                                                 fieldWithPath("contentsList[].users.profileImage").type(JsonFieldType.STRING).description("작성자 프로필 사진")
                                         )

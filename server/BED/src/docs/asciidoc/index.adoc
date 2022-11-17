@@ -120,3 +120,56 @@ include::{snippets}/post-contents/response-fields.adoc[]
 
 .response-body
 include::{snippets}/post-contents/response-body.adoc[]
+
+== WishContents 강좌 찜하기 및 찜 취소 (엔드포인트 변경 예정)
+.curl-request
+include::{snippets}/post-wish/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-wish/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/post-wish/path-parameters.adoc[]
+ (Table10 추후 변경 예정)
+
+.request-fields
+include::{snippets}/post-wish/request-fields.adoc[]
+
+.request-body
+include::{snippets}/post-wish/request-body.adoc[]
+
+.http-response
+include::{snippets}/post-wish/http-response.adoc[]
+
+.response-fields
+ Null
+
+.response-body
+ Null
+
+== MyClass 내클래스 (엔트포인트 변경 예정)
+=== MyWishClass 내가 찜한 클래스
+.curl-request
+include::{snippets}/get-mywishclass/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-mywishclass/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-mywishclass/path-parameters.adoc[]
+ (Table12 추후 변경 예정)
+
+.request-fields
+ Null
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-mywishclass/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-mywishclass/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-mywishclass/response-body.adoc[]

@@ -11,6 +11,9 @@ import main008.BED.users.dto.UsersDto;
 import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
 import main008.BED.users.service.UsersService;
+import main008.BED.wish.dto.WishDto;
+import main008.BED.wish.entity.Wish;
+import main008.BED.wish.mapper.WishMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +61,9 @@ public class ContentsControllerTest {
 
     @MockBean
     private ContentsService contentsService;
+
+    @MockBean
+    private WishMapper wishMapper;
 
     @Autowired
     private Gson gson;
@@ -109,15 +115,61 @@ public class ContentsControllerTest {
                         ),
                         responseFields(
                                 Arrays.asList(
-                                        fieldWithPath("contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자"),
+                                        fieldWithPath("contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자 ID"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("클래스 제목"),
                                         fieldWithPath("thumbnail").type(JsonFieldType.STRING).description("클래스 썸네일"),
                                         fieldWithPath("categories").type(JsonFieldType.STRING).description("카테고리"),
                                         fieldWithPath("users").type(JsonFieldType.OBJECT).description("클래스 작성자"),
-                                        fieldWithPath("users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자"),
+                                        fieldWithPath("users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자 ID"),
                                         fieldWithPath("users.userName").type(JsonFieldType.STRING).description("작성자 별칭"),
                                         fieldWithPath("users.profileImage").type(JsonFieldType.STRING).description("작성자 프로필 사진")
 
                         )))).andReturn();
+    }
+
+    @Test
+    public void postWishContentsTest() throws Exception {
+
+        // given
+        UsersDto.Post postUser = (UsersDto.Post) StubData.MockUser.getRequestBody(HttpMethod.POST);
+        UsersDto.UserResponseToMyPage responseUser = StubData.MockUser.getMyPageUser();
+
+        given(usersMapper.postToEntity(Mockito.any(UsersDto.Post.class))).willReturn(new Users());
+        given(usersService.createUsers(Mockito.any(Users.class))).willReturn(new Users());
+        given(usersMapper.usersToMyPage(Mockito.any(Users.class))).willReturn(responseUser);
+
+        ContentsDto.Post contentsPost = (ContentsDto.Post) StubData.MockContents.getRequestBody(HttpMethod.POST);
+        ContentsDto.Response responseContents = StubData.MockContents.getSingleContentResponseBody();
+
+        given(contentsMapper.postToContents(Mockito.any(ContentsDto.Post.class))).willReturn(new Contents());
+        given(contentsService.createContents(Mockito.any(Contents.class), eq(responseUser.getUsersId()))).willReturn(new Contents());
+        given(contentsMapper.contentsToResponse(Mockito.any(Contents.class))).willReturn(responseContents);
+
+        WishDto.Post wishPost = (WishDto.Post) StubData.MockWish.getWishRequestBody(HttpMethod.POST);
+
+        given(wishMapper.postToWish(Mockito.any(WishDto.Post.class))).willReturn(new Wish());
+        given(contentsService.wishContents(eq(responseContents.getContentsId()), eq(responseUser.getUsersId()), Mockito.any(Wish.class))).willReturn(new String());
+
+        String content = gson.toJson(wishPost);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                post("/auth/home/{users-id}/{contents-id}/wish", responseUser.getUsersId(), responseContents.getContentsId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content));
+
+        // then
+        actions.andExpect(status().isOk())
+                .andDo(document("post-wish",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("users-id").description("회원 식별자 ID"),
+                                parameterWithName("contents-id").description("클래스 식별자 ID")
+                        ),
+                        requestFields(
+                                fieldWithPath("wished").type(JsonFieldType.BOOLEAN).description("찜 버튼 클릭 유무")
+                        ))).andReturn();
     }
 }

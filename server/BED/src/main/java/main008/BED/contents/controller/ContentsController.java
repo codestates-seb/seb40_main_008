@@ -48,8 +48,8 @@ public class ContentsController {
 
         Wish wish = wishMapper.postToWish(post);
 
-        contentsService.wishContents(contentsId, usersId, wish);
+        String response = contentsService.wishContents(contentsId, usersId, wish);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

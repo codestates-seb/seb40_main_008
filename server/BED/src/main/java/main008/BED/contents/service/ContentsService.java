@@ -60,7 +60,7 @@ public class ContentsService {
     }
 
     // 콘텐츠 찜 기능
-    public void wishContents(Long contentsId, Long usersId, Wish wish) {
+    public String wishContents(Long contentsId, Long usersId, Wish wish) {
 
         Contents contents = contentsRepository.findByContentsId(contentsId);
         MyClass myClass = myClassRepository.findByUsersUsersId(usersId);
@@ -111,5 +111,7 @@ public class ContentsService {
                 }
             }
         }
+
+        return "Added to wishlist.";
     }
 }
