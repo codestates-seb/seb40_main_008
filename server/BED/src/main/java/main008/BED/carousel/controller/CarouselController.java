@@ -38,6 +38,7 @@ public class CarouselController {
 
         Carousel carousel = carouselService.readOne(id);
         s3ServiceImpl.delete(carousel.getFileKey(), "/carousel");
+
         carouselService.removeCarousel(id);
         return new ResponseEntity("Successfully delete Carousel", HttpStatus.OK);
     }

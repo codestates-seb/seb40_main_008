@@ -2,7 +2,6 @@ package main008.BED.carousel.entity;
 
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Entity

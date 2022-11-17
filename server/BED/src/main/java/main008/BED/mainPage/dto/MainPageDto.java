@@ -28,4 +28,13 @@ public class MainPageDto {
 //        private Contents.Categories[] categories;
         private List<ContentsDto.Response> contentsList;
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class LoginResponse {
+
+        private Long usersId;
+        private List<ContentsDto.Response> contentsList;
+    }
 }

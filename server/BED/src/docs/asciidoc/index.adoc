@@ -7,19 +7,19 @@
 
 SEB40_main008_BE
 
-2022.11.15
+v1.0.0 2022.11.15
 
 ***
-== MainPage
-=== 로그인 전 홈 화면
+== MainPage 홈화면
+=== MainPage (로그인 전)
 .curl-request
 include::{snippets}/get-notLoginHome/curl-request.adoc[]
 
 .http-request
 include::{snippets}/get-notLoginHome/http-request.adoc[]
 
-.request-fields
-include::{snippets}/get-notLoginHome/request-body.adoc[]
+.request-body
+ Null
 
 .http-response
 include::{snippets}/get-notLoginHome/http-response.adoc[]
@@ -29,3 +29,66 @@ include::{snippets}/get-notLoginHome/response-fields.adoc[]
 
 .response-body
 include::{snippets}/get-notLoginHome/response-body.adoc[]
+
+=== MainPage (로그인 후)
+.curl-request
+include::{snippets}/get-LoginHome/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-LoginHome/http-request.adoc[]
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-LoginHome/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-LoginHome/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-LoginHome/response-body.adoc[]
+
+== My Page 마이 페이지
+.curl-request
+include::{snippets}/get-mypage/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-mypage/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-mypage/path-parameters.adoc[]
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-mypage/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-mypage/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-mypage/response-body.adoc[]
+
+== MyUploadClass 내가 올린 클래스
+.curl-request
+include::{snippets}/get-myuploadclass/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-myuploadclass/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-myuploadclass/path-parameters.adoc[]
+
+.request-body
+include::{snippets}/get-myuploadclass/request-body.adoc[]
+
+.http-response
+include::{snippets}/get-myuploadclass/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-myuploadclass/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-myuploadclass/response-body.adoc[]
