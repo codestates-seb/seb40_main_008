@@ -7,7 +7,6 @@ import org.mapstruct.Mapper;
 import java.io.IOException;
 import java.util.List;
 
-
 @Mapper(componentModel = "spring")
 public interface DocsMapper {
 

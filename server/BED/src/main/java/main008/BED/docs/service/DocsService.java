@@ -43,11 +43,11 @@ public class DocsService {
     /**
      * Create: Docs 저장
      */
-    public void saveDocs(Docs docs) throws IOException {
+    public Docs saveDocs(Docs docs) throws IOException {
         if (docsRepository.existsByName(docs.getName())) {
             throw new DocsAlreadyExistsException();
         }
-        docsRepository.save(docs);
+        return docsRepository.save(docs);
     }
 
     /**
@@ -55,6 +55,7 @@ public class DocsService {
      */
     public Docs updateDocs(Docs newDocs, Long id) {
 
+        //TODO: 중복제거 로직 통일성 고려
         if (!docsRepository.findById(id).isPresent()) {
             throw new DocsNotFoundException();
         }

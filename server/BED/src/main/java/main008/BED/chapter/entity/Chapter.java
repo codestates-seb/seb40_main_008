@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.contents.entity.Contents;
+import main008.BED.uploadClass.entity.UploadClass;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,15 +22,21 @@ public class Chapter {
     private Long chapterId;
 
     @Column
-    private String thumbnail;
+    private String chapterOrder;
 
     @Column
     private String title;
 
     @Column
-    private String chapterOrder;
+    private String thumbnail;
 
-    @ManyToOne
-    @JoinColumn(name = "CONTENTS_ID")
-    private Contents contents;
+    @Column
+    private String keys;
+
+//    @ManyToOne
+//    @JoinColumn(name = "CONTENTS_ID")
+//    private Contents contents;
+
+    @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL) // 양방향
+    private List<UploadClass> uploadClassList;
 }

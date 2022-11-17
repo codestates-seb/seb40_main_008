@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.Column;
 import java.util.List;
 
-
 public class DocsDto {
 
     @Getter
@@ -31,7 +30,6 @@ public class DocsDto {
     @Getter
     @AllArgsConstructor
     public static class SingleResponseDto<T> {
-
 
         private final T message;
     }

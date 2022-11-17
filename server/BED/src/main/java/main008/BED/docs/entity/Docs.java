@@ -23,6 +23,7 @@ public class Docs {
     @Lob
     private byte[] data; // file
 
+
     @Column
     private String name; // file name +++ 추가
 
