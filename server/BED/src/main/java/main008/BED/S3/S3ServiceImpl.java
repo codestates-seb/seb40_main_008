@@ -29,17 +29,17 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     public HashMap uploadToS3(MultipartFile image, String folderSrc) {
-        String keys = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        String fileKey = UUID.randomUUID() + "_" + image.getOriginalFilename();
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(image.getContentType());
-            PutObjectRequest request = new PutObjectRequest(bucketName + folderSrc, keys, image.getInputStream(), metadata);
+            PutObjectRequest request = new PutObjectRequest(bucketName + folderSrc, fileKey, image.getInputStream(), metadata);
             request.withCannedAcl(CannedAccessControlList.PublicRead); // 접근권한 체크
             amazonS3Client.putObject(request);// Load
-            URL url = amazonS3Client.getUrl(bucketName + folderSrc, keys);
+            URL url = amazonS3Client.getUrl(bucketName + folderSrc, fileKey);
             HashMap map = new HashMap<>();
             map.put("url", url);
-            map.put("keys", keys);
+            map.put("keys", fileKey);
             return map;
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process

@@ -2,15 +2,12 @@ package main008.BED.carousel.entity;
 
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Carousel {
@@ -23,7 +20,7 @@ public class Carousel {
     private String name;
 
     @Column
-    private String keys;
+    private String fileKey;
 
     @Column
     private String imageUrl;

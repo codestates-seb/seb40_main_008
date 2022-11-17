@@ -62,7 +62,7 @@ public class ChapterController {
     @DeleteMapping("/del/{chapter-id}")
     public ResponseEntity deleteChapter(@PathVariable("chapter-id") Long id) {
         Chapter chapter = chapterService.readOne(id);
-        String keys = chapter.getKeys();
+        String keys = chapter.getFileKey();
         s3ServiceImpl.delete(keys, "/chapter/thumbnail");
         chapterService.removeChapter(chapter);
         return new ResponseEntity("The Chapter is removed.", HttpStatus.OK);
