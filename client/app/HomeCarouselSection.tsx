@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
+import { ProgressBar } from "../components/Bar/ProgressBar";
 import { CarouselInfo } from "../types/homeScreen/carousel";
 import styles from "./styles/HomeCarouselSection.module.css";
 
@@ -147,13 +148,20 @@ const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
       <div
         style={{
           height: "50px",
-          width: "260px",
+          maxWidth: "300px",
           color: "white",
           border: "1px solid blue",
           position: "absolute",
-          bottom: 0,
+          bottom: 10,
+          left: 10,
+          padding: "0px 20px",
+          alignItems: "center",
+          display: "flex",
         }}
-      ></div>
+      >
+        0{current}/0{children.length}
+        <ProgressBar />
+      </div>
     </section>
   );
 };
