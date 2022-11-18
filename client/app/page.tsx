@@ -27,11 +27,9 @@ const getClassesContents = async (): Promise<Array<Content>> => {
 
 const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
   try {
-    const response = await fetch(
-      "https://run.mocky.io/v3/dd10a02d-8e88-483a-a270-c284b4d4e81d"
-    );
+    const response = await fetch("https://pioneroroom.com/carousel");
     const { carouselInfo } = await response.json();
-    console.log("C", carouselInfo.length);
+    console.log("C", carouselInfo);
     return carouselInfo;
   } catch (error) {
     alert(error);
@@ -50,10 +48,10 @@ const page = async () => {
           <HomeCarouselSection>
             {carouselList.map((e) => (
               <CarouselImageWithText
-                key={e.id}
+                key={e.imageUrl}
                 title={e.title}
-                subtitle={e.subtitle}
-                src={e.src}
+                subtitle={e.subTitle}
+                src={e.imageUrl}
               />
             ))}
           </HomeCarouselSection>

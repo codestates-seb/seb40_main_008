@@ -16,7 +16,6 @@ interface HomeCarouselSectionProps {
 }
 
 const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
-  console.log(children);
   const containerRef = useRef<HTMLUListElement>(null);
   const intervalRef = useRef<MutableRefObject>(null);
   const [current, setCurrent] = useState(1);
