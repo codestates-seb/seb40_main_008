@@ -46,12 +46,13 @@ public class ContentsController {
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 //
-        ContentsDto.Post post = new ContentsDto.Post(title, categories, details, tutorDetail, thumbnailUrl);
+        ContentsDto.Post post = new ContentsDto.Post(title, categories, details, tutorDetail, thumbnailUrl, fileKey);
 
         Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
     }
+
 
     // 컨텐츠 찜 기능
     @PostMapping("/{users-id}/{contents-id}/wish")

@@ -34,6 +34,9 @@ public class Contents {
     @Column
     private String thumbnail;
 
+    @Column
+    private String fileKey; // thumbnail key for delete it in s3
+
     @Column(columnDefinition = "TEXT")
     private String details;
 

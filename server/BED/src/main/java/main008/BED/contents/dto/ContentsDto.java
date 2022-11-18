@@ -17,6 +17,7 @@ public class ContentsDto {
         private String details;
         private String tutorDetail;
         private String thumbnail;
+        private String fileKey;
     }
 
     @Getter

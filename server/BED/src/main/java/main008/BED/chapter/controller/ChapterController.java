@@ -38,9 +38,9 @@ public class ChapterController {
 
         HashMap map = s3ServiceImpl.uploadToS3(thumbnail, "/chapter/thumbnail");
         String url = map.get("url").toString();
-        String keys = map.get("keys").toString();
+        String fileKey = map.get("fileKey").toString();
 
-        ChapterDto.Post post = new ChapterDto.Post(chapterOrder, title, url, keys);
+        ChapterDto.Post post = new ChapterDto.Post(chapterOrder, title, url, fileKey);
         Chapter chapter = chapterMapper.postDtoToEntity(post);
         chapterService.saveChapter(chapter);
         return new ResponseEntity("The Chapter is successfully saved.", HttpStatus.CREATED);
