@@ -28,12 +28,12 @@ public class S3ServiceImpl implements S3Service {
 
 
     @Override
-    public HashMap uploadToS3(MultipartFile image, String folderSrc) {
-        String fileKey = UUID.randomUUID() + "_" + image.getOriginalFilename();
+    public HashMap uploadToS3(MultipartFile file, String folderSrc) {
+        String fileKey = UUID.randomUUID() + "_" + file.getOriginalFilename();
         try {
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(image.getContentType());
-            PutObjectRequest request = new PutObjectRequest(bucketName + folderSrc, fileKey, image.getInputStream(), metadata);
+            metadata.setContentType(file.getContentType());
+            PutObjectRequest request = new PutObjectRequest(bucketName + folderSrc, fileKey, file.getInputStream(), metadata);
             request.withCannedAcl(CannedAccessControlList.PublicRead); // 접근권한 체크
             amazonS3Client.putObject(request);// Load
             URL url = amazonS3Client.getUrl(bucketName + folderSrc, fileKey);
