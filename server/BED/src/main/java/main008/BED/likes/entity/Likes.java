@@ -8,6 +8,7 @@ import main008.BED.contents.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,15 +19,22 @@ public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long likesId;
 
+    @Column
+    private Boolean liked;
+
+    @Column
     private int count;
 
-    @OneToOne
-    @JoinColumn(name = "USERS_ID")
-    private Users users;
+//    @OneToOne
+//    @JoinColumn(name = "USERS_ID")
+//    private Users users;
 
     @OneToOne
     @JoinColumn(name = "CONTENTS_ID")
     private Contents contents;
+
+    @OneToMany(mappedBy = "likes")
+    private List<LikesDetail> likesDetails;
 }
