@@ -39,7 +39,7 @@ public class S3ServiceImpl implements S3Service {
             URL url = amazonS3Client.getUrl(bucketName + folderSrc, fileKey);
             HashMap map = new HashMap<>();
             map.put("url", url);
-            map.put("keys", fileKey);
+            map.put("fileKey", fileKey);
             return map;
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process

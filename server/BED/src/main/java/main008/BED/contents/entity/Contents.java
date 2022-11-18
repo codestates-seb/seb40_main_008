@@ -1,5 +1,7 @@
 package main008.BED.contents.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,12 +38,13 @@ public class Contents {
     private String details;
 
     @Column
-    private Boolean payment;
+    private Boolean payment = false;
 
 //    @Column
 //    private Boolean wish;
 
     @Column
+    @Enumerated(value = EnumType.STRING)
     private Categories categories;
 
     @Column
@@ -76,10 +79,27 @@ public class Contents {
         PARENTS_EDUCATION("부모 교육");
 
         @Getter
-        private final String keyword;
+        private final String value;
 
-        Categories(String keyword) {
-            this.keyword = keyword;
+        Categories(String value) {
+            this.value = value;
+        }
+
+        // 역직렬화
+        @JsonCreator
+        public static Categories from(String value) {
+            for (Categories categories : Categories.values()) {
+                if (categories.getValue().equals(value)) {
+                    return categories;
+                }
+            }
+            return null;
+        }
+
+        // 직렬화
+        @JsonValue
+        public String getValue() {
+            return value;
         }
     }
 
