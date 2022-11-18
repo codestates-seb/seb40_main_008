@@ -17,6 +17,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 	const handleSignin = async () => {
 		signIn();
 	};
+
 	return isSignIn ? (
 		<button onClick={() => signOut()}>sign out</button>
 	) : (
