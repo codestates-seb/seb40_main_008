@@ -1,7 +1,6 @@
 "use client";
 import React, {
   useMemo,
-  Children,
   useLayoutEffect,
   useState,
   useRef,
@@ -13,13 +12,9 @@ import styles from "./styles/HomeCarouselSection.module.css";
 
 interface HomeCarouselSectionProps {
   children: any;
-  carouselList: Array<CarouselInfo>;
 }
 
-const HomeCarouselSection = ({
-  children,
-  carouselList,
-}: HomeCarouselSectionProps) => {
+const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
   console.log(children);
   const containerRef = useRef<HTMLUListElement>(null);
   const intervalRef = useRef<MutableRefObject>(null);
@@ -135,20 +130,6 @@ const HomeCarouselSection = ({
       >
         {slides}
       </ul>
-      <div className={styles.titlecontainer}>
-        asdas
-        {carouselList &&
-          carouselList.map((e) => (
-            <>
-              <p className={styles.title} key={e.id}>
-                {e.title}dsa
-              </p>
-              <p className={styles.subtitile} key={e.id}>
-                {e.subtitle}
-              </p>
-            </>
-          ))}
-      </div>
 
       <button
         onClick={() => actionHandler("prev")}
@@ -162,6 +143,17 @@ const HomeCarouselSection = ({
       >
         {">"}
       </button>
+
+      <div
+        style={{
+          height: "50px",
+          width: "260px",
+          color: "white",
+          border: "1px solid blue",
+          position: "absolute",
+          bottom: 0,
+        }}
+      ></div>
     </section>
   );
 };

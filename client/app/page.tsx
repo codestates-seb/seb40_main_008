@@ -5,11 +5,7 @@ import { Content } from "../types/homeScreen/mainVideoContents";
 import HomeCarouselSection from "./HomeCarouselSection";
 import HomeClassesSection from "./HomeClassesSection";
 import styles from "./styles/page.module.css";
-import Image from "next/image";
-import HomeCarouselTitle from "./HomeCarouselTitle";
-import { Erica_One } from "@next/font/google";
-import { relative } from "path";
-import { HomeCarouselList } from "../components/Carousel/HomeCarouselList";
+import CarouselImageWithText from "../components/Carousel/CarouselImageWithText";
 
 const getClassesContents = async (): Promise<Array<Content>> => {
   try {
@@ -51,37 +47,18 @@ const page = async () => {
       <div className={styles.contentbody}>
         <HomeNavBar />
         <div className={styles.carousel}>
-          <HomeCarouselSection caroselList={carouselList}>
+          <HomeCarouselSection>
             {carouselList.map((e) => (
-              <div
+              <CarouselImageWithText
                 key={e.id}
-                style={{ position: "relative", border: "1px solid orange" }}
-              >
-                <Image
-                  key={e.id}
-                  src={e.src}
-                  alt="img"
-                  //fill = true 를 쓰려면 상위 div가 relative
-                  width={412}
-                  height={462}
-                  style={{ objectFit: "cover" }}
-                />
-                <div
-                  style={{
-                    height: "200px",
-                    width: "200px",
-                    border: "1px solid red",
-                    position: "absolute",
-                    zIndex: 1000,
-                    bottom: 0,
-                  }}
-                >
-                  <h2 style={{ color: "black" }}>{e.title}</h2>
-                </div>
-              </div>
+                title={e.title}
+                subtitle={e.subtitle}
+                src={e.src}
+              />
             ))}
           </HomeCarouselSection>
         </div>
+
         <HomeClassesSection contentList={contentsList} />
         <TabNavigator activeLink={"home"} />
       </div>
