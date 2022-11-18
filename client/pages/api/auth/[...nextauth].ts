@@ -27,10 +27,10 @@ export default NextAuth({
 		maxAge: 30 * 24 * 60 * 60, // 30 days
 	},
 	callbacks: {
-		async jwt(params) {
-			console.log(params);
-			return params;
-		},
+		// async jwt(params) {
+		// 	console.log(params);
+		// 	return params;
+		// },
 		async session({ session, token, user }) {
 			// console.log('session', session);
 			console.log('token', token);
