@@ -33,10 +33,6 @@ public class ChapterMapperImpl implements ChapterMapper{
         chapter.setThumbnail( post.getThumbnail() );
         chapter.setFileKey( post.getKeys() );
 
-<<<<<<< HEAD
-=======
-
->>>>>>> dev/structure
         return chapter;
     }
 

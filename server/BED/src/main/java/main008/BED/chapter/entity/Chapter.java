@@ -33,10 +33,6 @@ public class Chapter {
     @Column
     private String fileKey;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> dev/structure
 //    @ManyToOne
 //    @JoinColumn(name = "CONTENTS_ID")
 //    private Contents contents;
