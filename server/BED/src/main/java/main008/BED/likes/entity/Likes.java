@@ -22,9 +22,6 @@ public class Likes {
     private Long likesId;
 
     @Column
-    private Boolean liked;
-
-    @Column
     private int count;
 
 //    @OneToOne
