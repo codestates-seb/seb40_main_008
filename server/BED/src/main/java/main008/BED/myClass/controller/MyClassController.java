@@ -33,4 +33,6 @@ public class MyClassController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    // 수강중인 클래스
 }

@@ -3,6 +3,7 @@ package main008.BED.users.entity;
 import lombok.*;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
+import main008.BED.payment.entity.Payment;
 import main008.BED.userPage.entity.UserPage;
 
 import javax.persistence.*;
@@ -51,4 +52,7 @@ public class Users {
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
     private MyClass myClass;
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+    private Payment payment;
 }
