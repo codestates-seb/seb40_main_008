@@ -3,10 +3,10 @@
   flex-direction: row;
   position: fixed;
   align-items: center;
-  width: 100%;
+  justify-content: space-around;
+  width: var(--max-width);
   height: 54px;
-  margin: 0 auto;
-  background: #0a191f;
+  background: var(--background-color);
   bottom: 0;
 }
 
@@ -24,7 +24,6 @@
   flex-direction: column;
   margin: 0 auto;
   text-align: center;
-  width: 30vw;
 }
 
 .active {
