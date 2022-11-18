@@ -1,9 +1,9 @@
 package main008.BED.users.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import main008.BED.myClass.entity.MyClass;
+import main008.BED.myUploadClass.entity.MyUploadClass;
+import main008.BED.userPage.entity.UserPage;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -11,13 +11,14 @@ import java.time.ZonedDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long usersId;
 
     @Column
     private String email;
@@ -41,4 +42,13 @@ public class Users {
         ROLE_ADMIN,
         ROLE_USER;
     }
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private UserPage userPage;
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private MyUploadClass myUploadClass;
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private MyClass myClass;
 }

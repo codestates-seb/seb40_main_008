@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import main008.BED.contents.entity.Contents;
 import main008.BED.users.dto.UsersDto;
-import main008.BED.users.entity.Users;
 
 public class ContentsDto {
 
@@ -13,6 +12,11 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class Post {
 
+        private String title;
+        private Contents.Categories categories;
+        private String details;
+        private String tutorDetail;
+        private String thumbnail;
     }
 
     @Getter
@@ -26,10 +30,10 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class Response {
 
-        private Long id;
+        private Long contentsId;
         private String title;
         private String thumbnail;
         private Contents.Categories categories;
-        private UsersDto.Response users;
+        private UsersDto.UserResponseToHome users;
     }
 }

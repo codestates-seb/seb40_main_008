@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.likes.entity.Likes;
 import main008.BED.mainPage.entity.MainPage;
+import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
-import main008.BED.takingClass.entity.TakingClass;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.users.entity.Users;
-import main008.BED.wishClass.entity.WishClass;
-import org.hibernate.annotations.ColumnDefault;
+import main008.BED.wish.entity.Wish;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,13 +24,13 @@ public class Contents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long contentsId;
 
     @Column
     private String title;
 
     @Column
-    private String classProfile;
+    private String thumbnail;
 
     @Column(columnDefinition = "TEXT")
     private String details;
@@ -38,8 +38,8 @@ public class Contents {
     @Column
     private Boolean payment;
 
-    @Column
-    private Boolean wish;
+//    @Column
+//    private Boolean wish;
 
     @Column
     private Categories categories;
@@ -95,18 +95,24 @@ public class Contents {
     private MainPage mainPage;
 
     @ManyToOne // 양방향
-    @JoinColumn(name = "TAKING_CLASS_ID")
-    private TakingClass takingClass;
-
-    @ManyToOne // 양방향
-    @JoinColumn(name = "WISH_CLASS_ID")
-    private WishClass wishClass;
-
-    @ManyToOne // 양방향
     @JoinColumn(name = "MY_UPLOAD_CLASS_ID")
     private MyUploadClass myUploadClass;
 
     @ManyToOne // 양방향
     @JoinColumn(name = "USER_PAGE_ID")
     private UserPage userPage;
+
+    @ManyToOne
+    @JoinColumn(name = "MY_CLASS_ID")
+    private MyClass myClass;
+
+    @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
+    private List<Wish> wishes;
+
+    public void addWish(Wish wish) {
+        this.wishes.add(wish);
+        if (wish.getContents() != this) {
+            wish.addContents(this);
+        }
+    }
 }
