@@ -148,19 +148,20 @@ const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
       <div
         style={{
           height: "50px",
-          maxWidth: "300px",
+          width: "360px",
           color: "white",
-          border: "1px solid blue",
           position: "absolute",
           bottom: 10,
-          left: 10,
-          padding: "0px 20px",
+          left: 30,
+          fontSize: "10px",
           alignItems: "center",
           display: "flex",
         }}
       >
-        0{current}/0{children.length}
-        <ProgressBar />
+        0{current} | 0{children.length}
+        <div className={styles.progress}>
+          <div className={styles.color}></div>
+        </div>
       </div>
     </section>
   );

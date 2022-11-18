@@ -22,20 +22,20 @@ const CarouselImageWithText = ({ title, subtitle, src }: CarouselProp) => {
       />
       <div
         style={{
-          height: "150px",
+          height: "100px",
           width: "260px",
-          border: "1px solid red",
+          // border: "1px solid red",
           position: "absolute",
           padding: "0 20px",
-          zIndex: 1000,
-          bottom: 50,
+          fontWeight: "bold",
+          bottom: 70,
         }}
       >
         <h2 style={{ color: "white", fontWeight: "bold" }}>{title}</h2>
         <h3
           style={{
-            color: "white",
-            fontSize: "15px",
+            color: "gray",
+            fontSize: "13px",
             marginTop: "10px",
           }}
         >

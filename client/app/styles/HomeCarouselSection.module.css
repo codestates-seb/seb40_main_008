@@ -41,8 +41,8 @@
   top: 50%;
   transform: translateY(-50%);
   background-color: transparent;
-  color: red;
-  font-size: 2.5rem;
+  color: wheat;
+  font-size: 1.5rem;
   border-width: 0;
   cursor: pointer;
   z-index: 10;
@@ -54,3 +54,34 @@
 .BtnRight {
   right: 0;
 }
+
+.progress {
+  position: relative;
+  height: 1px;
+  width: 80%;
+  margin-left: 15px;
+  border: 1px solid grey;
+}
+.color {
+  position: absolute;
+  background-color: #ffffff;
+  height: 1px;
+  animation: progres 3s infinite linear;
+}
+@keyframes progres {
+  0% {
+    width: 0%;
+  }
+  25% {
+    width: 50%;
+  }
+  50% {
+    width: 75%;
+  }
+  75% {
+    width: 85%;
+  }
+  100% {
+    width: 100%;
+  }
+} ;
