@@ -1,6 +1,7 @@
 package main008.BED.users.entity;
 
 import lombok.*;
+import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.userPage.entity.UserPage;
 
@@ -47,4 +48,7 @@ public class Users {
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
     private MyUploadClass myUploadClass;
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private MyClass myClass;
 }

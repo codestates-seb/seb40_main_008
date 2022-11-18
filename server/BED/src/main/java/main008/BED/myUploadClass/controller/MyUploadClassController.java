@@ -3,7 +3,6 @@ package main008.BED.myUploadClass.controller;
 import lombok.RequiredArgsConstructor;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.myUploadClass.mapper.MyUploadClassMapper;
-import main008.BED.myUploadClass.repository.MyUploadClassRepository;
 import main008.BED.myUploadClass.service.MyUploadClassService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

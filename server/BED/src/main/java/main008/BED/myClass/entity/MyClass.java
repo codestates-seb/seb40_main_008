@@ -1,19 +1,39 @@
 package main008.BED.myClass.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import main008.BED.users.entity.Users;
+import main008.BED.wish.entity.Wish;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MyClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long myClassId;
+
+//    @OneToMany(mappedBy = "myClass", cascade = CascadeType.ALL)
+//    private List<Contents> contentsList;
+
+    @OneToOne
+    @JoinColumn(name = "USERS_ID")
+    private Users users;
+
+    @OneToMany(mappedBy = "myClass")
+    private List<Wish> wishes;
+
+    public void addWish(Wish wish) {
+        this.wishes.add(wish);
+        if (wish.getMyClass() != this) {
+            wish.addMyClass(this);
+        }
+    }
 
 }

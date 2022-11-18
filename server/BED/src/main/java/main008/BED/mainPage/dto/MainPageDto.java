@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import main008.BED.contents.dto.ContentsDto;
-import main008.BED.contents.entity.Contents;
 
 import java.util.List;
 

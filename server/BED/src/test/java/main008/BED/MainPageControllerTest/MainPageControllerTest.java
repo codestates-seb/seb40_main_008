@@ -96,12 +96,12 @@ public class MainPageControllerTest {
                                 responseFields(
                                         Arrays.asList(
                                                 fieldWithPath("contentsList").type(JsonFieldType.ARRAY).description("클래스 리스트"),
-                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자"),
+                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자 ID"),
                                                 fieldWithPath("contentsList[].title").type(JsonFieldType.STRING).description("클래스 제목"),
                                                 fieldWithPath("contentsList[].thumbnail").type(JsonFieldType.STRING).description("클래스 썸네일"),
                                                 fieldWithPath("contentsList[].categories").type(JsonFieldType.STRING).description("카테고리"),
                                                 fieldWithPath("contentsList[].users").type(JsonFieldType.OBJECT).description("클래스 작성자"),
-                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자"),
+                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자 ID"),
                                                 fieldWithPath("contentsList[].users.userName").type(JsonFieldType.STRING).description("작성자 별칭"),
                                                 fieldWithPath("contentsList[].users.profileImage").type(JsonFieldType.STRING).description("작성자 프로필 사진")
                                         )
@@ -146,12 +146,12 @@ public class MainPageControllerTest {
                                         Arrays.asList(
                                                 fieldWithPath("usersId").type(JsonFieldType.NUMBER).description("현 로그인 회원 식별자 ID"),
                                                 fieldWithPath("contentsList").type(JsonFieldType.ARRAY).description("클래스 리스트"),
-                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자"),
+                                                fieldWithPath("contentsList[].contentsId").type(JsonFieldType.NUMBER).description("클래스 식별자 ID"),
                                                 fieldWithPath("contentsList[].title").type(JsonFieldType.STRING).description("클래스 제목"),
                                                 fieldWithPath("contentsList[].thumbnail").type(JsonFieldType.STRING).description("클래스 썸네일"),
                                                 fieldWithPath("contentsList[].categories").type(JsonFieldType.STRING).description("카테고리"),
                                                 fieldWithPath("contentsList[].users").type(JsonFieldType.OBJECT).description("클래스 작성자"),
-                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자"),
+                                                fieldWithPath("contentsList[].users.usersId").type(JsonFieldType.NUMBER).description("작성자 식별자 ID"),
                                                 fieldWithPath("contentsList[].users.userName").type(JsonFieldType.STRING).description("작성자 별칭"),
                                                 fieldWithPath("contentsList[].users.profileImage").type(JsonFieldType.STRING).description("작성자 프로필 사진")
                                         )
@@ -159,48 +159,4 @@ public class MainPageControllerTest {
                 )
                 .andReturn();
     }
-
-   /* @Test
-    public void getMypage() throws Exception {
-
-        // given
-        UsersDto.Post post = (UsersDto.Post) StubData.MockUser.getRequestBody(HttpMethod.POST);
-
-        UsersDto.UserResponseToMyPage responseUser = StubData.MockUser.getMyPageUser();
-        UserPageDto.Response responseToMyPage = StubData.MockUserPage.getUserPage();
-
-        given(usersMapper.postToEntity(Mockito.any(UsersDto.Post.class))).willReturn(new Users());
-        given(usersService.createUsers(Mockito.any(Users.class))).willReturn(new Users());
-        given(usersMapper.usersToMyPage(Mockito.any(Users.class))).willReturn(responseUser);
-        given(userPageService.findUserPage(eq(responseUser.getUsersId()))).willReturn(new UserPage());
-        given(userPageMapper.userPageToResponse(Mockito.any(UserPage.class))).willReturn(responseToMyPage);
-
-        Long usersId = responseToMyPage.getUsers().getUsersId();
-
-        // when
-        ResultActions actions = mockMvc.perform(
-                        get("/auth/home/{users-id}", usersId)
-                                .accept(MediaType.APPLICATION_JSON)
-                                .contentType(MediaType.APPLICATION_JSON));
-
-        // then
-        actions.andExpect(status().isOk())
-                .andDo(document("get-mypage",
-                        getRequestPreProcessor(),
-                        getResponsePreProcessor(),
-                        pathParameters(
-                               parameterWithName("users-id").description("회원 식별자 ID")
-                        ),
-                        responseFields(
-                                Arrays.asList(
-                                        fieldWithPath("users").type(JsonFieldType.OBJECT).description("회원 정보"),
-                                        fieldWithPath("users.usersId").type(JsonFieldType.NUMBER).description("회원 식별자 ID"),
-                                        fieldWithPath("users.userName").type(JsonFieldType.STRING).description("회원 닉네임"),
-                                        fieldWithPath("users.email").type(JsonFieldType.STRING).description("회원 아이디"),
-                                        fieldWithPath("users.profileImage").type(JsonFieldType.STRING).description("회원 프로필 사진")
-                                )
-                        ))).andReturn();
-
-
-    }*/
 }

@@ -78,6 +78,7 @@ public class UserPageControllerTest {
         // when
         ResultActions actions = mockMvc.perform(
                 get("/auth/home/{users-id}", usersId)
+//                get("/auth/home/mypage")         // principal 적용 시 이걸로 변경해야함
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON));
 
