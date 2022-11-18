@@ -8,6 +8,7 @@ import main008.BED.likes.entity.Likes;
 import main008.BED.mainPage.entity.MainPage;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
+import main008.BED.payment.entity.Payment;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.users.entity.Users;
 import main008.BED.wish.entity.Wish;
@@ -35,8 +36,8 @@ public class Contents {
     @Column(columnDefinition = "TEXT")
     private String details;
 
-    @Column
-    private Boolean payment;
+//    @Column
+//    private Boolean payment;
 
 //    @Column
 //    private Boolean wish;
@@ -108,6 +109,9 @@ public class Contents {
 
     @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
     private List<Wish> wishes;
+
+    @OneToOne(mappedBy = "contents", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public void addWish(Wish wish) {
         this.wishes.add(wish);

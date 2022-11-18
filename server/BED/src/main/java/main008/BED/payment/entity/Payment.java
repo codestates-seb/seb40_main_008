@@ -25,7 +25,7 @@ public class Payment {
     private Boolean payed;
 
     @Column
-    private ZonedDateTime boughtAt;
+    private ZonedDateTime payedAt;
 
     @OneToOne
     @JoinColumn(name = "USERS_ID")

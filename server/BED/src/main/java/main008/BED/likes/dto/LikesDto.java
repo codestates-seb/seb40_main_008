@@ -15,19 +15,9 @@ public class LikesDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Post {
-
-        private Boolean liked;
-    }
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class Response {
 
-        private Boolean liked;
         private ContentsDto.Response contents;
-        private List<LikesDetail> likesDetails;
+        private List<LikesDetailDto.Response> likesDetails;
     }
 }
