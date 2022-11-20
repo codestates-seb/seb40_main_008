@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=Cylinder&color=FF9E0F&height=100&section=header&text=class4989%20&fontSize=45)
+![header](https://capsule-render.vercel.app/api?type=Cylinder&color=FF9E0F&height=100&section=header&text=class4989(진행중)%20&fontSize=45)
 
 ## 🔗 피그마 시안
 https://www.figma.com/file/c2WQ9ZPv7W3hozdQtuKZ8x/Untitled?node-id=0%3A1
