@@ -11,11 +11,12 @@ public interface UploadClassMapper {
 
     default UploadClass postDtoToEntity(UploadClassDto.Post post) throws IOException {
         return new UploadClass().builder()
-                .video(post.getVideo().getBytes())
+                .video(post.getVideo())
                 .title(post.getTitle())
                 .chapter(post.getChapter())
                 .docs(post.getDocs())
-                .name(post.getVideo().getOriginalFilename())
+                .fileKey(post.getFileKey())
+                .name(post.getName())
                 .build();
     }
 

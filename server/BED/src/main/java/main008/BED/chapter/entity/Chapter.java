@@ -33,9 +33,9 @@ public class Chapter {
     @Column
     private String fileKey;
 
-//    @ManyToOne
-//    @JoinColumn(name = "CONTENTS_ID")
-//    private Contents contents;
+    @ManyToOne
+    @JoinColumn(name = "CONTENTS_ID")
+    private Contents contents;
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL) // 양방향
     private List<UploadClass> uploadClassList;

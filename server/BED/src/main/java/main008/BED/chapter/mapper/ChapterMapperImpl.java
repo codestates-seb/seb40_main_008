@@ -31,7 +31,7 @@ public class ChapterMapperImpl implements ChapterMapper{
         chapter.setChapterOrder( post.getChapterOrder() );
         chapter.setTitle( post.getTitle() );
         chapter.setThumbnail( post.getThumbnail() );
-        chapter.setFileKey( post.getKeys() );
+        chapter.setFileKey( post.getFileKey() );
 
         return chapter;
     }

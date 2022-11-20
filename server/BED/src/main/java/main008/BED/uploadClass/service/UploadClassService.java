@@ -29,77 +29,23 @@ public class UploadClassService {
 
     private final UploadClassRepository uploadClassRepository;
 
-    // Stream 에러시 로그 확인을 위한 필드
-    private final Logger logger = LoggerFactory.getLogger(UploadClassService.class);
-
 
     /**
-     * Create - Video 저장
+     * Create - 강의 및 자료 저장
      */
     public UploadClass saveVideo(UploadClass uploadClass) throws IOException {
         if (uploadClassRepository.existsByName(uploadClass.getName())) {
             throw new VideoAlreadyExistsException();
         }
+        // disclose content
+        uploadClass.getChapter().getContents().discloseContent();
+
         return uploadClassRepository.save(uploadClass);
     }
 
 
-    /**
-     * Stream - Video_Partial_Part 전송
-     */
-    public ResponseEntity<byte[]> prepareContent(String fileName, String range) {
-
-        try {
-            long rangeStart = 0;
-            long rangeEnd = CHUNK_SIZE;
-            long fileSize = uploadClassRepository.findByName(fileName).getVideo().length; // MultiPartFile 객체의 getSize()와 같음.
-            if (range == null) {
-                return ResponseEntity
-                        .status(HttpStatus.PARTIAL_CONTENT)
-                        .header(CONTENT_TYPE, VIDEO_CONTENT)
-                        .header(ACCEPT_RANGES, BYTES)
-                        .header(CONTENT_LENGTH, String.valueOf(fileSize))
-                        .header(CONTENT_RANGE, BYTES + " " + rangeStart + "-" + rangeEnd + "/" + fileSize)
-                        .body(readByteRangeNew(fileName, rangeStart, rangeEnd));
-            }
-
-            String[] ranges = range.split("-");
-            rangeStart = Long.parseLong(ranges[0].substring(6));
-            if (ranges.length > 1) {
-                rangeEnd = Long.parseLong(ranges[1]);
-            } else {
-                rangeEnd = rangeStart + CHUNK_SIZE;
-            }
-
-            rangeEnd = Math.min(rangeEnd, fileSize - 1);
-            byte[] data = readByteRangeNew(fileName, rangeStart, rangeEnd);
-            String contentLength = String.valueOf((rangeEnd - rangeStart) + 1);
-            HttpStatus httpStatus = HttpStatus.PARTIAL_CONTENT;
-            if (rangeEnd >= fileSize) {
-                httpStatus = HttpStatus.OK;
-            }
-            return ResponseEntity
-                    .status(httpStatus)
-                    .header(CONTENT_TYPE, VIDEO_CONTENT)
-                    .header(ACCEPT_RANGES, BYTES)
-                    .header(CONTENT_LENGTH, contentLength)
-                    .header(CONTENT_RANGE, BYTES + " " + rangeStart + "-" + rangeEnd + "/" + fileSize)
-                    .body(data);
-        } catch (IOException e) {
-            logger.error("Exception while reading the file {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
-    }
 
 
-    public byte[] readByteRangeNew(String fileName, long start, long end) throws IOException {
-        UploadClass findByName = uploadClassRepository.findByName(fileName);
-        byte[] data = findByName.getVideo();
-        byte[] result = new byte[(int) (end - start) + 1];
-        System.arraycopy(data, (int) start, result, 0, (int) (end - start) + 1);
-        return result;
-    }
 
 
 

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main008.BED.chapter.entity.Chapter;
 import main008.BED.likes.entity.Likes;
 import main008.BED.mainPage.entity.MainPage;
 import main008.BED.myClass.entity.MyClass;
@@ -132,10 +133,21 @@ public class Contents {
     @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
     private List<Wish> wishes;
 
+    @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
+    private List<Chapter> chapterList;
+
     public void addWish(Wish wish) {
         this.wishes.add(wish);
         if (wish.getContents() != this) {
             wish.addContents(this);
+        }
+    }
+
+    public void discloseContent() {
+        if (!chapterList.isEmpty()) {
+            this.disclosure = true;
+        } else {
+            this.disclosure = false;
         }
     }
 }
