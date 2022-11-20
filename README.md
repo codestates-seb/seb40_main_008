@@ -43,7 +43,6 @@ https://www.figma.com/file/c2WQ9ZPv7W3hozdQtuKZ8x/Untitled?node-id=0%3A1
 
 <br/>
 
-## <a href="https://docs.google.com/spreadsheets/d/1-QceLqofCF-_wJDUFhIdViKeqwfPrRd1SfmS8KVxpjk/edit?usp=sharing"> 📝 사용자 요구사항 정의서 / API 명세서 / 테이블 명세서</a>
 
 <br/>
 
