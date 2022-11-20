@@ -27,6 +27,7 @@ public class UploadClassService {
      * Create - 강의 및 자료 저장
      */
     public UploadClass saveLecture(UploadClass uploadClass) {
+        // TODO: 중복 예외처리 기준을 타당한 것으로 바꿀 것.
         if (uploadClassRepository.existsByName(uploadClass.getName())) {
             throw new UploadClassAlreadyExistsException();
         }
@@ -37,8 +38,8 @@ public class UploadClassService {
     }
 
     private static void plusLecture(UploadClass uploadClass) {
-        int upCount = uploadClass.getChapter().getContents().getCountLecture() + 1;
         Contents contents = uploadClass.getChapter().getContents();
+        int upCount = contents.getCountLecture() + 1;
         contents.setCountLecture(upCount);
         contents.disclosureDecision();
     }
@@ -52,7 +53,25 @@ public class UploadClassService {
     }
 
     /**
-     * Delete Upload Class
+     * Patch: 강의 & 자료 수정하기
+     */
+    public void updateLecture(Long oldClassId, UploadClass newUploadClass) {
+        if (!uploadClassRepository.existsByUploadClassId(oldClassId)) {
+            throw new UploadClassNotFoundException();
+        }
+        UploadClass oldUploadClass = uploadClassRepository.findById(oldClassId).get();
+        oldUploadClass.setName(newUploadClass.getName());
+        oldUploadClass.setVideo(newUploadClass.getVideo());
+        oldUploadClass.setTitle(newUploadClass.getTitle());
+        oldUploadClass.setFileKey(newUploadClass.getFileKey());
+
+        // TODO: Chpater와 Docs도 Setter 사용시 문제 발생: why???
+
+    }
+
+
+    /**
+     * Delete - Upload Class
      */
     public void removeClassById(Long uploadClassId) {
         try {
@@ -70,8 +89,8 @@ public class UploadClassService {
     }
 
     private static void minusLecture(UploadClass uploadClass) {
-        int downCount = uploadClass.getChapter().getContents().getCountLecture() - 1;
         Contents contents = uploadClass.getChapter().getContents();
+        int downCount = contents.getCountLecture() - 1;
         contents.setCountLecture(downCount);
         contents.disclosureDecision();
     }

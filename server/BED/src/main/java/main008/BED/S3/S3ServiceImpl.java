@@ -62,6 +62,15 @@ public class S3ServiceImpl implements S3Service {
         amazonS3Client.deleteObject(bucketName + folderSrc, fileKey);
     }
 
+    @Override
+    public HashMap updateToS3(MultipartFile file, String folderSrc, String oldFileKey) {
+        delete(oldFileKey, folderSrc);
+        HashMap hashMap = uploadToS3(file, folderSrc);
+        return hashMap;
+    }
+
+
+
 /*    public void rename(String sourceKey, String destinationKey){
         amazonS3Client.copyObject(
                 bucketName,

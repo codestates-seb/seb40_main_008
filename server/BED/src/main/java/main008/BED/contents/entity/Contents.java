@@ -54,11 +54,12 @@ public class Contents {
     @Column
     private Boolean disclosure = false; // 콘텐츠 공개 여부
 
-    @Column
-    private int countLecture = 0; // 콘텐츠 공개 여부 결정 도움을 위한 필드
-
     @Column(columnDefinition = "TEXT")
     private String tutorDetail;
+
+    @Column
+    public int countLecture = 0;
+//    public static int countLecture = 0; // 콘텐츠 공개 여부 결정 도움을 위한 필드
 
     public enum Categories {
         DIGITAL_DRAWING("디지털 드로잉"),
@@ -147,7 +148,7 @@ public class Contents {
     }
 
     public void disclosureDecision() {
-        if (countLecture == 0) {
+        if (this.countLecture == 0) {
             this.disclosure = false;
         } else {
             this.disclosure = true;

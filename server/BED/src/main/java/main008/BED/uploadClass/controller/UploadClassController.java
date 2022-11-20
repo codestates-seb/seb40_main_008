@@ -38,7 +38,7 @@ public class UploadClassController {
 
 
     /**
-     * Create - 영상 & 강의 자료 올리기
+     * Post - 영상 & 강의 자료 올리기
      */
     @PostMapping("{chapter-id}")
     public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videoFile,
@@ -64,11 +64,48 @@ public class UploadClassController {
     }
 
     /**
+     * Patch: 영상 & 자료 수정하기
+     */
+    @PatchMapping("/edit/{uploadClass-id}")
+    public ResponseEntity patchUploadClass(@RequestParam(value = "videoFile") MultipartFile videoFile,
+                                           @RequestParam(value = "title") String newTitle,
+                                           @RequestParam(value = "docsFile") MultipartFile docsFile,
+                                           @RequestParam(value = "details") String details,
+                                           @PathVariable("uploadClass-id") @Positive Long oldUploadClassId) throws IOException {
+
+        UploadClass oldUploadClass = uploadClassService.readClassById(oldUploadClassId);
+        Chapter oldChapter = oldUploadClass.getChapter();
+        String oldFileKey = oldUploadClass.getFileKey();
+        String newVideoName = videoFile.getOriginalFilename();
+        Long oldDocsId = oldUploadClass.getDocs().getDocsId();
+
+        // Docs Table update
+        DocsDto.Patch patchDocs = new DocsDto.Patch(docsFile, details);
+        Docs newDocs = docsMapper.patchDtoToEntity(patchDocs);
+        docsService.updateDocs(newDocs, oldDocsId);
+
+        // s3 update
+        HashMap map = s3Service.updateToS3(videoFile, "/UploadClass/video", oldFileKey);// update video in S3
+        String newVideoUrl = map.get("url").toString();
+        String newFileKey = map.get("fileKey").toString();
+
+        // UploadClass Table update
+        UploadClassDto.Patch patchUploadClass =
+                new UploadClassDto.Patch(newVideoUrl, newTitle, newVideoName, newFileKey, oldChapter, newDocs);
+        UploadClass newUploadClass = uploadClassMapper.patchDtoToEntity(patchUploadClass);
+        uploadClassService.updateLecture(oldUploadClassId, newUploadClass);
+
+        return new ResponseEntity("The Lecture is updated.", HttpStatus.OK);
+    }
+
+    /**
      * Delete: 영상 & 자료 삭제하기
      */
     @DeleteMapping("del/{uploadClass-id}")
     public ResponseEntity deleteUploadClass(@PathVariable("uploadClass-id") @Positive Long uploadClassId) {
+        UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         uploadClassService.removeClassById(uploadClassId);
+        s3Service.delete(uploadClass.getFileKey(), "/UploadClass/video");
         return new ResponseEntity("The Lecture is removed.", HttpStatus.OK);
     }
 

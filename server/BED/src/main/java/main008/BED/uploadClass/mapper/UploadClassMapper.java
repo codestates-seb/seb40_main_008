@@ -20,6 +20,17 @@ public interface UploadClassMapper {
                 .build();
     }
 
+    default UploadClass patchDtoToEntity(UploadClassDto.Patch patch) throws IOException {
+        return new UploadClass().builder()
+                .video(patch.getVideo())
+                .title(patch.getTitle())
+                .chapter(patch.getChapter())
+                .docs(patch.getDocs())
+                .fileKey(patch.getFileKey())
+                .name(patch.getName())
+                .build();
+    }
+
     UploadClassDto.ResponseDtoInChapter entityToResponseDtoInChapter(UploadClass uploadClass);
 
 }

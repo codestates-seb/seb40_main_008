@@ -53,14 +53,14 @@ public class DocsService {
     /**
      * Patch: Docs 수정
      */
-    public Docs updateDocs(Docs newDocs, Long id) {
+    public Docs updateDocs(Docs newDocs, Long oldDocsId) {
 
-        //TODO: 중복제거 로직 통일성 고려
-        if (!docsRepository.findById(id).isPresent()) {
+        // TODO: 중복제거 로직 통일성 고려
+        if (!docsRepository.findById(oldDocsId).isPresent()) {
             throw new DocsNotFoundException();
         }
 
-        Docs oldDocs = docsRepository.findById(id).get();
+        Docs oldDocs = docsRepository.findById(oldDocsId).get();
         oldDocs.setData(newDocs.getData());
         oldDocs.setDetails(newDocs.getDetails());
         oldDocs.setName(newDocs.getName());

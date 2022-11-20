@@ -10,4 +10,6 @@ public interface S3Service {
 
     public void delete(String fileKey, String folderSrc);
 
+    public HashMap updateToS3(MultipartFile file, String folderSrc, String oldFileKey);
+
 }
