@@ -22,7 +22,7 @@ public class UserPageController {
     // 수정
 
     // 조회
-    @GetMapping("/auth/home/{users-id}")
+    @GetMapping("/auth/{users-id}")
     public ResponseEntity getUserPage(@PathVariable("users-id") @Positive Long usersId) {
 
         UserPage userPage = userPageService.findUserPage(usersId);

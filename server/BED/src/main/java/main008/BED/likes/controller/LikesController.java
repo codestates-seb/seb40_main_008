@@ -29,7 +29,7 @@ public class LikesController {
     private final LikesDetailMapper likesDetailMapper;
     private final ContentsMapper contentsMapper;
 
-    @PostMapping("/auth/home/{users-id}/{contents-id}/likes")
+    @PatchMapping("/auth/{users-id}/{contents-id}/likes")
     public ResponseEntity likesContents(@PathVariable("users-id") @Positive Long usersId,
                                         @PathVariable("contents-id") @Positive Long contentsId,
                                         @Valid @RequestBody LikesDetailDto.Post post) {

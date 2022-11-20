@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import main008.BED.contents.entity.Contents;
+import main008.BED.likes.dto.LikesDto;
 import main008.BED.users.dto.UsersDto;
 
 public class ContentsDto {
@@ -33,6 +34,7 @@ public class ContentsDto {
         private Long contentsId;
         private String title;
         private String thumbnail;
+        private int likesCount;
         private Contents.Categories categories;
         private UsersDto.UserResponseToHome users;
     }

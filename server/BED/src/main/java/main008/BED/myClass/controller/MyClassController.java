@@ -21,10 +21,9 @@ public class MyClassController {
 
     private final MyClassService myClassService;
     private final MyClassMapper myClassMapper;
-//    private final WishMapper wishMapper;
 
     // 내가 찜한 클래스
-    @GetMapping("/auth/home/{users-id}/myclass/wishclass") // principal 가능 시 users-id 필요없음, 토큰과 /auth/로 대체 가능
+    @GetMapping("/auth/{users-id}/myclass/wishclass") // principal 가능 시 users-id 필요없음, 토큰과 /auth/로 대체 가능
     public ResponseEntity getMyClass(@PathVariable("users-id") @Positive Long usersId) {
 
         MyClass myClass = myClassService.getWishClass(usersId);
