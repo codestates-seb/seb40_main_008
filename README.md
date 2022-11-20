@@ -1,7 +1,7 @@
 ![header](https://capsule-render.vercel.app/api?type=Cylinder&color=FF9E0F&height=100&section=header&text=class4989%20Clone&fontSize=45)
 
-## 🔗 배포링크
-<a href="링크"></a>
+## 🔗 피그마
+https://www.figma.com/file/c2WQ9ZPv7W3hozdQtuKZ8x/Untitled?node-id=0%3A1
 
 ## 💡프로젝트 개요
 
