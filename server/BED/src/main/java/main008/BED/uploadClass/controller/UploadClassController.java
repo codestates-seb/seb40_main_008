@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("auth/chapter")
+@RequestMapping("auth/chapter/lecture")
 @RequiredArgsConstructor
 public class UploadClassController {
 
@@ -39,7 +40,7 @@ public class UploadClassController {
     /**
      * Create - 영상 & 강의 자료 올리기
      */
-    @PostMapping("{chapter-id}/lecture")
+    @PostMapping("{chapter-id}")
     public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videoFile,
                                           @RequestParam("title") String title,
                                           @RequestParam("docsFile") MultipartFile docsFile,
@@ -57,9 +58,18 @@ public class UploadClassController {
         String videoName = videoFile.getOriginalFilename();
 
         UploadClassDto.Post post = new UploadClassDto.Post(videoUrl, title, videoName, fileKey, chapter, docs);
-        uploadClassService.saveVideo(uploadClassMapper.postDtoToEntity(post));
+        uploadClassService.saveLecture(uploadClassMapper.postDtoToEntity(post));
         return new ResponseEntity(new UploadClassDto.SingleResponseDto("Uploading Lecture is completed."),
                 HttpStatus.CREATED);
+    }
+
+    /**
+     * Delete: 영상 & 자료 삭제하기
+     */
+    @DeleteMapping("del/{uploadClass-id}")
+    public ResponseEntity deleteUploadClass(@PathVariable("uploadClass-id") @Positive Long uploadClassId) {
+        uploadClassService.removeClassById(uploadClassId);
+        return new ResponseEntity("The Lecture is removed.", HttpStatus.OK);
     }
 
 

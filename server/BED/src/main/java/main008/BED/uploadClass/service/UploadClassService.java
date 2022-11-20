@@ -1,26 +1,17 @@
 package main008.BED.uploadClass.service;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.contents.entity.Contents;
+import main008.BED.docs.entity.Docs;
+import main008.BED.docs.repository.DocsRepository;
 import main008.BED.uploadClass.entity.UploadClass;
-import main008.BED.uploadClass.exception.VideoAlreadyExistsException;
+import main008.BED.uploadClass.exception.UploadClassAlreadyExistsException;
+import main008.BED.uploadClass.exception.UploadClassNotFoundException;
 import main008.BED.uploadClass.repository.UploadClassRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
-
-import static main008.BED.uploadClass.constants.UploadClassConstants.*;
 
 @Service
 @Transactional
@@ -28,25 +19,62 @@ import static main008.BED.uploadClass.constants.UploadClassConstants.*;
 public class UploadClassService {
 
     private final UploadClassRepository uploadClassRepository;
+    private final DocsRepository docsRepository;
+
 
 
     /**
      * Create - 강의 및 자료 저장
      */
-    public UploadClass saveVideo(UploadClass uploadClass) throws IOException {
+    public UploadClass saveLecture(UploadClass uploadClass) {
         if (uploadClassRepository.existsByName(uploadClass.getName())) {
-            throw new VideoAlreadyExistsException();
+            throw new UploadClassAlreadyExistsException();
         }
         // disclose content
-        uploadClass.getChapter().getContents().discloseContent();
+        plusLecture(uploadClass);
 
         return uploadClassRepository.save(uploadClass);
     }
 
+    private static void plusLecture(UploadClass uploadClass) {
+        int upCount = uploadClass.getChapter().getContents().getCountLecture() + 1;
+        Contents contents = uploadClass.getChapter().getContents();
+        contents.setCountLecture(upCount);
+        contents.disclosureDecision();
+    }
 
+    /**
+     * Read One
+     */
+    public UploadClass readClassById(Long uploadClassId) {
+        UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
+        return uploadClass;
+    }
 
+    /**
+     * Delete Upload Class
+     */
+    public void removeClassById(Long uploadClassId) {
+        try {
+            UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
+            Docs docs = uploadClass.getDocs();
 
+            minusLecture(uploadClass);
 
+            docsRepository.delete(docs);
+            uploadClassRepository.deleteById(uploadClassId);
+        } catch (Exception e) {
+            throw new UploadClassNotFoundException();
+        }
+
+    }
+
+    private static void minusLecture(UploadClass uploadClass) {
+        int downCount = uploadClass.getChapter().getContents().getCountLecture() - 1;
+        Contents contents = uploadClass.getChapter().getContents();
+        contents.setCountLecture(downCount);
+        contents.disclosureDecision();
+    }
 
 
 }

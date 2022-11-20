@@ -52,7 +52,10 @@ public class Contents {
     private Categories categories;
 
     @Column
-    private Boolean disclosure = false;
+    private Boolean disclosure = false; // 콘텐츠 공개 여부
+
+    @Column
+    private int countLecture = 0; // 콘텐츠 공개 여부 결정 도움을 위한 필드
 
     @Column(columnDefinition = "TEXT")
     private String tutorDetail;
@@ -143,11 +146,11 @@ public class Contents {
         }
     }
 
-    public void discloseContent() {
-        if (!chapterList.isEmpty()) {
-            this.disclosure = true;
-        } else {
+    public void disclosureDecision() {
+        if (countLecture == 0) {
             this.disclosure = false;
+        } else {
+            this.disclosure = true;
         }
     }
 }

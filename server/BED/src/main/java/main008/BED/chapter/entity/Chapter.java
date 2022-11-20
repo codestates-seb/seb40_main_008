@@ -39,4 +39,13 @@ public class Chapter {
 
     @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL) // 양방향
     private List<UploadClass> uploadClassList;
+
+    public void discloseContent() {
+        if (contents.getChapterList().isEmpty() || uploadClassList.isEmpty()) {
+            contents.setDisclosure(false);
+        } else {
+            contents.setDisclosure(true);
+        }
+    }
+
 }

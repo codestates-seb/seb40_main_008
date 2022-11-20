@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("docs")
+@RequestMapping("auth/contents/chapter/docs")
 @RequiredArgsConstructor
 public class DocsController {
 
@@ -93,7 +93,7 @@ public class DocsController {
     /**
      * Delete
      */
-    @DeleteMapping("{docs-id}")
+    @DeleteMapping("del/{docs-id}")
     public ResponseEntity deleteDocs(@PathVariable("docs-id") Long id) {
         docsService.removeDocs(id);
         return new ResponseEntity<>(new DocsDto.SingleResponseDto("The Docs is removed."), HttpStatus.OK);
