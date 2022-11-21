@@ -9,8 +9,8 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const HomeNavBar = () => {
   const [isLogin, setIsLogin] = useState(false);
-
   const { show } = UseScrollBar();
+  console.log(window.scrollY);
 
   const scrollTopBtn = () => {
     window.scrollTo({
@@ -20,31 +20,61 @@ const HomeNavBar = () => {
   };
 
   return (
-    <nav className={`${show ? styles.nav : styles.change_nav} ${styles.tab}`}>
-      <div className="logo">
-        <FontAwesomeIcon icon={faBars} className={styles.font} />
-        <button className={styles.logo} onClick={scrollTopBtn}>
-          class4989
-        </button>
-      </div>
-      <div>
-        {isLogin ? (
-          <Link href={"/mypage"}>
-            <Image
-              className="myimg"
-              alt="myimg"
-              src="/img/myimg.png"
-              width={40}
-              height={40}
-            />
-          </Link>
-        ) : (
-          <Link className={styles.login} href={"/login"}>
-            Login
-          </Link>
-        )}
-      </div>
-    </nav>
+    <>
+      {window.scrollY < 60 ? (
+        <nav className={styles.firstNav}>
+          <div className="logo">
+            <FontAwesomeIcon icon={faBars} className={styles.font} />
+            <button className={styles.logo} onClick={scrollTopBtn}>
+              class4989
+            </button>
+          </div>
+          <div>
+            {isLogin ? (
+              <Link href={"/mypage"}>
+                <Image
+                  className="myimg"
+                  alt="myimg"
+                  src="/img/myimg.png"
+                  width={40}
+                  height={40}
+                />
+              </Link>
+            ) : (
+              <Link className={styles.login} href={"/login"}>
+                Login
+              </Link>
+            )}
+          </div>
+        </nav>
+      ) : (
+        <nav className={`${show ? styles.nav : styles.change_nav} `}>
+          <div className="logo">
+            <FontAwesomeIcon icon={faBars} className={styles.font} />
+            <button className={styles.logo} onClick={scrollTopBtn}>
+              class4989
+            </button>
+          </div>
+          <div>
+            {isLogin ? (
+              <Link href={"/mypage"}>
+                <Image
+                  className="myimg"
+                  alt="myimg"
+                  src="/img/myimg.png"
+                  width={40}
+                  height={40}
+                />
+              </Link>
+            ) : (
+              <Link className={styles.login} href={"/login"}>
+                Login
+              </Link>
+            )}
+          </div>
+        </nav>
+      )}
+    </>
   );
 };
 

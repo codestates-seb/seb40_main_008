@@ -1,11 +1,16 @@
 .uploadpage {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin-top: 45px;
   position: relative;
+  height: 100%;
 }
 .form {
-  margin: 0 auto;
+  margin: 0px auto;
+}
+.classtitle {
+  margin: 0;
+  margin-bottom: 8px;
 }
 .title {
   margin: 0;

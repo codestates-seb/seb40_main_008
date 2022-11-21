@@ -96,7 +96,7 @@ const UploadPage = () => {
         <BaseNavbar />
         <section className={styles.uploadpage}>
           <form onSubmit={handleSubmit} className={styles.form}>
-            <p className={styles.title}>클래스명</p>
+            <p className={styles.classtitle}>클래스명</p>
             <input
               type="text"
               name="classname"

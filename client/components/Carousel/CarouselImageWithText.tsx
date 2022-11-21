@@ -37,16 +37,7 @@ const CarouselImageWithText = ({
             bottom: 70,
           }}
         >
-          {title.split("\n").map((t) => {
-            return (
-              <>
-                <h2 style={{ color: "white", fontWeight: "bold" }}>
-                  {t}
-                  <br />
-                </h2>
-              </>
-            );
-          })}
+          <h2 style={{ color: "white", fontWeight: "bold" }}>{title}</h2>
 
           <h3
             style={{
