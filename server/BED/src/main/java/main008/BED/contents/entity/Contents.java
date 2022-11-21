@@ -1,9 +1,12 @@
 package main008.BED.contents.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main008.BED.chapter.entity.Chapter;
 import main008.BED.likes.entity.Likes;
 import main008.BED.mainPage.entity.MainPage;
 import main008.BED.myClass.entity.MyClass;
@@ -34,25 +37,29 @@ public class Contents {
     private String thumbnail;
 
     @Column
+    private String fileKey; // thumbnail key for delete it in s3
+
     private int likesCount = 0;
 
     @Column(columnDefinition = "TEXT")
     private String details;
 
 //    @Column
-//    private Boolean payment;
-
-//    @Column
 //    private Boolean wish;
 
     @Column
+    @Enumerated(value = EnumType.STRING)
     private Categories categories;
 
     @Column
-    private Boolean disclosure = false;
+    private Boolean disclosure = false; // 콘텐츠 공개 여부
 
     @Column(columnDefinition = "TEXT")
     private String tutorDetail;
+
+    @Column
+    public int countLecture = 0;
+//    public static int countLecture = 0; // 콘텐츠 공개 여부 결정 도움을 위한 필드
 
     public enum Categories {
         DIGITAL_DRAWING("디지털 드로잉"),
@@ -80,10 +87,27 @@ public class Contents {
         PARENTS_EDUCATION("부모 교육");
 
         @Getter
-        private final String keyword;
+        private final String value;
 
-        Categories(String keyword) {
-            this.keyword = keyword;
+        Categories(String value) {
+            this.value = value;
+        }
+
+        // 역직렬화
+        @JsonCreator
+        public static Categories from(String value) {
+            for (Categories categories : Categories.values()) {
+                if (categories.getValue().equals(value)) {
+                    return categories;
+                }
+            }
+            return null;
+        }
+
+        // 직렬화
+        @JsonValue
+        public String getValue() {
+            return value;
         }
     }
 
@@ -113,6 +137,9 @@ public class Contents {
     @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
     private List<Wish> wishes;
 
+    @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
+    private List<Chapter> chapterList;
+
     @OneToOne(mappedBy = "contents", cascade = CascadeType.ALL)
     private Payment payment;
 
@@ -120,6 +147,14 @@ public class Contents {
         this.wishes.add(wish);
         if (wish.getContents() != this) {
             wish.addContents(this);
+        }
+    }
+
+    public void disclosureDecision() {
+        if (this.countLecture == 0) {
+            this.disclosure = false;
+        } else {
+            this.disclosure = true;
         }
     }
 }

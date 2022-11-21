@@ -9,5 +9,7 @@ public interface UploadClassRepository extends JpaRepository<UploadClass, Long> 
 
     UploadClass findByName(String name);
 
+    boolean existsByUploadClassId(Long uploadClassId);
+
     boolean existsByName(String title);
 }

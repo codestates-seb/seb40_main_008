@@ -2,6 +2,8 @@ package main008.BED.carousel.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 public class CarouselDto {
 
     @Getter
@@ -17,10 +19,10 @@ public class CarouselDto {
     }
 
     @Getter
-    @NoArgsConstructor
     @Setter
-    @AllArgsConstructor
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ResponseDto {
 
         private Long carouselId;
@@ -28,5 +30,14 @@ public class CarouselDto {
         private String title;
         private String subTitle;
         private String redirectUrl;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ListResponseDto {
+        private List<ResponseDto> carouselInfo;
     }
 }

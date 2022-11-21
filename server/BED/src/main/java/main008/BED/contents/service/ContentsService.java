@@ -1,6 +1,7 @@
 package main008.BED.contents.service;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.S3.S3ServiceImpl;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.likes.entity.Likes;
@@ -38,6 +39,8 @@ public class ContentsService {
     private final LikesRepository likesRepository;
     private final LikesDetailRepository likesDetailRepository;
 
+    private final S3ServiceImpl s3ServiceImpl;
+
     // contents 올리기
     public Contents createContents(Contents contents, Long usersId) {
 
@@ -63,6 +66,20 @@ public class ContentsService {
 
         return contents1;
     }
+
+
+    /**
+     * contents 삭제
+     */
+    public void removeContents(Long contentId) {
+        // TODO: 컨텐츠에 담긴 챕터, DOCS 연쇄 삭제
+        Contents byContentsId = contentsRepository.findByContentsId(contentId);
+        String fileKey = byContentsId.getFileKey();
+        s3ServiceImpl.delete(fileKey, "/contents/thumbnail");
+        contentsRepository.delete(byContentsId);
+    }
+
+
 
     public Page<Contents> getContentsPage(int page, int size) {
 
