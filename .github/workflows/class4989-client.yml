@@ -23,7 +23,7 @@ jobs:
          - run: pwd
          - run: cd client
          - run: pwd
-         - run: npm i
+         - run: cd && npm i
          - run: npm run build
 
          - name: Deploy
