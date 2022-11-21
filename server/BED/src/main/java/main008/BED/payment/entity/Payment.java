@@ -1,4 +1,4 @@
-package main008.BED.likes.entity;
+package main008.BED.payment.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,30 +8,30 @@ import main008.BED.contents.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.ZonedDateTime;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
-public class Likes {
+@AllArgsConstructor
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long likesId;
+    private Long paymentId;
 
     @Column
-    private int likesCount = 0;
+    private Boolean payed;
 
-//    @OneToOne
-//    @JoinColumn(name = "USERS_ID")
-//    private Users users;
+    @Column
+    private ZonedDateTime payedAt;
+
+    @OneToOne
+    @JoinColumn(name = "USERS_ID")
+    private Users users;
 
     @OneToOne
     @JoinColumn(name = "CONTENTS_ID")
     private Contents contents;
-
-    @OneToMany(mappedBy = "likes", cascade = CascadeType.ALL)
-    private List<LikesDetail> likesDetails;
 }

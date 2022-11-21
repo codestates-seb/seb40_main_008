@@ -5,8 +5,10 @@ import main008.BED.S3.S3ServiceImpl;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
-//import main008.BED.likes.entity.Likes;
-//import main008.BED.likes.entity.LikesDetail;
+import main008.BED.likes.entity.Likes;
+import main008.BED.likes.entity.LikesDetail;
+import main008.BED.likes.repository.LikesDetailRepository;
+import main008.BED.likes.repository.LikesRepository;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myClass.repository.MyClassRepository;
 import main008.BED.myUploadClass.entity.MyUploadClass;
@@ -35,19 +37,23 @@ public class ContentsService {
     private final WishRepository wishRepository;
     private final MyUploadClassRepository myUploadClassRepository;
     private final MyClassRepository myClassRepository;
+    private final LikesRepository likesRepository;
+    private final LikesDetailRepository likesDetailRepository;
 
     private final S3ServiceImpl s3ServiceImpl;
+
 
     // contents 올리기
     public Contents createContents(Contents contents, Long usersId) {
 
         contents.setWishes(new ArrayList<>());
-  //      contents.setLikes(new Likes());
+        contents.setLikes(new Likes());
 
-  //      Likes likes = contents.getLikes();
-  //      likes.setContents(contents);
-  //      likes.setCount(0);
-  //      likes.setLikesDetails(new ArrayList<>());
+        Likes likes = contents.getLikes();
+        likes.setContents(contents);
+        likes.setLikesCount(0);
+        likes.setLikesDetails(new ArrayList<>());
+        likesRepository.save(likes);
 
         Contents contents1 = contentsRepository.save(contents);
 
@@ -74,6 +80,7 @@ public class ContentsService {
         s3ServiceImpl.delete(fileKey, "/contents/thumbnail");
         contentsRepository.delete(byContentsId);
     }
+
 
     /**
      * Read: 커리큘럼 (챕터 목록 끌어오기)
