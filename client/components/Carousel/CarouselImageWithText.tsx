@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import { CarouselInfo } from "../../types/homeScreen/carousel";
 import Link from "next/link";
 
 interface CarouselProp {

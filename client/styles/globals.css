@@ -11,24 +11,14 @@
   padding: 0;
 }
 
-html,
 body {
   -webkit-text-size-adjust: 100%;
   background-color: var(--background-color);
-  margin: 0 auto;
-}
+  width: 360px;
 
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  min-height: 800px;
+
   margin: 0 auto;
-  padding: 0;
-  background-color: var(--background-color);
-  min-width: 370px;
-  max-width: 100vw;
-  min-height: 100%;
 }
 
 select {

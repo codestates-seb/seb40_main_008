@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./BaseNavBar.module.css";
+import styles from "./BaseNavbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 

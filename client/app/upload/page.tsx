@@ -92,7 +92,7 @@ const UploadPage = () => {
 
   if (session.status === "authenticated")
     return (
-      <div className="main">
+      <>
         <BaseNavbar />
         <section className={styles.uploadpage}>
           <form onSubmit={handleSubmit} className={styles.form}>
@@ -150,7 +150,7 @@ const UploadPage = () => {
             ></input>
 
             <div className={styles.filebox}>
-              <p className={styles.title}>클래스 썸네일 업로드</p>
+              <p className={styles.title}>클래스 썸네일</p>
               <input
                 type="file"
                 accept="image/jpg, image/jpeg, image/png"
@@ -160,7 +160,11 @@ const UploadPage = () => {
                 style={{ display: "none" }}
                 onChange={uploadfile}
               />
-              <button type="button" onClick={handleClickFileInput}>
+              <button
+                className={styles.uploadbtn}
+                type="button"
+                onClick={handleClickFileInput}
+              >
                 업로드
               </button>
             </div>
@@ -168,12 +172,11 @@ const UploadPage = () => {
             <div className={styles.uploadimg}>{showImage}</div>
 
             <button type="submit" className={styles.openclassbtn}>
-              {" "}
               강좌 개설하기
             </button>
           </form>
         </section>
-      </div>
+      </>
     );
 };
 

@@ -3,7 +3,7 @@
   position: fixed;
   top: 0;
   margin: 0 auto;
-  width: var(--max-width);
+  width: 360px;
   color: #f3f3f3;
   height: 56px;
   background: #0a191f;

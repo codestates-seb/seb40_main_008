@@ -1,19 +1,19 @@
 .baseNav {
   display: flex;
   height: 56px;
-  width: 450px;
+  width: 100%;
   margin: 0 auto;
-  position: fixed;
-  padding: 0 30px;
+  background-color: #0a191f;
+  position: sticky;
   top: 0;
 }
 
 .leftbtn {
   color: white;
-  margin-top: 13px;
+  margin-left: 15px;
   border: 0;
-  outline: 0;
   background-color: #0a191f;
+  outline: 0;
 }
 .font {
   width: 40px;

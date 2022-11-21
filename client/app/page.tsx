@@ -42,24 +42,22 @@ const page = async () => {
   const carouselList = await getCarouselInfo();
   return (
     <>
-      <div className={styles.contentbody}>
-        <HomeNavBar />
-        <div className={styles.carousel}>
-          <HomeCarouselSection>
-            {carouselList.map((e) => (
-              <CarouselImageWithText
-                key={e.imageUrl}
-                title={e.title}
-                subtitle={e.subTitle}
-                src={e.imageUrl}
-              />
-            ))}
-          </HomeCarouselSection>
-        </div>
+      <HomeNavBar />
 
-        <HomeClassesSection contentList={contentsList} />
-        <TabNavigator activeLink={"home"} />
-      </div>
+      <HomeCarouselSection>
+        {carouselList.map((e) => (
+          <CarouselImageWithText
+            key={e.imageUrl}
+            title={e.title}
+            subtitle={e.subTitle}
+            src={e.imageUrl}
+            link={e.redirectUrl}
+          />
+        ))}
+      </HomeCarouselSection>
+
+      <HomeClassesSection contentList={contentsList} />
+      <TabNavigator activeLink={"home"} />
     </>
   );
 };
