@@ -1,0 +1,22 @@
+.baseNav {
+  display: flex;
+  height: 56px;
+  width: 450px;
+  margin: 0 auto;
+  position: fixed;
+  padding: 0 30px;
+  top: 0;
+}
+
+.leftbtn {
+  color: white;
+  margin-top: 13px;
+  border: 0;
+  outline: 0;
+  background-color: #0a191f;
+}
+.font {
+  width: 40px;
+  height: 24px;
+  font-size: 24px;
+}

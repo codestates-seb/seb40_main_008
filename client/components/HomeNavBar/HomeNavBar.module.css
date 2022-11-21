@@ -1,0 +1,53 @@
+.nav {
+  display: flex;
+  position: fixed;
+  top: 0;
+  margin: 0 auto;
+  width: 100%;
+  color: #f3f3f3;
+  height: 56px;
+  background: #0a191f;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+  animation: fadein 400ms;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+.change_nav {
+  display: none;
+}
+
+.logo {
+  align-items: center;
+  justify-content: center;
+}
+.font {
+  width: 24px;
+  height: 24px;
+}
+.logo {
+  border: 0;
+  outline: 0;
+  background-color: #0a191f;
+  color: white;
+  padding-left: 10px;
+  font-size: 16px;
+  vertical-align: top;
+  margin-top: 3px;
+}
+.login {
+  vertical-align: top;
+  font-size: 15.5px;
+}
