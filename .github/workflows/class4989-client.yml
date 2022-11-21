@@ -1,0 +1,30 @@
+name: class4989-client
+
+on:
+   push:
+      branches:
+         - dev-fe
+   pull_request:
+      branches:
+         - dev-fe
+
+jobs:
+   build:
+      runs-on: self-hosted
+      strategy:
+         matrix:
+            node-version: [16.x]
+      steps:
+         - uses: actions/checkout@v2
+         - name: Use Node.js ${{ matrix.node-version }}
+           uses: actions/setup-node@v1
+           with:
+              node-version: ${{ matrix.node-version }}
+         - run: cd client && npm install
+         - run: cd client && npm run build
+         - run: |
+              pm2 stop0
+              pm2 stop 0
+              pm2 start 0
+              pm2 save
+         - run: sudo service nginx restart
