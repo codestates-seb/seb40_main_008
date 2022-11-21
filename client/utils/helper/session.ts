@@ -6,6 +6,5 @@ export async function getSession(cookie: string): Promise<Session | null> {
 	});
 	if (!response?.ok) return null;
 	const session = await response.json();
-	// console.log("response", response);
 	return Object.keys(session).length > 0 ? session : null;
 }
