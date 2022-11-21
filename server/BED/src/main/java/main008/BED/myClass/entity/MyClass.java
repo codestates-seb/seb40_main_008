@@ -26,7 +26,7 @@ public class MyClass {
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    @OneToMany(mappedBy = "myClass")
+    @OneToMany(mappedBy = "myClass", cascade = CascadeType.ALL)
     private List<Wish> wishes;
 
     public void addWish(Wish wish) {

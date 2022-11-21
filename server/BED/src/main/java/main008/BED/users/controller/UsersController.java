@@ -29,10 +29,10 @@ public class UsersController {
 
         UsersDto.UserResponseToMyPage response = usersMapper.usersToMyPage(users);
 
-        return new ResponseEntity<>("welcome", HttpStatus.CREATED);
+        return new ResponseEntity<>("Sign up is complete.", HttpStatus.CREATED);
     }
 
-    @GetMapping("/auth/home/{users-id}/userinfo")
+    @GetMapping("/auth/{users-id}/userinfo")
     public ResponseEntity getUser(@PathVariable("users-id") @Positive Long usersId){
 
         Users user = usersService.getUsers(usersId);
@@ -40,7 +40,7 @@ public class UsersController {
         return new ResponseEntity<>(new SingleResponseDto<>(usersMapper.usersToUserResponseDto(user)), HttpStatus.OK);
     }
 
-    @PatchMapping("/auth/home/{users-id}/userinfo")
+    @PatchMapping("/auth/{users-id}/userinfo")
     public ResponseEntity patchUser(@PathVariable("users-id") @Positive Long usersId,
                                     @Valid @RequestBody UsersDto.Patch userPatchDto){
 
@@ -51,9 +51,11 @@ public class UsersController {
         return new ResponseEntity<>(new SingleResponseDto<>(usersMapper.usersToUserResponseDto(user)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/auth/home/{users-id}/userinfo")
-    public void deleteUser(@PathVariable("users-id") @Positive Long usersId){
+    @DeleteMapping("/auth/{users-id}/userinfo")
+    public ResponseEntity deleteUser(@PathVariable("users-id") @Positive Long usersId){
 
         usersService.deleteUser(usersId);
+
+        return new ResponseEntity<>("Your account has been deleted.", HttpStatus.OK);
     }
 }

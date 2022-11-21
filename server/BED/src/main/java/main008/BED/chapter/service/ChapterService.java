@@ -28,9 +28,11 @@ public class ChapterService {
             throw new ContentsNotFoundException();
         }
         Contents byContentsId = contentsRepository.findByContentsId(contentsId);
+
         List<Chapter> chapterList = byContentsId.getChapterList();
         chapterList.add(chapter);
         byContentsId.setChapterList(chapterList);
+
         chapter.setContents(byContentsId);
         Chapter save = chapterRepository.save(chapter);
         return save;
