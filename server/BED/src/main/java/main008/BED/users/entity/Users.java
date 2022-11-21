@@ -31,7 +31,7 @@ public class Users {
     private String profileImage;
 
     @Column
-    private int coin;
+    private int totalCoin;
 
     @Column
     private ZonedDateTime createdAt;

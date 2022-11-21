@@ -24,8 +24,7 @@ public class UserPage {
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "COIN_CHARGE_ID")
+    @OneToOne(mappedBy = "userPage", cascade = CascadeType.ALL)
     private CoinCharge coinCharge;
 
     @OneToMany(mappedBy = "userPage", cascade = CascadeType.ALL)
