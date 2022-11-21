@@ -31,7 +31,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 						alt='google logo'
 						width={25}
 					/>
-					Sign with in Google
+					<p>Sign with in Google</p>
 				</div>
 			</button>
 
@@ -43,7 +43,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 						alt='kakao logo'
 						width={30}
 					/>
-					카카오 로그인
+					<p>카카오 로그인</p>
 				</div>
 			</button>
 
@@ -55,7 +55,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 						alt='naver logo'
 						width={50}
 					/>
-					네이버 로그인
+					<p>네이버 로그인</p>
 				</div>
 			</button>
 
@@ -67,7 +67,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 						alt='admin logo'
 						width={50}
 					/>
-					관리자 로그인
+					<p>관리자 로그인</p>
 				</div>
 			</button>
 
