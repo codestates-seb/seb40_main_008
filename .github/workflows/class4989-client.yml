@@ -22,7 +22,7 @@ jobs:
               node-version: ${{ matrix.node-version }}
          - run: pwd
          - run: cd client
-         - run: npm i
+         - run: pwd
          - run: npm i
          - run: npm run build
 
