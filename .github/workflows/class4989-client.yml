@@ -20,12 +20,12 @@ jobs:
            uses: actions/setup-node@v1
            with:
               node-version: ${{ matrix.node-version }}
+         - run: cd client && npm install
+         - run: cd client && npm run build
+         - run: cd client && npm install
          - run: |
-              cd client
-              npm install
-              npm run build
-              cd ..
+              pm2 stop0
               pm2 stop 0
               pm2 start 0
               pm2 save
-              sudo service nginx restart
+         - run: sudo service nginx restart
