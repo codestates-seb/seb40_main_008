@@ -22,7 +22,6 @@ jobs:
               node-version: ${{ matrix.node-version }}
          - run: cd client && npm install
          - run: cd client && npm run build
-         - run: cd client && npm install
          - run: |
               pm2 stop0
               pm2 stop 0
