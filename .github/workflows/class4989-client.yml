@@ -13,8 +13,10 @@ jobs:
       runs-on: self-hosted
       steps:
          - uses: actions/checkout@v2
+         -name:  Change directory to client
+           run: cd client 
          - name: Install dependencies
-           run: cd client npm install
+            run: npm install
          - name: Build
            run: npm run build
          - name: Deploy
