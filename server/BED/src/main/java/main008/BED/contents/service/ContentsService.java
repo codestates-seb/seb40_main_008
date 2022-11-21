@@ -41,6 +41,8 @@ public class ContentsService {
 
     private final S3ServiceImpl s3ServiceImpl;
 
+    private final S3ServiceImpl s3ServiceImpl;
+
     // contents 올리기
     public Contents createContents(Contents contents, Long usersId) {
 
@@ -77,6 +79,18 @@ public class ContentsService {
         String fileKey = byContentsId.getFileKey();
         s3ServiceImpl.delete(fileKey, "/contents/thumbnail");
         contentsRepository.delete(byContentsId);
+    }
+
+
+    /**
+     * Read: 커리큘럼 (챕터 목록 끌어오기)
+     */
+    public List<Chapter> readChapterList(Long contentsId) {
+        if (!contentsRepository.existsByContentsId(contentsId)) {
+            throw new RuntimeException("The Content with this id is not found.");
+        }
+        Contents contents = contentsRepository.findByContentsId(contentsId);
+        return contents.getChapterList();
     }
 
 

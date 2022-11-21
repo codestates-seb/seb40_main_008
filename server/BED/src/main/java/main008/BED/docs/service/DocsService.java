@@ -21,7 +21,7 @@ public class DocsService {
 
 
     /**
-     * Read: Docs 이름으로 조회
+     * Read: Docs 조회
      */
     public Docs readDocs(Long id) {
 
@@ -56,7 +56,7 @@ public class DocsService {
     public Docs updateDocs(Docs newDocs, Long oldDocsId) {
 
         // TODO: 중복제거 로직 통일성 고려
-        if (!docsRepository.findById(oldDocsId).isPresent()) {
+        if (!docsRepository.existsById(oldDocsId)) {
             throw new DocsNotFoundException();
         }
 

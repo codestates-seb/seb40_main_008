@@ -39,6 +39,7 @@ public class Contents {
     @Column
     private String fileKey; // thumbnail key for delete it in s3
 
+
     private int likesCount = 0;
 
     @Column(columnDefinition = "TEXT")
@@ -89,9 +90,11 @@ public class Contents {
         @Getter
         private final String value;
 
+
         Categories(String value) {
             this.value = value;
         }
+
 
         // 역직렬화
         @JsonCreator
@@ -139,6 +142,7 @@ public class Contents {
 
     @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
     private List<Chapter> chapterList;
+
 
     @OneToOne(mappedBy = "contents", cascade = CascadeType.ALL)
     private Payment payment;
