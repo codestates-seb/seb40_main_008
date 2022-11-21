@@ -2,12 +2,15 @@ package main008.BED.chapter.service;
 
 import lombok.RequiredArgsConstructor;
 import main008.BED.chapter.entity.Chapter;
+import main008.BED.chapter.exception.ChapterNotFoundException;
 import main008.BED.chapter.exception.ContentsNotFoundException;
 import main008.BED.chapter.repository.ChapterRepository;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -17,9 +20,7 @@ public class ChapterService {
     private final ContentsRepository contentsRepository;
 
     /**
-     * CREATE
-     *
-     * @return
+     * SAVE
      */
     public Chapter saveChapter(Chapter chapter, Long contentsId) {
 
@@ -27,6 +28,11 @@ public class ChapterService {
             throw new ContentsNotFoundException();
         }
         Contents byContentsId = contentsRepository.findByContentsId(contentsId);
+
+        List<Chapter> chapterList = byContentsId.getChapterList();
+        chapterList.add(chapter);
+        byContentsId.setChapterList(chapterList);
+
         chapter.setContents(byContentsId);
         Chapter save = chapterRepository.save(chapter);
         return save;
@@ -35,8 +41,25 @@ public class ChapterService {
     /**
      * READ ONE
      */
-    public Chapter readOne(Long id) {
-        return chapterRepository.findById(id).get();
+    public Chapter readOne(Long chapterId) {
+        if (!chapterRepository.existsByChapterId(chapterId)) {
+            throw new ChapterNotFoundException();
+        }
+        return chapterRepository.findById(chapterId).get();
+    }
+
+    /**
+     * UPDATE
+     */
+    public void updateChapter(Long chapterId, Chapter newChapter) {
+        if (!chapterRepository.existsByChapterId(chapterId)) {
+            throw new ChapterNotFoundException();
+        }
+        Chapter oldChapter = chapterRepository.findByChapterId(chapterId);
+        oldChapter.setChapterOrder(newChapter.getChapterOrder());
+        oldChapter.setTitle(newChapter.getTitle());
+        oldChapter.setThumbnail(newChapter.getThumbnail());
+        oldChapter.setFileKey(newChapter.getFileKey());
     }
 
     /**

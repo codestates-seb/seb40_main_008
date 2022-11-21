@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ChapterRepository extends JpaRepository<Chapter, Long> {
 
     Chapter findByChapterId(Long chapterId);
+
+    boolean existsByChapterId(Long chapterId);
 }

@@ -6,7 +6,6 @@ import main008.BED.chapter.entity.Chapter;
 import main008.BED.uploadClass.dto.UploadClassDto;
 import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.mapper.UploadClassMapper;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -37,6 +36,23 @@ public class ChapterMapperImpl implements ChapterMapper{
     }
 
     @Override
+    public Chapter patchDtoToEntity(ChapterDto.Patch patch) {
+
+        if (patch == null) {
+            return null;
+        }
+        Chapter chapter = new Chapter();
+
+        chapter.setChapterOrder(patch.getChapterOrder());
+        chapter.setTitle(patch.getTitle());
+        chapter.setThumbnail(patch.getThumbnail());
+        chapter.setFileKey(patch.getFileKey());
+
+        return chapter;
+    }
+
+
+    @Override
     public ChapterDto.ResponseDto entityToResponseDto(Chapter chapter) {
 
         List<UploadClass> uploadClassList = chapter.getUploadClassList();
@@ -53,4 +69,23 @@ public class ChapterMapperImpl implements ChapterMapper{
                 .uploadClassList(collect)
                 .build();
     }
+
+    @Override
+    public ChapterDto.ResponseDtoWithoutThumbnail entityToResponseDtoWithoutThumbnail(Chapter chapter) {
+
+        List<UploadClass> uploadClassList = chapter.getUploadClassList();
+        List<UploadClassDto.ResponseDtoInChapter> collect = uploadClassList.stream()
+                .map(uploadClass -> uploadClassMapper.entityToResponseDtoInChapter(uploadClass))
+                .collect(Collectors.toList());
+
+        return new ChapterDto.ResponseDtoWithoutThumbnail()
+                .builder()
+                .chapterId(chapter.getChapterId())
+                .chapterOrder(chapter.getChapterOrder())
+                .title(chapter.getTitle())
+                .uploadClassList(collect)
+                .build();
+    }
+
+
 }
