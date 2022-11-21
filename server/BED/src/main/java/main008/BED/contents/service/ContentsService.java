@@ -13,6 +13,9 @@ import main008.BED.myClass.entity.MyClass;
 import main008.BED.myClass.repository.MyClassRepository;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.myUploadClass.repository.MyUploadClassRepository;
+import main008.BED.payment.entity.Payment;
+import main008.BED.payment.repository.PaymentRepository;
+import main008.BED.payment.service.PaymentService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
 import main008.BED.wish.entity.Wish;
@@ -38,20 +41,20 @@ public class ContentsService {
     private final MyUploadClassRepository myUploadClassRepository;
     private final MyClassRepository myClassRepository;
     private final LikesRepository likesRepository;
-    private final LikesDetailRepository likesDetailRepository;
 
     private final S3ServiceImpl s3ServiceImpl;
+    private final PaymentService paymentService;
 
 
     // contents 올리기
-    public Contents createContents(Contents contents, Long usersId) {
+    public Contents createContents(Contents contents, Long usersId, Payment payment) {
 
         contents.setWishes(new ArrayList<>());
         contents.setLikes(new Likes());
 
         Likes likes = contents.getLikes();
-        likes.setContents(contents);
         likes.setLikesCount(0);
+        likes.setContents(contents);
         likes.setLikesDetails(new ArrayList<>());
         likesRepository.save(likes);
 
@@ -65,6 +68,9 @@ public class ContentsService {
         contentsList.add(contents1);
         myUploadClass.setContentsList(contentsList);
         myUploadClassRepository.save(myUploadClass);
+
+        payment.setContents(contents1);
+        paymentService.createPaymentWithContent(payment);
 
         return contents1;
     }

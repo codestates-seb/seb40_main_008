@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import main008.BED.contents.entity.Contents;
-import main008.BED.likes.dto.LikesDto;
 import main008.BED.users.dto.UsersDto;
 
 public class ContentsDto {

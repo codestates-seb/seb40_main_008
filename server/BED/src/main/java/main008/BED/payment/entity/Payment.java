@@ -9,6 +9,7 @@ import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,20 +22,17 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
+    /*
+    강좌 개설 시 가격 인풋
+    */
     @Column
-    private Boolean payed;
+    private Integer price;
 
-    @Column
-    private ZonedDateTime payedAt;
-
-    @Column
-    private int price = 5000;
-
-    @OneToOne
-    @JoinColumn(name = "USERS_ID")
-    private Users users;
-
+    // 컨텐츠 < payment
     @OneToOne
     @JoinColumn(name = "CONTENTS_ID")
     private Contents contents;
+
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+    private List<PaymentDetail> paymentDetails;
 }
