@@ -20,7 +20,7 @@ import javax.validation.constraints.Positive;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Validated
 public class ContentsController {
@@ -32,7 +32,7 @@ public class ContentsController {
 
 
     // 컨텐츠 개설
-    @PostMapping("/auth/{users-id}/uploadcontents")
+    @PostMapping("/{users-id}/uploadcontents")
     public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
                                        @RequestParam("title") String title,
                                        @RequestParam("categories") Contents.Categories categories,
@@ -54,7 +54,7 @@ public class ContentsController {
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/auth/{users-id}/{contents-id}/wish")
+    @PostMapping("/{users-id}/{contents-id}/wish")
     public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {

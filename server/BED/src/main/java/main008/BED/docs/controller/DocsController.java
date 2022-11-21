@@ -93,7 +93,7 @@ public class DocsController {
     /**
      * Delete
      */
-    @DeleteMapping("del/{docs-id}")
+    @DeleteMapping("{docs-id}")
     public ResponseEntity deleteDocs(@PathVariable("docs-id") Long id) {
         docsService.removeDocs(id);
         return new ResponseEntity<>(new DocsDto.SingleResponseDto("The Docs is removed."), HttpStatus.OK);

@@ -49,7 +49,7 @@ public class ChapterController {
     }
 
 
-    @GetMapping("{chapter-id}")
+    @GetMapping("/{chapter-id}")
     public ResponseEntity getChapter(@PathVariable("chapter-id") Long chapterId) {
         Chapter chapter = chapterService.readOne(chapterId);
         List<UploadClass> uploadClassList = uploadClassRepository.findAll();
@@ -61,7 +61,7 @@ public class ChapterController {
 
 
 
-    @DeleteMapping("/del/{chapter-id}")
+    @DeleteMapping("/{chapter-id}")
     public ResponseEntity deleteChapter(@PathVariable("chapter-id") Long id) {
         Chapter chapter = chapterService.readOne(id);
         String keys = chapter.getFileKey();
