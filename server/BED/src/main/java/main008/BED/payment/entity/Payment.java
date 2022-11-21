@@ -27,6 +27,9 @@ public class Payment {
     @Column
     private ZonedDateTime payedAt;
 
+    @Column
+    private int price = 5000;
+
     @OneToOne
     @JoinColumn(name = "USERS_ID")
     private Users users;

@@ -39,8 +39,8 @@ public class Contents {
     @Column(columnDefinition = "TEXT")
     private String details;
 
-//    @Column
-//    private Boolean payment;
+    @Column
+    private Boolean payed;
 
 //    @Column
 //    private Boolean wish;
