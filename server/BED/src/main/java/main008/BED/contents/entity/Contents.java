@@ -33,6 +33,9 @@ public class Contents {
     @Column
     private String thumbnail;
 
+    @Column
+    private int likesCount = 0;
+
     @Column(columnDefinition = "TEXT")
     private String details;
 
@@ -84,7 +87,7 @@ public class Contents {
         }
     }
 
-    @OneToOne(mappedBy = "contents") // 양방향
+    @OneToOne(mappedBy = "contents", cascade = CascadeType.ALL) // 양방향
     private Likes likes;
 
     @ManyToOne

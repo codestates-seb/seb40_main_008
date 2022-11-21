@@ -39,46 +39,45 @@ public class LikesService {
         Likes likes = contents.getLikes();
         List<LikesDetail> likesDetails = likesDetailRepository.findByLikesLikesId(likes.getLikesId());
 
-        for (LikesDetail likesDetail2 : likesDetails) {
 
-            if (likesDetail2.getUsers() == users) {
+        if (likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId()) != null) {
 
-                likesDetailRepository.delete(likesDetail2);
+            LikesDetail likesDetail1 = likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId());
 
-            }
+            if (likesDetail1.getLiked() == true) {
 
-            if (likesDetail2.getUsers() == null) {
+                Likes likes1 = likesDetail1.getLikes();
 
-                LikesDetail likesDetail1 = new LikesDetail();
-                likesDetail1.setLikes(likes);
-                likesDetail1.setUsers(users);
-                likesDetail1.setLiked(true);
-                likesDetail1.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
+                likesDetail1.setLiked(false);
                 likesDetailRepository.save(likesDetail1);
+                likes1.setLikesCount(likes1.getLikesCount() - 1);
 
-                likes.getLikesDetails().add(likesDetail1);
-                likes.setCount(likes.getCount() + 1);
-                likesRepository.save(likes);
-            } else {
+                contents.setLikesCount(likes1.getLikesCount());
+                contentsRepository.save(contents);
 
-                if (likesDetail2.getUsers() == users && likesDetail2.getLiked() == true) {
+            } else if (likesDetail1.getLiked() == false) {
 
-                    LikesDetail l = likesDetailRepository.findByUsersUsersId(usersId);
+                Likes likes1 = likesDetail1.getLikes();
 
-                    likesDetailRepository.delete(l);
-                } else {
+                likesDetail1.setLiked(true);
+                likesDetailRepository.save(likesDetail1);
+                likes1.setLikesCount(likes1.getLikesCount() + 1);
 
-                    likesDetail.setLikes(likes);
-                    likesDetail.setUsers(users);
-                    likesDetail.setLiked(true);
-                    likesDetail.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-                    likesDetailRepository.save(likesDetail);
-
-                    likes.getLikesDetails().add(likesDetail);
-                    likes.setCount(likes.getCount() + 1);
-                    likesRepository.save(likes);
-                }
+                contents.setLikesCount(likes1.getLikesCount());
+                contentsRepository.save(contents);
             }
+        } else {
+
+            likesDetail.setLikes(likes);
+            likesDetail.setUsers(users);
+            likesDetail.setLiked(true);
+            likesDetail.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
+
+            likes.getLikesDetails().add(likesDetail);
+            likes.setLikesCount(likes.getLikesCount() + 1);
+
+            contents.setLikesCount(likes.getLikesCount());
+            contentsRepository.save(contents);
         }
         return likes;
     }

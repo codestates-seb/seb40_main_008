@@ -46,14 +46,9 @@ public class ContentsService {
 
         Likes likes = contents.getLikes();
         likes.setContents(contents);
-        likes.setCount(0);
-
-        LikesDetail likesDetail = new LikesDetail();
+        likes.setLikesCount(0);
         likes.setLikesDetails(new ArrayList<>());
-        likes.getLikesDetails().add(likesDetail);
         likesRepository.save(likes);
-        likesDetail.setLikes(likes);
-        likesDetailRepository.save(likesDetail);
 
         Contents contents1 = contentsRepository.save(contents);
 

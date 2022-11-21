@@ -22,7 +22,7 @@ public class Likes {
     private Long likesId;
 
     @Column
-    private int count;
+    private int likesCount = 0;
 
 //    @OneToOne
 //    @JoinColumn(name = "USERS_ID")
@@ -32,6 +32,6 @@ public class Likes {
     @JoinColumn(name = "CONTENTS_ID")
     private Contents contents;
 
-    @OneToMany(mappedBy = "likes")
+    @OneToMany(mappedBy = "likes", cascade = CascadeType.ALL)
     private List<LikesDetail> likesDetails;
 }

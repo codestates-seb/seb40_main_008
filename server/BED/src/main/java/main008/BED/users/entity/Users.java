@@ -44,13 +44,13 @@ public class Users {
         ROLE_USER;
     }
 
-    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private UserPage userPage;
 
-    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private MyUploadClass myUploadClass;
 
-    @OneToOne(mappedBy = "users", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private MyClass myClass;
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)

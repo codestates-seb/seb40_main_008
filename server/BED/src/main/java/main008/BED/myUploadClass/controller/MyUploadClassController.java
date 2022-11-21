@@ -23,7 +23,7 @@ public class MyUploadClassController {
     private final MyUploadClassMapper myUploadClassMapper;
     private final MyUploadClassService myUploadClassService;
 
-    @GetMapping("/auth/home/{users-id}/myuploadclass")
+    @GetMapping("/auth/{users-id}/myuploadclass")
     public ResponseEntity getMyUploadClass(@PathVariable("users-id") @Positive Long usersId) {
 
         MyUploadClass myUploadClass = myUploadClassService.getMyUploadClasses(usersId);
