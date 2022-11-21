@@ -7,4 +7,5 @@ export interface CarouselInfo {
   imageUrl: string;
   title: string;
   subTitle: string;
+  redirectUrl: string;
 }
