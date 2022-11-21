@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,8 @@ public class CarouselController {
                 .stream()
                 .map(carousel -> carouselMapper.entityToResponseDto(carousel))
                 .collect(Collectors.toList());
-       return new ResponseEntity(response, HttpStatus.OK);
+        CarouselDto.ListResponseDto listResponseDto = carouselMapper.responseToListDto(response);
+        return new ResponseEntity(listResponseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("del/{id}")
@@ -38,7 +40,6 @@ public class CarouselController {
 
         Carousel carousel = carouselService.readOne(id);
         s3ServiceImpl.delete(carousel.getFileKey(), "/carousel");
-
         carouselService.removeCarousel(id);
         return new ResponseEntity("Successfully delete Carousel", HttpStatus.OK);
     }

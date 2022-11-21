@@ -11,8 +11,10 @@ public class UploadClassDto {
     @Getter
     @AllArgsConstructor
     public static class Post {
-        private MultipartFile video;
+        private String video;
         private String title;
+        private String name;
+        private String fileKey;
         private Chapter chapter;
         private Docs docs;
     }
@@ -20,6 +22,12 @@ public class UploadClassDto {
     @Getter
     @AllArgsConstructor
     public static class Patch {
+        private String video;
+        private String title;
+        private String name;
+        private String fileKey;
+        private Chapter chapter;
+        private Docs docs;
 
     }
 

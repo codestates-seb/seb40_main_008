@@ -28,10 +28,4 @@ public class Docs {
     private String name; // file name +++ 추가
 
 
-//    강의 업로드 클래스로 이동
-//    @OneToOne
-//    @JoinColumn(name = "UPLOAD_CLASS_ID")
-//    private UploadClass uploadClass;
-
-
 }

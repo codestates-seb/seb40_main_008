@@ -36,9 +36,9 @@ public class S3Controller {
                                  @RequestParam("redirectUrl") String redirectUrl) {
         HashMap map = s3ServiceImpl.uploadToS3(image, "/carousel");
         String url = map.get("url").toString();
-        String keys = map.get("keys").toString();
+        String fileKey = map.get("fileKey").toString();
 
-        CarouselDto.Post post = new CarouselDto.Post(image.getOriginalFilename(), keys, url, title, subTitle, redirectUrl);
+        CarouselDto.Post post = new CarouselDto.Post(image.getOriginalFilename(), fileKey, url, title, subTitle, redirectUrl);
         carouselService.saveCarousel(carouselMapper.postDtoToEntity(post));
         return new ResponseEntity(url, HttpStatus.CREATED);
     }

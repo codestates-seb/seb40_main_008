@@ -1,6 +1,7 @@
 package main008.BED.uploadClass.controller;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.S3.S3ServiceImpl;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.repository.ChapterRepository;
 import main008.BED.docs.dto.DocsDto;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.Positive;
 import java.io.IOException;
+import java.util.HashMap;
 
 @RestController
-@RequestMapping("lecture")
+@RequestMapping("auth/chapter/lecture")
 @RequiredArgsConstructor
 public class UploadClassController {
 
@@ -31,9 +34,11 @@ public class UploadClassController {
     private final DocsService docsService;
     private final DocsMapper docsMapper;
 
+    private final S3ServiceImpl s3Service;
+
 
     /**
-     * Create - 영상 & 강의 자료 올리기
+     * Post - 영상 & 강의 자료 올리기
      */
     @PostMapping("{chapter-id}")
     public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videoFile,
@@ -41,47 +46,72 @@ public class UploadClassController {
                                           @RequestParam("docsFile") MultipartFile docsFile,
                                           @RequestParam("details") String details,
                                           @PathVariable("chapter-id") Long chapterId) throws IOException {
-        Chapter chapter = chapterRepository.findById(chapterId).get();
+
         DocsDto.Post docsPost = new DocsDto.Post(docsFile, details);
         Docs docs = docsService.saveDocs(docsMapper.postDtoToEntity(docsPost));
-        UploadClassDto.Post post = new UploadClassDto.Post(videoFile, title, chapter, docs);
-        uploadClassService.saveVideo(uploadClassMapper.postDtoToEntity(post));
+
+        Chapter chapter = chapterRepository.findById(chapterId).get();
+
+        HashMap map = s3Service.uploadToS3(videoFile, "/UploadClass/video");
+        String videoUrl = map.get("url").toString();
+        String fileKey = map.get("fileKey").toString();
+        String videoName = videoFile.getOriginalFilename();
+
+        UploadClassDto.Post post = new UploadClassDto.Post(videoUrl, title, videoName, fileKey, chapter, docs);
+        uploadClassService.saveLecture(uploadClassMapper.postDtoToEntity(post));
         return new ResponseEntity(new UploadClassDto.SingleResponseDto("Uploading Lecture is completed."),
                 HttpStatus.CREATED);
     }
 
-
-
     /**
-     * Stream - 영상 시청 페이지 부분 전송
+     * Patch: 영상 & 자료 수정하기
      */
-    @GetMapping("stream/{file-name}")
-    public Mono<ResponseEntity<byte[]>> streamVideo(@RequestHeader(value = "Range", required = false) String range,
-                                                    @PathVariable("file-name") String fileName) {
-        // TODO 1: 클라이언트 측에서 바로 실행 중지
-        // TODO 2: {커리큘럼, 수업자료, 댓글, 메모하기} <- 포함해서 비디오까지 DTO에 담아서 한 번에 보낼 것인지 생각해봐야 함.
-        // TODO 3: 멀티 쓰레드 활용 -> 비디오 전송, 나머지 자료 전송 각각 따로
+    @PatchMapping("/edit/{uploadClass-id}")
+    public ResponseEntity patchUploadClass(@RequestParam(value = "videoFile") MultipartFile videoFile,
+                                           @RequestParam(value = "title") String newTitle,
+                                           @RequestParam(value = "docsFile") MultipartFile docsFile,
+                                           @RequestParam(value = "details") String details,
+                                           @PathVariable("uploadClass-id") @Positive Long oldUploadClassId) throws IOException {
 
-//        ThreadStream threadStream = new ThreadStream();
-//        threadStream.start();
+        UploadClass oldUploadClass = uploadClassService.readClassById(oldUploadClassId);
+        Chapter oldChapter = oldUploadClass.getChapter();
+        String oldFileKey = oldUploadClass.getFileKey();
+        String newVideoName = videoFile.getOriginalFilename();
+        Long oldDocsId = oldUploadClass.getDocs().getDocsId();
 
-        return Mono.just(uploadClassService.prepareContent(fileName, range));
+        // Docs Table update
+        DocsDto.Patch patchDocs = new DocsDto.Patch(docsFile, details);
+        Docs newDocs = docsMapper.patchDtoToEntity(patchDocs);
+        docsService.updateDocs(newDocs, oldDocsId);
+
+        // s3 update
+        HashMap map = s3Service.updateToS3(videoFile, "/UploadClass/video", oldFileKey);// update video in S3
+        String newVideoUrl = map.get("url").toString();
+        String newFileKey = map.get("fileKey").toString();
+
+        // UploadClass Table update
+        UploadClassDto.Patch patchUploadClass =
+                new UploadClassDto.Patch(newVideoUrl, newTitle, newVideoName, newFileKey, oldChapter, newDocs);
+        UploadClass newUploadClass = uploadClassMapper.patchDtoToEntity(patchUploadClass);
+        uploadClassService.updateLecture(oldUploadClassId, newUploadClass);
+
+        return new ResponseEntity("The Lecture is updated.", HttpStatus.OK);
     }
 
-//    /**
-//     * Thread
-//     */
-//    public class ThreadStream extends Thread {
-//
-//        private String fileName;
-//        private String range;
-//        public Mono<ResponseEntity<byte[]>> run() {
-//            return Mono.just(uploadClassService.prepareContent(fileName, range));
-//        }
-//
-//        public ThreadStream(String fileName, String range) {
-//            this.fileName = fileName;
-//            this.range = range;
-//        }
-//    }
+    /**
+     * Delete: 영상 & 자료 삭제하기
+     */
+    @DeleteMapping("del/{uploadClass-id}")
+    public ResponseEntity deleteUploadClass(@PathVariable("uploadClass-id") @Positive Long uploadClassId) {
+        UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
+        uploadClassService.removeClassById(uploadClassId);
+        s3Service.delete(uploadClass.getFileKey(), "/UploadClass/video");
+        return new ResponseEntity("The Lecture is removed.", HttpStatus.OK);
+    }
+
+
+
+
+
+
 }

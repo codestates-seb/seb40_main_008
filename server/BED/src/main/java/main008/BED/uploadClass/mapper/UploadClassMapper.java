@@ -11,11 +11,23 @@ public interface UploadClassMapper {
 
     default UploadClass postDtoToEntity(UploadClassDto.Post post) throws IOException {
         return new UploadClass().builder()
-                .video(post.getVideo().getBytes())
+                .video(post.getVideo())
                 .title(post.getTitle())
                 .chapter(post.getChapter())
                 .docs(post.getDocs())
-                .name(post.getVideo().getOriginalFilename())
+                .fileKey(post.getFileKey())
+                .name(post.getName())
+                .build();
+    }
+
+    default UploadClass patchDtoToEntity(UploadClassDto.Patch patch) throws IOException {
+        return new UploadClass().builder()
+                .video(patch.getVideo())
+                .title(patch.getTitle())
+                .chapter(patch.getChapter())
+                .docs(patch.getDocs())
+                .fileKey(patch.getFileKey())
+                .name(patch.getName())
                 .build();
     }
 

@@ -19,7 +19,7 @@ public class ChapterDto {
 
         private String thumbnail;
 
-        private String keys;
+        private String fileKey;
     }
 
     @Getter

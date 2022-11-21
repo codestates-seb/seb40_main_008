@@ -21,11 +21,14 @@ public class UploadClass {
     @Column
     private String title;
 
-    @Lob
-    private byte[] video;
+    @Column
+    private String video;
 
     @Column
     private String name; // video name - eg: "video.mp4"
+
+    @Column
+    private String fileKey; // video fileKey - for deleting video in s3
 
     @ManyToOne // 양방향
     @JoinColumn(name = "CHAPTER_ID")

@@ -15,12 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Positive;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("chapter")
+@RequestMapping("auth/contents")
 @RequiredArgsConstructor
 public class ChapterController {
 
@@ -31,18 +32,19 @@ public class ChapterController {
     private final S3ServiceImpl s3ServiceImpl;
 
 
-    @PostMapping()
-    public ResponseEntity postChapter(@RequestParam("thumbnail") MultipartFile thumbnail,
+    @PostMapping("/chapter/{contents-id}")
+    public ResponseEntity postChapter(@PathVariable("contents-id") @Positive Long contentsId,
+                                      @RequestParam("thumbnail") MultipartFile thumbnail,
                                       @RequestParam("chapterOrder") String chapterOrder,
                                       @RequestParam("title") String title) {
 
         HashMap map = s3ServiceImpl.uploadToS3(thumbnail, "/chapter/thumbnail");
         String url = map.get("url").toString();
-        String keys = map.get("keys").toString();
+        String fileKey = map.get("fileKey").toString();
 
-        ChapterDto.Post post = new ChapterDto.Post(chapterOrder, title, url, keys);
+        ChapterDto.Post post = new ChapterDto.Post(chapterOrder, title, url, fileKey);
         Chapter chapter = chapterMapper.postDtoToEntity(post);
-        chapterService.saveChapter(chapter);
+        chapterService.saveChapter(chapter, contentsId);
         return new ResponseEntity("The Chapter is successfully saved.", HttpStatus.CREATED);
     }
 
@@ -63,7 +65,6 @@ public class ChapterController {
     public ResponseEntity deleteChapter(@PathVariable("chapter-id") Long id) {
         Chapter chapter = chapterService.readOne(id);
         String keys = chapter.getFileKey();
-
         s3ServiceImpl.delete(keys, "/chapter/thumbnail");
         chapterService.removeChapter(chapter);
         return new ResponseEntity("The Chapter is removed.", HttpStatus.OK);

@@ -11,5 +11,7 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
 
     Contents findByContentsId(Long contentsId);
 
+    boolean existsByContentsId(Long contentsId);
+
     List<Contents> findByUsersUsersId(Long usersId);
 }
