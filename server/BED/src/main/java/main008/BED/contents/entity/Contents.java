@@ -11,6 +11,7 @@ import main008.BED.likes.entity.Likes;
 import main008.BED.mainPage.entity.MainPage;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
+import main008.BED.payment.entity.Payment;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.users.entity.Users;
 import main008.BED.wish.entity.Wish;
@@ -38,11 +39,10 @@ public class Contents {
     @Column
     private String fileKey; // thumbnail key for delete it in s3
 
+    private int likesCount = 0;
+
     @Column(columnDefinition = "TEXT")
     private String details;
-
-    @Column
-    private Boolean payment = false;
 
 //    @Column
 //    private Boolean wish;
@@ -111,7 +111,7 @@ public class Contents {
         }
     }
 
-    @OneToOne(mappedBy = "contents") // 양방향
+    @OneToOne(mappedBy = "contents", cascade = CascadeType.ALL) // 양방향
     private Likes likes;
 
     @ManyToOne
@@ -139,6 +139,9 @@ public class Contents {
 
     @OneToMany(mappedBy = "contents", cascade = CascadeType.ALL)
     private List<Chapter> chapterList;
+
+    @OneToOne(mappedBy = "contents", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public void addWish(Wish wish) {
         this.wishes.add(wish);

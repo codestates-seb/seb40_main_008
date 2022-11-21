@@ -20,7 +20,7 @@ import javax.validation.constraints.Positive;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/auth/home")
+@RequestMapping
 @RequiredArgsConstructor
 @Validated
 public class ContentsController {
@@ -32,8 +32,7 @@ public class ContentsController {
 
 
     // 컨텐츠 개설
-    @PostMapping("/{users-id}/uploadcontents")
-//    @PostMapping("/mypage/uploadcontents")
+    @PostMapping("/auth/{users-id}/uploadcontents")
     public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
                                        @RequestParam("title") String title,
                                        @RequestParam("categories") Contents.Categories categories,
@@ -55,7 +54,7 @@ public class ContentsController {
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/{users-id}/{contents-id}/wish")
+    @PostMapping("/auth/{users-id}/{contents-id}/wish")
     public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {
@@ -65,14 +64,6 @@ public class ContentsController {
         contentsService.wishContents(contentsId, usersId, wish);
 
 //        return new ResponseEntity<>(response, HttpStatus.OK);
-        return ResponseEntity.status(HttpStatus.OK).body("Added to wishlist.");
+        return ResponseEntity.status(HttpStatus.OK).body("Update your wishlist.");
     }
-
-//    // 컨텐츠 좋아요 기능
-//    @PostMapping("/{users-id}/{contents-id}/like")
-//    public ResponseEntity likeContents(@PathVariable("users-id") @Positive Long usersId,
-//                                       @PathVariable("contents-id") @Positive Long contentsId,
-//                                       @Valid @RequestBody ) {
-//
-//    }
 }
