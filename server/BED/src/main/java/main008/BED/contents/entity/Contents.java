@@ -86,7 +86,7 @@ public class Contents {
         CHILD_EDUCATION("아이 교육"),
         PARENTS_EDUCATION("부모 교육");
 
-        @Getter
+//        @Getter
         private final String value;
 
 
