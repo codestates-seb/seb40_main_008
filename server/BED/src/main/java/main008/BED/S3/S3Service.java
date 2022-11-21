@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 public interface S3Service {
 
+    // TODO: 예외 처리 추가
+
     public HashMap uploadToS3(MultipartFile file, String folderSrc);
 
     public void delete(String fileKey, String folderSrc);

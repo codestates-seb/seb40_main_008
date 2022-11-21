@@ -37,4 +37,5 @@ public class ContentsDto {
         private Contents.Categories categories;
         private UsersDto.UserResponseToHome users;
     }
+
 }

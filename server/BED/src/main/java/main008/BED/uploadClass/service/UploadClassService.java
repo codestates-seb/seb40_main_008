@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @Transactional
@@ -24,7 +25,7 @@ public class UploadClassService {
 
 
     /**
-     * Create - 강의 및 자료 저장
+     * SAVE - 강의 및 자료 저장
      */
     public UploadClass saveLecture(UploadClass uploadClass) {
         // TODO: 중복 예외처리 기준을 타당한 것으로 바꿀 것.
@@ -53,7 +54,14 @@ public class UploadClassService {
     }
 
     /**
-     * Patch: 강의 & 자료 수정하기
+     * Read All
+     */
+    public List<UploadClass> readAll() {
+        return uploadClassRepository.findAll();
+    }
+
+    /**
+     * UPDATE: 강의 & 자료 수정하기
      */
     public void updateLecture(Long oldClassId, UploadClass newUploadClass) {
         if (!uploadClassRepository.existsByUploadClassId(oldClassId)) {
@@ -71,7 +79,7 @@ public class UploadClassService {
 
 
     /**
-     * Delete - Upload Class
+     * Remove - Upload Class
      */
     public void removeClassById(Long uploadClassId) {
         try {
