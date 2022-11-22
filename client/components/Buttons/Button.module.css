@@ -31,6 +31,7 @@
 	border-radius: 10px;
 	background-color: #FCB600;
 	border: none;
+	color: black;
 }
 
 .naverbtnWrapper{
@@ -40,7 +41,6 @@
 	line-height: 52px;
 	justify-content: center;
 	height: 55px;
-	color: white;
 }
 
 .kakaobtnWrapper{
@@ -80,4 +80,12 @@
 
 .adminlogo{
 	margin-right: 10px;
+}
+
+.btn_p {
+	color: black;
+}
+
+.btn_naver_p{
+	color: white;
 }
