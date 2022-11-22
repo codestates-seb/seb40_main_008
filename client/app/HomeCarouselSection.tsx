@@ -7,22 +7,19 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { ProgressBar } from "../components/Bar/ProgressBar";
-import { CarouselInfo } from "../types/homeScreen/carousel";
 import styles from "./styles/HomeCarouselSection.module.css";
-
 interface HomeCarouselSectionProps {
   children: any;
 }
 
 const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
   const containerRef = useRef<HTMLUListElement>(null);
-  const intervalRef = useRef<MutableRefObject>(null);
+  const intervalRef = useRef<any>(null);
   const [current, setCurrent] = useState(1);
   const [translateX, setTranslateX] = useState(0);
 
   const actionHandler = useCallback(
-    (mode) => {
+    (mode: any) => {
       if (containerRef.current) {
         containerRef.current.style.transitionDuration = "1000ms";
       }
