@@ -3,6 +3,7 @@ package main008.BED.contents.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3ServiceImpl;
 import main008.BED.chapter.entity.Chapter;
+import main008.BED.chapter.exception.ContentsNotFoundException;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.likes.entity.Likes;
@@ -165,4 +166,16 @@ public class ContentsService {
 
 //        return "Added to wishlist.";
     }
+
+    /**
+     * Read: Content One
+     */
+    public Contents readContent(Long contentsId) {
+        if (!contentsRepository.existsByContentsId(contentsId)) {
+            throw new ContentsNotFoundException();
+        }
+        return contentsRepository.findByContentsId(contentsId);
+    }
+
+
 }
