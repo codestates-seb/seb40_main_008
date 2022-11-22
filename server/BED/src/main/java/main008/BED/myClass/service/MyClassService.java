@@ -34,7 +34,7 @@ public class MyClassService {
     /*
     내가 구매한 컨텐츠 (수강중인 컨텐츠)
     */
-//    public MyClass getBuyClass(Long usersId) {
-//
-//    }
+    public MyClass getBuyClass(Long usersId) {
+
+    }
 }
