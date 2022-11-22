@@ -11,8 +11,6 @@ import {
   UploadImage,
 } from "../../types/uploadclass";
 
-
-
 const UploadPage = () => {
   const session = useSession();
   const fileInput = useRef<HTMLInputElement>(null);
