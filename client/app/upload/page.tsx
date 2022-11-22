@@ -32,6 +32,13 @@ const UploadPage = () => {
     });
   };
 
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert(JSON.stringify(values, null, 2));
@@ -104,7 +111,6 @@ const UploadPage = () => {
               className={styles.classnameinput}
             ></input>
             <p className={styles.title}>카테고리</p>
-
             <select
               id="category"
               name="categoryOption"
@@ -133,6 +139,22 @@ const UploadPage = () => {
                 <option value="music">음악</option>
               </optgroup>
             </select>
+
+            <p className={styles.title}>강의 가격</p>
+            <input
+              type="number"
+              name="classPrice"
+              onChange={handlePriceChange}
+              className={styles.classPrice}
+            ></input>
+            {
+              values.classPrice % 1000 === 0 ?
+                null : <div className={styles.alertMessage}>1,000원 단위로 입력 해주세요.</div>
+            }
+            {
+              values.classPrice <= 50000 ?
+                null : <div className={styles.alertMessage}>50,000원 이하로 입력 해주세요.</div>
+            }
 
             <p className={styles.title}>강의 소개</p>
             <input

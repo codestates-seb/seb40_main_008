@@ -108,3 +108,13 @@
   box-shadow: 1px 1px gray;
   background-color: #f2952f;
 }
+
+.classPrice {
+  height: 35px;
+  width: 300px;
+  border-radius: 10px;
+}
+
+.alertMessage {
+  color: darkred;
+}
