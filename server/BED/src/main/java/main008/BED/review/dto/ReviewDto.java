@@ -17,5 +17,9 @@ public class ReviewDto {
     @Getter
     @AllArgsConstructor
     public static class Patch {
+
+        private String comments;
+        private int starRate;
+
     }
 }

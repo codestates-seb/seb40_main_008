@@ -10,6 +10,11 @@ import main008.BED.chapter.mapper.ChapterMapperImpl;
 import main008.BED.chapter.repository.ChapterRepository;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
+import main008.BED.docs.entity.Docs;
+import main008.BED.docs.repository.DocsRepository;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
+import main008.BED.uploadClass.entity.UploadClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +32,7 @@ import java.util.stream.Collectors;
 public class ChapterService {
     private final ChapterRepository chapterRepository;
     private final ContentsRepository contentsRepository;
+    private final DocsRepository docsRepository;
 
     private final ChapterMapperImpl chapterMapper;
 
@@ -38,7 +44,7 @@ public class ChapterService {
     public Chapter saveChapter(Chapter chapter, Long contentsId) {
 
         if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new ContentsNotFoundException();
+            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
         }
         Contents byContentsId = contentsRepository.findByContentsId(contentsId);
 
@@ -56,7 +62,7 @@ public class ChapterService {
      */
     public Chapter readOne(Long chapterId) {
         if (!chapterRepository.existsByChapterId(chapterId)) {
-            throw new ChapterNotFoundException();
+            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
         }
         return chapterRepository.findById(chapterId).get();
     }
@@ -66,7 +72,7 @@ public class ChapterService {
      */
     public void updateChapter(Long chapterId, Chapter newChapter) {
         if (!chapterRepository.existsByChapterId(chapterId)) {
-            throw new ChapterNotFoundException();
+            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
         }
         Chapter oldChapter = chapterRepository.findByChapterId(chapterId);
         oldChapter.setChapterOrder(newChapter.getChapterOrder());
@@ -79,7 +85,16 @@ public class ChapterService {
      * DELETE
      */
     public void removeChapter(Chapter chapter) {
-        chapterRepository.delete(chapter);
+
+        List<UploadClass> uploadClassList = chapter.getUploadClassList();
+        List<Docs> docsListInChapter =
+                uploadClassList.stream()
+                        .map(uploadClass -> uploadClass.getDocs())
+                        .collect(Collectors.toList());
+
+        docsListInChapter.stream()
+                        .forEach(docs -> docsRepository.delete(docs)); // Docs 연쇄 삭제
+        chapterRepository.delete(chapter); // UploadClass, Review - cascade 연쇄 삭제
     }
 
 
@@ -88,7 +103,7 @@ public class ChapterService {
      */
     public ChapterDto.CurriculumInContent readCurriculumInContent(Long contentsId) {
         if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new RuntimeException("The Content with this id is not found.");
+            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
         Contents contents = contentsRepository.findByContentsId(contentsId);
         List<Chapter> chapterList = contents.getChapterList();
@@ -104,7 +119,7 @@ public class ChapterService {
      */
     public ChapterDto.CurriculumInStream readCurriculumInStream(Long contentsId) {
         if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new RuntimeException("The Content with this id is not found.");
+            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
         Contents contents = contentsRepository.findByContentsId(contentsId);
         List<Chapter> chapterList = contents.getChapterList();

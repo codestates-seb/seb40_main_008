@@ -40,7 +40,7 @@ public class UploadClass {
     @JoinColumn(name = "DOCS_ID")
     private Docs docs;
 
-    @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Review> reviewList;
 
 }

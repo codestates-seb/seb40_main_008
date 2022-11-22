@@ -4,6 +4,10 @@ import lombok.RequiredArgsConstructor;
 import main008.BED.contents.entity.Contents;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.repository.DocsRepository;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
+import main008.BED.review.entity.Review;
+import main008.BED.review.repository.ReviewRepository;
 import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.exception.UploadClassAlreadyExistsException;
 import main008.BED.uploadClass.exception.UploadClassNotFoundException;
@@ -22,6 +26,7 @@ public class UploadClassService {
 
     private final UploadClassRepository uploadClassRepository;
     private final DocsRepository docsRepository;
+    private final ReviewRepository reviewRepository;
 
 
 
@@ -83,17 +88,20 @@ public class UploadClassService {
      * Remove - Upload Class
      */
     public void removeClassById(Long uploadClassId) {
-        try {
-            UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
-            Docs docs = uploadClass.getDocs();
 
-            minusLecture(uploadClass);
-
-            docsRepository.delete(docs);
-            uploadClassRepository.deleteById(uploadClassId);
-        } catch (Exception e) {
-            throw new UploadClassNotFoundException();
+        if (!uploadClassRepository.existsByUploadClassId(uploadClassId)) {
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND);
         }
+        // TODO: 업로더만 삭제 가능하게끔 예외처리 추가.
+
+        UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
+        Docs docs = uploadClass.getDocs();
+        List<Review> reviewList = uploadClass.getReviewList();
+
+        minusLecture(uploadClass);
+
+        docsRepository.delete(docs);
+        uploadClassRepository.deleteById(uploadClassId);
 
     }
 

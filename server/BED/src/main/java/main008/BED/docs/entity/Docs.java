@@ -27,5 +27,8 @@ public class Docs {
     @Column
     private String name; // file name +++ 추가
 
+    @OneToOne(mappedBy = "docs")
+    private UploadClass uploadClass;
+
 
 }

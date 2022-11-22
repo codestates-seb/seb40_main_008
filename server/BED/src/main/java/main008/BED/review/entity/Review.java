@@ -35,7 +35,7 @@ public class Review {
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    @ManyToOne // 양방향
+    @ManyToOne // 양방향, Lazy, cascade.all
     @JoinColumn(name = "UPLOAD_CLASS_ID")
     private UploadClass uploadClass;
 

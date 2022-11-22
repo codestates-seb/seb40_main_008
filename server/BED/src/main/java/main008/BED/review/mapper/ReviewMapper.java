@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 public interface ReviewMapper {
 
     Review postDtoToEntity(ReviewDto.Post post);
+
+    Review patchDtoToEntity(ReviewDto.Patch patch);
 }
