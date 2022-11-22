@@ -6,6 +6,9 @@ import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
+import main008.BED.payment.dto.PaymentDto;
+import main008.BED.payment.entity.Payment;
+import main008.BED.payment.mapper.PaymentMapper;
 import main008.BED.wish.dto.WishDto;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.mapper.WishMapper;
@@ -27,6 +30,7 @@ public class ContentsController {
 
     private final ContentsService contentsService;
     private final ContentsMapper contentsMapper;
+    private final PaymentMapper paymentMapper;
     private final WishMapper wishMapper;
     private final S3Service s3Service;
 
@@ -38,16 +42,21 @@ public class ContentsController {
                                        @RequestParam("categories") Contents.Categories categories,
                                        @RequestParam("details") String details,
                                        @RequestParam("tutorDetail") String tutorDetail,
-                                       @RequestParam("thumbnail") MultipartFile thumbnail) {
+                                       @RequestParam("thumbnail") MultipartFile thumbnail,
+                                       @RequestParam("price") Integer price) {
 
         // thumbnail -> S3 업로드
         HashMap map = s3Service.uploadToS3(thumbnail, "/contents/thumbnail");
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
-//
+
+        PaymentDto.Post paymentPost = new PaymentDto.Post(price);
+
+        Payment payment = paymentMapper.postToEntity(paymentPost);
+
         ContentsDto.Post post = new ContentsDto.Post(title, categories, details, tutorDetail, thumbnailUrl, fileKey);
 
-        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId);
+        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId, payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
     }
