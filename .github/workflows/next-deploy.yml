@@ -18,15 +18,13 @@ jobs:
            uses: actions/setup-node@v3
            with:
               node-version: ${{ matrix.node-version }}
-         - run: export NEXTAUTH_URL=http://localhost:3000/
-         - run:
-              export
-              GOOGLE_CLIENT_ID=22582026482-pl9tbg3to66e0bcdpne6jb2fj0nhtnrn.apps.googleusercontent.com
-         - run: export GOOGLE_CLIENT_SECRET=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
-         - run: export KAKAO_CLIENT_ID=9d643605638d81aeffb6078a5d7403a9
-         - run: export KAKAO_CLIENT_SECRET=wT9FYl1R2VogSCAmI0Q2iTSV1UB9qxAQ
-         - run: export NAVER_CLIENT_ID=vm_ErHdMmaxRkLNDOS3t
-         - run: export NAVER_CLIENT_SECRET=c0fnerLogX
+         - run: NEXTAUTH_URL=http://localhost:3000/
+         - run: GOOGLE_CLIENT_ID=22582026482-pl9tbg3to66e0bcdpne6jb2fj0nhtnrn.apps.googleusercontent.com
+         - run: GOOGLE_CLIENT_SECRET=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
+         - run: KAKAO_CLIENT_ID=9d643605638d81aeffb6078a5d7403a9
+         - run: KAKAO_CLIENT_SECRET=wT9FYl1R2VogSCAmI0Q2iTSV1UB9qxAQ
+         - run: NAVER_CLIENT_ID=vm_ErHdMmaxRkLNDOS3t
+         - run: NAVER_CLIENT_SECRET=c0fnerLogX
          - run: cd client && npm i
          - run: cd client && npm run build --if-present
          - run: |
