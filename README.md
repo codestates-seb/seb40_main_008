@@ -1,9 +1,12 @@
 ![header](https://capsule-render.vercel.app/api?type=Cylinder&color=FF9E0F&height=100&section=header&text=class4989(진행중)%20&fontSize=45)
 
+##📍배포주소
+https://www.class4989.one/
 ## 🔗 피그마 시안
 https://www.figma.com/file/c2WQ9ZPv7W3hozdQtuKZ8x/Untitled?node-id=0%3A1
 
-## 💡프로젝트 개요
+## 💡Rest Api
+https://documenter.getpostman.com/view/22568988/2s8YmSrfq3
 
 
 <br/>
