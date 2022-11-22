@@ -4,35 +4,33 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import main008.BED.contents.entity.Contents;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Payment {
+public class PaymentDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paymentId;
+    private Long paymentDetailId;
 
-    /*
-    강좌 개설 시 가격 인풋
-    */
     @Column
-    private Integer price;
+    private Boolean payed;
 
-    // 컨텐츠 < payment
+    @Column
+    private ZonedDateTime payedAt;
+
     @OneToOne
-    @JoinColumn(name = "CONTENTS_ID")
-    private Contents contents;
+    @JoinColumn(name = "USERS_ID")
+    private Users users;
 
-    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
-    private List<PaymentDetail> paymentDetails;
+    @ManyToOne
+    @JoinColumn(name = "PAYMENT_ID")
+    private Payment payment;
 }

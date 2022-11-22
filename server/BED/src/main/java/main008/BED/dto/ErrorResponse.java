@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class ErrorResponse {
     private int status;
     private String message;
-    private List<FieldError> fieldErrors;
-    private List<ConstraintViolationError> violationErrors;
+    private List<FieldError> fieldErrors; // DTO 유효성 에러 변수
+    private List<ConstraintViolationError> violationErrors; // URI 유효성 에러 변수
 
     private ErrorResponse(int status, String message) {
         this.status = status;
@@ -28,14 +28,6 @@ public class ErrorResponse {
         this.violationErrors = violationErrors;
     }
 
-    public static ErrorResponse of(BindingResult bindingResult) {
-        return new ErrorResponse(FieldError.of(bindingResult), null);
-    }
-
-    public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
-        return new ErrorResponse(null, ConstraintViolationError.of(violations));
-    }
-
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         return new ErrorResponse(exceptionCode.getStatusCode(), exceptionCode.getMessage());
     }
@@ -44,8 +36,13 @@ public class ErrorResponse {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
-    public static ErrorResponse of(HttpStatus httpStatus, String message) {
-        return new ErrorResponse(httpStatus.value(), message);
+
+    public static ErrorResponse of(BindingResult bindingResult) {
+        return new ErrorResponse(FieldError.of(bindingResult), null);
+    }
+
+    public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
+        return new ErrorResponse(null, ConstraintViolationError.of(violations));
     }
 
     @Getter
