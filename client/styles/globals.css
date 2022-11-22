@@ -1,8 +1,9 @@
 :root {
-	--background-color: #0a191f;
-	--semi-info-text-color: #ababab;
-	--max-width: 480px;
-	color: #f3f3f3;
+  --background-color: #0a191f;
+  --semi-info-text-color: #ababab;
+  --max-width: 480px;
+  color: #f3f3f3;
+  --faintwhite: #F1F1F1;
 }
 
 * {
