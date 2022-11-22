@@ -2,9 +2,9 @@ package main008.BED.docs.service;
 
 import lombok.RequiredArgsConstructor;
 import main008.BED.docs.entity.Docs;
-import main008.BED.docs.exception.DocsAlreadyExistsException;
-import main008.BED.docs.exception.DocsNotFoundException;
 import main008.BED.docs.repository.DocsRepository;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +26,7 @@ public class DocsService {
     public Docs readDocs(Long id) {
 
         if (!docsRepository.existsById(id)) {
-            throw new DocsAlreadyExistsException();
+            throw new BusinessLogicException(ExceptionCode.DOCS_NOT_FOUND);
         }
         return docsRepository.findById(id).get();
     }
@@ -45,7 +45,7 @@ public class DocsService {
      */
     public Docs saveDocs(Docs docs) throws IOException {
         if (docsRepository.existsByName(docs.getName())) {
-            throw new DocsAlreadyExistsException();
+            throw new BusinessLogicException(ExceptionCode.DOCS_EXISTS);
         }
         return docsRepository.save(docs);
     }
@@ -57,7 +57,7 @@ public class DocsService {
 
         // TODO: 중복제거 로직 통일성 고려
         if (!docsRepository.existsById(oldDocsId)) {
-            throw new DocsNotFoundException();
+            throw new BusinessLogicException(ExceptionCode.DOCS_NOT_FOUND);
         }
 
         Docs oldDocs = docsRepository.findById(oldDocsId).get();

@@ -20,7 +20,11 @@ public enum ExceptionCode {
     CHAPTER_NOT_FOUND(404, "Chapter Not Found"),
 
     /*UploadClass*/
-    UPLOAD_CLASS_NOT_FOUND(404, "UploadClass Not Found")
+    UPLOAD_CLASS_NOT_FOUND(404, "UploadClass Not Found"),
+
+    /*Docs*/
+    DOCS_NOT_FOUND(404, "Docs Not Found"),
+    DOCS_EXISTS(409, "Docs Already exists")
     ;
 
 
