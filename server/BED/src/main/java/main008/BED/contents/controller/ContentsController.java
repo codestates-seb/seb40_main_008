@@ -95,7 +95,7 @@ public class ContentsController {
     }
 
     /**
-     * READ: 컨텐츠 상세화면 (구매 후?)
+     * READ: 컨텐츠 상세화면 Response DTO
      */
     // TODO: 구매 여부에 따라 상세화면 Dto 구분 로직 작성
     @GetMapping("/contents/{contents-id}")
@@ -114,13 +114,13 @@ public class ContentsController {
                 contents.getCategories(),
                 contents.getDetails(),
                 contents.getTutorDetail(),
-                curriculumInContent);
+                curriculumInContent.getCurriculumInfo());
 
         return new ResponseEntity(responseInContent, HttpStatus.OK);
     }
 
     /**
-     * READ: 영상 재생 화면
+     * READ: 영상 재생 화면 Response DTO
      */
     @GetMapping("contents/{contents-id}/video/{uploadClass-id}")
     public ResponseEntity getStream(@PathVariable("contents-id") @Positive Long contentsId,

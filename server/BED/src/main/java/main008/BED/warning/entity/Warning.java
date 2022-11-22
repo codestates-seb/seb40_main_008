@@ -21,17 +21,17 @@ public class Warning {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String reason;
 
     @Column
     private ZonedDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne // 양방향, cascade.all, Lazy
     @JoinColumn(name = "USRES_ID")
     private Users users;
 
-    @ManyToOne
+    @ManyToOne // 양방향, cascade.all, Lazy
     @JoinColumn(name = "UPLOAD_CLASS_ID")
     private UploadClass uploadClass;
 }

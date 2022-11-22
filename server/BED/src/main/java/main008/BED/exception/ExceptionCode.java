@@ -25,7 +25,10 @@ public enum ExceptionCode {
 
     /*Docs*/
     DOCS_NOT_FOUND(404, "Docs Not Found"),
-    DOCS_EXISTS(409, "Docs Already exists")
+    DOCS_EXISTS(409, "Docs Already exists"),
+
+    /*Warning*/
+    DUPLICATE_WARNING(409, "해당 강의에 대하여 이미 신고한 내역이 있습니다.")
     ;
 
 

@@ -59,7 +59,7 @@ public class ContentsDto {
         private Contents.Categories categories;
         private String details;
         private String tutorDetail;
-        private ChapterDto.CurriculumInContent curriculumInContent;
+        private List<ChapterDto.ResponseDto> curriculumInfo;
     }
 
     @Getter

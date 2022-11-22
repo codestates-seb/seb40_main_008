@@ -4,6 +4,7 @@ import lombok.*;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.docs.entity.Docs;
 import main008.BED.review.entity.Review;
+import main008.BED.warning.entity.Warning;
 
 import javax.persistence.*;
 import java.util.List;
@@ -43,4 +44,6 @@ public class UploadClass {
     @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Review> reviewList;
 
+    @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Warning> warningList;
 }
