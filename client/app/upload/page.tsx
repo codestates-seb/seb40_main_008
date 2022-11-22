@@ -37,7 +37,7 @@ const UploadPage = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -147,14 +147,16 @@ const UploadPage = () => {
               onChange={handlePriceChange}
               className={styles.classPrice}
             ></input>
-            {
-              values.classPrice % 1000 === 0 ?
-                null : <div className={styles.alertMessage}>1,000원 단위로 입력 해주세요.</div>
-            }
-            {
-              values.classPrice <= 50000 ?
-                null : <div className={styles.alertMessage}>50,000원 이하로 입력 해주세요.</div>
-            }
+            {values.classPrice % 1000 === 0 ? null : (
+              <div className={styles.alertMessage}>
+                1,000원 단위로 입력 해주세요.
+              </div>
+            )}
+            {values.classPrice <= 50000 ? null : (
+              <div className={styles.alertMessage}>
+                50,000원 이하로 입력 해주세요.
+              </div>
+            )}
 
             <p className={styles.title}>강의 소개</p>
             <input

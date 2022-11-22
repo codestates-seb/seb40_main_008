@@ -7,7 +7,6 @@ import { UseScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
 
 const BaseNavbar = () => {
   const { show } = UseScrollBar();
-  console.log("t", window.scrollY);
   return (
     <>
       {window.scrollY < 45 ? (

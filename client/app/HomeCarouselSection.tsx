@@ -131,7 +131,7 @@ const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
       <div
         style={{
           height: "50px",
-          width: "360px",
+          width: "410px",
           color: "white",
           position: "absolute",
           bottom: 10,

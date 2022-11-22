@@ -6,11 +6,12 @@ import { UseScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
 import styles from "./HomeNavBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useSession } from "next-auth/react";
 
 const HomeNavBar = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const session = useSession();
   const { show } = UseScrollBar();
-  console.log(window.scrollY);
+  // console.log(window.scrollY);
 
   const scrollTopBtn = () => {
     window.scrollTo({
@@ -23,21 +24,21 @@ const HomeNavBar = () => {
     <>
       {window.scrollY < 60 ? (
         <nav className={styles.firstNav}>
-          <div className="logo">
+          <div className={styles.logowrapper}>
             <FontAwesomeIcon icon={faBars} className={styles.font} />
             <button className={styles.logo} onClick={scrollTopBtn}>
               class4989
             </button>
           </div>
           <div>
-            {isLogin ? (
+            {session.status === "authenticated" ? (
               <Link href={"/mypage"}>
                 <Image
                   className="myimg"
                   alt="myimg"
                   src="/img/myimg.png"
-                  width={40}
-                  height={40}
+                  width={35}
+                  height={35}
                 />
               </Link>
             ) : (
@@ -56,7 +57,7 @@ const HomeNavBar = () => {
             </button>
           </div>
           <div>
-            {isLogin ? (
+            {session.status === "authenticated" ? (
               <Link href={"/mypage"}>
                 <Image
                   className="myimg"
