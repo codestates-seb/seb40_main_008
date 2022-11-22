@@ -39,7 +39,6 @@ public class Contents {
     @Column
     private String fileKey; // thumbnail key for delete it in s3
 
-
     private int likesCount = 0;
 
     @Column(columnDefinition = "TEXT")
@@ -87,7 +86,7 @@ public class Contents {
         CHILD_EDUCATION("아이 교육"),
         PARENTS_EDUCATION("부모 교육");
 
-        @Getter
+//        @Getter
         private final String value;
 
 
@@ -146,6 +145,7 @@ public class Contents {
 
     @OneToOne(mappedBy = "contents", cascade = CascadeType.ALL)
     private Payment payment;
+
 
     public void addWish(Wish wish) {
         this.wishes.add(wish);
