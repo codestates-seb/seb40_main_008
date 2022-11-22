@@ -2,7 +2,7 @@ name: next deploy
 
 on:
    push:
-      branches: ['dev-fe']
+      branches: ['dev-fe', 'fe/test/yaml-production-test']
 
 jobs:
    build:
