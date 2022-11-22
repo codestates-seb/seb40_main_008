@@ -30,7 +30,7 @@ const UploadPage = () => {
   const handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
     setValues({
       ...values,
-      categoryOption: e.currentTarget.value,
+      categories: e.currentTarget.value,
     });
   };
 
@@ -109,14 +109,14 @@ const UploadPage = () => {
             <p className={styles.classtitle}>클래스명</p>
             <input
               type="text"
-              name="classname"
+              name="title"
               onChange={handleChange}
               className={styles.classnameinput}
             ></input>
             <p className={styles.title}>카테고리</p>
             <select
               id="category"
-              name="categoryOption"
+              name="categories"
               onChange={handleOptionChange}
               className={styles.select}
             >
@@ -146,30 +146,30 @@ const UploadPage = () => {
             <p className={styles.title}>강의 가격</p>
             <input
               type="number"
-              name="classPrice"
+              name="price"
               onChange={handlePriceChange}
               className={styles.classPrice}
             />
             {
-              values.classPrice % 1000 === 0 ?
+              values.price % 1000 === 0 ?
                 null : <div className={styles.alertMessage}>1,000원 단위로 입력 해주세요.</div>
             }
             {
-              values.classPrice <= 50000 ?
+              values.price <= 50000 ?
                 null : <div className={styles.alertMessage}>50,000원 이하로 입력 해주세요.</div>
             }
 
             <p className={styles.title}>강의 소개</p>
             <input
               type="text"
-              name="introduceClass"
+              name="details"
               onChange={handleChange}
               className={styles.introduceClass}
             ></input>
             <p className={styles.title}>강사 소개</p>
             <input
               type="text"
-              name="introduceInstructor"
+              name="tutorDetail"
               onChange={handleChange}
               className={styles.introduceInstructor}
             ></input>
