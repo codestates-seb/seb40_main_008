@@ -15,8 +15,8 @@ body {
   -webkit-text-size-adjust: 100%;
   background-color: var(--background-color);
   width: 360px;
+  min-height: 850px;
   border: 1px solid white;
-  min-height: 800px;
   margin: 0 auto;
 }
 h1,

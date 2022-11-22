@@ -1,7 +1,17 @@
-import styles from './Button.module.css';
+import styles from "./Button.module.css";
 
-const Button = () => {
-	return <div>Button</div>;
+interface Prop {
+  name: string;
+}
+
+const Button = ({ name }: Prop) => {
+  return (
+    <>
+      <div className={styles.chargeBoardWrapper}>
+        <button className={styles.chargeBoard}>{name}</button>
+      </div>
+    </>
+  );
 };
 
 export default Button;

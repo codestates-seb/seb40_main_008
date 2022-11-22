@@ -1,3 +1,19 @@
-button {
-	width: 100%;
+.chargeBoardWrapper {
+  display: flex;
+  position: sticky;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+}
+
+.chargeBoard {
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  box-shadow: 1px 1px gray;
+  background-color: #f2952f;
 }

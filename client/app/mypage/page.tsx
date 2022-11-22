@@ -9,6 +9,7 @@ import {
   faPenToSquare,
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
+import Button from "../../components/Buttons/Button";
 
 const MyPage = () => {
   return (
@@ -54,7 +55,7 @@ const MyPage = () => {
             <h2 className={styles.font}>강좌 개설하기</h2>
           </Link>
         </div>
-        <button className={styles.logoutBtn}>로그아웃</button>
+        <Button name={"로그 아웃"}></Button>
       </div>
     </>
   );

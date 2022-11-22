@@ -1,0 +1,46 @@
+.TitleWrapper {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  position: relative;
+  align-items: center;
+  text-align: center;
+}
+
+.line {
+  height: 0.1px;
+  width: 90%;
+  margin-top: 20px;
+  background-color: gray;
+  margin: 0 auto;
+}
+
+.ChargeWrapper {
+  display: flex;
+  position: relative;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+.charge {
+  display: flex;
+  padding: 30px;
+  align-items: center;
+}
+
+.coinfont {
+  margin-right: 10px;
+}
+
+.chargeBtn {
+  cursor: pointer;
+  margin-left: 50px;
+  margin-top: 3px;
+  border-radius: 5px;
+  outline: 0;
+  padding: 6px;
+  color: white;
+  background: transparent;
+  font-size: 20px;
+}
