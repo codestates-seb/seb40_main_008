@@ -131,19 +131,6 @@ const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
         {slides}
       </ul>
 
-      <button
-        onClick={() => actionHandler("prev")}
-        className={`${styles.Btn} ${styles.BtnLeft}`}
-      >
-        {"<"}
-      </button>
-      <button
-        onClick={() => actionHandler("next")}
-        className={`${styles.Btn} ${styles.BtnRight}`}
-      >
-        {">"}
-      </button>
-
       <div
         style={{
           height: "50px",
