@@ -1,5 +1,5 @@
 .myinfo {
-  margin-top: 50px;
+  margin-top: 60px;
   position: relative;
   align-items: center;
   text-align: center;
@@ -48,7 +48,7 @@
   position: relative;
   align-items: center;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 .CourseWrapper {
   display: flex;
@@ -56,15 +56,5 @@
   align-items: center;
   justify-content: center;
   padding: 35px;
-}
-
-.logoutBtn {
-  margin-top: 100px;
-  width: 300px;
-  height: 50px;
-  border-radius: 10px;
-  color: white;
-  font-size: 16px;
-  box-shadow: 1px 1px gray;
-  background-color: #f2952f;
+  margin-bottom: 20px;
 }

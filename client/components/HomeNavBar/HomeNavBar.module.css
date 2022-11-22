@@ -3,9 +3,9 @@
   position: fixed;
   top: 0;
   margin: 0 auto;
-  width: 360px;
+  width: 410px;
   color: #f3f3f3;
-  height: 50px;
+  height: 54px;
   background-color: #0a191f;
   padding: 0 20px;
   align-items: center;
@@ -31,7 +31,7 @@
   position: fixed;
   top: 0;
   margin: 0 auto;
-  width: 360px;
+  width: 410px;
   color: #f3f3f3;
   height: 50px;
   padding: 0 20px;
@@ -49,6 +49,11 @@
   width: 24px;
   height: 24px;
 }
+.logowrapper {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .logo {
   border: 0;
   outline: 0;
@@ -56,8 +61,7 @@
   color: white;
   padding-left: 10px;
   font-size: 16px;
-  vertical-align: top;
-  margin-top: 3px;
+  vertical-align: baseline;
 }
 .login {
   vertical-align: top;

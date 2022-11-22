@@ -1,3 +1,8 @@
+.loginbtnWrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+}
 .chargeBoardWrapper {
   display: flex;
   position: sticky;
@@ -6,16 +11,6 @@
   align-items: center;
   justify-content: center;
   bottom: 0;
-}
-
-.chargeBoard {
-  width: 300px;
-  height: 50px;
-  border-radius: 10px;
-  color: white;
-  font-size: 16px;
-  box-shadow: 1px 1px gray;
-  background-color: #f2952f;
 }
 
 .googlebtn {
