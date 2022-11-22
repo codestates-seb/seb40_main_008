@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CoinChargeRepository extends JpaRepository<CoinCharge, Long> {
+
+    CoinCharge findByUserPageUserPageId(Long userPageId);
 }

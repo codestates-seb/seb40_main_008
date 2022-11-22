@@ -8,6 +8,9 @@ import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
+import main008.BED.payment.dto.PaymentDto;
+import main008.BED.payment.entity.Payment;
+import main008.BED.payment.mapper.PaymentMapper;
 import main008.BED.wish.dto.WishDto;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.mapper.WishMapper;
@@ -22,7 +25,7 @@ import javax.validation.constraints.Positive;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Validated
 public class ContentsController {
@@ -31,34 +34,40 @@ public class ContentsController {
 
     private final ChapterService chapterService;
     private final ContentsMapper contentsMapper;
+    private final PaymentMapper paymentMapper;
     private final WishMapper wishMapper;
     private final S3Service s3Service;
 
 
     // 컨텐츠 개설
-    @PostMapping("/auth/{users-id}/uploadcontents")
+    @PostMapping("/{users-id}/uploadcontents")
     public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
                                        @RequestParam("title") String title,
                                        @RequestParam("categories") Contents.Categories categories,
                                        @RequestParam("details") String details,
                                        @RequestParam("tutorDetail") String tutorDetail,
-                                       @RequestParam("thumbnail") MultipartFile thumbnail) {
+                                       @RequestParam("thumbnail") MultipartFile thumbnail,
+                                       @RequestParam("price") Integer price) {
 
         // thumbnail -> S3 업로드
         HashMap map = s3Service.uploadToS3(thumbnail, "/contents/thumbnail");
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
-//
+
+        PaymentDto.Post paymentPost = new PaymentDto.Post(price);
+
+        Payment payment = paymentMapper.postToEntity(paymentPost);
+
         ContentsDto.Post post = new ContentsDto.Post(title, categories, details, tutorDetail, thumbnailUrl, fileKey);
 
-        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId);
+        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId, payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
     }
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/auth/{users-id}/{contents-id}/wish")
+    @PostMapping("/{users-id}/{contents-id}/wish")
     public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {

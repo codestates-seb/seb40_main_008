@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
-@RequestMapping("/auth/home")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Valid
 public class MyUploadClassController {
@@ -23,7 +23,7 @@ public class MyUploadClassController {
     private final MyUploadClassService myUploadClassService;
 
 
-    @GetMapping("/auth/{users-id}/myuploadclass")
+    @GetMapping("/{users-id}/myuploadclass")
     public ResponseEntity getMyUploadClass(@PathVariable("users-id") @Positive Long usersId) {
 
         MyUploadClass myUploadClass = myUploadClassService.getMyUploadClasses(usersId);
@@ -34,7 +34,7 @@ public class MyUploadClassController {
     /**
      * Delete: 마이 페이지 화면 -> 내가 올린 클래스 -> 컨텐츠 삭제 기능
      */
-    @DeleteMapping("/{users-id}/myuploadclass/del/{contents-id}")
+    @DeleteMapping("/{users-id}/myuploadclass/{contents-id}")
     public void deleteContents(@PathVariable("contents-id") @Positive Long contentsId,
                                @PathVariable("users-id") @Positive Long usersId) {
         contentsService.removeContents(contentsId);

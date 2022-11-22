@@ -1,6 +1,8 @@
 package main008.BED.users.service;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.coinCharge.entity.CoinCharge;
+import main008.BED.coinCharge.repository.CoinChargeRepository;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
 import main008.BED.myClass.entity.MyClass;
@@ -29,6 +31,7 @@ public class UsersService {
     private final MyUploadClassRepository myUploadClassRepository;
     private final MyClassRepository myClassRepository;
     private final WishRepository wishRepository;
+    private final CoinChargeRepository coinChargeRepository;
 
     public Users createUsers(Users users) {
 
@@ -36,10 +39,17 @@ public class UsersService {
 
         UserPage userPage = new UserPage();
         userPage.setUsers(users1);
+        userPage.setCoinCharge(new CoinCharge());
         userPageRepository.save(userPage);
+
+        CoinCharge coinCharge = userPage.getCoinCharge();
+        coinCharge.setCoinChargeDetails(new ArrayList<>());
+        coinCharge.setUserPage(userPage);
+        coinChargeRepository.save(coinCharge);
 
         MyUploadClass myUploadClass = new MyUploadClass();
         myUploadClass.setUsers(users1);
+        myUploadClass.setUserPage(userPage);
         myUploadClass.setContentsList(new ArrayList<>());
         myUploadClassRepository.save(myUploadClass);
 

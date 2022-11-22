@@ -15,7 +15,7 @@ public interface UsersMapper {
                 .userName(users.getUserName())
                 .email(users.getEmail())
                 .profileImage(users.getProfileImage())
-                .coin(users.getCoin())
+                .totalCoin(users.getTotalCoin())
                 .build();
     }
     default Users postToEntity(UsersDto.Post post) {
@@ -24,7 +24,7 @@ public interface UsersMapper {
                 .userName(post.getUserName())
                 .email(post.getEmail())
                 .profileImage(post.getProfileImage())
-                .coin(5000)
+                .totalCoin(5000)
                 .build();
     }
 

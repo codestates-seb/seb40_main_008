@@ -66,7 +66,7 @@ public class UploadClassController {
     /**
      * Patch: 영상 & 자료 수정하기
      */
-    @PatchMapping("/edit/{uploadClass-id}")
+    @PatchMapping("/{uploadClass-id}")
     public ResponseEntity patchUploadClass(@RequestParam(value = "videoFile") MultipartFile videoFile,
                                            @RequestParam(value = "title") String newTitle,
                                            @RequestParam(value = "docsFile") MultipartFile docsFile,
@@ -101,7 +101,7 @@ public class UploadClassController {
     /**
      * Delete: 영상 & 자료 삭제하기
      */
-    @DeleteMapping("del/{uploadClass-id}")
+    @DeleteMapping("/{uploadClass-id}")
     public ResponseEntity deleteUploadClass(@PathVariable("uploadClass-id") @Positive Long uploadClassId) {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         uploadClassService.removeClassById(uploadClassId);

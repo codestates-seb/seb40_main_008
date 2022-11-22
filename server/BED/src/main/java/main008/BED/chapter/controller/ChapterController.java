@@ -56,6 +56,7 @@ public class ChapterController {
     }
 
 
+
     // TODO: 콘텐츠 상세화면의 커리큘럼과, 영상 재생 화면의 커리큘럼(썸네일빠짐) 둘 다 작성
 
     /**
@@ -89,6 +90,7 @@ public class ChapterController {
      */
     @GetMapping("/chapter/{chapter-id}")
     public ResponseEntity getChapter(@PathVariable("chapter-id") @Positive Long chapterId) {
+
         Chapter chapter = chapterService.readOne(chapterId);
         List<UploadClass> uploadClassList = uploadClassService.readAll();
         chapter.setUploadClassList(uploadClassList);
@@ -120,10 +122,12 @@ public class ChapterController {
     }
 
 
+
     /**
      * Delete: 챕터 삭제
      */
     @DeleteMapping("/chapter/del/{chapter-id}")
+
     public ResponseEntity deleteChapter(@PathVariable("chapter-id") Long id) {
         Chapter chapter = chapterService.readOne(id);
         String keys = chapter.getFileKey();

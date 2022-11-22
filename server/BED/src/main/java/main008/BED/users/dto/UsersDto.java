@@ -43,7 +43,7 @@ public class UsersDto {
         private String userName;
         private String email;
         private String profileImage;
-        private int coin;
+        private int totalCoin;
     }
 
     @Getter
