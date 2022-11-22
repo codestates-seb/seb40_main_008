@@ -28,4 +28,6 @@ public interface DocsMapper {
 
     DocsDto.ReadAllDto entityToReadAllDto(Docs docs);
 
+    DocsDto.Response entityToResponseDto(Docs docs);
+
 }

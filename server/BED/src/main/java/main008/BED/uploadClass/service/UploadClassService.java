@@ -53,6 +53,9 @@ public class UploadClassService {
      * Read One
      */
     public UploadClass readClassById(Long uploadClassId) {
+        if (!uploadClassRepository.existsByUploadClassId(uploadClassId)) {
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND);
+        }
         UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
         return uploadClass;
     }

@@ -49,4 +49,14 @@ public class DocsDto {
         private String name;
     }
 
+    @Getter
+    @AllArgsConstructor
+    public static class Response {
+
+        private Long docsId;
+        private String details;
+        private String name;
+    }
+
+
 }
