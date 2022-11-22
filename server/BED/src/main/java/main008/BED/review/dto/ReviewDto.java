@@ -8,6 +8,10 @@ public class ReviewDto {
     @Getter
     @AllArgsConstructor
     public static class Post {
+
+        private String comments;
+        private int starRate;
+
     }
 
     @Getter

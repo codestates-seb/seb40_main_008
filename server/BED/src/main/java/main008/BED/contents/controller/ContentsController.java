@@ -2,6 +2,8 @@ package main008.BED.contents.controller;
 
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3Service;
+import main008.BED.chapter.dto.ChapterDto;
+import main008.BED.chapter.service.ChapterService;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.mapper.ContentsMapper;
@@ -29,6 +31,8 @@ import java.util.HashMap;
 public class ContentsController {
 
     private final ContentsService contentsService;
+
+    private final ChapterService chapterService;
     private final ContentsMapper contentsMapper;
     private final PaymentMapper paymentMapper;
     private final WishMapper wishMapper;
@@ -75,4 +79,38 @@ public class ContentsController {
 //        return new ResponseEntity<>(response, HttpStatus.OK);
         return ResponseEntity.status(HttpStatus.OK).body("Update your wishlist.");
     }
+
+    /**
+     * READ: 컨텐츠 상세화면 (구매 후?)
+     */
+    // TODO: 구매 여부에 따라 상세화면 Dto 구분 로직 작성
+    @GetMapping("/contents/{contents-id}")
+    public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
+
+        Contents contents = contentsService.readContent(contentsId);
+
+        ChapterDto.CurriculumInContent curriculumInContent
+                = chapterService.readCurriculumInContent(contentsId);
+
+        ContentsDto.ResponseInContent responseInContent
+                = new ContentsDto.ResponseInContent(contentsId,
+                contents.getTitle(),
+                contents.getThumbnail(),
+                contents.getLikesCount(),
+                contents.getCategories(),
+                contents.getDetails(),
+                contents.getTutorDetail(),
+                curriculumInContent);
+
+        return new ResponseEntity(responseInContent, HttpStatus.OK);
+    }
+
+    /**
+     * READ: 영상 재생 화면
+     */
+//    @GetMapping("contents/{contents-id}/video/{uploadClass-id}")
+//    public ResponseEntity getStream(@PathVariable("contents-id") @Positive Long contentsId,
+//                                    @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
+//
+//    }
 }

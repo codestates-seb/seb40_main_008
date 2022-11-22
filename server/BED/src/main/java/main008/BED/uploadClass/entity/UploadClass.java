@@ -3,8 +3,10 @@ package main008.BED.uploadClass.entity;
 import lombok.*;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.docs.entity.Docs;
+import main008.BED.review.entity.Review;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,5 +39,8 @@ public class UploadClass {
     @OneToOne
     @JoinColumn(name = "DOCS_ID")
     private Docs docs;
+
+    @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY)
+    private List<Review> reviewList;
 
 }
