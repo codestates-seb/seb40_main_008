@@ -1,0 +1,70 @@
+.myinfo {
+  margin-top: 50px;
+  position: relative;
+  align-items: center;
+  text-align: center;
+}
+
+.myimg {
+  display: block;
+  margin: 0 auto;
+}
+.id {
+  color: gray;
+  padding: 5px;
+  font-size: 14px;
+}
+.Wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.coinfont {
+  margin-bottom: 35px;
+}
+.mycoin {
+  color: gray;
+  padding: 5px;
+  font-size: 14px;
+  margin-left: 5px;
+  margin-bottom: 35px;
+}
+.line {
+  margin: 0 auto;
+  border: 0.3px solid gray;
+  width: 90%;
+}
+
+.fontimg {
+  font-size: 25px;
+}
+
+.font {
+  margin-left: 10px;
+}
+
+.mycorner {
+  position: relative;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+}
+.CourseWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 35px;
+}
+
+.logoutBtn {
+  margin-top: 100px;
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  box-shadow: 1px 1px gray;
+  background-color: #f2952f;
+}
