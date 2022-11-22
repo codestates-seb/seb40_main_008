@@ -37,15 +37,22 @@ const MyPage = () => {
       <div className={styles.mycorner}>
         <div className={styles.CourseWrapper}>
           <FontAwesomeIcon icon={faCoins} className={styles.fontimg} />
-          <h2 className={styles.font}>코인 충전하기</h2>
+          <Link href={`/charge`}>
+            <h2 className={styles.font}>코인 충전하기</h2>
+          </Link>
         </div>
         <div className={styles.CourseWrapper}>
           <FontAwesomeIcon icon={faPencil} className={styles.fontimg} />
-          <h2 className={styles.font}>내가 올린 클래스</h2>
+          <Link href={`/myupload`}>
+            <h2 className={styles.font}>내가 올린 클래스</h2>
+          </Link>
         </div>
+
         <div className={styles.CourseWrapper}>
           <FontAwesomeIcon icon={faPenToSquare} className={styles.fontimg} />
-          <h2 className={styles.font}>강좌 개설하기</h2>
+          <Link href={`/upload`}>
+            <h2 className={styles.font}>강좌 개설하기</h2>
+          </Link>
         </div>
         <button className={styles.logoutBtn}>로그아웃</button>
       </div>
