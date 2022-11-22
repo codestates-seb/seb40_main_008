@@ -118,3 +118,15 @@
 .alertMessage {
   color: darkred;
 }
+
+/* Chrome, Safari, Edge, Opera */
+.classPrice::-webkit-outer-spin-button,
+.classPrice::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.classPrice[type=number] {
+  -moz-appearance: textfield;
+}

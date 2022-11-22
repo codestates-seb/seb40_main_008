@@ -11,6 +11,8 @@ import {
   UploadImage,
 } from "../../types/uploadclass";
 
+
+
 const UploadPage = () => {
   const session = useSession();
   const fileInput = useRef<HTMLInputElement>(null);
@@ -64,10 +66,10 @@ const UploadPage = () => {
         ...values,
         thumbnail: fileList[0],
       });
-      console.log(fileList);
-      console.log(fileList[0]);
-      console.log(URL);
-      console.log(url);
+      console.log('fileList', fileList);
+      console.log('fileList[0]', fileList[0]);
+      console.log('URL', URL);
+      console.log('url', url);
     }
   };
 
@@ -75,6 +77,7 @@ const UploadPage = () => {
     if (!imageFile && imageFile == null) {
       return <p>비어있는 프로필</p>;
     }
+
     return (
       <Image
         className={styles.thumbnail}
@@ -146,7 +149,7 @@ const UploadPage = () => {
               name="classPrice"
               onChange={handlePriceChange}
               className={styles.classPrice}
-            ></input>
+            />
             {
               values.classPrice % 1000 === 0 ?
                 null : <div className={styles.alertMessage}>1,000원 단위로 입력 해주세요.</div>
