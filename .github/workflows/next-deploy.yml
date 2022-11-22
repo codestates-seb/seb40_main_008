@@ -1,4 +1,4 @@
-name: next deploy
+name: class-next-nginx-deploy
 
 on:
    push:
