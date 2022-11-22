@@ -4,6 +4,8 @@ import { CarouselInfo } from "../types/homeScreen/carousel";
 import { Content } from "../types/homeScreen/mainVideoContents";
 import HomeCarouselSection from "./HomeCarouselSection";
 import HomeClassesSection from "./HomeClassesSection";
+import styles from "./styles/page.module.css";
+import CarouselImageWithText from "../components/Carousel/CarouselImageWithText";
 
 const getClassesContents = async (): Promise<Array<Content>> => {
   try {
@@ -25,9 +27,7 @@ const getClassesContents = async (): Promise<Array<Content>> => {
 
 const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
   try {
-    const response = await fetch(
-      "https://run.mocky.io/v3/dd10a02d-8e88-483a-a270-c284b4d4e81d"
-    );
+    const response = await fetch("https://pioneroroom.com/carousel");
     const { carouselInfo } = await response.json();
     return carouselInfo;
   } catch (error) {
@@ -42,7 +42,19 @@ const page = async () => {
   return (
     <>
       <HomeNavBar />
-      <HomeCarouselSection carouselList={carouselList} />
+
+      <HomeCarouselSection>
+        {carouselList.map((e) => (
+          <CarouselImageWithText
+            key={e.imageUrl}
+            title={e.title}
+            subtitle={e.subTitle}
+            src={e.imageUrl}
+            link={e.redirectUrl}
+          />
+        ))}
+      </HomeCarouselSection>
+
       <HomeClassesSection contentList={contentsList} />
       <TabNavigator activeLink={"home"} />
     </>

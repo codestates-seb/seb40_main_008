@@ -1,17 +1,36 @@
-'use client';
-import React from 'react';
-import styles from './BaseNavbar.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+"use client";
+import React from "react";
+import styles from "./BaseNavbar.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { UseScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
 
 const BaseNavbar = () => {
-	return (
-		<nav className={styles.baseNav}>
-			<button onClick={() => window.history.back()} className={styles.leftbtn}>
-				<FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
-			</button>
-		</nav>
-	);
+  const { show } = UseScrollBar();
+  console.log("t", window.scrollY);
+  return (
+    <>
+      {window.scrollY < 45 ? (
+        <nav className={styles.firstNav}>
+          <button
+            onClick={() => window.history.back()}
+            className={styles.leftbtn}
+          >
+            <FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
+          </button>
+        </nav>
+      ) : (
+        <nav className={`${show ? styles.baseNav : styles.change_nav} `}>
+          <button
+            onClick={() => window.history.back()}
+            className={styles.leftbtn}
+          >
+            <FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
+          </button>
+        </nav>
+      )}
+    </>
+  );
 };
 
 export default BaseNavbar;

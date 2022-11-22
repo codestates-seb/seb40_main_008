@@ -2,41 +2,16 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { UseScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
 import styles from "./HomeNavBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const HomeNavBar = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const { show } = UseScrollBar();
+  console.log(window.scrollY);
 
-  const [show, setShow] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  const controlNavbar = () => {
-    if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY) {
-        // if scroll down hide the navbar
-        setShow(false);
-      } else {
-        // if scroll up show the navbar
-        setShow(true);
-      }
-
-      // remember current page location to use in the next move
-      setLastScrollY(window.scrollY);
-    }
-  };
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", controlNavbar);
-
-      // cleanup function
-      return () => {
-        window.removeEventListener("scroll", controlNavbar);
-      };
-    }
-  }, [lastScrollY]);
   const scrollTopBtn = () => {
     window.scrollTo({
       top: 0,
@@ -45,33 +20,61 @@ const HomeNavBar = () => {
   };
 
   return (
-    <nav className={`${show ? styles.nav : styles.change_nav} ${styles.tab}`}>
-      <div className="logo">
-        <Link href={"/categories"}>
-          <FontAwesomeIcon icon={faBars} className={styles.font} />
-        </Link>
-        <button className={styles.logo} onClick={scrollTopBtn}>
-          class4989
-        </button>
-      </div>
-      <div>
-        {isLogin ? (
-          <Link href={"/mypage"}>
-            <Image
-              className="myimg"
-              alt="myimg"
-              src="/img/myimg.png"
-              width={40}
-              height={40}
-            />
-          </Link>
-        ) : (
-          <Link className={styles.login} href={"/login"}>
-            Login
-          </Link>
-        )}
-      </div>
-    </nav>
+    <>
+      {window.scrollY < 60 ? (
+        <nav className={styles.firstNav}>
+          <div className="logo">
+            <FontAwesomeIcon icon={faBars} className={styles.font} />
+            <button className={styles.logo} onClick={scrollTopBtn}>
+              class4989
+            </button>
+          </div>
+          <div>
+            {isLogin ? (
+              <Link href={"/mypage"}>
+                <Image
+                  className="myimg"
+                  alt="myimg"
+                  src="/img/myimg.png"
+                  width={40}
+                  height={40}
+                />
+              </Link>
+            ) : (
+              <Link className={styles.login} href={"/login"}>
+                Login
+              </Link>
+            )}
+          </div>
+        </nav>
+      ) : (
+        <nav className={`${show ? styles.nav : styles.change_nav} `}>
+          <div className="logo">
+            <FontAwesomeIcon icon={faBars} className={styles.font} />
+            <button className={styles.logo} onClick={scrollTopBtn}>
+              class4989
+            </button>
+          </div>
+          <div>
+            {isLogin ? (
+              <Link href={"/mypage"}>
+                <Image
+                  className="myimg"
+                  alt="myimg"
+                  src="/img/myimg.png"
+                  width={40}
+                  height={40}
+                />
+              </Link>
+            ) : (
+              <Link className={styles.login} href={"/login"}>
+                Login
+              </Link>
+            )}
+          </div>
+        </nav>
+      )}
+    </>
   );
 };
 

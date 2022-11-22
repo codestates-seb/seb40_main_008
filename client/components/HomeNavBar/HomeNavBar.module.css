@@ -3,10 +3,10 @@
   position: fixed;
   top: 0;
   margin: 0 auto;
-  width: 100%;
+  width: 360px;
   color: #f3f3f3;
-  height: 56px;
-  background: #0a191f;
+  height: 50px;
+  background-color: #0a191f;
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
@@ -25,14 +25,26 @@
   }
 }
 
+.firstNav {
+  background-color: transparent;
+  display: flex;
+  position: fixed;
+  top: 0;
+  margin: 0 auto;
+  width: 360px;
+  color: #f3f3f3;
+  height: 50px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+  animation: fadein 400ms;
+}
+
 .change_nav {
   display: none;
 }
 
-.logo {
-  align-items: center;
-  justify-content: center;
-}
 .font {
   width: 24px;
   height: 24px;
@@ -40,7 +52,7 @@
 .logo {
   border: 0;
   outline: 0;
-  background-color: #0a191f;
+  background-color: transparent;
   color: white;
   padding-left: 10px;
   font-size: 16px;

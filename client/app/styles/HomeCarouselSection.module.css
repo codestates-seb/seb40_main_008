@@ -1,40 +1,61 @@
-.container {
-  height: 383px;
+.carouselSection {
   width: 100%;
-  background-color: var(--background-color);
-}
-
-.imageContainer {
-  border: 2px solid green;
-  width: 100%;
-  height: 383px;
+  height: 462px;
+  margin: 0 auto;
   position: relative;
+  overflow: hidden;
 }
 
-.slide {
-  /* display: none; */
-  opacity: 0;
-  transition-duration: 1s ease;
+.Container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.Slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 50%;
 }
 
-.slideActive {
-  opacity: 1;
-  transition-duration: 1s;
-  transform: scale(1.08);
+.titlecontainer {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  color: white;
+  top: 70%;
+  z-index: 100;
 }
 
-@media screen and (min-width: 640px) {
-  .container {
+.title {
+  color: white;
+  font-size: 24px;
+  z-index: 100;
+}
+
+.progress {
+  position: relative;
+  height: 1px;
+  width: 70%;
+  margin-left: 15px;
+  border: 1px solid grey;
+}
+.color {
+  position: absolute;
+  background-color: #ffffff;
+  height: 1px;
+
+  animation: progres 3s infinite ease;
+}
+@keyframes progres {
+  0% {
+    width: 0%;
+  }
+
+  100% {
     width: 100%;
   }
-}
-@media screen and (min-width: 1024px) {
-  .container {
-    width: 100%;
-  }
-}
-@media screen and (min-width: 1312px) {
-  .container {
-    width: 100%;
-  }
-}
+} ;

@@ -1,10 +1,11 @@
 export interface Carousel {
-	carouselInfo: CarouselInfo[];
+  carouselInfo: CarouselInfo[];
 }
 
 export interface CarouselInfo {
-	id: number;
-	src: string;
-	title: string;
-	subtitle: string;
+  carouselId: number;
+  imageUrl: string;
+  title: string;
+  subTitle: string;
+  redirectUrl: string;
 }

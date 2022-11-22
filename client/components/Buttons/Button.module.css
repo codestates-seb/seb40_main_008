@@ -1,83 +1,97 @@
-.loginbtnWrapper{
-	display: flex;
-	flex-direction: column;
-	min-width: 250px;
+.chargeBoardWrapper {
+  display: flex;
+  position: sticky;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
 }
 
-.googlebtn{
-	margin-top: 50px;
-	margin-bottom: 50px;
-	border-radius: 10px;
-	background-color:white;
-	border: none;
+.chargeBoard {
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  box-shadow: 1px 1px gray;
+  background-color: #f2952f;
 }
 
-.kakaobtn{
-	margin-bottom: 50px;
-	border-radius: 10px;
-	background-color: #FEE500;
-	border: none;
+.googlebtn {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  background-color: white;
+  border: none;
 }
 
-.naverbtn{
-	margin-bottom: 50px;
-	border-radius: 10px;
-	background-color: #03C759;
-	border: none;
+.kakaobtn {
+  margin-bottom: 50px;
+  border-radius: 10px;
+  background-color: #fee500;
+  border: none;
 }
 
-.adminbtn{
-	margin-bottom: 50px;
-	border-radius: 10px;
-	background-color: #FCB600;
-	border: none;
+.naverbtn {
+  margin-bottom: 50px;
+  border-radius: 10px;
+  background-color: #03c759;
+  border: none;
 }
 
-.naverbtnWrapper{
-	font-weight: bold;
-	font-size: 15px;
-	display: flex;
-	line-height: 52px;
-	justify-content: center;
-	height: 55px;
-	color: white;
+.adminbtn {
+  margin-bottom: 50px;
+  border-radius: 10px;
+  background-color: #fcb600;
+  border: none;
 }
 
-.kakaobtnWrapper{
-	font-weight: bold;
-	font-size: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 55px;
+.naverbtnWrapper {
+  font-weight: bold;
+  font-size: 15px;
+  display: flex;
+  line-height: 52px;
+  justify-content: center;
+  height: 55px;
+  color: white;
 }
 
-.googlebtnWrapper{
-	font-weight: bold;
-	font-size: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 55px;
+.kakaobtnWrapper {
+  font-weight: bold;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px;
 }
 
-.adminbtnWrapper{
-	font-weight: bold;
-	font-size: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 55px;
+.googlebtnWrapper {
+  font-weight: bold;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px;
 }
 
-.googlelogo{
-	margin-right: 10px;
+.adminbtnWrapper {
+  font-weight: bold;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px;
 }
 
-.kakaologo{
-	margin-right: 10px;
+.googlelogo {
+  margin-right: 10px;
 }
 
-.adminlogo{
-	margin-right: 10px;
+.kakaologo {
+  margin-right: 10px;
+}
+
+.adminlogo {
+  margin-right: 10px;
 }
