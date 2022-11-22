@@ -1,8 +1,6 @@
 package main008.BED.review.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.users.entity.Users;
 
@@ -10,6 +8,8 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @Entity
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,7 +35,7 @@ public class Review {
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    @ManyToOne
+    @ManyToOne // 양방향
     @JoinColumn(name = "UPLOAD_CLASS_ID")
     private UploadClass uploadClass;
 
