@@ -3,9 +3,6 @@ package main008.BED.chapter.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.chapter.entity.Chapter;
-import main008.BED.chapter.exception.ChapterNotFoundException;
-import main008.BED.chapter.exception.ContentsNotFoundException;
-import main008.BED.chapter.mapper.ChapterMapper;
 import main008.BED.chapter.mapper.ChapterMapperImpl;
 import main008.BED.chapter.repository.ChapterRepository;
 import main008.BED.contents.entity.Contents;
@@ -15,14 +12,9 @@ import main008.BED.docs.repository.DocsRepository;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
 import main008.BED.uploadClass.entity.UploadClass;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.validation.constraints.Positive;
 import java.util.List;
 import java.util.stream.Collectors;
 
