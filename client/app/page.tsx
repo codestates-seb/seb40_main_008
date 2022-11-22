@@ -29,7 +29,6 @@ const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
   try {
     const response = await fetch("https://pioneroroom.com/carousel");
     const { carouselInfo } = await response.json();
-    console.log("C", carouselInfo);
     return carouselInfo;
   } catch (error) {
     alert(error);
