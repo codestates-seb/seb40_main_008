@@ -18,6 +18,9 @@ public class MyClassService {
     private final MyClassRepository myClassRepository;
     private final WishRepository wishRepository;
 
+    /*
+    내가 찜한 컨텐츠
+    */
     public MyClass getWishClass(Long usersId) {
 
         MyClass myClass = myClassRepository.findByUsersUsersId(usersId);
@@ -27,4 +30,11 @@ public class MyClassService {
 
         return myClassRepository.save(myClass);
     }
+
+    /*
+    내가 구매한 컨텐츠 (수강중인 컨텐츠)
+    */
+//    public MyClass getBuyClass(Long usersId) {
+//
+//    }
 }

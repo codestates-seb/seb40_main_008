@@ -1,8 +1,9 @@
 package main008.BED.payment.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -10,7 +11,8 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Getter
-@Builder
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDetail {
 

@@ -14,9 +14,4 @@ public class PaymentDto {
         private Integer price;
     }
 
-//    @Getter
-//    @AllArgsConstructor
-//    public static class Response {
-//
-//    }
 }
