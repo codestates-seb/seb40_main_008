@@ -21,6 +21,7 @@ public enum ExceptionCode {
 
     /*UploadClass*/
     UPLOAD_CLASS_NOT_FOUND(404, "UploadClass Not Found"),
+    UPLOAD_CLASS_EXISTS(409, "UploadClass Already exists"),
 
     /*Docs*/
     DOCS_NOT_FOUND(404, "Docs Not Found"),

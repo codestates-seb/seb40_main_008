@@ -9,8 +9,6 @@ import main008.BED.exception.ExceptionCode;
 import main008.BED.review.entity.Review;
 import main008.BED.review.repository.ReviewRepository;
 import main008.BED.uploadClass.entity.UploadClass;
-import main008.BED.uploadClass.exception.UploadClassAlreadyExistsException;
-import main008.BED.uploadClass.exception.UploadClassNotFoundException;
 import main008.BED.uploadClass.repository.UploadClassRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +34,7 @@ public class UploadClassService {
     public UploadClass saveLecture(UploadClass uploadClass) {
         // TODO: 중복 예외처리 기준을 타당한 것으로 바꿀 것.
         if (uploadClassRepository.existsByName(uploadClass.getName())) {
-            throw new UploadClassAlreadyExistsException();
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_EXISTS);
         }
         // disclose content
         plusLecture(uploadClass);
@@ -71,7 +69,7 @@ public class UploadClassService {
      */
     public void updateLecture(Long oldClassId, UploadClass newUploadClass) {
         if (!uploadClassRepository.existsByUploadClassId(oldClassId)) {
-            throw new UploadClassNotFoundException();
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND);
         }
         UploadClass oldUploadClass = uploadClassRepository.findById(oldClassId).get();
         oldUploadClass.setName(newUploadClass.getName());
