@@ -18,6 +18,9 @@ const CarouselImageWithText = ({ title, subtitle, src, link }: CarouselProp) => 
 					style={{
 						width: '100%',
 						height: '450px',
+						backgroundImage:
+							'linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)',
+						zIndex: 2,
 					}}
 				>
 					<Image

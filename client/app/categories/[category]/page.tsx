@@ -1,18 +1,18 @@
-import React from 'react'
+import React from 'react';
 
 const fetchGet = async (category: any) => {
-    const res = await fetch(`https://pioneroroom.com/contentsList/${category}`)
-    return await res.json().then((res) => res.data);
-}
+	const res = await fetch(`https://pioneroroom.com/contentsList/${category}`);
+	return await res.json().then((res) => res.data);
+};
 
 const DetailCategoryPage = async ({ params }: any) => {
-    const get = await fetchGet(params.categoryId);
-    return (
-        <div>
-            <p>{JSON.stringify(get)}</p>
-        </div>
-    )
-}
+	const get = await fetchGet(params.categoryId);
+	return (
+		<div>
+			<p>{JSON.stringify(get)}</p>
+		</div>
+	);
+};
 
 export default DetailCategoryPage;
 

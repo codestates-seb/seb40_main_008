@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTrottle } from './useTrottle';
 
-export const UseScrollBar = () => {
+export const useScrollBar = () => {
 	const [show, setShow] = useState(true);
 	const [lastScrollY, setLastScrollY] = useState(0);
 
