@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import main008.BED.contents.entity.Contents;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.repository.DocsRepository;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
+import main008.BED.review.entity.Review;
+import main008.BED.review.repository.ReviewRepository;
 import main008.BED.uploadClass.entity.UploadClass;
-import main008.BED.uploadClass.exception.UploadClassAlreadyExistsException;
-import main008.BED.uploadClass.exception.UploadClassNotFoundException;
 import main008.BED.uploadClass.repository.UploadClassRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,7 @@ public class UploadClassService {
 
     private final UploadClassRepository uploadClassRepository;
     private final DocsRepository docsRepository;
+    private final ReviewRepository reviewRepository;
 
 
 
@@ -31,7 +34,7 @@ public class UploadClassService {
     public UploadClass saveLecture(UploadClass uploadClass) {
         // TODO: 중복 예외처리 기준을 타당한 것으로 바꿀 것.
         if (uploadClassRepository.existsByName(uploadClass.getName())) {
-            throw new UploadClassAlreadyExistsException();
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_EXISTS);
         }
         // disclose content
         plusLecture(uploadClass);
@@ -50,6 +53,9 @@ public class UploadClassService {
      * Read One
      */
     public UploadClass readClassById(Long uploadClassId) {
+        if (!uploadClassRepository.existsByUploadClassId(uploadClassId)) {
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND);
+        }
         UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
         return uploadClass;
     }
@@ -66,7 +72,7 @@ public class UploadClassService {
      */
     public void updateLecture(Long oldClassId, UploadClass newUploadClass) {
         if (!uploadClassRepository.existsByUploadClassId(oldClassId)) {
-            throw new UploadClassNotFoundException();
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND);
         }
         UploadClass oldUploadClass = uploadClassRepository.findById(oldClassId).get();
         oldUploadClass.setName(newUploadClass.getName());
@@ -83,17 +89,20 @@ public class UploadClassService {
      * Remove - Upload Class
      */
     public void removeClassById(Long uploadClassId) {
-        try {
-            UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
-            Docs docs = uploadClass.getDocs();
 
-            minusLecture(uploadClass);
-
-            docsRepository.delete(docs);
-            uploadClassRepository.deleteById(uploadClassId);
-        } catch (Exception e) {
-            throw new UploadClassNotFoundException();
+        if (!uploadClassRepository.existsByUploadClassId(uploadClassId)) {
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND);
         }
+        // TODO: 업로더만 삭제 가능하게끔 예외처리 추가.
+
+        UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
+        Docs docs = uploadClass.getDocs();
+        List<Review> reviewList = uploadClass.getReviewList();
+
+        minusLecture(uploadClass);
+
+        docsRepository.delete(docs);
+        uploadClassRepository.deleteById(uploadClassId);
 
     }
 

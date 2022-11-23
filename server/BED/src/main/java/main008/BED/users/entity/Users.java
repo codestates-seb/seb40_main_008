@@ -6,6 +6,7 @@ import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.entity.PaymentDetail;
 import main008.BED.userPage.entity.UserPage;
+import main008.BED.warning.entity.Warning;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -54,4 +55,7 @@ public class Users {
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
     private MyClass myClass;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Warning> warningList;
 }

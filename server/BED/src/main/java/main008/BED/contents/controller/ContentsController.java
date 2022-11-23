@@ -3,14 +3,23 @@ package main008.BED.contents.controller;
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3Service;
 import main008.BED.chapter.dto.ChapterDto;
+import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.service.ChapterService;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
+import main008.BED.docs.entity.Docs;
+import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
+import main008.BED.review.entity.Review;
+import main008.BED.review.mapper.ReviewMapper;
+import main008.BED.uploadClass.entity.UploadClass;
+import main008.BED.uploadClass.service.UploadClassService;
+import main008.BED.users.entity.Users;
+import main008.BED.users.mapper.UsersMapper;
 import main008.BED.wish.dto.WishDto;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.mapper.WishMapper;
@@ -23,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,8 +43,12 @@ public class ContentsController {
     private final ContentsService contentsService;
 
     private final ChapterService chapterService;
+    private final UploadClassService uploadClassService;
     private final ContentsMapper contentsMapper;
+    private final UsersMapper usersMapper;
     private final PaymentMapper paymentMapper;
+    private final DocsMapper docsMapper;
+    private final ReviewMapper reviewMapper;
     private final WishMapper wishMapper;
     private final S3Service s3Service;
 
@@ -81,7 +95,7 @@ public class ContentsController {
     }
 
     /**
-     * READ: 컨텐츠 상세화면 (구매 후?)
+     * READ: 컨텐츠 상세화면 Response DTO
      */
     // TODO: 구매 여부에 따라 상세화면 Dto 구분 로직 작성
     @GetMapping("/contents/{contents-id}")
@@ -100,17 +114,37 @@ public class ContentsController {
                 contents.getCategories(),
                 contents.getDetails(),
                 contents.getTutorDetail(),
-                curriculumInContent);
+                curriculumInContent.getCurriculumInfo());
 
         return new ResponseEntity(responseInContent, HttpStatus.OK);
     }
 
     /**
-     * READ: 영상 재생 화면
+     * READ: 영상 재생 화면 Response DTO
      */
-//    @GetMapping("contents/{contents-id}/video/{uploadClass-id}")
-//    public ResponseEntity getStream(@PathVariable("contents-id") @Positive Long contentsId,
-//                                    @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
-//
-//    }
+    @GetMapping("contents/{contents-id}/video/{uploadClass-id}")
+    public ResponseEntity getStream(@PathVariable("contents-id") @Positive Long contentsId,
+                                    @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
+
+        Contents contents = contentsService.readContent(contentsId);
+        UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
+        ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
+
+        Users users = contents.getUsers();
+        String title = contents.getTitle();
+        Docs docs = uploadClass.getDocs();
+        String video = uploadClass.getVideo();
+        List<Review> reviewList = uploadClass.getReviewList();
+
+        ContentsDto.ResponseForStream responseForStream
+                = new ContentsDto.ResponseForStream(
+                usersMapper.usersToUserResponseDto(users),
+                title,
+                video,
+                docsMapper.entityToResponseDto(docs),
+                reviewMapper.listEntityToListResponseDto(reviewList),
+                curriculumInStream.getCurriculumInfo());
+
+        return new ResponseEntity(responseForStream, HttpStatus.OK);
+    }
 }

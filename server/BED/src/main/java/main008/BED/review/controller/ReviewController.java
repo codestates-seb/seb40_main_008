@@ -34,4 +34,26 @@ public class ReviewController {
         reviewService.saveReview(review, usersId, upladClassId);
         return new ResponseEntity("The Review is saved.", HttpStatus.OK);
     }
+
+    @PatchMapping("/auth/{users-id}/uploadclass/{uploadclass-id}/{review-id}")
+    public ResponseEntity patchReview(@RequestBody @Valid ReviewDto.Patch patch,
+                                      @PathVariable("users-id") @Positive Long usersId,
+                                      @PathVariable("uploadclass-id") @Positive Long uploadClassId,
+                                      @PathVariable("review-id") @Positive Long reviewId) {
+
+        Review newReview = reviewMapper.patchDtoToEntity(patch);
+
+        reviewService.updateReview(newReview, usersId, uploadClassId, reviewId);
+
+        return new ResponseEntity("The Review is updated.", HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("/auth/{users-id}/uploadclass/{uploadclass-id}/{review-id}")
+    public ResponseEntity deleteReview(@PathVariable("users-id") @Positive Long usersId,
+                                       @PathVariable("uploadclass-id") @Positive Long uploadClassId,
+                                       @PathVariable("review-id") @Positive Long reviewId) {
+        reviewService.removeReview(usersId, uploadClassId, reviewId);
+        return new ResponseEntity("Review is removed.", HttpStatus.OK);
+    }
 }

@@ -6,6 +6,8 @@ import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.exception.ContentsNotFoundException;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
 import main008.BED.likes.entity.Likes;
 import main008.BED.likes.entity.LikesDetail;
 import main008.BED.likes.repository.LikesDetailRepository;
@@ -172,7 +174,7 @@ public class ContentsService {
      */
     public Contents readContent(Long contentsId) {
         if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new ContentsNotFoundException();
+            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
         return contentsRepository.findByContentsId(contentsId);
     }

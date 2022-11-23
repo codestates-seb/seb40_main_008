@@ -6,10 +6,13 @@ import lombok.Getter;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.contents.entity.Contents;
-import main008.BED.docs.entity.Docs;
+import main008.BED.docs.dto.DocsDto;
 import main008.BED.likes.dto.LikesDto;
+import main008.BED.review.dto.ReviewDto;
 import main008.BED.review.entity.Review;
 import main008.BED.users.dto.UsersDto;
+
+import java.util.List;
 
 public class ContentsDto {
 
@@ -56,7 +59,7 @@ public class ContentsDto {
         private Contents.Categories categories;
         private String details;
         private String tutorDetail;
-        private ChapterDto.CurriculumInContent curriculumInContent;
+        private List<ChapterDto.ResponseDto> curriculumInfo;
     }
 
     @Getter
@@ -64,13 +67,13 @@ public class ContentsDto {
     @AllArgsConstructor
     public static class ResponseForStream {
 
-        private String userName;
+        private UsersDto.Response userInfo;
         private String title;
         private String video;
-        private Docs docs;
-        private Review review; // 리뷰 작성자 이름, 작성 시간, 내용 -> 리스트
-        private Bookmark bookmark; // 북마크 시간, 메모 내용 -> 리스트
-        private ChapterDto.CurriculumInStream curriculumInStream;
+        private DocsDto.Response docsInfo;
+        private List<ReviewDto.Response> reviewInfo; // 리뷰 작성자 이름, 작성 시간, 내용 -> 리스트
+//        private Bookmark bookmark; // 북마크 시간, 메모 내용 -> 리스트
+        private List<ChapterDto.ResponseDtoWithoutThumbnail> curriculumInfo;
     }
 
 
