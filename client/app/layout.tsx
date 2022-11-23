@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import SessionContainer from '../components/Providers/SessionProvider';
 import { getSession } from '../utils/helper/session';
 import { cookies, headers } from 'next/headers';
+import Header from './Header';
 
 const noto = Noto_Sans_KR({
 	weight: '400',
@@ -16,10 +17,7 @@ const RootLayout = async ({ children }: any) => {
 	const nextCookies = cookies();
 	return (
 		<html className={noto.className}>
-			<head>
-				<meta name="viewport" content="width=device-width,initial-scale=1" />
-				<title>asdf</title>
-			</head>
+			<Header />
 			<body>
 				<SessionContainer session={session}>{children}</SessionContainer>
 			</body>
