@@ -38,7 +38,7 @@ const page = async () => {
 	const carouselList = await getCarouselInfo();
 	return (
 		<>
-			{/* <HomeNavBar /> */}
+			<HomeNavBar />
 
 			<HomeCarouselSection>
 				{carouselList.map((e) => (
