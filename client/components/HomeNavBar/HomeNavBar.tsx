@@ -28,7 +28,7 @@ const HomeNavBar = () => {
               <FontAwesomeIcon icon={faBars} className={styles.font} />
             </Link>
             <button className={styles.logo} onClick={scrollTopBtn}>
-              class4989
+              CLASS4989
             </button>
           </div>
           <div>
