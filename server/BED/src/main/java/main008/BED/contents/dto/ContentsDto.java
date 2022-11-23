@@ -3,6 +3,7 @@ package main008.BED.contents.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import main008.BED.bookmark.dto.BookmarkDto;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.contents.entity.Contents;
@@ -65,6 +66,22 @@ public class ContentsDto {
     @Getter
     @Builder
     @AllArgsConstructor
+    public static class ResponseInPreview {
+
+        private Long contentsId;
+        private String title;
+        private String thumbnail;
+        private Contents.Categories categories;
+        private int starRateAvg;
+        private int price;
+        private String details;
+        private String tutorDetail;
+        private List<ChapterDto.ResponseDto> curriculumInfo;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
     public static class ResponseForStream {
 
         private UsersDto.Response userInfo;
@@ -72,7 +89,7 @@ public class ContentsDto {
         private String video;
         private DocsDto.Response docsInfo;
         private List<ReviewDto.Response> reviewInfo; // 리뷰 작성자 이름, 작성 시간, 내용 -> 리스트
-//        private Bookmark bookmark; // 북마크 시간, 메모 내용 -> 리스트
+        private List<BookmarkDto.Response> bookmarkInfo; // 북마크 시간, 메모 내용 -> 리스트
         private List<ChapterDto.ResponseDtoWithoutThumbnail> curriculumInfo;
     }
 

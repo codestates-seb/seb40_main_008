@@ -1,6 +1,7 @@
 package main008.BED.users.entity;
 
 import lombok.*;
+import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.payment.entity.Payment;
@@ -58,4 +59,7 @@ public class Users {
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Warning> warningList;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bookmark> bookmarkList;
 }

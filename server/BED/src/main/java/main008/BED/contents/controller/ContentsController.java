@@ -2,6 +2,8 @@ package main008.BED.contents.controller;
 
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3Service;
+import main008.BED.bookmark.entity.Bookmark;
+import main008.BED.bookmark.mapper.BookmarkMapper;
 import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.service.ChapterService;
@@ -20,6 +22,7 @@ import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.service.UploadClassService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
+import main008.BED.users.service.UsersService;
 import main008.BED.wish.dto.WishDto;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.mapper.WishMapper;
@@ -41,12 +44,13 @@ import java.util.List;
 public class ContentsController {
 
     private final ContentsService contentsService;
-
+    private final UsersService usersService;
     private final ChapterService chapterService;
     private final UploadClassService uploadClassService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
     private final PaymentMapper paymentMapper;
+    private final BookmarkMapper bookmarkMapper;
     private final DocsMapper docsMapper;
     private final ReviewMapper reviewMapper;
     private final WishMapper wishMapper;
@@ -101,6 +105,9 @@ public class ContentsController {
     @GetMapping("/contents/{contents-id}")
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
 
+
+        //TODO: Principal 정보를 이용해 해당 컨텐츠에 대한 결제 이력이 있는지 확인하고, 구매 전과 후의 DTO 분리
+
         Contents contents = contentsService.readContent(contentsId);
 
         ChapterDto.CurriculumInContent curriculumInContent
@@ -122,27 +129,32 @@ public class ContentsController {
     /**
      * READ: 영상 재생 화면 Response DTO
      */
-    @GetMapping("contents/{contents-id}/video/{uploadClass-id}")
-    public ResponseEntity getStream(@PathVariable("contents-id") @Positive Long contentsId,
+    @GetMapping("{users-id}/contents/{contents-id}/video/{uploadClass-id}")
+    public ResponseEntity getStream(@PathVariable("users-id") @Positive Long usersId,
+                                    @PathVariable("contents-id") @Positive Long contentsId,
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
 
         Contents contents = contentsService.readContent(contentsId);
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
+        Users user = usersService.findOne(usersId);
 
-        Users users = contents.getUsers();
+
+        Users tutor = contents.getUsers();
         String title = contents.getTitle();
         Docs docs = uploadClass.getDocs();
         String video = uploadClass.getVideo();
-        List<Review> reviewList = uploadClass.getReviewList();
+        List<Review> reviewList = uploadClass.getReviewList(); // Class의 모든 리뷰 전송
+        List<Bookmark> bookmarkList = user.getBookmarkList(); // User 본인의 메모만 전송
 
         ContentsDto.ResponseForStream responseForStream
                 = new ContentsDto.ResponseForStream(
-                usersMapper.usersToUserResponseDto(users),
+                usersMapper.usersToUserResponseDto(tutor),
                 title,
                 video,
                 docsMapper.entityToResponseDto(docs),
                 reviewMapper.listEntityToListResponseDto(reviewList),
+                bookmarkMapper.listEntityToListResponseDto(bookmarkList),
                 curriculumInStream.getCurriculumInfo());
 
         return new ResponseEntity(responseForStream, HttpStatus.OK);
