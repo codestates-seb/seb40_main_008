@@ -21,14 +21,14 @@
 
 .categoryleft{
     margin-left: 20px;
-    width: 170px;
+    width: 200px;
     display: flex;
     flex-direction: column;
 }
 
 .categoryright{
     margin-right: 20px;
-    width: 170px;
+    width: 200px;
     display: flex;
     flex-direction: column;
 }
@@ -40,7 +40,7 @@
 }
 
 .line{
-    width: 340px;
+    width: 410px;
     height: 1px;
     border: 1px solid #333333; 
     margin-top: 20px;
