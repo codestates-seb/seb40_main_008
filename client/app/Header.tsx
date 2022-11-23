@@ -55,7 +55,7 @@ const Header = ({ children, ...props }: HeaderProp) => {
 				name="viewport"
 				content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
 			/>
-			<title>올인원 프로필 링크, 리틀리</title>
+			<title>CLASS4989</title>
 		</head>
 	);
 };
