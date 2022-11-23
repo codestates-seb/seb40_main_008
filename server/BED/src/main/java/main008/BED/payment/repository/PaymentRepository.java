@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     Payment findByContentsContentsId(Long contentsId);
+    Payment findByPaymentId(Long paymentId);
 }

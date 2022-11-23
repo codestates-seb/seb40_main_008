@@ -21,7 +21,7 @@ public class PaymentDetail {
     private Long paymentDetailId;
 
     @Column
-    private Boolean payed;
+    private Boolean payed = false;
 
     @Column
     private ZonedDateTime payedAt;
