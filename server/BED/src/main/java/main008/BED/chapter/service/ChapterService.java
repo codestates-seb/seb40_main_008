@@ -36,7 +36,7 @@ public class ChapterService {
     public Chapter saveChapter(Chapter chapter, Long contentsId) {
 
         if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
         Contents byContentsId = contentsRepository.findByContentsId(contentsId);
 
