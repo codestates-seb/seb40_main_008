@@ -25,9 +25,12 @@ const HomeNavBar = () => {
       {window.scrollY < 60 ? (
         <nav className={styles.firstNav}>
           <div className={styles.logowrapper}>
-            <FontAwesomeIcon icon={faBars} className={styles.font} />
+            <Link href={"/categories"}>
+              <FontAwesomeIcon icon={faBars} className={styles.font} />
+            </Link>
+
             <button className={styles.logo} onClick={scrollTopBtn}>
-              class4989
+              CLASS4989
             </button>
           </div>
           <div>

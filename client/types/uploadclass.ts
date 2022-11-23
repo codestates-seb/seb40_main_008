@@ -1,21 +1,21 @@
 import { type } from "os";
 
 export interface UploadClassType {
-  classname: string;
-  categoryOption: string;
-  classPrice: number;
-  introduceClass: string;
-  introduceInstructor: string;
+  title: string;
+  categories: string;
+  details: string;
+  tutorDetail: string;
   thumbnail: File | null;
+  price: number;
 }
 
 export const initialClass = {
-  classname: "",
-  categoryOption: "",
-  classPrice: 0,
-  introduceClass: "",
-  introduceInstructor: "",
+  title: "",
+  categories: "",
+  details: "",
+  tutorDetail: "",
   thumbnail: null,
+  price: 0,
 };
 
 export interface UploadImage {
