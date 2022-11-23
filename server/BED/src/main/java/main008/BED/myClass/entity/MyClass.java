@@ -1,6 +1,7 @@
 package main008.BED.myClass.entity;
 
 import lombok.*;
+import main008.BED.contents.entity.Contents;
 import main008.BED.payment.entity.Payment;
 import main008.BED.users.entity.Users;
 import main008.BED.wish.entity.Wish;
@@ -20,8 +21,8 @@ public class MyClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long myClassId;
 
-//    @OneToMany(mappedBy = "myClass", cascade = CascadeType.ALL)
-//    private List<Contents> contentsList;
+    @OneToMany(mappedBy = "myClass", cascade = CascadeType.ALL)
+    private List<Payment> payments;
 
     @OneToOne
     @JoinColumn(name = "USERS_ID")

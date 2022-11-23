@@ -55,6 +55,7 @@ public class UsersService {
 
         MyClass myClass = new MyClass();
         myClass.setWishes(new ArrayList<>());
+        myClass.setPayments(new ArrayList<>());
         myClass.setUsers(users1);
 
         Wish wish = new Wish();

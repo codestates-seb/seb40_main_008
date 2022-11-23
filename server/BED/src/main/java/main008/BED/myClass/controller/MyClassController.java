@@ -34,8 +34,13 @@ public class MyClassController {
     }
 
     // 수강중인 클래스
-    @GetMapping("/auth/{users-id}/myclass/buyclass")
+    @GetMapping("/auth/{users-id}/myclass/takingclass")
     public ResponseEntity getMyBuyClass(@PathVariable("users-id") @Positive Long usersId) {
 
+        MyClass myClass = myClassService.getBuyClass(usersId);
+
+        MyClassDto.TakingClassResponse response = myClassMapper.myClassToTakingResponse(myClass);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
