@@ -1,65 +1,69 @@
-import Image from "next/image";
-import React from "react";
-import Link from "next/link";
+import Image from 'next/image';
+import React from 'react';
+import Link from 'next/link';
 
 interface CarouselProp {
-  title: string;
-  subtitle: string;
-  src: string;
-  link: string;
+	title: string;
+	subtitle: string;
+	src: string;
+	link: string;
 }
 
-const CarouselImageWithText = ({
-  title,
-  subtitle,
-  src,
-  link,
-}: CarouselProp) => {
-  return (
-    <div style={{ position: "relative" }}>
-      <Link href={`/${link}`}>
-        <Image
-          src={src}
-          alt={title + subtitle}
-          //fill = true 를 쓰려면 상위 div가 relative
-          width={412}
-          height={462}
-          style={{ objectFit: "cover" }}
-        />
-        <div
-          style={{
-            height: "100px",
-            width: "260px",
-            // border: "1px solid red",
-            position: "absolute",
-            padding: "0 20px",
-            fontWeight: "bold",
-            bottom: 70,
-          }}
-        >
-          <h2
-            style={{
-              color: "white",
-              fontWeight: "bold",
-              textShadow: "4px 2px 2px gray",
-            }}
-          >
-            {title}
-          </h2>
+const CarouselImageWithText = ({ title, subtitle, src, link }: CarouselProp) => {
+	return (
+		<div style={{ position: 'relative' }}>
+			<Link href={`/${link}`}>
+				<div
+					className="img-ctn"
+					style={{
+						width: '100%',
+						height: '450px',
+					}}
+				>
+					<Image
+						src={src}
+						alt={title + subtitle}
+						//fill = true 를 쓰려면 상위 div가 relative
+						// width={412}
+						// height={462}
+						fill={true}
+						style={{ objectFit: 'cover' }}
+					/>
+				</div>
+				<div
+					style={{
+						height: '100px',
+						width: '260px',
+						// border: "1px solid red",
+						position: 'absolute',
+						padding: '0 20px',
+						fontWeight: 'bold',
+						bottom: 70,
+					}}
+				>
+					<h2
+						style={{
+							color: 'white',
+							fontWeight: 'bold',
+							textShadow: '4px 2px 2px gray',
+						}}
+					>
+						{title}
+					</h2>
 
-          <h3
-            style={{
-              color: "gray",
-              fontSize: "13px",
-              marginTop: "10px",
-            }}
-          >
-            {subtitle}
-          </h3>
-        </div>
-      </Link>
-    </div>
-  );
+					<h3
+						style={{
+							color: 'gray',
+							fontSize: '13px',
+							marginTop: '10px',
+						}}
+					>
+						{subtitle}
+					</h3>
+				</div>
+			</Link>
+		</div>
+	);
 };
 
 export default CarouselImageWithText;
