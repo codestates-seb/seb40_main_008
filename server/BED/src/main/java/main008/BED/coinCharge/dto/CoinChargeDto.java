@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import main008.BED.coinCharge.entity.CoinCharge;
+import main008.BED.users.dto.UsersDto;
+
+import java.util.List;
 
 public class CoinChargeDto {
 
@@ -11,5 +14,14 @@ public class CoinChargeDto {
     @AllArgsConstructor
     public static class Post {
         private CoinCharge.ChargeAmount chargeAmount;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class Response {
+
+        private int totalCoin;
+        private List<CoinChargeDetailResponseDto> coinChargeDetails;
     }
 }
