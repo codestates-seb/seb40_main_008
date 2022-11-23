@@ -27,6 +27,6 @@ public class PaymentDto {
     public static class Response {
 
         private ContentsDto.Response contents;
-//        private List<PaymentDetailDto.Response> paymentDetails;
+        private List<PaymentDetailDto.Response> paymentDetails;
     }
 }
