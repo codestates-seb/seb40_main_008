@@ -37,7 +37,15 @@ const CarouselImageWithText = ({
             bottom: 70,
           }}
         >
-          <h2 style={{ color: "white", fontWeight: "bold" }}>{title}</h2>
+          <h2
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textShadow: "4px 2px 2px gray",
+            }}
+          >
+            {title}
+          </h2>
 
           <h3
             style={{

@@ -3,7 +3,7 @@ import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
 import styles from "./ChargeCoin.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
-import Button from "../../components/Buttons/Button";
+import Button from "../../components/Buttons/orangeButton";
 
 const ChargeCoin = () => {
   return (

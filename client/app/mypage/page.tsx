@@ -9,7 +9,7 @@ import {
   faPenToSquare,
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "../../components/Buttons/Button";
+import Button from "../../components/Buttons/orangeButton";
 
 const MyPage = () => {
   return (

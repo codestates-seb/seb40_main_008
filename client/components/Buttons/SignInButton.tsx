@@ -1,27 +1,49 @@
-'use client';
-import { signIn, signOut } from 'next-auth/react';
-import React from 'react';
-import Image from 'next/image';
-import styles from './Button.module.css'
-import naverlogo from '../../public/img/naverlogo.png'
-import kakaologo from '../../public/img/kakaologo.png';
-import googlelogo from '../../public/img/googlelogo.webp';
-import adminlogo from '../../public/img/myimg.png'
+"use client";
+import { signIn, signOut } from "next-auth/react";
+import React from "react";
+import Image from "next/image";
+import styles from "./Button.module.css";
+import naverlogo from "../../public/img/naverlogo.png";
+import kakaologo from "../../public/img/kakaologo.png";
+import googlelogo from "../../public/img/googlelogo.webp";
+import adminlogo from "../../public/img/myimg.png";
 
 interface SignInButtonProps {
-	isSignIn: boolean;
+  isSignIn: boolean;
 }
 
 const SignInButton = ({ isSignIn }: SignInButtonProps) => {
+  const handleSignin = async () => {
+    signIn();
+  };
 
-	const handleSignin = async () => {
-		signIn();
-	};
+  return isSignIn ? (
+    <button onClick={() => signOut()}>sign out</button>
+  ) : (
+    <div className={styles.loginbtnWrapper}>
+      <button className={styles.googlebtn} onClick={() => signIn("google")}>
+        <div className={styles.googlebtnWrapper}>
+          <Image
+            className={styles.googlelogo}
+            src={googlelogo}
+            alt="google logo"
+            width={25}
+          />
+          <p>Sign with in Google</p>
+        </div>
+      </button>
 
-	return isSignIn ? (
-		<button onClick={() => signOut()}>sign out</button>
-	) : (
-		<div className={styles.loginbtnWrapper}>
+      <button className={styles.kakaobtn} onClick={() => signIn("kakao")}>
+        <div className={styles.kakaobtnWrapper}>
+          <Image
+            className={styles.kakaologo}
+            src={kakaologo}
+            alt="kakao logo"
+            width={30}
+          />
+          <p>카카오 로그인</p>
+        </div>
+      </button>
 
 			<button className={styles.googlebtn} onClick={() => signIn('google')}>
 				<div className={styles.googlebtnWrapper}>

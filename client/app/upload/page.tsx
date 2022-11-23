@@ -37,7 +37,7 @@ const UploadPage = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
