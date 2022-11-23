@@ -5,29 +5,29 @@
 }
 
 .googlebtn{
-	margin-top: 50px;
-	margin-bottom: 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 	border-radius: 10px;
 	background-color:white;
 	border: none;
 }
 
 .kakaobtn{
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 	border-radius: 10px;
 	background-color: #FEE500;
 	border: none;
 }
 
 .naverbtn{
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 	border-radius: 10px;
 	background-color: #03C759;
 	border: none;
 }
 
 .adminbtn{
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 	border-radius: 10px;
 	background-color: #FCB600;
 	border: none;
