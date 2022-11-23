@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.contents.entity.Contents;
+import main008.BED.myClass.entity.MyClass;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
@@ -35,4 +36,8 @@ public class Payment {
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     private List<PaymentDetail> paymentDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "MY_CLASS_ID")
+    private MyClass myClass;
 }
