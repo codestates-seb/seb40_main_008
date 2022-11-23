@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const withPwa = require('next-pwa')({
+	dest: 'public',
+});
+
+module.exports = withPwa({
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: { appDir: true },
@@ -12,8 +16,6 @@ const nextConfig = {
 			},
 		],
 	},
-};
+});
 
 //picsum.photos/seed/picsum/200/300
-
-module.exports = nextConfig;
