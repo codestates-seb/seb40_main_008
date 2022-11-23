@@ -1,0 +1,25 @@
+.searchWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* .searchboxWrapper::placeholder {
+    color: rgb(161, 161, 161);
+    font-size: 15px;
+  } */
+
+.searchboxWrapper {
+    /* border: none; */
+    margin-top: 15px;
+    width: 370px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.171);
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.searchbox {
+    border: none;
+}
