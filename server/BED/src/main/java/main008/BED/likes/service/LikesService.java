@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional // 이해 필요
 @RequiredArgsConstructor
 public class LikesService {
 
@@ -44,7 +44,7 @@ public class LikesService {
 
             LikesDetail likesDetail1 = likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId());
 
-            if (likesDetail1.getLiked() == true) {
+            if (likesDetail1.getLiked()) {
 
                 Likes likes1 = likesDetail1.getLikes();
 
@@ -55,13 +55,13 @@ public class LikesService {
                 contents.setLikesCount(likes1.getLikesCount());
                 contentsRepository.save(contents);
 
-            } else if (likesDetail1.getLiked() == false) {
+            } else {
 
                 Likes likes1 = likesDetail1.getLikes();
 
                 likesDetail1.setLiked(true);
                 likesDetailRepository.save(likesDetail1);
-                likes1.setLikesCount(likes1.getLikesCount() + 1);
+                likes1.setLikesCount(likes1.getLikesCount() + 1); // DB에서
 
                 contents.setLikesCount(likes1.getLikesCount());
                 contentsRepository.save(contents);

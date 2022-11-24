@@ -23,6 +23,7 @@ import main008.BED.users.mapper.UsersMapper;
 import main008.BED.wish.dto.WishDto;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.mapper.WishMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,11 +32,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping
 @RequiredArgsConstructor
 @Validated
 public class ContentsController {
@@ -54,7 +56,7 @@ public class ContentsController {
 
 
     // 컨텐츠 개설
-    @PostMapping("/{users-id}/uploadcontents")
+    @PostMapping("/auth/{users-id}/uploadcontents")
     public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
                                        @RequestParam("title") String title,
                                        @RequestParam("categories") Contents.Categories categories,
@@ -81,7 +83,7 @@ public class ContentsController {
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/{users-id}/{contents-id}/wish")
+    @PostMapping("/auth/{users-id}/{contents-id}/wish")
     public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {
@@ -98,7 +100,7 @@ public class ContentsController {
      * READ: 컨텐츠 상세화면 Response DTO
      */
     // TODO: 구매 여부에 따라 상세화면 Dto 구분 로직 작성
-    @GetMapping("/contents/{contents-id}")
+    @GetMapping("/auth/contents/{contents-id}")
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
 
         Contents contents = contentsService.readContent(contentsId);
@@ -122,7 +124,7 @@ public class ContentsController {
     /**
      * READ: 영상 재생 화면 Response DTO
      */
-    @GetMapping("contents/{contents-id}/video/{uploadClass-id}")
+    @GetMapping("/auth/contents/{contents-id}/video/{uploadClass-id}")
     public ResponseEntity getStream(@PathVariable("contents-id") @Positive Long contentsId,
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
 
@@ -146,5 +148,19 @@ public class ContentsController {
                 curriculumInStream.getCurriculumInfo());
 
         return new ResponseEntity(responseForStream, HttpStatus.OK);
+    }
+
+    /**
+     * 카테고리 조회
+     */
+    @GetMapping("/category/sort")
+    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories,
+                                        @RequestParam(name = "sort", required = false, defaultValue = "likesCount") String sort,
+                                        @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                                        @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+
+        Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
+
+        return new ResponseEntity<>(contentsMapper.contentsToResponses(contents.getContent(), usersMapper), HttpStatus.OK);
     }
 }

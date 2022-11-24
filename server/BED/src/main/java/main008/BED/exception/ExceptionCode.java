@@ -31,7 +31,10 @@ public enum ExceptionCode {
     DUPLICATE_WARNING(409, "해당 강의에 대하여 이미 신고한 내역이 있습니다."),
 
     /*Payment Coin*/
-    COIN_SHORTAGE(400, "잔액이 부족합니다.")
+    COIN_SHORTAGE(400, "잔액이 부족합니다."),
+
+    /*Kakao pay*/
+    UNCORRECTED_API(400, "Uncorrected Api.")
     ;
 
 
