@@ -11,13 +11,19 @@ const BaseNavbar = () => {
 		<>
 			{window.scrollY < 45 ? (
 				<nav className={styles.firstNav}>
-					<button onClick={() => window.history.back()} className={styles.leftbtn}>
+					<button
+						onClick={() => window.history.back()}
+						className={styles.leftbtn}
+					>
 						<FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
 					</button>
 				</nav>
 			) : (
 				<nav className={`${show ? styles.baseNav : styles.change_nav} `}>
-					<button onClick={() => window.history.back()} className={styles.leftbtn}>
+					<button
+						onClick={() => window.history.back()}
+						className={styles.leftbtn}
+					>
 						<FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
 					</button>
 				</nav>

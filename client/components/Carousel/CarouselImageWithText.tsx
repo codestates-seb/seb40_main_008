@@ -8,7 +8,7 @@ interface CarouselProp {
 	src: string;
 	link: string;
 }
-
+//TODO: add gradient to carousel image container
 const CarouselImageWithText = ({ title, subtitle, src, link }: CarouselProp) => {
 	return (
 		<div style={{ position: 'relative' }}>
