@@ -109,4 +109,11 @@ public class UsersService {
         Optional<Users> user = Optional.ofNullable(usersRepository.findByEmail(email));
         if(user.isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
     }
+
+    public Users findOne(Long usersId) {
+        if (!usersRepository.existsById(usersId)) {
+            throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
+        }
+        return usersRepository.findByUsersId(usersId);
+    }
 }

@@ -28,7 +28,10 @@ public enum ExceptionCode {
     DOCS_EXISTS(409, "Docs Already exists"),
 
     /*Warning*/
-    DUPLICATE_WARNING(409, "해당 강의에 대하여 이미 신고한 내역이 있습니다.")
+    DUPLICATE_WARNING(409, "해당 강의에 대하여 이미 신고한 내역이 있습니다."),
+
+    /*Bookmark*/
+    BOOKMARK_NOT_FOUND(404, "Bookmark Not Found")
     ;
 
 

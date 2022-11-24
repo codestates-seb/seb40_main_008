@@ -23,10 +23,7 @@ import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.repository.WishRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -179,5 +176,20 @@ public class ContentsService {
         return contentsRepository.findByContentsId(contentsId);
     }
 
+    /**
+     * Search: 강의명 검색
+     */
+    public Page<Contents> searchTitleContents(String keyword, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("contentsId").descending());
+
+        List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByContentsIdDesc(keyword);
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), contentsList.size());
+        Page<Contents> contentsPage = new PageImpl<>(contentsList.subList(start, end), pageable, contentsList.size());
+
+        return contentsPage;
+    }
 
 }

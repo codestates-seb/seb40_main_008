@@ -2,6 +2,8 @@ package main008.BED.contents.controller;
 
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3Service;
+import main008.BED.bookmark.entity.Bookmark;
+import main008.BED.bookmark.mapper.BookmarkMapper;
 import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.service.ChapterService;
@@ -11,6 +13,8 @@ import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
+import main008.BED.dto.MultiResponseDto;
+import main008.BED.dto.PageInfo;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
@@ -20,9 +24,11 @@ import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.service.UploadClassService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
+import main008.BED.users.service.UsersService;
 import main008.BED.wish.dto.WishDto;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.mapper.WishMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -35,18 +41,19 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping
 @RequiredArgsConstructor
 @Validated
 public class ContentsController {
 
     private final ContentsService contentsService;
-
+    private final UsersService usersService;
     private final ChapterService chapterService;
     private final UploadClassService uploadClassService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
     private final PaymentMapper paymentMapper;
+    private final BookmarkMapper bookmarkMapper;
     private final DocsMapper docsMapper;
     private final ReviewMapper reviewMapper;
     private final WishMapper wishMapper;
@@ -54,7 +61,7 @@ public class ContentsController {
 
 
     // 컨텐츠 개설
-    @PostMapping("/{users-id}/uploadcontents")
+    @PostMapping("/auth/{users-id}/uploadcontents")
     public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
                                        @RequestParam("title") String title,
                                        @RequestParam("categories") Contents.Categories categories,
@@ -81,7 +88,7 @@ public class ContentsController {
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/{users-id}/{contents-id}/wish")
+    @PostMapping("/auth/{users-id}/{contents-id}/wish")
     public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {
@@ -98,8 +105,11 @@ public class ContentsController {
      * READ: 컨텐츠 상세화면 Response DTO
      */
     // TODO: 구매 여부에 따라 상세화면 Dto 구분 로직 작성
-    @GetMapping("/contents/{contents-id}")
+    @GetMapping("/auth/contents/{contents-id}")
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
+
+
+        //TODO: Principal 정보를 이용해 해당 컨텐츠에 대한 결제 이력이 있는지 확인하고, 구매 전과 후의 DTO 분리
 
         Contents contents = contentsService.readContent(contentsId);
 
@@ -122,29 +132,53 @@ public class ContentsController {
     /**
      * READ: 영상 재생 화면 Response DTO
      */
-    @GetMapping("contents/{contents-id}/video/{uploadClass-id}")
-    public ResponseEntity getStream(@PathVariable("contents-id") @Positive Long contentsId,
+    @GetMapping("/auth/{users-id}/contents/{contents-id}/video/{uploadClass-id}")
+    public ResponseEntity getStream(@PathVariable("users-id") @Positive Long usersId,
+                                    @PathVariable("contents-id") @Positive Long contentsId,
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
 
         Contents contents = contentsService.readContent(contentsId);
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
+        Users user = usersService.findOne(usersId);
 
-        Users users = contents.getUsers();
+
+        Users tutor = contents.getUsers();
         String title = contents.getTitle();
         Docs docs = uploadClass.getDocs();
         String video = uploadClass.getVideo();
-        List<Review> reviewList = uploadClass.getReviewList();
+        List<Review> reviewList = uploadClass.getReviewList(); // Class의 모든 리뷰 전송
+        List<Bookmark> bookmarkList = user.getBookmarkList(); // User 본인의 메모만 전송
 
         ContentsDto.ResponseForStream responseForStream
                 = new ContentsDto.ResponseForStream(
-                usersMapper.usersToUserResponseDto(users),
+                usersMapper.usersToUserResponseDto(tutor),
                 title,
                 video,
                 docsMapper.entityToResponseDto(docs),
                 reviewMapper.listEntityToListResponseDto(reviewList),
+                bookmarkMapper.listEntityToListResponseDto(bookmarkList),
                 curriculumInStream.getCurriculumInfo());
 
         return new ResponseEntity(responseForStream, HttpStatus.OK);
+    }
+
+    /**
+     * Search: 강의명으로 검색 - 해당 콘텐츠 불러오기(Default: 인기순) 그 외 최신순
+     */
+    @GetMapping("/search/title")
+    public ResponseEntity getTitleContents(@RequestParam("keyword") String keyword,
+                                           @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                                           @RequestParam(name = "size", required = false, defaultValue = "3") int size) {
+
+
+        // TODO: 인기순 로직 구현하고 최신순하고 분기 - 디폴트 인기순
+        Page<Contents> contentsPage = contentsService.searchTitleContents(keyword, page, size);
+        PageInfo pageInfo = PageInfo.of(contentsPage);
+
+        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
+                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+
+        return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
     }
 }
