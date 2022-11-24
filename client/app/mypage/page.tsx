@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
 import styles from "./Mypage.module.css";
@@ -9,7 +10,8 @@ import {
   faPenToSquare,
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "../../components/Buttons/orangeButton";
+import OrangeButton from "../../components/Buttons/orangeButton";
+import { signOut } from "next-auth/react";
 
 const MyPage = () => {
   return (
@@ -55,7 +57,7 @@ const MyPage = () => {
             <h2 className={styles.font}>강좌 개설하기</h2>
           </Link>
         </div>
-        <Button name={"로그 아웃"}></Button>
+        <OrangeButton onclick={() => signOut} name={"로그 아웃"} />
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
 import styles from "./ChargeCoin.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
-import Button from "../../components/Buttons/orangeButton";
+import OrangeButton from "../../components/Buttons/orangeButton";
 
 const ChargeCoin = () => {
   return (
@@ -38,7 +38,7 @@ const ChargeCoin = () => {
         </div>
       </div>
 
-      <Button name={"충전 내역보기"}></Button>
+      <OrangeButton name={"충전 내역보기"} />
     </>
   );
 };
