@@ -164,16 +164,15 @@ public class ContentsController {
     }
 
     /**
-     * Search: 강의명으로 검색 - 해당 콘텐츠 불러오기(Default: 인기순) 그 외 최신순
+     * Search: Contents Title 검색 - 최신순
      */
-    @GetMapping("/search/title")
-    public ResponseEntity getTitleContents(@RequestParam("keyword") String keyword,
+    @GetMapping("/search/title/lateast")
+    public ResponseEntity getTitleContentsByLateast(@RequestParam("keyword") String keyword,
                                            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
-                                           @RequestParam(name = "size", required = false, defaultValue = "3") int size) {
+                                           @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
 
 
-        // TODO: 인기순 로직 구현하고 최신순하고 분기 - 디폴트 인기순
-        Page<Contents> contentsPage = contentsService.searchTitleContents(keyword, page, size);
+        Page<Contents> contentsPage = contentsService.searchTitleContentsByLateast(keyword, page, size);
         PageInfo pageInfo = PageInfo.of(contentsPage);
 
         List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
@@ -181,4 +180,25 @@ public class ContentsController {
 
         return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
     }
+
+    // TODO: 인기순 로직 구현하고 최신순하고 분기 - 디폴트 인기순if(sort.equals("latest"))
+
+    /**
+     * Search: Contents Title 검색 - 인기순
+     */
+    @GetMapping("/search/title")
+    public ResponseEntity getTitleContentsByPopular(@RequestParam("keyword") String keyword,
+                                           @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                                           @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+
+
+        Page<Contents> contentsPage = contentsService.searchTitleContentsByPopular(keyword, page, size);
+        PageInfo pageInfo = PageInfo.of(contentsPage);
+
+        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
+                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+
+        return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
+    }
+
 }

@@ -30,7 +30,7 @@ public class LikesDetail {
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "LIKES_ID")
     private Likes likes;
 }
