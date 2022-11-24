@@ -65,6 +65,8 @@ public class PaymentService {
         Users tutorUsers = usersRepository.findByUsersId(contents.getUsers().getUsersId());
 
         buyUsers.setTotalCoin(buyUsers.getTotalCoin() - payment.getPrice());
+        verifyCountOfCoin(buyUsers.getTotalCoin());
+
         tutorUsers.setTotalCoin(tutorUsers.getTotalCoin() + payment.getPrice());
 
         usersRepository.save(tutorUsers);
@@ -78,5 +80,15 @@ public class PaymentService {
 
         payment.setPaymentDetails(paymentDetails);
         return paymentRepository.save(payment);
+    }
+
+    /*
+    결제 시 코인 부족 확인
+    */
+    private void verifyCountOfCoin(Integer totalCoin) {
+
+        if (totalCoin < 0) {
+            throw new BusinessLogicException(ExceptionCode.COIN_SHORTAGE);
+        }
     }
 }

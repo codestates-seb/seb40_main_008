@@ -26,6 +26,9 @@ public class CoinChargeService {
     private final UserPageRepository userPageRepository;
     private final UsersRepository usersRepository;
 
+    /*
+    코인 충전
+    */
     public CoinCharge charging(Long usersId, CoinCharge coinChargePost) {
 
         Users users = usersRepository.findByUsersId(usersId);
@@ -49,6 +52,9 @@ public class CoinChargeService {
         return coinCharge1;
     }
 
+    /*
+    충전 내역 조회
+    */
     public List<CoinChargeDetail> getCoinChargeDetail(Long usersId) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);

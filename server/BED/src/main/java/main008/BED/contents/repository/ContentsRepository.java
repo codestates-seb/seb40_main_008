@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
@@ -16,6 +17,9 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
     boolean existsByContentsId(Long contentsId);
 
     List<Contents> findByUsersUsersId(Long usersId);
+
+
+    Page<Contents> findByCategories(Contents.Categories categories, Pageable pageable);
 
     List<Contents> findContentsByTitleContainingOrderByContentsIdDesc(String keyword);
 
