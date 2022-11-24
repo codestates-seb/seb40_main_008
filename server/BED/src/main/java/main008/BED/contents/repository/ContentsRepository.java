@@ -20,4 +20,5 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
     List<Contents> findContentsByTitleContainingOrderByContentsIdDesc(String keyword);
 
     List<Contents> findContentsByTitleContainingOrderByLikesCountDesc(String keyword);
+
 }
