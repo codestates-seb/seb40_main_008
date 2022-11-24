@@ -203,6 +203,7 @@ public class ContentsService {
 
         return contentsRepository.findByCategories(
                 categories, PageRequest.of(page - 1, size, Sort.by(sort).descending()));
+    }
 
     /**
      * Search: 강의명 검색 - 인기순
@@ -219,4 +220,5 @@ public class ContentsService {
 
         return contentsPage;
     }
+
 }
