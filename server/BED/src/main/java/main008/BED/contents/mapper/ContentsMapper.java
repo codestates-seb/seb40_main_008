@@ -29,4 +29,32 @@ public interface ContentsMapper {
                         .build())
                 .collect(Collectors.toList());
     }
+
+
+    default ContentsDto.ResponseForTitleSearch contentsPageToResponse(Contents contents) {
+            if ( contents == null ) {
+                return null;
+            }
+
+            String title = null;
+            String thumbnail = null;
+            Contents.Categories categories = null;
+            String tutorName = null;
+
+            title = contents.getTitle();
+            thumbnail = contents.getThumbnail();
+            categories = contents.getCategories();
+            tutorName = contents.getUsers().getUserName();
+
+
+            ContentsDto.ResponseForTitleSearch responseForTitleSearch = new ContentsDto.ResponseForTitleSearch( title, thumbnail, categories, tutorName );
+
+            return responseForTitleSearch;
+    }
+    default List<ContentsDto.ResponseForTitleSearch> contentsPageToResponses(List<Contents> contents) {
+        return contents.stream()
+                .map(content -> contentsPageToResponse(content))
+                .collect(Collectors.toList());
+    }
+
 }

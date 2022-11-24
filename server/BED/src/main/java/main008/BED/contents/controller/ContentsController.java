@@ -13,6 +13,8 @@ import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
+import main008.BED.dto.MultiResponseDto;
+import main008.BED.dto.PageInfo;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
@@ -26,6 +28,7 @@ import main008.BED.users.service.UsersService;
 import main008.BED.wish.dto.WishDto;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.mapper.WishMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping
 @RequiredArgsConstructor
 @Validated
 public class ContentsController {
@@ -58,7 +61,7 @@ public class ContentsController {
 
 
     // 컨텐츠 개설
-    @PostMapping("/{users-id}/uploadcontents")
+    @PostMapping("/auth/{users-id}/uploadcontents")
     public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
                                        @RequestParam("title") String title,
                                        @RequestParam("categories") Contents.Categories categories,
@@ -85,7 +88,7 @@ public class ContentsController {
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/{users-id}/{contents-id}/wish")
+    @PostMapping("/auth/{users-id}/{contents-id}/wish")
     public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {
@@ -102,7 +105,7 @@ public class ContentsController {
      * READ: 컨텐츠 상세화면 Response DTO
      */
     // TODO: 구매 여부에 따라 상세화면 Dto 구분 로직 작성
-    @GetMapping("/contents/{contents-id}")
+    @GetMapping("/auth/contents/{contents-id}")
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
 
 
@@ -129,7 +132,7 @@ public class ContentsController {
     /**
      * READ: 영상 재생 화면 Response DTO
      */
-    @GetMapping("{users-id}/contents/{contents-id}/video/{uploadClass-id}")
+    @GetMapping("/auth/{users-id}/contents/{contents-id}/video/{uploadClass-id}")
     public ResponseEntity getStream(@PathVariable("users-id") @Positive Long usersId,
                                     @PathVariable("contents-id") @Positive Long contentsId,
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
@@ -158,5 +161,24 @@ public class ContentsController {
                 curriculumInStream.getCurriculumInfo());
 
         return new ResponseEntity(responseForStream, HttpStatus.OK);
+    }
+
+    /**
+     * Search: 강의명으로 검색 - 해당 콘텐츠 불러오기(Default: 인기순) 그 외 최신순
+     */
+    @GetMapping("/search/title")
+    public ResponseEntity getTitleContents(@RequestParam("keyword") String keyword,
+                                           @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                                           @RequestParam(name = "size", required = false, defaultValue = "3") int size) {
+
+
+        // TODO: 인기순 로직 구현하고 최신순하고 분기 - 디폴트 인기순
+        Page<Contents> contentsPage = contentsService.searchTitleContents(keyword, page, size);
+        PageInfo pageInfo = PageInfo.of(contentsPage);
+
+        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
+                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+
+        return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
     }
 }

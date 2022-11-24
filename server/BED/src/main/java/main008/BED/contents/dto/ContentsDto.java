@@ -93,5 +93,16 @@ public class ContentsDto {
         private List<ChapterDto.ResponseDtoWithoutThumbnail> curriculumInfo;
     }
 
+    @Getter
+    @AllArgsConstructor
+    public static class ResponseForTitleSearch {
+
+        private String title;
+        private String thumbnail;
+        private Contents.Categories categories;
+        private String tutorName;
+    }
+
+
 
 }
