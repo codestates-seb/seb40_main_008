@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Content } from "../types/homeScreen/mainVideoContents";
-import { titleLengthFormatter } from "../utils/helper/titleLengthFormatter";
-import styles from "./styles/HomeClassesSection.module.css";
+import { Content } from "../../types/homeScreen/mainVideoContents";
+import { titleLengthFormatter } from "../../utils/helper/titleLengthFormatter";
+import styles from "./HomeClassesSection.module.css";
 
 interface HomeContentProps {
   contentList: Content[];

@@ -1,18 +1,41 @@
-import React from 'react'
+import React from 'react';
+import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
+import SearchResultFilter from '../../../components/Search/SearchResultFilter';
 
-const fetchGet = async (category: any) => {
-    const res = await fetch(`https://pioneroroom.com/contentsList/${category}`)
-    return await res.json().then((res) => res.data);
-}
+// geneticStaticParams 도 만들기,,,(detail,,,에 있는 것과 같이)
+// Homeclasses Section interface type도 ICategorySearchResult로 바꾸기
+// 필터링 부분 컴포넌트화 하기
+// Classes 그리드 부분 맞춰서 가져다 쓰기
+
+const fetchCategoryData = async (
+    categoryName: string
+): Promise<ICategorySearchResult[]> => {
+    // const res = await fetch(https://pioneroroom.com/contentsList/${category});
+    const res = await fetch(
+        `https://pioneroroom.com/category/sort/likes?categories=${categoryName}`
+    );
+    const body = await res.json();
+    return body;
+};
 
 const DetailCategoryPage = async ({ params }: any) => {
-    const get = await fetchGet(params.categoryId);
+
+    const get = await fetchCategoryData(params.categoryName);
+
     return (
-        <div>
-            <p>{JSON.stringify(get)}</p>
-        </div>
-    )
-}
+        <>
+            <SearchResultFilter searchTerm={params.categoryName} />
+            <div>
+
+
+                {/* 갖가지 강의영상에 대한 정보 그리드 정보 */}
+
+
+                {/* <p>{JSON.stringify(get)}</p> */}
+            </div>
+        </>
+    );
+};
 
 export default DetailCategoryPage;
 
