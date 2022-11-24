@@ -56,7 +56,7 @@ const HomeNavBar = () => {
           <div className="logo">
             <FontAwesomeIcon icon={faBars} className={styles.font} />
             <button className={styles.logo} onClick={scrollTopBtn}>
-              class4989
+              CLASS4989
             </button>
           </div>
           <div>

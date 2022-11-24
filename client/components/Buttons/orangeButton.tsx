@@ -1,15 +1,15 @@
 import styles from "./orangeButton.module.css";
 
-interface Prop {
+interface OrangeBtnProps {
   name: string;
-  onclick?: () => void;
+  onClick?: () => void;
 }
 
-const OrangeButton = ({ onclick, name }: Prop) => {
+const OrangeButton = ({ onClick, name }: OrangeBtnProps) => {
   return (
     <>
       <div className={styles.Wrapper}>
-        <button onClick={onclick} className={styles.btn}>
+        <button onClick={onClick} className={styles.btn}>
           {name}
         </button>
       </div>
