@@ -64,6 +64,7 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
+// 빌드시 충돌
 tasks.named('test') {
 	useJUnitPlatform()
 }
