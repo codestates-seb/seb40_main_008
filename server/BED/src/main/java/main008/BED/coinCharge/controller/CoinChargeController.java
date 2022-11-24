@@ -15,6 +15,7 @@ import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.service.UserPageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +23,10 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/coincharge")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Validated
+//@SessionAttributes({"tid"}) // 세션에 저장된 값 사용 시 쓰는 어노테이션, session에 없을 시 model까지 훑어서 찾음
 public class CoinChargeController {
 
     private final CoinChargeService coinChargeService;
@@ -38,7 +40,7 @@ public class CoinChargeController {
      * @param usersId
      * @return
      */
-    @PostMapping("/{users-id}/ready")
+    @PostMapping("/{users-id}/coincharge/ready")
     public ResponseEntity readyToCoinCharge(@RequestBody CoinChargeDto.Post post,
                                             @PathVariable("users-id") @Positive Long usersId) {
 
@@ -51,11 +53,10 @@ public class CoinChargeController {
     /**
      * 결제성공
      */
-    @GetMapping("/success")
-    public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken,
-                                          @RequestParam("tid") String tid) {
+    @GetMapping("/coincharge/success")
+    public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken) {
 
-        CoinChargeDetailDto.KakaoApproveResponse approveResponse = coinChargeService.kakaoApproveResponse(pgToken, tid);
+        CoinChargeDetailDto.KakaoApproveResponse approveResponse = coinChargeService.ApproveResponse(pgToken);
 
         return new ResponseEntity<>(new SingleResponseDto<>(approveResponse), HttpStatus.OK);
     }
@@ -63,23 +64,29 @@ public class CoinChargeController {
     /**
      * 결제 진행 중 취소
      */
-    @GetMapping("/cancel")
+    @GetMapping("/coincharge/cancel")
     public void cancel() {
+
+        coinChargeService.deleteDetail();
+
         throw new BusinessLogicException(ExceptionCode.PAY_CANCEL);
     }
 
     /**
      * 결제 실패
      */
-    @GetMapping("/fail")
+    @GetMapping("/coincharge/fail")
     public void fail() {
+
+        coinChargeService.deleteDetail();
+
         throw new BusinessLogicException(ExceptionCode.PAY_FAILED);
     }
 
     /**
     * 충전 내역 조회
     */
-    @GetMapping("/auth/{users-id}/coincharge")
+    @GetMapping("/{users-id}/coincharge")
     public ResponseEntity getCoinCharge(@PathVariable("users-id") @Positive Long usersId) {
 
 

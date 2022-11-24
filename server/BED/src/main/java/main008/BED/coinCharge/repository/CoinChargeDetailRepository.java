@@ -13,4 +13,5 @@ public interface CoinChargeDetailRepository extends JpaRepository<CoinChargeDeta
     List<CoinChargeDetail> findByCoinChargeCoinChargeId(Long coinChargeId);
 
     Optional<CoinChargeDetail> findByTid(String tid);
+
 }

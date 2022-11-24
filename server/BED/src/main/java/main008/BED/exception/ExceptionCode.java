@@ -40,8 +40,8 @@ public enum ExceptionCode {
     WRONG_TID(404, "Not available tid"),
     STRANGE_APPROACH(404, "Payment To Merchant Failed"),
     PAY_CANCEL(200, "Your payment has been successfully canceled."),
-    PAY_FAILED(500, "Payment failed. Please try again.")
-
+    PAY_FAILED(500, "Payment failed. Please try again."),
+    AMOUNT_DIFFERENT(404, "The total payment amount is different and the payment was canceled. Please pay again from the beginning.")
     ;
 
 

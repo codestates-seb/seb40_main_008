@@ -30,13 +30,13 @@ import java.util.List;
 public class CoinChargeService {
 
     static final String cid = "TC0ONETIME"; // 가맹점 테스트 코드
-    static final String admin_Key = "${ADMIN_KEY}"; // 공개 조심!
-
+    static final String admin_Key = "328091c101c67566980ed089597a8be8"; // 공개 조심!
 
     private final CoinChargeDetailRepository coinChargeDetailRepository;
     private final CoinChargeRepository coinChargeRepository;
     private final UserPageRepository userPageRepository;
     private final UsersRepository usersRepository;
+    private CoinChargeDetailDto.KakaoReadyResponse kakaoReady;
 
 
     /**
@@ -57,6 +57,7 @@ public class CoinChargeService {
         coinChargeDetail.setQuantity(1);
         coinChargeDetail.setTax(0);
         coinChargeDetail.setCoinCharge(coinCharge);
+        coinChargeDetail.setPaySuccess(false);
         coinChargeDetailRepository.save(coinChargeDetail);
 
         // 카카오페이 요청 양식
@@ -69,9 +70,9 @@ public class CoinChargeService {
         parameters.add("total_amount", String.valueOf(coinChargeDetail.getChargeAmount()));
         parameters.add("vat_amount", String.valueOf(coinChargeDetail.getTax()));
         parameters.add("tax_free_amount", "0");
-        parameters.add("approval_url", "http://localhost:8080/coincharge/success");
-        parameters.add("cancel_url", "http://localhost:8080/coincharge/cancel");
-        parameters.add("fail_url", "http://localhost:8080/coincharge/fail");
+        parameters.add("approval_url", "http://localhost:8080/auth/coincharge/success");
+        parameters.add("cancel_url", "http://localhost:8080/auth/coincharge/cancel");
+        parameters.add("fail_url", "http://localhost:8080/auth/coincharge/fail");
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
@@ -79,7 +80,7 @@ public class CoinChargeService {
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
 
-        CoinChargeDetailDto.KakaoReadyResponse kakaoReady = restTemplate.postForObject(
+        kakaoReady = restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/ready",
                 requestEntity,
                 CoinChargeDetailDto.KakaoReadyResponse.class);
@@ -99,16 +100,16 @@ public class CoinChargeService {
     /**
      * 결제 완료 승인
      */
-    public CoinChargeDetailDto.KakaoApproveResponse kakaoApproveResponse(String pgToken, String tid) {
+    public CoinChargeDetailDto.KakaoApproveResponse ApproveResponse(String pgToken) {
 
         CoinChargeDetail coinChargeDetail =
-                coinChargeDetailRepository.findByTid(tid).orElseThrow(()
-                        -> new BusinessLogicException(ExceptionCode.WRONG_TID));
+                coinChargeDetailRepository.findByTid(kakaoReady.getTid())
+                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.WRONG_TID));
 
         // 카카오 요청
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", cid);
-        parameters.add("tid", tid);
+        parameters.add("tid", kakaoReady.getTid());
         parameters.add("partner_order_id", String.valueOf(coinChargeDetail.getCoinChargeDetailId()));
         parameters.add("partner_user_id", String.valueOf(coinChargeDetail.getCoinCharge().getUserPage().getUsers().getUsersId()));
         parameters.add("pg_token", pgToken);
@@ -122,8 +123,18 @@ public class CoinChargeService {
 
         if (approveResponse != null) {
 
+            // 결제금액이 다른 경우 예외 던짐
+            int payBefore = coinChargeDetail.getChargeAmount();
+            int payAfter = approveResponse.getAmount().getTotal();
+
+            if (payBefore != payAfter) {
+                deleteDetail();
+                throw new BusinessLogicException(ExceptionCode.AMOUNT_DIFFERENT);
+            }
+
             coinChargeDetail.setApprovedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
             coinChargeDetail.setAid(approveResponse.getAid());
+            coinChargeDetail.setPaySuccess(true);
             coinChargeDetailRepository.save(coinChargeDetail);
 
             charge(coinChargeDetail);
@@ -171,29 +182,18 @@ public class CoinChargeService {
         return httpHeaders;
     }
 
-//    /*
-//    코인 충전
-//    */
-//    public CoinCharge charging(Long usersId, CoinCharge coinChargePost) {
-//
-//        Users users = usersRepository.findByUsersId(usersId);
-//        UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
-//        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId());
-//        List<CoinChargeDetail> coinChargeDetails = coinChargeDetailRepository.findByCoinChargeCoinChargeId(coinCharge.getCoinChargeId());
-//
-//        CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
-//        coinChargeDetail.setCoinCharge(coinCharge);
-//        coinChargeDetail.setChargeAmount(coinChargePost.getChargeAmount().getAmount());
-//        coinChargeDetail.setBoughtAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-//        coinChargeDetail = coinChargeDetailRepository.save(coinChargeDetail);
-//
-//        coinChargeDetails.add(coinChargeDetail);
-//        coinCharge.setCoinChargeDetails(coinChargeDetails);
-//        CoinCharge coinCharge1 = coinChargeRepository.save(coinCharge);
-//
-//        users.setTotalCoin(users.getTotalCoin() + coinChargeDetail.getChargeAmount());
-//        usersRepository.save(users);
-//
-//        return coinCharge1;
-//    }
+    /**
+     * 결제 취소/중단 시 detail 삭제
+     * 결제가 취소되었음에도 DB에 저장되는 버그 해결
+     */
+    public void deleteDetail() {
+
+        CoinChargeDetail coinChargeDetail = coinChargeDetailRepository.findByTid(kakaoReady.getTid()).orElseThrow();
+
+        coinChargeDetailRepository.delete(coinChargeDetail);
+    }
+
+    /**
+     * 환불
+     */
 }

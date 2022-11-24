@@ -38,6 +38,9 @@ public class CoinChargeDetail {
     private int chargeAmount; // 결제 금액
 
     @Column
+    private Boolean paySuccess = false;
+
+    @Column
     private ZonedDateTime approvedAt;
 
     @ManyToOne
