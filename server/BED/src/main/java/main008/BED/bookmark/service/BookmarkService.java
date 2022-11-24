@@ -88,8 +88,6 @@ public class BookmarkService {
      */
     public void removeBookmark(Long usersId, Long uploadClassId, Long bookmarkId) {
 
-        //TODO : 본인의 메모만 삭제 가능하게 예외 처리 추가.
-
         existsById(usersId, uploadClassId);
 
         if (!bookmarkRepository.existsById(bookmarkId)) {

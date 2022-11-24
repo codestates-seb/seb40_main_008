@@ -179,5 +179,8 @@ public class ContentsService {
         return contentsRepository.findByContentsId(contentsId);
     }
 
+    /**
+     * Search: 강의명 검색
+     */
 
 }

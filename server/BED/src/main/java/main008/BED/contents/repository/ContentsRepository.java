@@ -14,4 +14,6 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
     boolean existsByContentsId(Long contentsId);
 
     List<Contents> findByUsersUsersId(Long usersId);
+
+    List<Contents> findContentsByTitleContainingOrderByContentsIdDesc(String keyword);
 }
