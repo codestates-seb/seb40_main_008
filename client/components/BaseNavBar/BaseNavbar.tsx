@@ -3,10 +3,10 @@ import React from "react";
 import styles from "./BaseNavbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import { UseScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
+import { useScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
 
 const BaseNavbar = () => {
-  const { show } = UseScrollBar();
+  const { show } = useScrollBar();
   return (
     <>
       {window.scrollY < 45 ? (
