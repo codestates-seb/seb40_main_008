@@ -1,6 +1,8 @@
 import React, { use } from "react";
 import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
 import ContentInfo from "../../../components/content/ContentInfo";
+import ContentTabs from "../../../components/content/ContentTabs";
+
 import { IContent } from "../../../types/contents";
 import styles from "./content.module.css";
 // const getContentInfo = async (contentsId: string): Promise<Array<IContent>> => {
