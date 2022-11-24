@@ -18,5 +18,11 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
 
     List<Contents> findByUsersUsersId(Long usersId);
 
+
     Page<Contents> findByCategories(Contents.Categories categories, Pageable pageable);
+
+    List<Contents> findContentsByTitleContainingOrderByContentsIdDesc(String keyword);
+
+    List<Contents> findContentsByTitleContainingOrderByLikesCountDesc(String keyword);
+
 }

@@ -20,7 +20,6 @@ public class PaymentDto {
     }
 
 
-
     @Getter
     @Setter
     @NoArgsConstructor
@@ -30,4 +29,5 @@ public class PaymentDto {
         private ContentsDto.Response contents;
         private List<PaymentDetailDto.Response> paymentDetails;
     }
+
 }

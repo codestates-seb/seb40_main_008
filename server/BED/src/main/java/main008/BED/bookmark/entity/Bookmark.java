@@ -9,6 +9,7 @@ import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 
 @Entity
 @Getter
@@ -25,13 +26,19 @@ public class Bookmark {
     private String memo;
 
     @Column
-    private String timeline;
+    private ZonedDateTime createdAt;
 
-    @ManyToOne
+    @Column
+    private ZonedDateTime modifiedAt;
+
+//    @Column
+//    private String timeline;
+
+    @ManyToOne // 양방향, cascade.all, Lazy
     @JoinColumn(name = "UPLOAD_CLASS_ID")
     private UploadClass uploadClass;
 
-    @ManyToOne
+    @ManyToOne // 양방향, cascade.all, Lazy
     @JoinColumn(name = "USERS_ID")
     private Users users;
 }

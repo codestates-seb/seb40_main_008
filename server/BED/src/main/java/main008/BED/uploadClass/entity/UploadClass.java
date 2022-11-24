@@ -1,6 +1,7 @@
 package main008.BED.uploadClass.entity;
 
 import lombok.*;
+import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.docs.entity.Docs;
 import main008.BED.review.entity.Review;
@@ -46,4 +47,7 @@ public class UploadClass {
 
     @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Warning> warningList;
+
+    @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarkList;
 }

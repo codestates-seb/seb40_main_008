@@ -33,8 +33,9 @@ public enum ExceptionCode {
     /*Payment Coin*/
     COIN_SHORTAGE(400, "잔액이 부족합니다."),
 
-    /*Kakao pay*/
-    UNCORRECTED_API(400, "Uncorrected Api.")
+    /*Bookmark*/
+    BOOKMARK_NOT_FOUND(404, "Bookmark Not Found")
+
     ;
 
 

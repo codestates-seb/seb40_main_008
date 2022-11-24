@@ -30,7 +30,7 @@ public class WarningService {
      */
     public void saveWarning(Warning warning, Long usersId, Long uploadClassId) {
 
-        saveValidation(usersId); // Validation & Exception Handling
+        saveValidation(usersId, uploadClassId); // Validation & Exception Handling
 
         Users user = usersRepository.findByUsersId(usersId);
         UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
@@ -53,19 +53,36 @@ public class WarningService {
     /**
      * Validation: 신고 접수 예외 처리
      */
-    private void saveValidation(Long usersId) {
+    // TODO: 한 유저가 한 챕터의 다른 강의에 대하여 각각 신고를 못하고 있음.
+    private void saveValidation(Long usersId, Long uploadClassId) {
         if (!usersRepository.existsById(usersId)) {
             throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
+        } else if (!uploadClassRepository.existsByUploadClassId(uploadClassId)) {
+            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND);
         }
 
-        // 같은 유저가 한 강의 당 한 번의 신고만 가능
 
-        List<Warning> warningCollect = warningRepository.findAll();
-        boolean duplication = warningCollect.stream()
-                .map(warningElem -> warningElem.getUsers().getUsersId())
-                .anyMatch(userIdentity -> userIdentity.equals(usersId));
+        Users user = usersRepository.findByUsersId(usersId);
+        List<Warning> warningList = user.getWarningList();
+        boolean duplication = warningList.stream()
+                .map(warning -> warning.getUploadClass().getUploadClassId())
+                .anyMatch(classIdentity -> classIdentity.equals(uploadClassId));
+
         if (duplication) {
             throw new BusinessLogicException(ExceptionCode.DUPLICATE_WARNING);
         }
+
+    }
+
+    /**
+     * FIND: 사용자 신고 내역 목록 조회
+     */
+    public List<Warning> findWarningList(Long usersId) {
+        if (!usersRepository.existsById(usersId)) {
+            throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
+        }
+        Users user = usersRepository.findByUsersId(usersId);
+        List<Warning> warningList = user.getWarningList();
+        return warningList;
     }
 }
