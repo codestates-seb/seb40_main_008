@@ -30,8 +30,12 @@ public enum ExceptionCode {
     /*Warning*/
     DUPLICATE_WARNING(409, "해당 강의에 대하여 이미 신고한 내역이 있습니다."),
 
+    /*Payment Coin*/
+    COIN_SHORTAGE(400, "잔액이 부족합니다."),
+
     /*Bookmark*/
     BOOKMARK_NOT_FOUND(404, "Bookmark Not Found")
+
     ;
 
 

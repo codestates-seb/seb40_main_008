@@ -105,7 +105,7 @@ public class ContentsService {
 
         Pageable pageable =
                 PageRequest.of(page - 1, size,
-                        Sort.by("contentsId").descending());
+                        Sort.by("likesCount").descending());
 
         return contentsRepository.findAll(pageable);
     }
@@ -193,6 +193,19 @@ public class ContentsService {
     }
 
     /**
+     * find Categories
+     */
+    public Page<Contents> findContentsByCategory(int page, int size, Contents.Categories categories, String sort) {
+
+        if ("newest".equals(sort)) {
+            sort = "contentsId";
+        }
+
+        return contentsRepository.findByCategories(
+                categories, PageRequest.of(page - 1, size, Sort.by(sort).descending()));
+    }
+
+    /**
      * Search: 강의명 검색 - 인기순
      */
     public Page<Contents> searchTitleContentsByPopular(String keyword, int page, int size) {
@@ -207,4 +220,5 @@ public class ContentsService {
 
         return contentsPage;
     }
+
 }

@@ -37,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -161,6 +162,20 @@ public class ContentsController {
                 curriculumInStream.getCurriculumInfo());
 
         return new ResponseEntity(responseForStream, HttpStatus.OK);
+    }
+
+    /**
+     * 카테고리 조회
+     */
+    @GetMapping("/category/sort")
+    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories,
+                                        @RequestParam(name = "sort", required = false, defaultValue = "likesCount") String sort,
+                                        @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                                        @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+
+        Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
+
+        return new ResponseEntity<>(contentsMapper.contentsToResponses(contents.getContent(), usersMapper), HttpStatus.OK);
     }
 
     /**
