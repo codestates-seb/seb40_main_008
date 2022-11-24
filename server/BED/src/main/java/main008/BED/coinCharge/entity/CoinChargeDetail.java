@@ -17,13 +17,28 @@ public class CoinChargeDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long coinChargeDetailId;
+    private Long coinChargeDetailId; // 결제번호
 
     @Column
-    private int chargeAmount;
+    private String itemName; // 상품명
 
     @Column
-    private ZonedDateTime boughtAt;
+    private int quantity; // 상품 수량
+
+    @Column
+    private int tax; // 부가세
+
+    @Column(unique = true)
+    private String tid; // 결제 번호
+
+    @Column
+    private String aid; // 요청 고유 번호
+
+    @Column
+    private int chargeAmount; // 결제 금액
+
+    @Column
+    private ZonedDateTime approvedAt;
 
     @ManyToOne
     @JoinColumn(name = "COIN_CHARGE_ID")

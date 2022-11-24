@@ -34,7 +34,13 @@ public enum ExceptionCode {
     COIN_SHORTAGE(400, "잔액이 부족합니다."),
 
     /*Bookmark*/
-    BOOKMARK_NOT_FOUND(404, "Bookmark Not Found")
+    BOOKMARK_NOT_FOUND(404, "Bookmark Not Found"),
+
+    /*KakaoPay*/
+    WRONG_TID(404, "Not available tid"),
+    STRANGE_APPROACH(404, "Payment To Merchant Failed"),
+    PAY_CANCEL(200, "Your payment has been successfully canceled."),
+    PAY_FAILED(500, "Payment failed. Please try again.")
 
     ;
 
