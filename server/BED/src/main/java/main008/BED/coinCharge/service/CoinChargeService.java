@@ -30,7 +30,7 @@ import java.util.List;
 public class CoinChargeService {
 
     static final String cid = "TC0ONETIME"; // 가맹점 테스트 코드
-    static final String admin_Key = "328091c101c67566980ed089597a8be8"; // 공개 조심!
+    static final String admin_Key = "${ADMIN_KEY}"; // 공개 조심!
 
     private final CoinChargeDetailRepository coinChargeDetailRepository;
     private final CoinChargeRepository coinChargeRepository;
@@ -194,6 +194,7 @@ public class CoinChargeService {
     }
 
     /**
-     * 환불
+     * 결제 환불
      */
+    // TODO: 결제 환불 구현해야함
 }
