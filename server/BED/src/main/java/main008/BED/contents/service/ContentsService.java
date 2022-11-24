@@ -177,9 +177,9 @@ public class ContentsService {
     }
 
     /**
-     * Search: 강의명 검색
+     * Search: 강의명 검색 - 최신순
      */
-    public Page<Contents> searchTitleContents(String keyword, int page, int size) {
+    public Page<Contents> searchTitleContentsByLateast(String keyword, int page, int size) {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("contentsId").descending());
 
@@ -192,4 +192,19 @@ public class ContentsService {
         return contentsPage;
     }
 
+    /**
+     * Search: 강의명 검색 - 인기순
+     */
+    public Page<Contents> searchTitleContentsByPopular(String keyword, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("likesCount").descending());
+
+        List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByLikesCountDesc(keyword);
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), contentsList.size());
+        Page<Contents> contentsPage = new PageImpl<>(contentsList.subList(start, end), pageable, contentsList.size());
+
+        return contentsPage;
+    }
 }
