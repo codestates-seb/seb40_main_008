@@ -19,14 +19,20 @@
   position: relative;
   margin-top: 20px;
   align-items: center;
-  justify-content: center;
   text-align: center;
   flex-direction: column;
   margin-bottom: 35px;
 }
 .charge {
   display: flex;
-  padding: 30px;
+  width: 100%;
+  padding: 30px 50px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coinwrap {
+  display: flex;
   align-items: center;
 }
 
@@ -37,11 +43,11 @@
 .chargeBtn {
   cursor: pointer;
   margin-left: 50px;
-  margin-top: 3px;
   border-radius: 5px;
   outline: 0;
-  padding: 6px;
+  border: 0;
+  padding-top: 7px;
   color: white;
   background: transparent;
-  font-size: 20px;
+  font-size: 22px;
 }

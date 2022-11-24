@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { UseScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
+import { useScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
 import styles from "./HomeNavBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 
 const HomeNavBar = () => {
   const session = useSession();
-  const { show } = UseScrollBar();
+  const { show } = useScrollBar();
   // console.log(window.scrollY);
 
   const scrollTopBtn = () => {
@@ -56,7 +56,7 @@ const HomeNavBar = () => {
           <div className="logo">
             <FontAwesomeIcon icon={faBars} className={styles.font} />
             <button className={styles.logo} onClick={scrollTopBtn}>
-              class4989
+              CLASS4989
             </button>
           </div>
           <div>

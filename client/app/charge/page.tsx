@@ -3,7 +3,7 @@ import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
 import styles from "./ChargeCoin.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
-import Button from "../../components/Buttons/orangeButton";
+import OrangeButton from "../../components/Buttons/orangeButton";
 
 const ChargeCoin = () => {
   return (
@@ -17,28 +17,38 @@ const ChargeCoin = () => {
 
       <div className={styles.ChargeWrapper}>
         <div className={styles.charge}>
-          <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
-          <h2>5000원</h2>
+          <div className={styles.coinwrap}>
+            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <h2>5000원</h2>
+          </div>
+          <button className={styles.chargeBtn}> $ 충전하기 </button>
+        </div>
+
+        <div className={styles.charge}>
+          <div className={styles.coinwrap}>
+            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <h2>10000원</h2>
+          </div>
+          <button className={styles.chargeBtn}> $ 충전하기 </button>
+        </div>
+
+        <div className={styles.charge}>
+          <div className={styles.coinwrap}>
+            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <h2>20000원</h2>
+          </div>
           <button className={styles.chargeBtn}> $ 충전하기 </button>
         </div>
         <div className={styles.charge}>
-          <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
-          <h2>10000원</h2>
-          <button className={styles.chargeBtn}> $ 충전하기 </button>
-        </div>
-        <div className={styles.charge}>
-          <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
-          <h2>20000원</h2>
-          <button className={styles.chargeBtn}> $ 충전하기 </button>
-        </div>
-        <div className={styles.charge}>
-          <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
-          <h2>50000원</h2>
+          <div className={styles.coinwrap}>
+            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <h2>50000원</h2>
+          </div>
           <button className={styles.chargeBtn}> $ 충전하기 </button>
         </div>
       </div>
 
-      <Button name={"충전 내역보기"}></Button>
+      <OrangeButton name={"충전 내역보기"}></OrangeButton>
     </>
   );
 };
