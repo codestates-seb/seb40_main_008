@@ -37,34 +37,28 @@ public class LikesService {
         Contents contents = contentsRepository.findByContentsId(contentsId);
         Users users = usersRepository.findByUsersId(usersId);
         Likes likes = contents.getLikes();
-        List<LikesDetail> likesDetails = likesDetailRepository.findByLikesLikesId(likes.getLikesId());
-
 
         if (likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId()) != null) {
 
-            LikesDetail likesDetail1 = likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId());
+            LikesDetail likesDetail1 =
+                    likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId());
 
             if (likesDetail1.getLiked()) {
 
-                Likes likes1 = likesDetail1.getLikes();
+                contentsRepository.likesCountForContentsDown(contents);
 
                 likesDetail1.setLiked(false);
                 likesDetailRepository.save(likesDetail1);
-                likes1.setLikesCount(likes1.getLikesCount() - 1);
-
-                contents.setLikesCount(likes1.getLikesCount());
-                contentsRepository.save(contents);
-
+                likes.setContents(contents);
+                likesRepository.likesCountDown(likes);
             } else {
 
-                Likes likes1 = likesDetail1.getLikes();
+                contentsRepository.likesCountForContentsUp(contents);
 
                 likesDetail1.setLiked(true);
                 likesDetailRepository.save(likesDetail1);
-                likes1.setLikesCount(likes1.getLikesCount() + 1); // DB에서
-
-                contents.setLikesCount(likes1.getLikesCount());
-                contentsRepository.save(contents);
+                likes.setContents(contents);
+                likesRepository.likesCountUp(likes);
             }
         } else {
 
@@ -73,12 +67,13 @@ public class LikesService {
             likesDetail.setLiked(true);
             likesDetail.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
 
-            likes.getLikesDetails().add(likesDetail);
-            likes.setLikesCount(likes.getLikesCount() + 1);
+            contentsRepository.likesCountForContentsUp(contents);
 
-            contents.setLikesCount(likes.getLikesCount());
-            contentsRepository.save(contents);
+            likes.getLikesDetails().add(likesDetail);
+            likes.setContents(contents);
+            likesRepository.likesCountUp(likes);
         }
-        return likes;
+
+        return likesRepository.save(likes);
     }
 }

@@ -30,38 +30,39 @@ public class Contents {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long contentsId;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String thumbnail;
 
-    @Column
+    @Column(nullable = false)
     private String fileKey; // thumbnail key for delete it in s3
 
-    private int likesCount = 0;
+    @Column
+    private int likesCount;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String details;
 
 //    @Column
 //    private Boolean wish;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Categories categories;
 
-    @Column
+    @Column(nullable = false)
     private Boolean disclosure = false; // 콘텐츠 공개 여부
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String tutorDetail;
 
-    @Column
+    @Column(nullable = false)
     public int countLecture = 0;
 //    public static int countLecture = 0; // 콘텐츠 공개 여부 결정 도움을 위한 필드
 
-    public enum Categories {
+    public enum Categories implements EnumModel{
         DIGITAL_DRAWING("디지털 드로잉"),
         MUSIC("음악"),
         DRAWING("드로잉"),
@@ -106,6 +107,12 @@ public class Contents {
             return null;
         }
 
+        // 추상 메서드 구현
+        @Override
+        public String getKey() {
+            return name();
+        }
+
         // 직렬화
         @JsonValue
         public String getValue() {
@@ -147,10 +154,18 @@ public class Contents {
     private Payment payment;
 
 
+    // 양방향 매핑 시 편의메서드 필수
     public void addWish(Wish wish) {
         this.wishes.add(wish);
         if (wish.getContents() != this) {
             wish.addContents(this);
+        }
+    }
+
+    public void addLikes(Likes likes) {
+        this.likes = likes;
+        if (likes.getContents() != this) {
+            likes.addContents(this);
         }
     }
 

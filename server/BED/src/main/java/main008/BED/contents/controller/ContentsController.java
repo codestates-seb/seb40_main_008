@@ -9,6 +9,8 @@ import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.service.ChapterService;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
+import main008.BED.contents.entity.EnumModel;
+import main008.BED.contents.entity.EnumValue;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.docs.entity.Docs;
@@ -38,8 +40,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.awt.print.Pageable;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping
@@ -214,6 +216,29 @@ public class ContentsController {
                 = contentsMapper.contentsPageToResponses(contentsPage.getContent());
 
         return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
+    }
+
+    /**
+     * 카테고리 명칭 리스트 출력 위한 로직
+     * @return 카테고리 명칭 리스트
+     */
+    @GetMapping("/categoryList")
+    public Map<String, List<EnumValue>> getCategoryList() {
+
+        Map<String, List<EnumValue>> enumValues = new LinkedHashMap<>();
+
+        enumValues.put("카테고리 명칭 리스트", toEnumValues(Contents.Categories.class));
+
+        return enumValues;
+
+    }
+
+    private List<EnumValue> toEnumValues(Class<? extends EnumModel> e){
+
+        return Arrays
+                .stream(e.getEnumConstants())
+                .map(EnumValue::new)
+                .collect(Collectors.toList());
     }
 
 }

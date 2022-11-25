@@ -51,6 +51,7 @@ public class ContentsService {
 
         contents.setWishes(new ArrayList<>());
         contents.setLikes(new Likes());
+        contents.setLikesCount(0);
 
         Likes likes = contents.getLikes();
         likes.setLikesCount(0);
