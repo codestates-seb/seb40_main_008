@@ -1,14 +1,14 @@
 export interface ICategorySearchResult {
+    id: number;
     contentsId: number;
     title: string;
     thumbnail: string;
-    likesCount: number;
     categories: string;
     users: Users;
 }
 
 export interface Users {
     usersId: number;
-    userName: string;
+    username: string;
     profileImage: string;
 }

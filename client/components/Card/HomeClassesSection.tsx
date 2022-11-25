@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { Content } from "../../types/homeScreen/mainVideoContents";
+import { ICategorySearchResult } from "../../types/category_search/categorySearchType";
 import { titleLengthFormatter } from "../../utils/helper/titleLengthFormatter";
 import styles from "./HomeClassesSection.module.css";
 
 interface HomeContentProps {
-  contentList: Content[];
+  contentList: ICategorySearchResult[];
 }
 
 const HomeClassesSection = ({ contentList }: HomeContentProps) => {

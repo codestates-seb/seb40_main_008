@@ -25,7 +25,7 @@ const SearchPage = () => {
 
     }
 
-    // 검색 버튼 클릭 시, 내용 담아서 POST 요청 보내기
+    // 검색 버튼 클릭 시, 내용 담아서 GET 요청 보내기
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // console.log(searchvalue);
