@@ -1,45 +1,70 @@
-import React from 'react'
+"use client";
+import React, { use, useState } from 'react'
 import styles from './search.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
+import getSearchData from '../../components/Search/PopularKeyword';
+import { searchApi } from '../../components/Search/searchApi';
 
-const getSearchData = async () => {
-    const res = await fetch('https://jsonplaceholder.typicode.com/todos?_start=0&_end=10');
+// client 페이지
+// input에 value 에 추가
+// params.categoryName으로 받기
 
-    if (!res.ok) {
-        throw new Error('failed to data fetch')
+const SearchPage = () => {
+
+    // 인기 검색어(무한 fetching 문제 발생...)
+    // const popularKeyword = use(getSearchData());
+
+    // 검색어 
+    const [searchvalue, setSearchvalue] = useState('');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchvalue(e.target.value);
+        console.log(searchvalue);
+
     }
-    return res.json();
-}
 
-const SearchPage = async () => {
-
-    const searchData = await getSearchData();
-
-    console.log(searchData);
+    // 검색 버튼 클릭 시, 내용 담아서 POST 요청 보내기
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // console.log(searchvalue);
+        // alert(JSON.stringify(searchvalue));
+        searchApi.getSearch(searchvalue);
+    }
 
     return (
         <>
             <div className={styles.searchpageWrapper}>
                 <div className={styles.searchWrapper}>
                     <div className={styles.searchboxWrapper}>
-                        <input
-                            className={styles.searchbox}
-                            placeholder='관심 클래스 찾기' />
-                        <FontAwesomeIcon
-                            icon={faMagnifyingGlass}
-                            className={styles.magnifyingglass} />
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                value={searchvalue}
+                                onChange={handleChange}
+                                className={styles.searchbox}
+                                placeholder='관심 클래스 찾기' />
+                            <button className={styles.submitbtn} type='submit'>
+                                <FontAwesomeIcon
+                                    icon={faMagnifyingGlass}
+                                    className={styles.magnifyingglass} />
+                            </button>
+                        </form>
                     </div>
                 </div>
 
                 <div className={styles.title}>인기순</div>
 
-                {searchData.map((e: any, idx: number) => {
+                {/* {popularKeyword.map((e: any, idx: number) => {
                     return (
-                        <li className={styles.li}>{idx}.{e.title}</li>
+                        <ol>
+                            <li className={styles.li}>
+                                <span className={styles.num}>{idx + 1}</span>
+                                <span>{e.title}</span>
+                            </li>
+                        </ol>
                     )
-                })}
+                })} */}
 
             </div>
             <TabNavigator activeLink={'home'} />

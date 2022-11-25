@@ -8,6 +8,12 @@ import { Content } from '../../../types/homeScreen/mainVideoContents';
 // Homeclasses Section interface type도 ICategorySearchResult로 바꾸기
 // 필터링 부분 컴포넌트화 하기
 // Classes 그리드 부분 맞춰서 가져다 쓰기
+// 검색어가 카테고리 arr에 포함되면 categoryName으로 아니면 검색어로 req보내기
+
+// Grid 콘텐츠 불러오기 부분
+interface HomeContentProps {
+    contentList: Content[];
+}
 
 const getClassesContents = async (): Promise<Array<Content>> => {
     try {
@@ -24,15 +30,16 @@ const getClassesContents = async (): Promise<Array<Content>> => {
     }
 };
 
-interface HomeContentProps {
-    contentList: Content[];
-}
-
+// categoryName 또는 검색어에 대한 get요청
 const fetchCategoryData = async (
     categoryName: string
 ): Promise<ICategorySearchResult[]> => {
     const res = await fetch(
-        `https://pioneroroom.com/category/sort/likes?categories=${categoryName}`
+        // category search
+        `https://pioneroroom.com/search?categories=${categoryName}`
+
+        // search engine
+        // `https://pioneroroom.com/search/title/?keyword=${searchName}`
     );
     const body = await res.json();
     return body;
@@ -61,10 +68,3 @@ const DetailCategoryPage = async ({ params }: any) => {
 };
 
 export default DetailCategoryPage;
-
-// 카테고리 필터링 작업
-
-// 1. categoryId별로 필터링된 api에서 가져오면 될지?(카테고리/최신순/인기순)
-// 2. 전체 카테고리 리스트를 주시면 프론트에서 필터링..?
-// 3. 카테고리 네이밍 BE에서 정한게 있는지?
-// --> 백엔드에 쿼리스트링으로 넘겨주기(스티랑 값/URL 받으면 이어 작업하기)
