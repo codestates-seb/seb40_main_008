@@ -23,3 +23,15 @@ export interface UploadImage {
   thumbnail: string;
   type: string;
 }
+
+export interface UploadChapterType {
+  thumbnail: File | null;
+  chapterOrder: string;
+  title: string;
+}
+
+export const initialChapter = {
+  thumbnail: null,
+  chapterOrder: "",
+  title: "",
+};
