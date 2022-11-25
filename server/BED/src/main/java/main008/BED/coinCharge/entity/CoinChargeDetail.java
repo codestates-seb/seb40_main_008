@@ -38,10 +38,19 @@ public class CoinChargeDetail {
     private int chargeAmount; // 결제 금액
 
     @Column
-    private Boolean paySuccess = false;
+    private Boolean paySuccess = false; // 결제 성공 유무
 
     @Column
-    private ZonedDateTime approvedAt;
+    private ZonedDateTime approvedAt; // 결제 시간
+
+    @Column
+    private int cancelAmount; // 환불 금액
+
+    @Column
+    private Boolean refund = false; // 환불 유무
+
+    @Column
+    private String canceled_at; // 환불 시간
 
     @ManyToOne
     @JoinColumn(name = "COIN_CHARGE_ID")

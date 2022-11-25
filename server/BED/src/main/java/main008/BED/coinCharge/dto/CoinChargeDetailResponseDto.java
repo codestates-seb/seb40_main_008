@@ -13,4 +13,5 @@ public class CoinChargeDetailResponseDto {
 
     private ZonedDateTime approvedAt;
     private int chargeAmount;
+    private Boolean refund;
 }

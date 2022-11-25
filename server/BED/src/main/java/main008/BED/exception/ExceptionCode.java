@@ -38,10 +38,12 @@ public enum ExceptionCode {
 
     /*KakaoPay*/
     WRONG_TID(404, "Not available tid"),
-    STRANGE_APPROACH(404, "Payment To Merchant Failed"),
-    PAY_CANCEL(200, "Your payment has been successfully canceled."),
-    PAY_FAILED(500, "Payment failed. Please try again."),
-    AMOUNT_DIFFERENT(404, "The total payment amount is different and the payment was canceled. Please pay again from the beginning.")
+    STRANGE_APPROACH(404, "비 정상적인 접근이 감지되어 결제가 실패되었습니다."),
+    PAY_CANCEL(200, "결제가 정상적으로 취소되었습니다."),
+    PAY_FAILED(500, "결제에 실패하였습니다. 다시 시도하여주세요."),
+    AMOUNT_DIFFERENT(404, "결제 금액이 달라 결제가 취소되었습니다. 처음부터 다시 시도하여주세요."),
+    DETAIL_NOT_FOUND(404, "코인 충전 내역을 찾을 수 없습니다."),
+    CANCEL_FAILED(500, "환불에 실패하였습니다. 다시 시도하여주세요.")
     ;
 
 

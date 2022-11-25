@@ -123,7 +123,7 @@ public class CoinChargeService {
 
         if (approveResponse != null) {
 
-            // 결제금액이 같지 않은데 DB에 저장되는 오류 해결
+            // 결제금액이 같지 않은데 DB에 저장되는 버그 해결
             int payBefore = coinChargeDetail.getChargeAmount();
             int payAfter = approveResponse.getAmount().getTotal();
 
@@ -146,26 +146,45 @@ public class CoinChargeService {
     }
 
     /**
-     * 결제 완료 후 코인 충전
+     * 결제 환불
      */
-    public void charge(CoinChargeDetail coinChargeDetail) {
-
-        CoinCharge coinCharge = coinChargeDetail.getCoinCharge();
-        Users users = usersRepository.findByUsersId(coinCharge.getUserPage().getUsers().getUsersId());
-
-        users.setTotalCoin(users.getTotalCoin() + coinChargeDetail.getChargeAmount());
-        usersRepository.save(users);
-    }
-
-    /**
-     * 결제 내역 조회
-     */
-    public List<CoinChargeDetail> getCoinChargeDetail(Long usersId) {
+    // TODO: 결제 환불 구현해야함
+    public CoinChargeDetailDto.KakaoCancelResponse kakaoCancel(Long usersId, Long coinDetailDetailId) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
         CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId());
+        CoinChargeDetail coinChargeDetail =
+                coinChargeDetailRepository.findByCoinChargeCoinChargeIdAndCoinChargeDetailId(coinCharge.getCoinChargeId(), coinDetailDetailId)
+                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
 
-        return coinChargeDetailRepository.findByCoinChargeCoinChargeId(coinCharge.getCoinChargeId());
+        // 카카오페이 요청
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("cid", cid);
+        parameters.add("tid", coinChargeDetail.getTid());
+        parameters.add("cancel_amount", String.valueOf(coinChargeDetail.getChargeAmount()));
+        parameters.add("cancel_tax_free_amount", "0");
+        parameters.add("cancel_vat_amount", String.valueOf(coinChargeDetail.getTax()));
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
+        RestTemplate restTemplate = new RestTemplate();
+        CoinChargeDetailDto.KakaoCancelResponse cancelResponse = restTemplate.postForObject(
+                "https://kapi.kakao.com/v1/payment/cancel",
+                requestEntity,
+                CoinChargeDetailDto.KakaoCancelResponse.class);
+
+        if (cancelResponse != null) {
+
+            coinChargeDetail.setRefund(true);
+            coinChargeDetail.setCancelAmount(cancelResponse.getAmount().getTotal());
+            coinChargeDetail.setCanceled_at(cancelResponse.getCanceled_at());
+            coinChargeDetailRepository.save(coinChargeDetail);
+
+            coinMinus(coinChargeDetail);
+
+            return cancelResponse;
+        } else {
+            throw new BusinessLogicException(ExceptionCode.CANCEL_FAILED);
+        }
     }
 
     /**
@@ -183,6 +202,41 @@ public class CoinChargeService {
     }
 
     /**
+     * 결제 완료 후 코인 충전
+     */
+    public void charge(CoinChargeDetail coinChargeDetail) {
+
+        CoinCharge coinCharge = coinChargeDetail.getCoinCharge();
+        Users users = usersRepository.findByUsersId(coinCharge.getUserPage().getUsers().getUsersId());
+
+        users.setTotalCoin(users.getTotalCoin() + coinChargeDetail.getChargeAmount());
+        usersRepository.save(users);
+    }
+
+    /**
+     * 결제 취소 후 코인 환불
+     */
+    public void coinMinus(CoinChargeDetail coinChargeDetail) {
+
+        CoinCharge coinCharge = coinChargeDetail.getCoinCharge();
+        Users users = usersRepository.findByUsersId(coinCharge.getUserPage().getUsers().getUsersId());
+
+        users.setTotalCoin(users.getTotalCoin() - coinChargeDetail.getChargeAmount());
+        usersRepository.save(users);
+    }
+
+    /**
+     * 결제 내역 조회
+     */
+    public List<CoinChargeDetail> getCoinChargeDetail(Long usersId) {
+
+        UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
+        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId());
+
+        return coinChargeDetailRepository.findByCoinChargeCoinChargeId(coinCharge.getCoinChargeId());
+    }
+
+    /**
      * 결제 취소/중단 시 detail 삭제
      * 결제가 취소되었음에도 DB에 저장되는 버그 해결
      */
@@ -192,9 +246,4 @@ public class CoinChargeService {
 
         coinChargeDetailRepository.delete(coinChargeDetail);
     }
-
-    /**
-     * 결제 환불
-     */
-    // TODO: 결제 환불 구현해야함
 }

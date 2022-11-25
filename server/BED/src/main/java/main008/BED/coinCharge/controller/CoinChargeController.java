@@ -89,12 +89,26 @@ public class CoinChargeController {
     @GetMapping("/{users-id}/coincharge")
     public ResponseEntity getCoinCharge(@PathVariable("users-id") @Positive Long usersId) {
 
-
         UserPage userPage = userPageService.findUserPage(usersId);
 
         List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto =  coinChargeDetailMapper.entityToResponses(
                         coinChargeService.getCoinChargeDetail(usersId));
 
         return new ResponseEntity<>(coinChargeMapper.entityToResponse(userPage, coinChargeDetailResponseDto), HttpStatus.OK);
+    }
+
+    /**
+     * 코인 환불
+     * @param usersId
+     * @param coinChargeDetailId
+     * @return
+     */
+    @PostMapping("/{users-id}/coincharge/{coin-charge-detail-id}")
+    public ResponseEntity refundCoinCharge(@PathVariable("users-id") @Positive Long usersId,
+                                           @PathVariable("coin-charge-detail-id") @Positive Long coinChargeDetailId) {
+
+        CoinChargeDetailDto.KakaoCancelResponse kakaoCancelResponse = coinChargeService.kakaoCancel(usersId, coinChargeDetailId);
+
+        return new ResponseEntity<>(coinChargeDetailMapper.cancelToResponse(kakaoCancelResponse), HttpStatus.OK);
     }
 }
