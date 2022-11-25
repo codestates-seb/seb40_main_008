@@ -38,42 +38,54 @@ public class LikesService {
         Users users = usersRepository.findByUsersId(usersId);
         Likes likes = contents.getLikes();
 
-        if (likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId()) != null) {
+        if (likesDetailRepository.findByUsersIdLikesId(
+                        usersId, likes.getLikesId()) != null) {
 
-            LikesDetail likesDetail1 =
-                    likesDetailRepository.findByUsersUsersIdAndLikesLikesId(usersId, likes.getLikesId());
+            LikesDetail likesDetail1 = likesDetailRepository
+                            .findByUsersIdLikesId(usersId, likes.getLikesId());
 
-            if (likesDetail1.getLiked()) {
-
-                contentsRepository.likesCountForContentsDown(contents);
-
-                likesDetail1.setLiked(false);
-                likesDetailRepository.save(likesDetail1);
-                likes.setContents(contents);
-                likesRepository.likesCountDown(likes);
-            } else {
-
-                contentsRepository.likesCountForContentsUp(contents);
-
-                likesDetail1.setLiked(true);
-                likesDetailRepository.save(likesDetail1);
-                likes.setContents(contents);
-                likesRepository.likesCountUp(likes);
-            }
+            reLikesClick(likesDetail1, likes, contents);
         } else {
 
-            likesDetail.setLikes(likes);
-            likesDetail.setUsers(users);
-            likesDetail.setLiked(true);
-            likesDetail.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-
-            contentsRepository.likesCountForContentsUp(contents);
-
-            likes.getLikesDetails().add(likesDetail);
-            likes.setContents(contents);
-            likesRepository.likesCountUp(likes);
+            likesClick(likesDetail, likes, contents, users);
         }
 
         return likesRepository.save(likes);
+    }
+
+    /**
+     * 이미 좋아요 누른 경우
+     */
+    private void reLikesClick(LikesDetail likesDetail, Likes likes, Contents contents) {
+
+        if (likesDetail.getLiked()) {
+
+            likesDetail.setLiked(false);
+            likesRepository.likesCountDown(likes);
+            contentsRepository.likesCountForContentsDown(contents);
+        } else {
+
+            likesDetail.setLiked(true);
+            likesRepository.likesCountUp(likes);
+            contentsRepository.likesCountForContentsUp(contents);
+        }
+
+        likesDetailRepository.save(likesDetail);
+    }
+
+    /**
+     * 처음 좋아요를 누른 경우
+     */
+    private void likesClick(LikesDetail likesDetail, Likes likes, Contents contents, Users users) {
+
+        likesDetail.setLikes(likes);
+        likesDetail.setUsers(users);
+        likesDetail.setLiked(true);
+        likesDetail.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
+
+        likes.getLikesDetails().add(likesDetail);
+        likes.setContents(contents);
+        likesRepository.likesCountUp(likes);
+        contentsRepository.likesCountForContentsUp(contents);
     }
 }
