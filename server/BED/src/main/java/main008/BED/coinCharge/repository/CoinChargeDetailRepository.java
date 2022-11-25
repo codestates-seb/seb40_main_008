@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface CoinChargeDetailRepository extends JpaRepository<CoinChargeDetail, Long> {
 
-    List<CoinChargeDetail> findByCoinChargeCoinChargeId(Long coinChargeId);
+    Optional<List<CoinChargeDetail>> findByCoinChargeCoinChargeId(Long coinChargeId);
 
     Optional<CoinChargeDetail> findByTid(String tid);
 

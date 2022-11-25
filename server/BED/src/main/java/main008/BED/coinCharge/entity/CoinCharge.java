@@ -5,7 +5,6 @@ import lombok.*;
 import main008.BED.userPage.entity.UserPage;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +19,6 @@ public class CoinCharge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long coinChargeId;
-
-//    @Column
-//    private int totalCoin = 0;
 
     @Column
     private ChargeAmount chargeAmount;

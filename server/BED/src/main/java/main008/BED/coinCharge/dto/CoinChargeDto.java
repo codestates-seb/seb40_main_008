@@ -2,7 +2,6 @@ package main008.BED.coinCharge.dto;
 
 import lombok.*;
 import main008.BED.coinCharge.entity.CoinCharge;
-import main008.BED.users.dto.UsersDto;
 
 import java.util.List;
 

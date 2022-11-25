@@ -48,8 +48,13 @@ public class CoinChargeService {
     public CoinChargeDetailDto.KakaoReadyResponse kakaoPayReady(Long usersId, CoinCharge coinChargePost) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
-        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId());
-        List<CoinChargeDetail> coinChargeDetails = coinChargeDetailRepository.findByCoinChargeCoinChargeId(coinCharge.getCoinChargeId());
+
+        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
+
+        List<CoinChargeDetail> coinChargeDetails =
+                coinChargeDetailRepository.findByCoinChargeCoinChargeId(coinCharge.getCoinChargeId())
+                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
 
         CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
         coinChargeDetail.setChargeAmount(coinChargePost.getChargeAmount().getAmount());
@@ -152,7 +157,10 @@ public class CoinChargeService {
     public CoinChargeDetailDto.KakaoCancelResponse kakaoCancel(Long usersId, Long coinDetailDetailId) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
-        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId());
+
+        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
+
         CoinChargeDetail coinChargeDetail =
                 coinChargeDetailRepository.findByCoinChargeCoinChargeIdAndCoinChargeDetailId(coinCharge.getCoinChargeId(), coinDetailDetailId)
                         .orElseThrow(() -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
@@ -231,9 +239,12 @@ public class CoinChargeService {
     public List<CoinChargeDetail> getCoinChargeDetail(Long usersId) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
-        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId());
 
-        return coinChargeDetailRepository.findByCoinChargeCoinChargeId(coinCharge.getCoinChargeId());
+        CoinCharge coinCharge = coinChargeRepository.findByUserPageUserPageId(userPage.getUserPageId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
+
+        return coinChargeDetailRepository.findByCoinChargeCoinChargeId(coinCharge.getCoinChargeId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
     }
 
     /**

@@ -43,7 +43,8 @@ public enum ExceptionCode {
     PAY_FAILED(500, "결제에 실패하였습니다. 다시 시도하여주세요."),
     AMOUNT_DIFFERENT(404, "결제 금액이 달라 결제가 취소되었습니다. 처음부터 다시 시도하여주세요."),
     DETAIL_NOT_FOUND(404, "코인 충전 내역을 찾을 수 없습니다."),
-    CANCEL_FAILED(500, "환불에 실패하였습니다. 다시 시도하여주세요.")
+    CANCEL_FAILED(500, "환불에 실패하였습니다. 다시 시도하여주세요."),
+    COIN_CHARGE_NOT_FOUND(404, "Coin charge not found.")
     ;
 
 
