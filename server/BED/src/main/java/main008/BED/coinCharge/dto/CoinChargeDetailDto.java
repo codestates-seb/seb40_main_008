@@ -17,7 +17,7 @@ public class CoinChargeDetailDto {
     }
 
     /**
-     * 결제 요청 시 받음
+     * 결제 요청 시 카카오에게 받음
      */
     @Getter
     @Setter

@@ -123,7 +123,7 @@ public class CoinChargeService {
 
         if (approveResponse != null) {
 
-            // 결제금액이 다른 경우 예외 던짐
+            // 결제금액이 같지 않은데 DB에 저장되는 오류 해결
             int payBefore = coinChargeDetail.getChargeAmount();
             int payAfter = approveResponse.getAmount().getTotal();
 
