@@ -3,6 +3,8 @@ package main008.BED.likes.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
 import main008.BED.likes.entity.Likes;
 import main008.BED.likes.entity.LikesDetail;
 import main008.BED.likes.repository.LikesDetailRepository;
@@ -28,7 +30,8 @@ public class LikesService {
 
     public List<LikesDetail> findTrueLikes(Likes likes) {
 
-        return likesDetailRepository.findByLikesLikesIdAndLikedTrue(likes.getLikesId());
+        return likesDetailRepository.findByLikesLikesIdAndLikedTrue(likes.getLikesId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKES_NOT_FOUND));
     }
 
     // 콘텐츠 좋아요 기능
@@ -38,11 +41,11 @@ public class LikesService {
         Users users = usersRepository.findByUsersId(usersId);
         Likes likes = contents.getLikes();
 
-        if (likesDetailRepository.findByUsersIdLikesId(
-                        usersId, likes.getLikesId()) != null) {
+        if (likesDetailRepository.findByUsersIdLikesId(usersId, likes.getLikesId()).isPresent()) {
 
             LikesDetail likesDetail1 = likesDetailRepository
-                            .findByUsersIdLikesId(usersId, likes.getLikesId());
+                    .findByUsersIdLikesId(usersId, likes.getLikesId())
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKES_NOT_FOUND));
 
             reLikesClick(likesDetail1, likes, contents);
         } else {

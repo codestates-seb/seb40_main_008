@@ -47,7 +47,10 @@ public enum ExceptionCode {
     COIN_CHARGE_NOT_FOUND(404, "Coin charge not found."),
 
     /*Likes*/
-    LIKES_NOT_FOUND(404, "Likes not found")
+    LIKES_NOT_FOUND(404, "Likes not found"),
+
+    /*Wish*/
+    WISH_NOT_FOUND(404, "Wish not found")
     ;
 
 

@@ -24,10 +24,6 @@ public class Likes {
     @Column
     private int likesCount = 0;
 
-//    @OneToOne
-//    @JoinColumn(name = "USERS_ID")
-//    private Users users;
-
     @OneToOne
     @JoinColumn(name = "CONTENTS_ID")
     private Contents contents;
@@ -42,6 +38,7 @@ public class Likes {
     @OneToMany(mappedBy = "likes", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<LikesDetail> likesDetails;
 
+    /*편의 메서드*/
     public void addContents(Contents contents) {
         this.contents = contents;
         if (contents.getLikes() != this) {

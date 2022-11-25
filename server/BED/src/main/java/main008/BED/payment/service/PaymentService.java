@@ -29,9 +29,9 @@ public class PaymentService {
     private final ContentsRepository contentsRepository;
     private final UsersRepository usersRepository;
 
-    /*
-    컨텐츠 개설 시 가격 등록
-    */
+    /**
+     * 컨텐츠 개설 시 가격 등록
+     */
     public Payment createPaymentWithContent(Payment payment) {
 
         payment.setPaymentDetails(new ArrayList<>());
@@ -41,9 +41,9 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    /*
-    가격 등록 시 제한
-    */
+    /**
+     * 가격 등록 시 제한
+     */
     private void verifyUnitPrice(Integer price) {
 
         if (price % 1000 != 0) {
@@ -53,9 +53,9 @@ public class PaymentService {
         }
     }
 
-    /*
-    컨텐츠 결제
-    */
+    /**
+     * 컨텐츠 결제
+     */
     public Payment payContent(PaymentDetail paymentDetail, Long userId, Long contentsId) {
 
         Payment payment = paymentRepository.findByContentsContentsId(contentsId);
@@ -82,9 +82,9 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    /*
-    결제 시 코인 부족 확인
-    */
+    /**
+     * 결제 시 코인 부족 확인
+     */
     private void verifyCountOfCoin(Integer totalCoin) {
 
         if (totalCoin < 0) {
