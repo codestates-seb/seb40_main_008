@@ -105,12 +105,8 @@ public class ContentsController {
     /**
      * READ: 컨텐츠 상세화면 Response DTO
      */
-    // TODO: 구매 여부에 따라 상세화면 Dto 구분 로직 작성
     @GetMapping("/auth/contents/{contents-id}")
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
-
-
-        //TODO: Principal 정보를 이용해 해당 컨텐츠에 대한 결제 이력이 있는지 확인하고, 구매 전과 후의 DTO 분리
 
         Contents contents = contentsService.readContent(contentsId);
 
@@ -178,6 +174,7 @@ public class ContentsController {
         return new ResponseEntity<>(contentsMapper.contentsToResponses(contents.getContent(), usersMapper), HttpStatus.OK);
     }
 
+
     /**
      * Search: Contents Title 검색 - 최신순
      */
@@ -195,8 +192,6 @@ public class ContentsController {
 
         return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
     }
-
-    // TODO: 인기순 로직 구현하고 최신순하고 분기 - 디폴트 인기순if(sort.equals("latest"))
 
     /**
      * Search: Contents Title 검색 - 인기순
