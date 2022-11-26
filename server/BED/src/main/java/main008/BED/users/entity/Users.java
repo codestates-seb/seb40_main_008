@@ -1,5 +1,7 @@
 package main008.BED.users.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.myClass.entity.MyClass;
@@ -19,6 +21,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "usersId")
 public class Users {
 
     @Id
@@ -48,18 +51,21 @@ public class Users {
         ROLE_USER;
     }
 
-    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
-    private UserPage userPage;
+//    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+//    private UserPage userPage;
 
-    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
-    private MyUploadClass myUploadClass;
-
-    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
-    private MyClass myClass;
+//    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+//    private MyUploadClass myUploadClass;
+//
+//    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+//    private MyClass myClass;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Warning> warningList;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bookmark> bookmarkList;
+
+
+
 }

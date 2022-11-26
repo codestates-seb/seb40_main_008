@@ -18,6 +18,17 @@ spring:
     properties:
       hibernate:
         format_sql: true;
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+            scope:
+              - email
+              - profile
   servlet:
     multipart:
       max-file-size: 50MB

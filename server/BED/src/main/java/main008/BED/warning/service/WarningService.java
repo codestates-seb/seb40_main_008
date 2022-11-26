@@ -36,18 +36,18 @@ public class WarningService {
         UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
 
         warning.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-        warning.setUsers(user);
-        warning.setUploadClass(uploadClass);
+        warning.addUsers(user);
+        warning.addUploadClass(uploadClass);
 
-        Warning receivedWarning = warningRepository.save(warning);
+        warningRepository.save(warning);
 
-        List<Warning> warningListInUsers = user.getWarningList();
-        warningListInUsers.add(receivedWarning);
-        user.setWarningList(warningListInUsers);
-
-        List<Warning> warningListInUploadClass = uploadClass.getWarningList();
-        warningListInUploadClass.add(receivedWarning);
-        uploadClass.setWarningList(warningListInUploadClass);
+//        List<Warning> warningListInUsers = user.getWarningList();
+//        warningListInUsers.add(receivedWarning);
+//        user.setWarningList(warningListInUsers);
+//
+//        List<Warning> warningListInUploadClass = uploadClass.getWarningList();
+//        warningListInUploadClass.add(receivedWarning);
+//        uploadClass.setWarningList(warningListInUploadClass);
     }
 
     /**

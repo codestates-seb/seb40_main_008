@@ -1,5 +1,7 @@
 package main008.BED.uploadClass.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.entity.Chapter;
@@ -16,6 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "uploadClassId")
 public class UploadClass {
 
     @Id
