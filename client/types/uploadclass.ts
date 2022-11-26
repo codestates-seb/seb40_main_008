@@ -35,3 +35,17 @@ export const initialChapter = {
   chapterOrder: "",
   title: "",
 };
+
+export interface UploadLectureType {
+  videoFile: File | null;
+  title: string;
+  docsFile: File | null;
+  details: string;
+}
+
+export const initialLecture = {
+  videoFile: null,
+  title: "",
+  docsFile: null,
+  details: "",
+};

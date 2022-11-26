@@ -5,15 +5,15 @@ export interface IContent {
   likesCount: number;
   categories: string;
   details: string;
+  grade: number;
+  tutorname: string;
   tutorDetail: string;
-  curriculumInContent: CurriculumInContent;
 }
 
-export interface CurriculumInContent {
-  curriculumInfo: CurriculumInfo[];
+export interface Curriculum {
+  curriculumInfo: ICurriculumContent[];
 }
-
-export interface CurriculumInfo {
+export interface ICurriculumContent {
   chapterId: number;
   chapterOrder: string;
   title: string;

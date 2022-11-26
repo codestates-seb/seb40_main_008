@@ -4,7 +4,14 @@ import styles from "./ContentTabs.module.css";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import CurriculumInfo from "./CurriculumInfo";
-const ContentTabs = () => {
+import { IContent, ICurriculumContent } from "../../types/contents";
+
+interface ContentTabsProps {
+  contentInfo: IContent;
+  curriculumInfo: ICurriculumContent[];
+}
+
+const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
   const [tabIndex, setTabIndex] = useState(0);
   return (
     <>
@@ -17,10 +24,34 @@ const ContentTabs = () => {
           <Tab>강사소개</Tab>
           <Tab>커리큘럼</Tab>
         </TabList>
-        <TabPanel>t1t1t1</TabPanel>
-        <TabPanel>t2t2t2</TabPanel>
         <TabPanel>
-          <CurriculumInfo />
+          <div
+            style={{
+              width: "90%",
+              padding: "20px",
+              height: "100%",
+              border: "1px solid white",
+              margin: "20px auto",
+            }}
+          >
+            {contentInfo.details}
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div
+            style={{
+              width: "90%",
+              padding: "20px",
+              height: "100%",
+              border: "1px solid white",
+              margin: "20px auto",
+            }}
+          >
+            {contentInfo.tutorDetail}
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <CurriculumInfo curriculumInfo={curriculumInfo} />
         </TabPanel>
       </Tabs>
     </>

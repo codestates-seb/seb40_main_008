@@ -1,6 +1,7 @@
 .thumbnail {
   width: 100%;
   height: 292.5px;
+  position: relative;
   border: 1px solid red;
 }
 
