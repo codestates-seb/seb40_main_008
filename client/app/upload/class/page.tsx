@@ -1,14 +1,16 @@
 "use client";
 import styles from "./uploadClass.module.css";
 import { useRef, useState } from "react";
-import {
-  initialLecture,
-  UploadLectureType,
-} from "../../../../types/uploadclass";
-import OrangeButton from "../../../../components/Buttons/orangeButton";
-import BaseNavbar from "../../../../components/BaseNavBar/BaseNavbar";
+
+import OrangeButton from "../../../components/Buttons/orangeButton";
+import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
+import { initialLecture, UploadLectureType } from "../../../types/uploadclass";
+import { useSearchParams } from "next/navigation";
 
 const UploadClassPage = () => {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("slug");
+  console.log(query);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const [values, setValues] = useState<UploadLectureType>(initialLecture);
@@ -50,9 +52,9 @@ const UploadClassPage = () => {
       <BaseNavbar />
       <section className={styles.uploadpage}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <p className={styles.title}>챕터순서</p>
+          <p className={styles.title}>강의명</p>
 
-          <p className={styles.classtitle}>챕터 명</p>
+          <p className={styles.classtitle}>강의 업로드</p>
           <input
             type="text"
             name="title"
@@ -80,7 +82,11 @@ const UploadClassPage = () => {
             </button>
           </div>
 
-          <OrangeButton type={"submit"} name={"올리기"} />
+          {query == "edit" ? (
+            <OrangeButton type={"submit"} name={"수정하기"} />
+          ) : (
+            <OrangeButton type={"submit"} name={"올리기"} />
+          )}
         </form>
       </section>
     </>

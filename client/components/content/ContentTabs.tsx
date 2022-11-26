@@ -51,7 +51,10 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
           </div>
         </TabPanel>
         <TabPanel>
-          <CurriculumInfo curriculumInfo={curriculumInfo} />
+          <CurriculumInfo
+            contentsId={contentInfo.contentsId}
+            curriculumInfo={curriculumInfo}
+          />
         </TabPanel>
       </Tabs>
     </>

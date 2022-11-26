@@ -42,6 +42,7 @@ const ContentsIdPage = async ({ params }: any) => {
   // const contentInfo = await getContentInfo(params.contentsId);
   const contentInfo = await getContentInfo2();
   const curriculumInfo = await getCurriculum();
+  console.log("parm", params);
   return (
     <>
       <BaseNavbar />

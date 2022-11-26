@@ -3,6 +3,7 @@
 import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
 import styles from "./uploadChapter.module.css";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import {
   initialChapter,
   UploadChapterType,
@@ -10,10 +11,14 @@ import {
 } from "../../../types/uploadclass";
 import { useMemo, useRef, useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
+import { useSearchParams } from "next/navigation";
 
 const UploadChapterPage = () => {
-  const fileInput = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
+  const query = searchParams.get("slug");
+  console.log(query);
 
+  const fileInput = useRef<HTMLInputElement>(null);
   const [values, setValues] = useState<UploadChapterType>(initialChapter);
   const [imageFile, setImageFile] = useState<UploadImage | null>(null);
 
@@ -131,7 +136,11 @@ const UploadChapterPage = () => {
 
           <div className={styles.uploadimg}>{showImage}</div>
 
-          <OrangeButton type={"submit"} name={"올리기"} />
+          {query == "edit" ? (
+            <OrangeButton type={"submit"} name={"수정하기"} />
+          ) : (
+            <OrangeButton type={"submit"} name={"올리기"} />
+          )}
         </form>
       </section>
     </>

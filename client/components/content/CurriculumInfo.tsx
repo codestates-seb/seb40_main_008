@@ -7,9 +7,22 @@ import Image from "next/image";
 import Link from "next/link";
 interface CurriculumInfoProps {
   curriculumInfo: ICurriculumContent[];
+  contentsId: number;
 }
 
-const CurriculumInfo = ({ curriculumInfo }: CurriculumInfoProps) => {
+const CurriculumInfo = ({
+  contentsId,
+  curriculumInfo,
+}: CurriculumInfoProps) => {
+  console.log("dadsa", contentsId);
+  const handleChapterDeleteClick = async () => {
+    // try{
+    //   const status = await delChapter()
+    // }
+  };
+
+  const handleClassDeleteClick = async () => {};
+
   return (
     <>
       {curriculumInfo.map((e, index) => (
@@ -23,8 +36,20 @@ const CurriculumInfo = ({ curriculumInfo }: CurriculumInfoProps) => {
               <div className={styles.chapter}>
                 <h3>{e.title}</h3>
                 <span>
-                  <button className={styles.btn}>수정</button>
-                  <button className={styles.btn}>삭제</button>
+                  <Link
+                    href={{
+                      pathname: "/upload/chapter",
+                      query: { slug: "edit" },
+                    }}
+                  >
+                    <button className={styles.btn}>수정</button>
+                  </Link>
+                  <button
+                    onClick={handleChapterDeleteClick}
+                    className={styles.btn}
+                  >
+                    삭제
+                  </button>
                 </span>
               </div>
 
@@ -36,15 +61,27 @@ const CurriculumInfo = ({ curriculumInfo }: CurriculumInfoProps) => {
                       <h5>영상길이</h5>
                     </div>
                     <div>
-                      <button className={styles.btn}>수정</button>
-                      <button className={styles.btn}>삭제</button>
+                      <Link
+                        href={{
+                          pathname: "/upload/class",
+                          query: { slug: "edit" },
+                        }}
+                      >
+                        <button className={styles.btn}>수정</button>
+                      </Link>
+                      <button
+                        onClick={handleClassDeleteClick}
+                        className={styles.btn}
+                      >
+                        삭제
+                      </button>
                     </div>
                   </div>
                 </>
               ))}
 
               <div className={styles.addbtnWrapper}>
-                <Link href={"/upload/chapter/class"}>
+                <Link href={"/upload/class"}>
                   <button className={styles.addbtn}>
                     <FontAwesomeIcon
                       icon={faPencil}
