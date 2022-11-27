@@ -21,7 +21,7 @@ public class PrincipalController {
     @GetMapping("auth/test/principal")
     public ResponseEntity getPrin(Principal principal) {
         Users verifiedUserByEmail = usersService.findVerifiedUserByEmail(principal.getName());
-        System.out.println(principal.getName());
+        System.out.println(verifiedUserByEmail);
         return new ResponseEntity<>(verifiedUserByEmail, HttpStatus.OK);
     }
 }

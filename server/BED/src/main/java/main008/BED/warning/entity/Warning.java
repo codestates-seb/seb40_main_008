@@ -32,7 +32,7 @@ public class Warning {
     private ZonedDateTime createdAt;
 
     @ManyToOne // 양방향, cascade.all, Lazy
-    @JoinColumn(name = "USRES_ID")
+    @JoinColumn(name = "USERS_ID")
     private Users users;
 
     @ManyToOne // 양방향, cascade.all, Lazy

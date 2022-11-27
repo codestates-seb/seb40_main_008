@@ -81,6 +81,7 @@ public class WarningService {
         if (!usersRepository.existsById(usersId)) {
             throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
         }
+
         Users user = usersRepository.findByUsersId(usersId);
         List<Warning> warningList = user.getWarningList();
         return warningList;

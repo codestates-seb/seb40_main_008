@@ -37,17 +37,9 @@ public class BookmarkService {
         Users user = usersRepository.findByUsersId(usersId);
         UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
 
-        bookmark.setUsers(user);
-        bookmark.setUploadClass(uploadClass);
+        bookmark.addUsers(user);
+        bookmark.addUploadClass(uploadClass);
         bookmark.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-
-        List<Bookmark> bookmarkListInUser = user.getBookmarkList();
-        bookmarkListInUser.add(bookmark);
-        user.setBookmarkList(bookmarkListInUser);
-
-        List<Bookmark> bookmarkListInClass = uploadClass.getBookmarkList();
-        bookmarkListInClass.add(bookmark);
-        uploadClass.setBookmarkList(bookmarkListInClass);
 
         bookmarkRepository.save(bookmark);
     }

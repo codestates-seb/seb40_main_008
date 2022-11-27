@@ -6,7 +6,9 @@ import lombok.*;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.docs.entity.Docs;
+import main008.BED.mainPage.entity.MainPage;
 import main008.BED.review.entity.Review;
+import main008.BED.users.entity.Users;
 import main008.BED.warning.entity.Warning;
 
 import javax.persistence.*;
@@ -53,4 +55,13 @@ public class UploadClass {
 
     @OneToMany(mappedBy = "uploadClass", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Bookmark> bookmarkList;
+
+    public void addChapter(Chapter chapter) {
+        if (this.chapter != null) {
+            this.chapter.getUploadClassList().remove(this);
+        }
+        this.chapter = chapter;
+        chapter.getUploadClassList().add(this);
+    }
+
 }

@@ -1,6 +1,7 @@
 package main008.BED.oauth2_jwt.handler;
 
 
+import main008.BED.S3.S3ServiceImpl;
 import main008.BED.oauth2_jwt.jwt.JwtTokenizer;
 import main008.BED.oauth2_jwt.utils.CustomAuthorityUtils;
 import main008.BED.users.entity.Users;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +30,12 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     private final CustomAuthorityUtils authorityUtils;
     private final UsersService usersService;
 
+
     // (2)
     public OAuth2UserSuccessHandler(JwtTokenizer jwtTokenizer,
-                                      CustomAuthorityUtils authorityUtils,
-                                      UsersService usersService) {
+                                    CustomAuthorityUtils authorityUtils,
+                                    UsersService usersService
+                                    ) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.usersService = usersService;
@@ -40,15 +45,23 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         var oAuth2User = (OAuth2User)authentication.getPrincipal();
         String email = String.valueOf(oAuth2User.getAttributes().get("email")); // (3)
+        String picture = oAuth2User.getAttributes().get("picture").toString();
+        String name = oAuth2User.getAttributes().get("name").toString();
         List<String> authorities = authorityUtils.createRoles(email);           // (4)
 
-        saveUser(email);  // (5)
+        saveUser(email, picture, name);  // (5)
         redirect(request, response, email, authorities);  // (6)
     }
 
-    private void saveUser(String email) {
+    private void saveUser(String email, String picture, String name) {
         Users users = new Users();
+
+        users.setProfileImage(picture);
+        users.setUserName(name);
         users.setEmail(email);
+        users.setTotalCoin(30000);
+        users.setRole(Users.Role.ROLE_USER);
+        users.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         usersService.createUsers(users);
     }
 

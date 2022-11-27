@@ -157,6 +157,31 @@ public class Contents {
         }
     }
 
+    public void addMainPage(MainPage mainPage) {
+        if (this.mainPage != null) {
+            this.mainPage.getContentsList().remove(this);
+        }
+        this.mainPage = mainPage;
+        mainPage.getContentsList().add(this);
+    }
+
+    public void addUserPage(UserPage userPage) {
+        if (this.userPage != null) {
+            this.userPage.getContentsList().remove(this);
+        }
+        this.userPage = userPage;
+        userPage.getContentsList().add(this);
+    }
+
+    public void addMyUploadClass(MyUploadClass myUploadClass) {
+        if (this.myUploadClass != null) {
+            this.myUploadClass.getContentsList().remove(this);
+        }
+        this.myUploadClass = myUploadClass;
+        myUploadClass.getContentsList().add(this);
+    }
+
+
     public void disclosureDecision() {
         if (this.countLecture == 0) {
             this.disclosure = false;
