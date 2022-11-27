@@ -39,14 +39,6 @@ public class Warning {
     @JoinColumn(name = "UPLOAD_CLASS_ID")
     private UploadClass uploadClass;
 
-    public void addUsers(Users users) {
-        if (this.users != null) {
-            this.users.getWarningList().remove(this);
-        }
-        this.users = users;
-        users.getWarningList().add(this);
-    }
-
     public void addUploadClass(UploadClass uploadClass) {
         if (this.uploadClass != null) {
             this.uploadClass.getWarningList().remove(this);

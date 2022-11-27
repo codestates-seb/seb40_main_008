@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3Service;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.bookmark.mapper.BookmarkMapper;
+import main008.BED.bookmark.service.BookmarkService;
 import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.service.ChapterService;
@@ -13,6 +14,7 @@ import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
+import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.MultiResponseDto;
 import main008.BED.dto.PageInfo;
 import main008.BED.payment.dto.PaymentDto;
@@ -50,6 +52,7 @@ public class ContentsController {
     private final ContentsService contentsService;
     private final UsersService usersService;
     private final ChapterService chapterService;
+    private final BookmarkService bookmarkService;
     private final UploadClassService uploadClassService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
@@ -119,11 +122,16 @@ public class ContentsController {
                 contents.getThumbnail(),
                 contents.getLikesCount(),
                 contents.getCategories(),
+                0,
+                contents.getUsers().getUserName(),
                 contents.getDetails(),
-                contents.getTutorDetail(),
-                curriculumInContent.getCurriculumInfo());
+                contents.getTutorDetail()
+                );
 
-        return new ResponseEntity(responseInContent, HttpStatus.OK);
+        ContentsMultiResponseDto<ContentsDto.ResponseInContent, List<ChapterDto.ResponseDto>> response
+                = new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo());
+
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     /**
@@ -145,7 +153,9 @@ public class ContentsController {
         Docs docs = uploadClass.getDocs();
         String video = uploadClass.getVideo();
         List<Review> reviewList = uploadClass.getReviewList(); // Class의 모든 리뷰 전송
-        List<Bookmark> bookmarkList = user.getBookmarkList(); // User 본인의 메모만 전송
+//        List<Bookmark> bookmarkList = user.getBookmarkList(); // User 본인의 메모만 전송
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(usersId);
+
 
         ContentsDto.ResponseForStream responseForStream
                 = new ContentsDto.ResponseForStream(

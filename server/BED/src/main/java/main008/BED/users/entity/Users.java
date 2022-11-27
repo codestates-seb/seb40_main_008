@@ -60,11 +60,11 @@ public class Users {
 //    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
 //    private MyClass myClass;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Warning> warningList;
+//    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Warning> warningList;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Bookmark> bookmarkList;
+//    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Bookmark> bookmarkList;
 
 
 

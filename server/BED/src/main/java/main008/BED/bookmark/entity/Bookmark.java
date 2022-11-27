@@ -42,13 +42,6 @@ public class Bookmark {
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    public void addUsers(Users users) {
-        if (this.users != null) {
-            this.users.getBookmarkList().remove(this);
-        }
-        this.users = users;
-        users.getBookmarkList().add(this);
-    }
 
     public void addUploadClass(UploadClass uploadClass) {
         if (this.uploadClass != null) {

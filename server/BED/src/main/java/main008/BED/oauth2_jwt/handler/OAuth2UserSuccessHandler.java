@@ -1,12 +1,14 @@
 package main008.BED.oauth2_jwt.handler;
 
 
-import main008.BED.S3.S3ServiceImpl;
 import main008.BED.oauth2_jwt.jwt.JwtTokenizer;
 import main008.BED.oauth2_jwt.utils.CustomAuthorityUtils;
 import main008.BED.users.entity.Users;
 import main008.BED.users.service.UsersService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.util.LinkedMultiValueMap;
@@ -14,17 +16,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Configuration
 public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {   // (1)
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -43,14 +44,41 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        var oAuth2User = (OAuth2User)authentication.getPrincipal();
-        String email = String.valueOf(oAuth2User.getAttributes().get("email")); // (3)
-        String picture = oAuth2User.getAttributes().get("picture").toString();
-        String name = oAuth2User.getAttributes().get("name").toString();
-        List<String> authorities = authorityUtils.createRoles(email);           // (4)
+        try {
+            var oAuth2User2 = (OAuth2User) authentication.getPrincipal();
 
-        saveUser(email, picture, name);  // (5)
-        redirect(request, response, email, authorities);  // (6)
+            String authorizedClientRegistrationId = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+            if (authorizedClientRegistrationId.equals("naver")) {
+                var oAuth2User = (OAuth2User) authentication.getPrincipal();
+                HashMap userInfo = oAuth2User.getAttribute("response");
+                String email = userInfo.get("email").toString();
+                String profile_image = userInfo.get("profile_image").toString();
+                String name = userInfo.get("name").toString();
+                List<String> authorities = authorityUtils.createRoles(email);
+                saveUser(email, profile_image, name);  // (5)
+                redirect(request, response, email, authorities);  // (6)
+            } else if (authorizedClientRegistrationId.equals("kakao")) {
+                var oAuth2User = (OAuth2User) authentication.getPrincipal();
+                HashMap userInfo = oAuth2User2.getAttribute("properties");
+                String nickname = userInfo.get("nickname").toString();
+                String profile_image = userInfo.get("profile_image").toString();
+                HashMap account = oAuth2User2.getAttribute("kakao_account");
+                String email = account.get("email").toString();
+                List<String> authorities = authorityUtils.createRoles(email);
+                saveUser(email, profile_image, nickname);  // (5)
+                redirect(request, response, email, authorities);  // (6)
+            } else if (authorizedClientRegistrationId.equals("google")) {
+                var oAuth2User = (OAuth2User) authentication.getPrincipal();
+                String email = String.valueOf(oAuth2User.getAttributes().get("email")); // (3)
+                String picture = oAuth2User.getAttributes().get("picture").toString();
+                String name = oAuth2User.getAttributes().get("name").toString();
+                List<String> authorities = authorityUtils.createRoles(email); // (4)
+                saveUser(email, picture, name);  // (5)
+                redirect(request, response, email, authorities);  // (6)
+            }
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     private void saveUser(String email, String picture, String name) {
@@ -69,7 +97,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
 
-        String uri = createURI(accessToken, refreshToken).toString();   // (6-3)
+        String uri = createURI(accessToken, refreshToken, response).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
     }
 
@@ -98,18 +126,35 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         return refreshToken;
     }
 
-    private URI createURI(String accessToken, String refreshToken) {
+    private URI createURI(String accessToken, String refreshToken, HttpServletResponse response) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
+        Cookie cookie_access = new Cookie("access_token", accessToken);
+        Cookie cookie_refresh = new Cookie("refresh_token", refreshToken);
+        ArrayList<Cookie> cookieList = new ArrayList<>();
+        cookieList.add(cookie_access);
+        cookieList.add(cookie_refresh);
+        for (Cookie cookie : cookieList) {
+//            cookie.setDomain(${Domain}); // backend server domain
+            cookie.setDomain("localhost");
+            cookie.setPath("/");
+            cookie.setMaxAge(3600);
+            cookie.setSecure(true);
+            response.addCookie(cookie);
+        }
+
 
         return UriComponentsBuilder
                 .newInstance()
+//                .scheme("https")
                 .scheme("http")
+//                .host(${Domain}) // backend server domain
                 .host("localhost")
                 .port(8081)
-                .path("/receive-token.html")
-                .queryParams(queryParams)
+//                .path("/")
+                .path("/my-page.html")
+                .queryParams(queryParams) // Cookie 사용 시 주석 처리
                 .build()
                 .toUri();
     }
