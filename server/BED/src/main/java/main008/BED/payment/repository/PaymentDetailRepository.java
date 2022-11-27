@@ -21,4 +21,12 @@ public interface PaymentDetailRepository extends JpaRepository<PaymentDetail, Lo
             "WHERE p.users_id = :users_id"
             , nativeQuery = true)
     List<PaymentDetail> findByUsersId(Long users_id);
+
+    @Query(value =
+            "SELECT * FROM payment_detail p " +
+            "WHERE p.payment_id = :payment_id " +
+            "AND p.users_id = :users_id " +
+            "AND p.payed = true"
+            , nativeQuery = true)
+    PaymentDetail findBoughtContents(Long payment_id, Long users_id);
 }

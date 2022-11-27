@@ -32,6 +32,7 @@ public enum ExceptionCode {
 
     /*Payment Coin*/
     COIN_SHORTAGE(400, "잔액이 부족합니다."),
+    DUPLICATE_PAY(409, "해당 강의를 이미 구매하셨습니다."),
 
     /*Bookmark*/
     BOOKMARK_NOT_FOUND(404, "Bookmark Not Found"),

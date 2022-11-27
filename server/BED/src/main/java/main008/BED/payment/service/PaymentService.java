@@ -67,6 +67,8 @@ public class PaymentService {
         Users buyUsers = usersRepository.findByUsersId(userId);
         Users tutorUsers = usersRepository.findByUsersId(contents.getUsers().getUsersId());
 
+        verifiedBuyContents(payment, userId);
+
         buyUsers.setTotalCoin(buyUsers.getTotalCoin() - payment.getPrice());
 
         verifyCountOfCoin(buyUsers.getTotalCoin());
@@ -93,6 +95,17 @@ public class PaymentService {
 
         if (totalCoin < 0) {
             throw new BusinessLogicException(ExceptionCode.COIN_SHORTAGE);
+        }
+    }
+
+    /**
+     * 이미 구매했던 컨텐츠인지 확인
+     */
+    private void verifiedBuyContents(Payment payment, Long usersId) {
+
+        if (paymentDetailRepository.findBoughtContents(payment.getPaymentId(), usersId) != null) {
+
+            throw new BusinessLogicException(ExceptionCode.DUPLICATE_PAY);
         }
     }
 }
