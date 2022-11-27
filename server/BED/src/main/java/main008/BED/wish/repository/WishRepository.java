@@ -10,14 +10,24 @@ import java.util.Optional;
 
 @Repository
 public interface WishRepository extends JpaRepository<Wish, Long> {
-    Optional<List<Wish>> findByMyClassMyClassId(Long myClassId);
-
-    List<Wish> findByMyClassMyClassIdAndWishedTrue(Long myClassId);
 
     @Query(value =
-              "SELECT * FROM wish "
-            + "WHERE wish.my_class_id = :my_class_id "
-            + "AND wish.contents_id = :contents_id"
+            "SELECT * FROM wish " +
+            "WHERE wish.my_class_id = :my_class_id"
+            , nativeQuery = true)
+    Optional<List<Wish>> findByMyClassId(Long my_class_id);
+
+    @Query(value =
+            "SELECT * FROM wish " +
+            "WHERE wish.my_class_id = :my_class_id " +
+            "AND wish.wished = true"
+          , nativeQuery = true)
+    Optional<List<Wish>> findByMyClassIdAndTrue(Long my_class_id);
+
+    @Query(value =
+            "SELECT * FROM wish " +
+            "WHERE wish.my_class_id = :my_class_id " +
+            "AND wish.contents_id = :contents_id"
             , nativeQuery = true)
     Optional<Wish> findByMyClassIdAndContentsId(Long my_class_id, Long contents_id);
 }

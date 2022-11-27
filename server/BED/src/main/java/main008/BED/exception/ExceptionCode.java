@@ -50,7 +50,10 @@ public enum ExceptionCode {
     LIKES_NOT_FOUND(404, "Likes not found"),
 
     /*Wish*/
-    WISH_NOT_FOUND(404, "Wish not found")
+    WISH_NOT_FOUND(404, "Wish not found"),
+
+    /*Payment*/
+    PAYMENT_NOT_FOUND(404, "Payment not found")
     ;
 
 

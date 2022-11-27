@@ -32,13 +32,13 @@ public class PaymentService {
     /**
      * 컨텐츠 개설 시 가격 등록
      */
-    public Payment createPaymentWithContent(Payment payment) {
+    public void createPaymentWithContent(Payment payment) {
 
         payment.setPaymentDetails(new ArrayList<>());
 
         verifyUnitPrice(payment.getPrice());
 
-        return paymentRepository.save(payment);
+        paymentRepository.save(payment);
     }
 
     /**
@@ -56,15 +56,19 @@ public class PaymentService {
     /**
      * 컨텐츠 결제
      */
-    public Payment payContent(PaymentDetail paymentDetail, Long userId, Long contentsId) {
+    public void payContent(PaymentDetail paymentDetail, Long userId, Long contentsId) {
 
-        Payment payment = paymentRepository.findByContentsContentsId(contentsId);
-        List<PaymentDetail> paymentDetails = paymentDetailRepository.findByPaymentPaymentId(payment.getPaymentId());
+        Payment payment = paymentRepository.findByContentsId(contentsId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PAYMENT_NOT_FOUND));
+
+        List<PaymentDetail> paymentDetails = paymentDetailRepository.findByPaymentId(payment.getPaymentId());
+
         Contents contents = contentsRepository.findByContentsId(contentsId);
         Users buyUsers = usersRepository.findByUsersId(userId);
         Users tutorUsers = usersRepository.findByUsersId(contents.getUsers().getUsersId());
 
         buyUsers.setTotalCoin(buyUsers.getTotalCoin() - payment.getPrice());
+
         verifyCountOfCoin(buyUsers.getTotalCoin());
 
         tutorUsers.setTotalCoin(tutorUsers.getTotalCoin() + payment.getPrice());
@@ -79,7 +83,7 @@ public class PaymentService {
         paymentDetails.add(paymentDetail);
 
         payment.setPaymentDetails(paymentDetails);
-        return paymentRepository.save(payment);
+        paymentRepository.save(payment);
     }
 
     /**

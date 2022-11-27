@@ -21,6 +21,7 @@ import main008.BED.wish.entity.Wish;
 import main008.BED.wish.repository.WishRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -76,7 +77,9 @@ public class ContentsService {
     /*set myUploadClass*/
     private void setMyUploadClass(Long usersId, Contents contents) {
 
-        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersUsersId(usersId);
+        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersId(usersId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND));
+
         List<Contents> contentsList = myUploadClass.getContentsList();
         contentsList.add(contents);
         myUploadClass.setContentsList(contentsList);
@@ -107,7 +110,8 @@ public class ContentsService {
         return contents.getChapterList();
     }
 
-    
+
+    @Transactional(readOnly = true)
     public Page<Contents> getContentsPage(int page, int size) {
 
         Pageable pageable =
@@ -121,14 +125,15 @@ public class ContentsService {
     /**
      * 콘텐츠 찜 기능
      */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void wishContents(Long contentsId, Long usersId, Wish wish) {
 
         Contents contents = contentsRepository.findByContentsId(contentsId);
 
-        MyClass myClass = myClassRepository.findByUsersUsersId(usersId)
+        MyClass myClass = myClassRepository.findByUsersId(usersId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
-        List<Wish> wishList = wishRepository.findByMyClassMyClassId(myClass.getMyClassId())
+        List<Wish> wishList = wishRepository.findByMyClassId(myClass.getMyClassId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
 
         for (Wish wishIndex : wishList) {
@@ -192,6 +197,7 @@ public class ContentsService {
     /**
      * Read: Content One
      */
+    @Transactional(readOnly = true)
     public Contents readContent(Long contentsId) {
         if (!contentsRepository.existsByContentsId(contentsId)) {
             throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);

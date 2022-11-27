@@ -15,6 +15,7 @@ import main008.BED.users.repository.UsersRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -45,6 +46,7 @@ public class CoinChargeService {
      * @param coinChargePost : 구매 코인 금액
      * @return : 카톡에게 결제번호 및 url 받음
      */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public CoinChargeDetailDto.KakaoReadyResponse kakaoPayReady(Long usersId, CoinCharge coinChargePost) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
@@ -153,7 +155,7 @@ public class CoinChargeService {
     /**
      * 결제 환불
      */
-    // TODO: 결제 환불 구현해야함
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public CoinChargeDetailDto.KakaoCancelResponse kakaoCancel(Long usersId, Long coinDetailDetailId) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
@@ -212,6 +214,7 @@ public class CoinChargeService {
     /**
      * 결제 완료 후 코인 충전
      */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void charge(CoinChargeDetail coinChargeDetail) {
 
         CoinCharge coinCharge = coinChargeDetail.getCoinCharge();
@@ -224,6 +227,7 @@ public class CoinChargeService {
     /**
      * 결제 취소 후 코인 환불
      */
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void coinMinus(CoinChargeDetail coinChargeDetail) {
 
         CoinCharge coinCharge = coinChargeDetail.getCoinCharge();
@@ -236,6 +240,7 @@ public class CoinChargeService {
     /**
      * 결제 내역 조회
      */
+    @Transactional(readOnly = true)
     public List<CoinChargeDetail> getCoinChargeDetail(Long usersId) {
 
         UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
