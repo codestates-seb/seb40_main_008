@@ -1,16 +1,15 @@
 package main008.BED.coinCharge.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import main008.BED.coinCharge.entity.CoinCharge;
-import main008.BED.users.dto.UsersDto;
 
 import java.util.List;
 
 public class CoinChargeDto {
 
     @Getter
+    @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
         private CoinCharge.ChargeAmount chargeAmount;

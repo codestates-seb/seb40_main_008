@@ -32,10 +32,29 @@ public enum ExceptionCode {
 
     /*Payment Coin*/
     COIN_SHORTAGE(400, "잔액이 부족합니다."),
+    DUPLICATE_PAY(409, "해당 강의를 이미 구매하셨습니다."),
 
     /*Bookmark*/
-    BOOKMARK_NOT_FOUND(404, "Bookmark Not Found")
+    BOOKMARK_NOT_FOUND(404, "Bookmark Not Found"),
 
+    /*KakaoPay*/
+    WRONG_TID(404, "Not available tid"),
+    STRANGE_APPROACH(404, "비 정상적인 접근이 감지되어 결제가 실패되었습니다."),
+    PAY_CANCEL(200, "결제가 정상적으로 취소되었습니다."),
+    PAY_FAILED(500, "결제에 실패하였습니다. 다시 시도하여주세요."),
+    AMOUNT_DIFFERENT(404, "결제 금액이 달라 결제가 취소되었습니다. 처음부터 다시 시도하여주세요."),
+    DETAIL_NOT_FOUND(404, "코인 충전 내역을 찾을 수 없습니다."),
+    CANCEL_FAILED(500, "환불에 실패하였습니다. 다시 시도하여주세요."),
+    COIN_CHARGE_NOT_FOUND(404, "Coin charge not found."),
+
+    /*Likes*/
+    LIKES_NOT_FOUND(404, "Likes not found"),
+
+    /*Wish*/
+    WISH_NOT_FOUND(404, "Wish not found"),
+
+    /*Payment*/
+    PAYMENT_NOT_FOUND(404, "Payment not found")
     ;
 
 

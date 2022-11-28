@@ -1,8 +1,6 @@
 package main008.BED.contents.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import main008.BED.bookmark.dto.BookmarkDto;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.dto.ChapterDto;
@@ -103,6 +101,15 @@ public class ContentsDto {
         private String tutorName;
     }
 
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class ResponseForCategories {
 
-
+        private Long contentsId;
+        private String title;
+        private String thumbnail;
+        private Contents.Categories categories;
+        private UsersDto.UserResponseToHome users;
+    }
 }

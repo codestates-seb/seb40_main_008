@@ -23,7 +23,20 @@ public interface ContentsMapper {
                         .contentsId(content.getContentsId())
                         .title(content.getTitle())
                         .thumbnail(content.getThumbnail())
-                        .likesCount(content.getLikes().getLikesCount())
+                        .likesCount(content.getLikesCount())
+                        .categories(content.getCategories())
+                        .users(usersMapper.usersToResponse(content.getUsers()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    default List<ContentsDto.ResponseForCategories> contentsToCategoriesResponses(List<Contents> contents, UsersMapper usersMapper) {
+
+        return contents.stream()
+                .map(content -> ContentsDto.ResponseForCategories.builder()
+                        .contentsId(content.getContentsId())
+                        .title(content.getTitle())
+                        .thumbnail(content.getThumbnail())
                         .categories(content.getCategories())
                         .users(usersMapper.usersToResponse(content.getUsers()))
                         .build())
