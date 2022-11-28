@@ -7,6 +7,7 @@ import naverlogo from "../../public/img/naverlogo.png";
 import kakaologo from "../../public/img/kakaologo.png";
 import googlelogo from "../../public/img/googlelogo.webp";
 import adminlogo from "../../public/img/myimg.png";
+import { Link } from "react-router-dom";
 
 interface SignInButtonProps {
 	isSignIn: boolean;
@@ -20,7 +21,9 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 	return isSignIn ? (
 		<button onClick={() => signOut()}>sign out</button>
 	) : (
+
 		<div className={styles.loginbtnWrapper}>
+
 			<button className={styles.googlebtn} onClick={() => signIn('google')}>
 				<div className={styles.googlebtnWrapper}>
 					<Image

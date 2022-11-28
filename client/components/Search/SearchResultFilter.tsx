@@ -1,19 +1,30 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react';
 import { redirect } from 'next/navigation';
-import styles from './SearchResultFilter.module.css'
+import styles from './SearchResultFilter.module.css';
+import getCategoryContents from '../../app/categories/[category]/page';
 
-const SearchResultFilter = ({ params }: any) => {
+export const handleSortChange = (e: any) => {
 
-    const handleSortChange = (e: any) => {
-        if (params.categoryName === e.target.value) return;
+    const value = e.target.value;
 
-        // 카테고리 변경 시, redirect 주소
-        //'http://localhost:8080/search?categories=MUSIC'
-        //'http://localhost:8080/search?categories=MUSIC&sort=likesCount'
-        //'http://localhost:8080/search?categories=MUSIC&sort=newest'
-        redirect(`/search?categoies=${params.categoryName}&sort=${e.target.value}`)
-    }
+    console.log('value', value);
+
+    // if (category.category === e.target.value) return;
+
+    // 카테고리 변경 시, redirect 주소
+    //'http://localhost:8080/search?categories=MUSIC'
+    //'http://localhost:8080/search?categories=MUSIC&sort=likesCount'
+    //'http://localhost:8080/search?categories=MUSIC&sort=newest'
+
+    // redirect(`/search?categoies=${category.category}&sort=${e.target.value}`)
+
+    return value;
+}
+
+const SearchResultFilter = (category: any) => {
+
+    console.log('category', category.category);
 
     return (
 
