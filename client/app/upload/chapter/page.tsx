@@ -1,9 +1,7 @@
 "use client";
-
 import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
 import styles from "./uploadChapter.module.css";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import {
   initialChapter,
   UploadChapterType,
@@ -12,15 +10,54 @@ import {
 import { useMemo, useRef, useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
 import { useSearchParams } from "next/navigation";
+import { ICurriculumContent } from "../../../types/contents";
+import { fetchEditChapter } from "../../../api/fetchDelete";
 
 const UploadChapterPage = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("slug");
-  console.log(query);
+  const thumbnail = searchParams.get("thumbnail");
+  const chapterOrder = searchParams.get("chapterOrder");
+  const title = searchParams.get("title");
+
+  console.log("썸네일", thumbnail);
+
+  const queryChapter = {
+    thumbnail,
+    chapterOrder,
+    title,
+  };
+
+  const img = {
+    file: null,
+    thumbnail: thumbnail,
+    type: null,
+  };
 
   const fileInput = useRef<HTMLInputElement>(null);
-  const [values, setValues] = useState<UploadChapterType>(initialChapter);
-  const [imageFile, setImageFile] = useState<UploadImage | null>(null);
+
+  const [values, setValues] = useState<UploadChapterType>(queryChapter);
+
+  const [imageFile, setImageFile] = useState<UploadImage | null>(img);
+
+  // const handleChapterEditClick = async ({
+  //   chapterId,
+  //   chapterOrder,
+  //   thumbnail,
+  //   title,
+
+  // }: ICurriculumContent) => {
+  //   try {
+  //     const status = await fetchEditChapter(
+  //       thumbnail,
+  //       chapterOrder,
+  //       title,
+  //       chapterId
+  //     );
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -60,7 +97,7 @@ const UploadChapterPage = () => {
 
       setValues({
         ...values,
-        thumbnail: fileList[0],
+        thumbnail: url,
       });
       console.log("fileList", fileList);
       console.log("fileList[0]", fileList[0]);
@@ -71,16 +108,20 @@ const UploadChapterPage = () => {
 
   const showImage = useMemo(() => {
     if (!imageFile && imageFile == null) {
-      return <p>비어있는 프로필</p>;
+      return (
+        <p style={{ backgroundColor: "black", border: "1px solid red" }}>
+          비어있는 프로필
+        </p>
+      );
     }
 
     return (
       <Image
         className={styles.thumbnail}
-        src={imageFile.thumbnail}
-        alt={imageFile.type}
-        width={300}
-        height={220}
+        src={imageFile.thumbnail ?? "/"}
+        alt={"img"}
+        width={350}
+        height={200}
         onClick={handleClickFileInput}
         style={{ objectFit: "contain", borderRadius: "4px" }}
       />
@@ -97,12 +138,17 @@ const UploadChapterPage = () => {
           <select
             id="chapterOrder"
             name="chapterOrder"
+            value={values.chapterOrder ?? ""}
             onChange={handleOptionChange}
             className={styles.select}
           >
             <option>-- 선택하세요 --</option>
             <optgroup>
               <option value="chapter 1">Chapter 1</option>
+              <option value="chapter 1">Chapter 2</option>
+              <option value="chapter 1">Chapter 3</option>
+              <option value="chapter 1">Chapter 4</option>
+              <option value="chapter 1">Chapter 5</option>
             </optgroup>
           </select>
 
@@ -110,6 +156,7 @@ const UploadChapterPage = () => {
           <input
             type="text"
             name="title"
+            value={values.title ?? ""}
             onChange={handleChange}
             className={styles.chapternameinput}
           ></input>
@@ -118,10 +165,11 @@ const UploadChapterPage = () => {
             <p className={styles.title}>챕터 썸네일</p>
             <input
               type="file"
-              accept="image/jpg, image/jpeg, image/png"
+              accept="image/jpg, image/jpeg, image/png string"
               name="thumbnail"
               ref={fileInput}
               id="ex_file"
+              // value={values.thumbnail ?? ""}
               style={{ display: "none" }}
               onChange={uploadfile}
             />
@@ -137,7 +185,7 @@ const UploadChapterPage = () => {
           <div className={styles.uploadimg}>{showImage}</div>
 
           {query == "edit" ? (
-            <OrangeButton type={"submit"} name={"수정하기"} />
+            <OrangeButton name={"수정하기"} />
           ) : (
             <OrangeButton type={"submit"} name={"올리기"} />
           )}

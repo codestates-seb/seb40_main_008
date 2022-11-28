@@ -14,7 +14,7 @@ import {
 const UploadPage = () => {
   const session = useSession();
   const fileInput = useRef<HTMLInputElement>(null);
-
+  const formData = new FormData();
   const [values, setValues] = useState<UploadClassType>(initialClass);
   const [imageFile, setImageFile] = useState<UploadImage | null>(null);
 
@@ -23,6 +23,7 @@ const UploadPage = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
+    //formData.append(`"${e.target.name}"`, e.target.value);
   };
 
   const handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
@@ -32,16 +33,17 @@ const UploadPage = () => {
     });
   };
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert(JSON.stringify(values, null, 2));
+    fetch("api/temp", {
+      method: "POST",
+      // headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
+      //body: JSON.stringify(formData),
+      body: formData,
+    });
   };
 
   const handleClickFileInput = () => {
@@ -54,6 +56,8 @@ const UploadPage = () => {
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
 
+      formData.append("thumbnail", fileList[0]);
+
       setImageFile({
         file: fileList[0],
         thumbnail: url,
@@ -64,10 +68,11 @@ const UploadPage = () => {
         ...values,
         thumbnail: fileList[0],
       });
-      console.log('fileList', fileList);
-      console.log('fileList[0]', fileList[0]);
-      console.log('URL', URL);
-      console.log('url', url);
+
+      console.log("fileList", fileList);
+      console.log("fileList[0]", fileList[0]);
+      console.log("URL", URL);
+      console.log("url", url);
     }
   };
 
@@ -79,8 +84,8 @@ const UploadPage = () => {
     return (
       <Image
         className={styles.thumbnail}
-        src={imageFile.thumbnail}
-        alt={imageFile.type}
+        src={imageFile.thumbnail ?? ""}
+        alt={imageFile.type ?? ""}
         width={300}
         height={220}
         onClick={handleClickFileInput}
@@ -145,17 +150,19 @@ const UploadPage = () => {
             <input
               type="number"
               name="price"
-              onChange={handlePriceChange}
+              onChange={handleChange}
               className={styles.classPrice}
             />
-            {
-              values.price % 1000 === 0 ?
-                null : <div className={styles.alertMessage}>1,000원 단위로 입력 해주세요.</div>
-            }
-            {
-              values.price <= 50000 ?
-                null : <div className={styles.alertMessage}>50,000원 이하로 입력 해주세요.</div>
-            }
+            {values.price % 1000 === 0 ? null : (
+              <div className={styles.alertMessage}>
+                1,000원 단위로 입력 해주세요.
+              </div>
+            )}
+            {values.price <= 50000 ? null : (
+              <div className={styles.alertMessage}>
+                50,000원 이하로 입력 해주세요.
+              </div>
+            )}
 
             <p className={styles.title}>강의 소개</p>
             <input

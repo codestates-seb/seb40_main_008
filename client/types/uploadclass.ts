@@ -5,7 +5,7 @@ export interface UploadClassType {
   categories: string;
   details: string;
   tutorDetail: string;
-  thumbnail: File | null;
+  thumbnail: any;
   price: number;
 }
 
@@ -19,15 +19,15 @@ export const initialClass = {
 };
 
 export interface UploadImage {
-  file: File;
-  thumbnail: string;
-  type: string;
+  file: any;
+  thumbnail: any;
+  type: string | null;
 }
 
 export interface UploadChapterType {
-  thumbnail: File | null;
-  chapterOrder: string;
-  title: string;
+  thumbnail: string | null;
+  chapterOrder: string | null;
+  title: string | null;
 }
 
 export const initialChapter = {

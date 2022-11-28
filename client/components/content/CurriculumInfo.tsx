@@ -5,6 +5,8 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { ICurriculumContent } from "../../types/contents";
 import Image from "next/image";
 import Link from "next/link";
+import { fetchDelete, fetchEditChapter } from "../../api/fetchDelete";
+import { UploadChapterType } from "../../types/uploadclass";
 interface CurriculumInfoProps {
   curriculumInfo: ICurriculumContent[];
   contentsId: number;
@@ -15,13 +17,32 @@ const CurriculumInfo = ({
   curriculumInfo,
 }: CurriculumInfoProps) => {
   console.log("dadsa", contentsId);
-  const handleChapterDeleteClick = async () => {
-    // try{
-    //   const status = await delChapter()
-    // }
+
+  const handleChapterDeleteClick = async (chapterId: number) => {
+    try {
+      const status = await fetchDelete(
+        `http://localhost:8080/auth/contents/chapter/`,
+        chapterId
+      );
+      if (status !== 200) throw new Error("status is not good");
+      //렌더링 필요
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleClassDeleteClick = async () => {};
+  const handleClassDeleteClick = async (uploadClassId: number) => {
+    try {
+      const status = await fetchDelete(
+        `localhost:8080/auth/chapter/lecture/`,
+        uploadClassId
+      );
+      if (status !== 200) throw new Error("status is not good");
+      //렌더링 필요
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -39,13 +60,18 @@ const CurriculumInfo = ({
                   <Link
                     href={{
                       pathname: "/upload/chapter",
-                      query: { slug: "edit" },
+                      query: {
+                        slug: "edit",
+                        thumbnail: e.thumbnail,
+                        title: e.title,
+                        chapterOrder: e.chapterOrder,
+                      },
                     }}
                   >
                     <button className={styles.btn}>수정</button>
                   </Link>
                   <button
-                    onClick={handleChapterDeleteClick}
+                    onClick={() => handleChapterDeleteClick(e.chapterId)}
                     className={styles.btn}
                   >
                     삭제
@@ -70,7 +96,7 @@ const CurriculumInfo = ({
                         <button className={styles.btn}>수정</button>
                       </Link>
                       <button
-                        onClick={handleClassDeleteClick}
+                        onClick={() => handleClassDeleteClick(e.uploadClassId)}
                         className={styles.btn}
                       >
                         삭제
