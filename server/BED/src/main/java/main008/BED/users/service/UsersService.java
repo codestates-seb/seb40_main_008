@@ -2,6 +2,7 @@ package main008.BED.users.service;
 
 import lombok.RequiredArgsConstructor;
 import main008.BED.coinCharge.entity.CoinCharge;
+import main008.BED.coinCharge.entity.CoinChargeDetail;
 import main008.BED.coinCharge.repository.CoinChargeRepository;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +46,13 @@ public class UsersService {
 
         CoinCharge coinCharge = userPage.getCoinCharge();
         coinCharge.setCoinChargeDetails(new ArrayList<>());
+        coinChargeRepository.save(coinCharge);
+
+        CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
+        List<CoinChargeDetail> coinChargeDetailList = coinCharge.getCoinChargeDetails();
+        coinChargeDetailList.add(coinChargeDetail);
+        coinCharge.setCoinChargeDetails(coinChargeDetailList);
+
         coinCharge.setUserPage(userPage);
         coinChargeRepository.save(coinCharge);
 

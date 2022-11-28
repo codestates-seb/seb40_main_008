@@ -24,7 +24,7 @@ public interface UsersMapper {
                 .userName(post.getUserName())
                 .email(post.getEmail())
                 .profileImage(post.getProfileImage())
-                .totalCoin(5000)
+                .totalCoin(30000)
                 .build();
     }
 

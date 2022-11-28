@@ -100,6 +100,7 @@ cloud:
     s3:
       bucket: ${S3_BUCKET_NAME}
 
+
 application:
   open-api:
     admin-key: ${ADMIN_KEY}

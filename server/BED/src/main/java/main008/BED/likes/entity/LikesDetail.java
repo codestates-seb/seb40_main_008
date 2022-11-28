@@ -21,7 +21,7 @@ public class LikesDetail {
     private Long likesDetailsId;
 
     @Column
-    private Boolean liked;
+    private Boolean liked = false;
 
     @Column
     private ZonedDateTime createdAt;

@@ -29,21 +29,21 @@ public class PaymentService {
     private final ContentsRepository contentsRepository;
     private final UsersRepository usersRepository;
 
-    /*
-    컨텐츠 개설 시 가격 등록
-    */
-    public Payment createPaymentWithContent(Payment payment) {
+    /**
+     * 컨텐츠 개설 시 가격 등록
+     */
+    public void createPaymentWithContent(Payment payment) {
 
         payment.setPaymentDetails(new ArrayList<>());
 
         verifyUnitPrice(payment.getPrice());
 
-        return paymentRepository.save(payment);
+        paymentRepository.save(payment);
     }
 
-    /*
-    가격 등록 시 제한
-    */
+    /**
+     * 가격 등록 시 제한
+     */
     private void verifyUnitPrice(Integer price) {
 
         if (price % 1000 != 0) {
@@ -53,18 +53,24 @@ public class PaymentService {
         }
     }
 
-    /*
-    컨텐츠 결제
-    */
-    public Payment payContent(PaymentDetail paymentDetail, Long userId, Long contentsId) {
+    /**
+     * 컨텐츠 결제
+     */
+    public void payContent(PaymentDetail paymentDetail, Long userId, Long contentsId) {
 
-        Payment payment = paymentRepository.findByContentsContentsId(contentsId);
-        List<PaymentDetail> paymentDetails = paymentDetailRepository.findByPaymentPaymentId(payment.getPaymentId());
+        Payment payment = paymentRepository.findByContentsId(contentsId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PAYMENT_NOT_FOUND));
+
+        List<PaymentDetail> paymentDetails = paymentDetailRepository.findByPaymentId(payment.getPaymentId());
+
         Contents contents = contentsRepository.findByContentsId(contentsId);
         Users buyUsers = usersRepository.findByUsersId(userId);
         Users tutorUsers = usersRepository.findByUsersId(contents.getUsers().getUsersId());
 
+        verifiedBuyContents(payment, userId);
+
         buyUsers.setTotalCoin(buyUsers.getTotalCoin() - payment.getPrice());
+
         verifyCountOfCoin(buyUsers.getTotalCoin());
 
         tutorUsers.setTotalCoin(tutorUsers.getTotalCoin() + payment.getPrice());
@@ -79,16 +85,27 @@ public class PaymentService {
         paymentDetails.add(paymentDetail);
 
         payment.setPaymentDetails(paymentDetails);
-        return paymentRepository.save(payment);
+        paymentRepository.save(payment);
     }
 
-    /*
-    결제 시 코인 부족 확인
-    */
+    /**
+     * 결제 시 코인 부족 확인
+     */
     private void verifyCountOfCoin(Integer totalCoin) {
 
         if (totalCoin < 0) {
             throw new BusinessLogicException(ExceptionCode.COIN_SHORTAGE);
+        }
+    }
+
+    /**
+     * 이미 구매했던 컨텐츠인지 확인
+     */
+    private void verifiedBuyContents(Payment payment, Long usersId) {
+
+        if (paymentDetailRepository.findBoughtContents(payment.getPaymentId(), usersId) != null) {
+
+            throw new BusinessLogicException(ExceptionCode.DUPLICATE_PAY);
         }
     }
 }
