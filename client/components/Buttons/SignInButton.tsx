@@ -24,40 +24,47 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 
 		<div className={styles.loginbtnWrapper}>
 
-			<button className={styles.googlebtn} onClick={() => signIn('google')}>
-				<div className={styles.googlebtnWrapper}>
-					<Image
-						className={styles.googlelogo}
-						src={googlelogo}
-						alt='google logo'
-						width={25}
-					/>
-					<p className={styles.btn_p}>Sign with in Google</p>
-				</div>
+			<button className={styles.googlebtn}>
+				<a href="https://pioneroroom.com/oauth2/authorization/google">
+					<div className={styles.googlebtnWrapper}>
+						<Image
+							className={styles.googlelogo}
+							src={googlelogo}
+							alt='google logo'
+							width={25}
+						/>
+						<p className={styles.btn_p}>Sign with in Google</p>
+					</div>
+				</a>
 			</button>
 
-			<button className={styles.kakaobtn} onClick={() => signIn('kakao')}>
-				<div className={styles.kakaobtnWrapper}>
-					<Image
-						className={styles.kakaologo}
-						src={kakaologo}
-						alt='kakao logo'
-						width={30}
-					/>
-					<p className={styles.btn_p}>카카오 로그인</p>
-				</div>
+
+			<button className={styles.kakaobtn}>
+				<a href="https://pioneroroom.com/oauth2/authorization/kakao">
+					<div className={styles.kakaobtnWrapper}>
+						<Image
+							className={styles.kakaologo}
+							src={kakaologo}
+							alt='kakao logo'
+							width={30}
+						/>
+						<p className={styles.btn_p}>카카오 로그인</p>
+					</div>
+				</a>
 			</button>
 
 			<button className={styles.naverbtn} onClick={() => signIn('naver')}>
-				<div className={styles.naverbtnWrapper}>
-					<Image
-						className={styles.naverlogo}
-						src={naverlogo}
-						alt='naver logo'
-						width={50}
-					/>
-					<p className={styles.btn_naver_p}>네이버 로그인</p>
-				</div>
+				<a href="https://pioneroroom.com/oauth2/authorization/naver">
+					<div className={styles.naverbtnWrapper}>
+						<Image
+							className={styles.naverlogo}
+							src={naverlogo}
+							alt='naver logo'
+							width={50}
+						/>
+						<p className={styles.btn_naver_p}>네이버 로그인</p>
+					</div>
+				</a>
 			</button>
 
 			<button className={styles.adminbtn} onClick={() => signIn()}>
