@@ -14,56 +14,73 @@ import { handleSortChange } from '../../../components/Search/SearchResultFilter'
 
 // categoryName 또는 검색어에 대한 get요청(parameter에 categoryName: string 넣어야 함.)
 // { params }: any
-const getCategoryContents = async (): Promise<Array<ICategorySearchResult>> => {
+const getCategoryContents = async (
+	category: string,
+	sortingMethod: string
+): Promise<Array<ICategorySearchResult>> => {
+	try {
+		// https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
 
-    try {
-        // https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
+		// 'http://localhost:8080/search?categories=MUSIC&sort=likesCount'
+		// request url : https://pioneroroom.com/search?categories=${category}&sort=${sortingMethod}
+		const response = await fetch(
+			`https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818`,
+			{
+				next: {
+					revalidate: 60,
+				},
+			}
+		);
 
-        // 'http://localhost:8080/search?categories=MUSIC&sort=likesCount'
-        // request url : https://pioneroroom.com/search?categories=${params.category}&sort=${params.value}
-        const response = await fetch(`https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818`, {
-            next: {
-                revalidate: 60,
-            },
-        });
-
-        const { contentsList } = await response.json();
-        // console.log('contentsList', contentsList);
-        return contentsList;
-
-    } catch (error) {
-        console.error(error);
-        return [];
-    }
+		const { contentsList } = await response.json();
+		// console.log('contentsList', contentsList);
+		return contentsList;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 };
 
 const DetailCategoryPage = async (context: any) => {
+	// console.log('context', context);
 
-    // console.log('context', context);
+	// 인기순, 최신순 선택하면 각 option의 value에 맞게 다른 url parameter로 get 요청을 보내야 한다.
+	// const value = handleSortChange();
+	// console.log('value', value);
 
-    // 인기순, 최신순 선택하면 각 option의 value에 맞게 다른 url parameter로 get 요청을 보내야 한다.
-    // const value = handleSortChange();
-    // console.log('value', value);
+	const { params } = context;
+	/**
+	 * params: 'DRAWING_CONTENT?name=likesCount || newest '
+	 * params: 'DRAWING_CONTENT'
+	 *
+	 */
+	const { category } = params;
+	console.log(
+		'🚀 ~ file: page.tsx ~ line 58 ~ DetailCategoryPage ~ category',
+		category
+	);
+	let contentsList;
+	if (category.includes('-')) {
+		const [categoryName, value] = category.split('-');
+		contentsList = await getCategoryContents(categoryName, value);
+	} else {
+		contentsList = await getCategoryContents(category, 'likesCount');
+	}
+	// categories/DRAWING_CONTENT
 
-    const { params } = context;
-    const { category } = params;
+	// params { category: 'DIGITAL_DRAWING' }
+	// category DIGITAL_DRAWING
 
-    // params { category: 'DIGITAL_DRAWING' }
-    // category DIGITAL_DRAWING
+	// console.log('contentsList', contentsList)
 
-    const contentsList = await getCategoryContents();
-    // console.log('contentsList', contentsList)
-
-    return (
-        <>
-            <SearchResultFilter category={category} />
-            <div>
-
-                <HomeClassesSection contentsList={contentsList} />
-
-            </div>
-        </>
-    );
+	return (
+		<>
+			<SearchResultFilter category={category} />
+			<div>
+				<HomeClassesSection contentsList={contentsList} />
+			</div>
+		</>
+	);
 };
 
 export default DetailCategoryPage;
