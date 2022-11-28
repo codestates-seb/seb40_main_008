@@ -25,10 +25,7 @@ public class ChapterService {
     private final ChapterRepository chapterRepository;
     private final ContentsRepository contentsRepository;
     private final DocsRepository docsRepository;
-
     private final ChapterMapperImpl chapterMapper;
-
-
 
     /**
      * SAVE
@@ -38,7 +35,9 @@ public class ChapterService {
         if (!contentsRepository.existsByContentsId(contentsId)) {
             throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
-        Contents byContentsId = contentsRepository.findByContentsId(contentsId);
+
+        Contents byContentsId = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
         List<Chapter> chapterList = byContentsId.getChapterList();
         chapterList.add(chapter);
@@ -53,9 +52,11 @@ public class ChapterService {
      * READ ONE
      */
     public Chapter readOne(Long chapterId) {
+
         if (!chapterRepository.existsByChapterId(chapterId)) {
             throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
         }
+
         return chapterRepository.findById(chapterId).get();
     }
 
@@ -63,9 +64,11 @@ public class ChapterService {
      * UPDATE
      */
     public void updateChapter(Long chapterId, Chapter newChapter) {
+
         if (!chapterRepository.existsByChapterId(chapterId)) {
             throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
         }
+
         Chapter oldChapter = chapterRepository.findByChapterId(chapterId);
         oldChapter.setChapterOrder(newChapter.getChapterOrder());
         oldChapter.setTitle(newChapter.getTitle());
@@ -94,15 +97,22 @@ public class ChapterService {
      * Read: 컨텐츠 상세화면 커리큘럼 읽어오기 - 컨텐츠 API에서 호출
      */
     public ChapterDto.CurriculumInContent readCurriculumInContent(Long contentsId) {
+
         if (!contentsRepository.existsByContentsId(contentsId)) {
             throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
-        Contents contents = contentsRepository.findByContentsId(contentsId);
+
+        Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
         List<Chapter> chapterList = contents.getChapterList();
+
         List<ChapterDto.ResponseDto> responseList = chapterList.stream()
                 .map(chapter -> chapterMapper.entityToResponseDto(chapter))
                 .collect(Collectors.toList());
+
         ChapterDto.CurriculumInContent curriculumInContent = new ChapterDto.CurriculumInContent(responseList);
+
         return curriculumInContent;
     }
 
@@ -110,15 +120,22 @@ public class ChapterService {
      * Read: 영상 재생화면 커리큘럼 읽어오기 - 컨텐츠 API에서 호출
      */
     public ChapterDto.CurriculumInStream readCurriculumInStream(Long contentsId) {
+
         if (!contentsRepository.existsByContentsId(contentsId)) {
             throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
-        Contents contents = contentsRepository.findByContentsId(contentsId);
+
+        Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
         List<Chapter> chapterList = contents.getChapterList();
+
         List<ChapterDto.ResponseDtoWithoutThumbnail> responseList = chapterList.stream()
                 .map(chapter -> chapterMapper.entityToResponseDtoWithoutThumbnail(chapter))
                 .collect(Collectors.toList());
+
         ChapterDto.CurriculumInStream curriculumInStream = new ChapterDto.CurriculumInStream(responseList);
+
         return curriculumInStream;
     }
 }

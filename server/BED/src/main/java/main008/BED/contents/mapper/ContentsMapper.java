@@ -2,7 +2,6 @@ package main008.BED.contents.mapper;
 
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
-import main008.BED.likes.mapper.LikesMapper;
 import main008.BED.users.mapper.UsersMapper;
 import org.mapstruct.Mapper;
 

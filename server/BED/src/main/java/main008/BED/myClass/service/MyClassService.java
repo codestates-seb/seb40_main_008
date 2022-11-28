@@ -1,7 +1,6 @@
 package main008.BED.myClass.service;
 
 import lombok.RequiredArgsConstructor;
-import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
 import main008.BED.myClass.entity.MyClass;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-//@Transactional
+@Transactional
 public class MyClassService {
 
     private final MyClassRepository myClassRepository;
@@ -50,24 +49,26 @@ public class MyClassService {
     @Transactional(readOnly = true)
     public MyClass getBuyClass(Long usersId) {
 
-        MyClass myClass = myClassRepository.findByUsersId(usersId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        MyClass myClass = myClassRepository.findByUsersId(usersId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         List<PaymentDetail> paymentDetails = paymentDetailRepository.findByUsersId(usersId);
-        List<Payment> payments = myClass.getPayments();
+
+        List<Payment> paymentList = myClass.getPayments();
 
         for (PaymentDetail paymentDetail : paymentDetails) {
 
-            Payment payment = paymentRepository.findByPaymentId(paymentDetail.getPayment().getPaymentId())
-                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PAYMENT_NOT_FOUND));
+            Payment payment = paymentRepository.findByPaymentId(
+                    paymentDetail.getPayment().getPaymentId()).orElseThrow(()
+                    -> new BusinessLogicException(ExceptionCode.PAYMENT_NOT_FOUND));
 
             payment.setMyClass(myClass);
             paymentRepository.save(payment);
 
-            payments.add(payment);
+            paymentList.add(payment);
         }
 
-        myClass.setPayments(payments);
+        myClass.setPayments(paymentList);
         return myClassRepository.save(myClass);
     }
 }
