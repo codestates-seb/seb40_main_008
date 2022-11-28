@@ -53,7 +53,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 				</a>
 			</button>
 
-			<button className={styles.naverbtn} onClick={() => signIn('naver')}>
+			<button className={styles.naverbtn}>
 				<a href="https://pioneroroom.com/oauth2/authorization/naver">
 					<div className={styles.naverbtnWrapper}>
 						<Image
@@ -68,15 +68,17 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 			</button>
 
 			<button className={styles.adminbtn} onClick={() => signIn()}>
-				<div className={styles.adminbtnWrapper}>
-					<Image
-						className={styles.adminlogo}
-						src={adminlogo}
-						alt='admin logo'
-						width={50}
-					/>
-					<p className={styles.btn_p}>관리자 로그인</p>
-				</div>
+				<a href="https://pioneroroom.com/oauth2/authorization/naver">
+					<div className={styles.adminbtnWrapper}>
+						<Image
+							className={styles.adminlogo}
+							src={adminlogo}
+							alt='admin logo'
+							width={50}
+						/>
+						<p className={styles.btn_p}>관리자 로그인</p>
+					</div>
+				</a>
 			</button>
 
 		</div>
