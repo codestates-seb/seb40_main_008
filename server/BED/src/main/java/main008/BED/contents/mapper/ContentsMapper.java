@@ -38,9 +38,17 @@ public interface ContentsMapper {
                         .title(content.getTitle())
                         .thumbnail(content.getThumbnail())
                         .categories(content.getCategories())
+//                        .likesCount(content.getLikesCount())
                         .users(usersMapper.usersToResponse(content.getUsers()))
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    default ContentsDto.CategoryListResponse toCategoryList(List<ContentsDto.ResponseForCategories> categories) {
+
+        return ContentsDto.CategoryListResponse.builder()
+                .contentsList(categories)
+                .build();
     }
 
 

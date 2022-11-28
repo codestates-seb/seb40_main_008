@@ -176,8 +176,9 @@ public class ContentsController {
                                         @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
 
         Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
+        List<ContentsDto.ResponseForCategories> categories1 = contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
 
-        return new ResponseEntity<>(contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper), HttpStatus.OK);
+        return new ResponseEntity<>(contentsMapper.toCategoryList(categories1), HttpStatus.OK);
     }
 
     /**

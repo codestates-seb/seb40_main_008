@@ -12,6 +12,7 @@ import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.repository.UserPageRepository;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ import java.util.List;
 public class CoinChargeService {
 
     static final String cid = "TC0ONETIME"; // 가맹점 테스트 코드
-    static final String admin_Key = "328091c101c67566980ed089597a8be8"; // 공개 조심! 서버 배포 시 환경 변수로 설정해야함
-//    static final String admin_Key = "${ADMIN_KEY}"; // 서버 배포 시에는 이걸로 변경
+    @Value("${application.open-api.admin-key}")
+    private String admin_Key; // 서버 배포 시에는 이걸로 변경
 
     private final CoinChargeDetailRepository coinChargeDetailRepository;
     private final CoinChargeRepository coinChargeRepository;

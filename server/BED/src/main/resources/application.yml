@@ -53,3 +53,7 @@ cloud:
       static: ${REGION}
     s3:
       bucket: ${BUCKET_NAME}
+
+application:
+  open-api:
+    admin-key: ${ADMIN_KEY}
