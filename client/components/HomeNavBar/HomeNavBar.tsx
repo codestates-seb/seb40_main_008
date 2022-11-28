@@ -19,6 +19,17 @@ const HomeNavBar = () => {
       behavior: "smooth",
     });
   };
+  const temp = async () => {
+		const res = await fetch('https://pioneroroom.com/auth/2/userinfo/', {
+			method: 'GET',
+		});
+	};
+
+  return (
+    <div>
+				<button onClick={temp}> submit </button>
+			</div>
+  )
 
   return (
     <>
