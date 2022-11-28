@@ -45,8 +45,6 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         try {
-            var oAuth2User2 = (OAuth2User) authentication.getPrincipal();
-
             String authorizedClientRegistrationId = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
             if (authorizedClientRegistrationId.equals("naver")) {
                 var oAuth2User = (OAuth2User) authentication.getPrincipal();
@@ -59,10 +57,10 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 redirect(request, response, email, authorities);  // (6)
             } else if (authorizedClientRegistrationId.equals("kakao")) {
                 var oAuth2User = (OAuth2User) authentication.getPrincipal();
-                HashMap userInfo = oAuth2User2.getAttribute("properties");
+                HashMap userInfo = oAuth2User.getAttribute("properties");
                 String nickname = userInfo.get("nickname").toString();
                 String profile_image = userInfo.get("profile_image").toString();
-                HashMap account = oAuth2User2.getAttribute("kakao_account");
+                HashMap account = oAuth2User.getAttribute("kakao_account");
                 String email = account.get("email").toString();
                 List<String> authorities = authorityUtils.createRoles(email);
                 saveUser(email, profile_image, nickname);  // (5)
@@ -127,9 +125,11 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     }
 
     private URI createURI(String accessToken, String refreshToken, HttpServletResponse response) {
+
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
+
         Cookie cookie_access = new Cookie("access_token", accessToken);
         Cookie cookie_refresh = new Cookie("refresh_token", refreshToken);
         ArrayList<Cookie> cookieList = new ArrayList<>();
