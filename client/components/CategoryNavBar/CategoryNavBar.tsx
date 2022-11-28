@@ -4,7 +4,6 @@ import styles from './CategoryNavbar.module.css';
 import { UseScrollBar } from "../../hooks/\bScrollBar/UseScrollBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faHouse } from "@fortawesome/free-solid-svg-icons";
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 
