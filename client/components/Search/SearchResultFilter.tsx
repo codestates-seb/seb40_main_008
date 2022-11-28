@@ -15,13 +15,6 @@ export const handleSortChange = (
 
     router.push(`/categories/${category}-${value}`);
 
-    // 카테고리 변경 시, redirect 주소
-    //'http://localhost:8080/search?categories=MUSIC'
-    //'http://localhost:8080/search?categories=MUSIC&sort=likesCount'
-    //'http://localhost:8080/search?categories=MUSIC&sort=newest'
-
-    // redirect(`/search?categoies=${category.category}&sort=${e.target.value}`)
-
     return value;
 };
 

@@ -1,8 +1,9 @@
 import React from 'react';
+import CategoryNavBar from '../../../components/CategoryNavBar/CategoryNavBar';
 import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
 import SearchResultFilter from '../../../components/Search/SearchResultFilter';
 import HomeClassesSection from '../../../components/Card/HomeClassesSection';
-import { handleSortChange } from '../../../components/Search/SearchResultFilter';
+import styles from './categorydetail.module.css';
 
 // geneticStaticParams 도 만들기,,,(detail,,,에 있는 것과 같이)
 // 검색어가 카테고리 arr에 포함되면 categoryName으로 아니면 검색어로 req보내기
@@ -52,7 +53,10 @@ const DetailCategoryPage = async (context: any) => {
 
     return (
         <>
-            <SearchResultFilter category={category} />
+            <CategoryNavBar />
+            <div className={styles.filterWrapper}>
+                <SearchResultFilter category={category} />
+            </div>
             <div>
                 <HomeClassesSection contentsList={contentsList} />
             </div>
