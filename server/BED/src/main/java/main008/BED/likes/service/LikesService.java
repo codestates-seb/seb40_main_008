@@ -87,12 +87,12 @@ public class LikesService {
 
             likesDetail.setLiked(false);
             likesRepository.likesCountDown(likes);
-            contentsRepository.likesCountForContentsDown(contents);
+            contentsRepository.likesCountForContentsDown(contents.getContentsId());
         } else {
 
             likesDetail.setLiked(true);
             likesRepository.likesCountUp(likes);
-            contentsRepository.likesCountForContentsUp(contents);
+            contentsRepository.likesCountForContentsUp(contents.getContentsId());
         }
 
         likesDetailRepository.save(likesDetail);
@@ -111,6 +111,6 @@ public class LikesService {
         likes.getLikesDetails().add(likesDetail);
         likes.setContents(contents);
         likesRepository.likesCountUp(likes);
-        contentsRepository.likesCountForContentsUp(contents);
+        contentsRepository.likesCountForContentsUp(contents.getContentsId());
     }
 }

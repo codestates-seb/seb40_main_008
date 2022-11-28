@@ -109,7 +109,16 @@ public class ContentsDto {
         private Long contentsId;
         private String title;
         private String thumbnail;
+//        private int likesCount;
         private Contents.Categories categories;
         private UsersDto.UserResponseToHome users;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class CategoryListResponse {
+
+        private List<ResponseForCategories> contentsList;
     }
 }

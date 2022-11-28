@@ -39,7 +39,7 @@ public class Contents {
     @Column(nullable = false)
     private String fileKey; // thumbnail key for delete it in s3
 
-    @Column
+    @Column(nullable = false)
     private int likesCount;
 
     @Column(columnDefinition = "TEXT", nullable = false)
