@@ -1,49 +1,50 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { searchApi } from './searchApi';
 import styles from './SearchBar.module.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const SearchBar = () => {
+	// 검색어
+	const [searchvalue, setSearchvalue] = useState('');
 
-    // 검색어 
-    const [searchvalue, setSearchvalue] = useState('');
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchvalue(e.target.value);
+		console.log(searchvalue);
+	};
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchvalue(e.target.value);
-        console.log(searchvalue);
+	// 검색 버튼 클릭 시, 내용 담아서 GET 요청 보내기
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		// console.log(searchvalue);
+		// alert(JSON.stringify(searchvalue));
+		searchApi.getSearch(searchvalue);
+		redirect('/categories/seachValue');
+	};
 
-    }
-
-    // 검색 버튼 클릭 시, 내용 담아서 GET 요청 보내기
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // console.log(searchvalue);
-        // alert(JSON.stringify(searchvalue));
-        searchApi.getSearch(searchvalue);
-    }
-
-    return (
-        <>
-            <div className={styles.searchWrapper}>
-                <div className={styles.searchboxWrapper}>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            value={searchvalue}
-                            onChange={handleChange}
-                            className={styles.searchbox}
-                            placeholder='관심 클래스 찾기' />
-                        <button className={styles.submitbtn} type='submit'>
-                            <FontAwesomeIcon
-                                icon={faMagnifyingGlass}
-                                className={styles.magnifyingglass} />
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </>
-    )
-}
+	return (
+		<>
+			<div className={styles.searchWrapper}>
+				<div className={styles.searchboxWrapper}>
+					<form onSubmit={handleSubmit}>
+						<input
+							value={searchvalue}
+							onChange={handleChange}
+							className={styles.searchbox}
+							placeholder="관심 클래스 찾기"
+						/>
+						<button className={styles.submitbtn} type="submit">
+							<FontAwesomeIcon
+								icon={faMagnifyingGlass}
+								className={styles.magnifyingglass}
+							/>
+						</button>
+					</form>
+				</div>
+			</div>
+		</>
+	);
+};
 
 export default SearchBar;
