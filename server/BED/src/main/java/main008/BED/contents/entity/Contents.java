@@ -180,4 +180,5 @@ public class Contents {
             this.disclosure = true;
         }
     }
+
 }

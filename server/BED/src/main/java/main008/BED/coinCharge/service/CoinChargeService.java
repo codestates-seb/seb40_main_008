@@ -79,9 +79,9 @@ public class CoinChargeService {
         parameters.add("total_amount", String.valueOf(coinChargeDetail.getChargeAmount()));
         parameters.add("vat_amount", String.valueOf(coinChargeDetail.getTax()));
         parameters.add("tax_free_amount", "0");
-        parameters.add("approval_url", "http://localhost:8080/auth/coincharge/success");
-        parameters.add("cancel_url", "http://localhost:8080/auth/coincharge/cancel");
-        parameters.add("fail_url", "http://localhost:8080/auth/coincharge/fail");
+        parameters.add("approval_url", "http://localhost:8080/coincharge/success");
+        parameters.add("cancel_url", "http://localhost:8080/coincharge/cancel");
+        parameters.add("fail_url", "http://localhost:8080/coincharge/fail");
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());

@@ -4,6 +4,7 @@ package main008.BED.oauth2_jwt.handler;
 import main008.BED.oauth2_jwt.jwt.JwtTokenizer;
 import main008.BED.oauth2_jwt.utils.CustomAuthorityUtils;
 import main008.BED.users.entity.Users;
+import main008.BED.users.repository.UsersRepository;
 import main008.BED.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -55,8 +56,10 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 String profile_image = userInfo.get("profile_image").toString();
                 String name = userInfo.get("name").toString();
                 List<String> authorities = authorityUtils.createRoles(email);
+
                 saveUser(email, profile_image, name);  // (5)
                 redirect(request, response, email, authorities);  // (6)
+
             } else if (authorizedClientRegistrationId.equals("kakao")) {
                 var oAuth2User = (OAuth2User) authentication.getPrincipal();
                 HashMap userInfo = oAuth2User.getAttribute("properties");
@@ -65,14 +68,17 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 HashMap account = oAuth2User.getAttribute("kakao_account");
                 String email = account.get("email").toString();
                 List<String> authorities = authorityUtils.createRoles(email);
+
                 saveUser(email, profile_image, nickname);  // (5)
                 redirect(request, response, email, authorities);  // (6)
+
             } else if (authorizedClientRegistrationId.equals("google")) {
                 var oAuth2User = (OAuth2User) authentication.getPrincipal();
                 String email = String.valueOf(oAuth2User.getAttributes().get("email")); // (3)
                 String picture = oAuth2User.getAttributes().get("picture").toString();
                 String name = oAuth2User.getAttributes().get("name").toString();
                 List<String> authorities = authorityUtils.createRoles(email); // (4)
+
                 saveUser(email, picture, name);  // (5)
                 redirect(request, response, email, authorities);  // (6)
             }
@@ -82,15 +88,17 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     }
 
     private void saveUser(String email, String picture, String name) {
-        Users users = new Users();
+        if (!usersService.verifyExistsEmail(email)) {
+            Users users = new Users();
 
-        users.setProfileImage(picture);
-        users.setUserName(name);
-        users.setEmail(email);
-        users.setTotalCoin(30000);
-        users.setRole(Users.Role.ROLE_USER);
-        users.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-        usersService.createUsers(users);
+            users.setProfileImage(picture);
+            users.setUserName(name);
+            users.setEmail(email);
+            users.setTotalCoin(30000);
+            users.setRole(Users.Role.ROLE_USER);
+            users.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
+            usersService.createUsers(users);
+        }
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
@@ -153,9 +161,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 .newInstance()
                 .scheme("http")
                 .host("localhost")
-                .port(8081)
-                .path("/")
-                .queryParams(queryParams) // Cookie 사용 시 주석 처리
+                .port(3000)
+                .path("/api/token")
+                .queryParams(queryParams)
                 .build()
                 .toUri();
     }

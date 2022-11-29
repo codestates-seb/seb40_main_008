@@ -14,6 +14,7 @@ import main008.BED.contents.entity.EnumModel;
 import main008.BED.contents.entity.EnumValue;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
+import main008.BED.converter.StringToCategoryEnum;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
@@ -42,6 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.awt.print.Pageable;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -65,29 +67,35 @@ public class ContentsController {
     private final WishMapper wishMapper;
     private final S3Service s3Service;
 
+    private final StringToCategoryEnum stringToCategoryEnum;
+
 
     // 컨텐츠 개설
-    @PostMapping("/auth/{users-id}/uploadcontents")
-    public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
+    @PostMapping("/auth/uploadcontents")
+    public ResponseEntity postContents(Principal principal,
                                        @RequestParam("title") String title,
-                                       @RequestParam("categories") Contents.Categories categories,
+                                       @RequestParam("categories") String categories,
                                        @RequestParam("details") String details,
                                        @RequestParam("tutorDetail") String tutorDetail,
                                        @RequestParam("thumbnail") MultipartFile thumbnail,
-                                       @RequestParam("price") Integer price) {
+                                       @RequestParam("price") String price) {
+
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
         // thumbnail -> S3 업로드
         HashMap map = s3Service.uploadToS3(thumbnail, "/contents/thumbnail");
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 
-        PaymentDto.Post paymentPost = new PaymentDto.Post(price);
+        PaymentDto.Post paymentPost = new PaymentDto.Post(Integer.parseInt(price));
 
         Payment payment = paymentMapper.postToEntity(paymentPost);
 
-        ContentsDto.Post post = new ContentsDto.Post(title, categories, details, tutorDetail, thumbnailUrl, fileKey);
+        Contents.Categories category = stringToCategoryEnum.convert(categories);
 
-        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId, payment);
+        ContentsDto.Post post = new ContentsDto.Post(title, category, details, tutorDetail, thumbnailUrl, fileKey);
+
+        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), user.getUsersId(), payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
     }
