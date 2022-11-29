@@ -4,11 +4,12 @@ import { searchApi } from './searchApi';
 import styles from './SearchBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/navigation';
 
 const SearchBar = () => {
 	// 검색어
 	const [searchvalue, setSearchvalue] = useState('');
-
+	const router = useRouter();
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchvalue(e.target.value);
 		console.log(searchvalue);
@@ -20,7 +21,7 @@ const SearchBar = () => {
 		// console.log(searchvalue);
 		// alert(JSON.stringify(searchvalue));
 		searchApi.getSearch(searchvalue);
-		redirect('/categories/seachValue');
+		router.push(`/categories/${searchvalue}`);
 	};
 
 	return (

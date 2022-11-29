@@ -4,6 +4,7 @@ import { ICategorySearchResult } from '../../../types/category_search/categorySe
 import SearchResultFilter from '../../../components/Search/SearchResultFilter';
 import HomeClassesSection from '../../../components/Card/HomeClassesSection';
 import styles from './categorydetail.module.css';
+import { fixedCategoriesEng } from '../../../constants/fixedCategorys';
 // geneticStaticParams 도 만들기,,,(detail,,,에 있는 것과 같이)
 // 검색어가 카테고리 arr에 포함되면 categoryName으로 아니면 검색어로 req보내기
 
@@ -30,17 +31,15 @@ const getCategoryContents = async (
 	}
 };
 
-const getSearchContents = async (searchVal: string) => {
+const getSearchContents = async (searchVal: string, sortingMethod: string) => {
+	const sortCondition = sortingMethod === '' || sortingMethod === 'newest';
 	try {
 		// https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
 		// request url : https://pioneroroom.com/search?categories=${category}&sort=${sortingMethod}
 		const response = await fetch(
-			`https://run.mocky.io/v3/072e5b64-e3fb-4b38-category-searchVal`,
-			{
-				next: {
-					revalidate: 60,
-				},
-			}
+			sortCondition
+				? `http://pioneroroom/search/title/lateast?keyword=${searchVal}`
+				: `http://pioneroroom/search/title?keyword=${searchVal}`
 		);
 		const { contentsList } = await response.json();
 		return contentsList;
@@ -50,23 +49,17 @@ const getSearchContents = async (searchVal: string) => {
 	}
 };
 
-const DetailCategoryPage = async (context: any) => {
-	/*
-      params: 'DRAWING_CONTENT?name=likesCount || newest '
-      params: 'DRAWING_CONTENT'
-     */
-
-	const { params } = context;
-	const { category } = params;
-	// category: java
-
+const DetailCategoryPage = async ({ params: { category } }: any) => {
 	let contentsList;
+	const [categoryName, sortingMethod] = category.includes('-')
+		? category.split('-')
+		: [category, ''];
 
-	if (!FixedCategories.includes(category)) {
+	if (!fixedCategoriesEng.includes(categoryName)) {
+		contentsList = await getSearchContents(categoryName, sortingMethod);
 	} else {
 		if (category.includes('-')) {
-			const [categoryName, value] = category.split('-');
-			contentsList = await getCategoryContents(categoryName, value);
+			contentsList = await getCategoryContents(categoryName, sortingMethod);
 		} else {
 			contentsList = await getCategoryContents(category, 'likesCount');
 		}
