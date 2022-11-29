@@ -29,4 +29,6 @@ public interface PaymentDetailRepository extends JpaRepository<PaymentDetail, Lo
             "AND p.payed = true"
             , nativeQuery = true)
     PaymentDetail findBoughtContents(Long payment_id, Long users_id);
+
+
 }

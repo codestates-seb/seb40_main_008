@@ -108,4 +108,13 @@ public class PaymentService {
             throw new BusinessLogicException(ExceptionCode.DUPLICATE_PAY);
         }
     }
+
+    public boolean verifyPaidByUser(Long contentsId, Long usersId) {
+
+        if (paymentDetailRepository.findBoughtContents(contentsId, usersId) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

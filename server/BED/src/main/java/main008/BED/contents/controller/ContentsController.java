@@ -23,6 +23,7 @@ import main008.BED.dto.PageInfo;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
+import main008.BED.payment.service.PaymentService;
 import main008.BED.review.entity.Review;
 import main008.BED.review.mapper.ReviewMapper;
 import main008.BED.uploadClass.entity.UploadClass;
@@ -58,6 +59,9 @@ public class ContentsController {
     private final ChapterService chapterService;
     private final BookmarkService bookmarkService;
     private final UploadClassService uploadClassService;
+    private final S3Service s3Service;
+
+    private final PaymentService paymentService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
     private final PaymentMapper paymentMapper;
@@ -65,7 +69,6 @@ public class ContentsController {
     private final DocsMapper docsMapper;
     private final ReviewMapper reviewMapper;
     private final WishMapper wishMapper;
-    private final S3Service s3Service;
 
     private final StringToCategoryEnum stringToCategoryEnum;
 
@@ -119,12 +122,18 @@ public class ContentsController {
      * READ: 컨텐츠 상세화면 Response DTO
      */
     @GetMapping("/auth/contents/{contents-id}")
-    public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
+    public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
+                                     Principal principal) {
+
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
         Contents contents = contentsService.readContent(contentsId);
 
         ChapterDto.CurriculumInContent curriculumInContent
                 = chapterService.readCurriculumInContent(contentsId);
+
+        boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
+
 
         ContentsDto.ResponseInContent responseInContent
                 = new ContentsDto.ResponseInContent(contentsId,
@@ -133,6 +142,8 @@ public class ContentsController {
                 contents.getLikesCount(),
                 contents.getCategories(),
                 contentsService.calculateAvgStar(contentsId),
+                contents.getPayment().getPrice(),
+                bePaid,
                 contents.getUsers().getUserName(),
                 contents.getDetails(),
                 contents.getTutorDetail()
