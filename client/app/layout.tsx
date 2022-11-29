@@ -20,7 +20,8 @@ const RootLayout = async ({ children }: any) => {
 		<html className={noto.className}>
 			<Header />
 			<body>
-				<SessionContainer session={session}>{children}</SessionContainer>
+				{/* <SessionContainer session={session}>{children}</SessionContainer> */}
+				{children}
 			</body>
 		</html>
 	);

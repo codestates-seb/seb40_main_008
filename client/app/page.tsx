@@ -6,6 +6,9 @@ import HomeCarouselSection from './HomeCarouselSection';
 import HomeClassesSection from '../components/Card/HomeClassesSection';
 import styles from './styles/page.module.css';
 import CarouselImageWithText from '../components/Carousel/CarouselImageWithText';
+import { cookies, headers } from 'next/headers';
+import getUserInfoWithCookie from '../utils/helper/backendUserInfo';
+import getUserInfo from '../utils/helper/backendUserInfo';
 
 const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 	try {
@@ -37,8 +40,16 @@ const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 };
 
 const page = async () => {
+	const userInfo = await getUserInfo(headers().get('cookie') ?? '');
+
 	const contentsList = await getClassesContents();
 	const carouselList = await getCarouselInfo();
+
+	if (!userInfo) {
+		<div>
+			<span>ASDFSDAASDFASDFASDFASDFASDFFDADFS</span>
+		</div>;
+	}
 
 	return (
 		<>
@@ -54,6 +65,7 @@ const page = async () => {
 					/>
 				))}
 			</HomeCarouselSection>
+			<div>{JSON.stringify(userInfo)}</div>
 			<HomeClassesSection contentsList={contentsList} />
 			<TabNavigator activeLink={'home'} />
 		</>

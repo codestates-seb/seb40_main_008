@@ -1,4 +1,3 @@
-// "use client";
 import React from 'react';
 import BaseNavbar from '../../components/BaseNavBar/BaseNavbar';
 import styles from './Mypage.module.css';
@@ -15,7 +14,10 @@ import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 
 const MyPage = async () => {
-	const session = useSession();
+	// const session = useSession();
+	const session = {
+		status: 'authenticated',
+	};
 
 	if (session.status === 'authenticated')
 		return (

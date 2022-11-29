@@ -9,7 +9,10 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useSession } from 'next-auth/react';
 
 const HomeNavBar = () => {
-	const session = useSession();
+	// const session = useSession();
+	const session = {
+		status: 'authenticated',
+	};
 	const { show } = useScrollBar();
 	// console.log(window.scrollY);
 
