@@ -7,8 +7,13 @@ import styles from './HomeNavBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useSession } from 'next-auth/react';
+import IUserInfo from '../../types/user/userinfo';
 
-const HomeNavBar = () => {
+interface HomeNavBarProps {
+	userInfo: IUserInfo;
+}
+
+const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 	// const session = useSession();
 	const session = {
 		status: 'authenticated',
@@ -37,7 +42,7 @@ const HomeNavBar = () => {
 						</button>
 					</div>
 					<div>
-						{session.status === 'authenticated' ? (
+						{userInfo ? (
 							<Link href={'/mypage'}>
 								<Image
 									className="myimg"
@@ -63,7 +68,7 @@ const HomeNavBar = () => {
 						</button>
 					</div>
 					<div>
-						{session.status === 'authenticated' ? (
+						{userInfo ? (
 							<Link href={'/mypage'}>
 								<Image
 									className="myimg"

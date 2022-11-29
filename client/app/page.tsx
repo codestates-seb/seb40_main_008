@@ -41,19 +41,13 @@ const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 
 const page = async () => {
 	const userInfo = await getUserInfo(headers().get('cookie') ?? '');
-
+	console.log('🚀 ~ file: page.tsx ~ line 44 ~ page ~ userInfo', userInfo);
 	const contentsList = await getClassesContents();
 	const carouselList = await getCarouselInfo();
 
-	if (!userInfo) {
-		<div>
-			<span>ASDFSDAASDFASDFASDFASDFASDFFDADFS</span>
-		</div>;
-	}
-
 	return (
 		<>
-			<HomeNavBar />
+			<HomeNavBar userInfo={userInfo} />
 			<HomeCarouselSection>
 				{carouselList.map((e) => (
 					<CarouselImageWithText
