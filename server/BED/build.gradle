@@ -23,7 +23,7 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -40,7 +40,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson'
 
 	//JWT 인증 관련 --> spring security 적용
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	// (2) JWT 기능을 위한 jjwt 라이브러리
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -56,14 +56,15 @@ dependencies {
 
 	// aws
 	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.2'
-	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.342'
-	implementation 'com.amazonaws:aws-java-sdk-secretsmanager:1.12.342'
+	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.347'
+	implementation 'com.amazonaws:aws-java-sdk-secretsmanager:1.12.347'
 	implementation 'com.amazonaws:aws-encryption-sdk-java:2.4.0'
 
 	// devtools
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//// 빌드시 충돌
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}

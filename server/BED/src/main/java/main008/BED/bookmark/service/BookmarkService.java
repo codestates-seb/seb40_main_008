@@ -9,6 +9,7 @@ import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.repository.UploadClassRepository;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
+import main008.BED.warning.entity.Warning;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,16 +39,8 @@ public class BookmarkService {
         UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
 
         bookmark.setUsers(user);
-        bookmark.setUploadClass(uploadClass);
+        bookmark.addUploadClass(uploadClass);
         bookmark.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-
-        List<Bookmark> bookmarkListInUser = user.getBookmarkList();
-        bookmarkListInUser.add(bookmark);
-        user.setBookmarkList(bookmarkListInUser);
-
-        List<Bookmark> bookmarkListInClass = uploadClass.getBookmarkList();
-        bookmarkListInClass.add(bookmark);
-        uploadClass.setBookmarkList(bookmarkListInClass);
 
         bookmarkRepository.save(bookmark);
     }
@@ -102,11 +95,23 @@ public class BookmarkService {
 
         bookmarkRepository.delete(bookmark);
 
-        Users user = usersRepository.findByUsersId(usersId);
+//        Users user = usersRepository.findByUsersId(usersId);
         UploadClass uploadClass = uploadClassRepository.findById(uploadClassId).get();
 
         List<Bookmark> list = new ArrayList<>();
-        user.setBookmarkList(list);
+//        user.setBookmarkList(list);
         uploadClass.setBookmarkList(list);
+    }
+
+    /**
+     * READ: 유저 아이디에 해당하는 북마크 내역 목록 조회 (Version 2: Query)
+     */
+    public List<Bookmark> findBookmarkListByUsersId(Long usersId) {
+        if (!usersRepository.existsById(usersId)) {
+            throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
+        }
+
+        List<Bookmark> bookmarkListByUsersId = bookmarkRepository.findByUsersId(usersId);
+        return bookmarkListByUsersId;
     }
 }

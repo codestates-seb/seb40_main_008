@@ -13,7 +13,6 @@ public interface UploadClassMapper {
         return new UploadClass().builder()
                 .video(post.getVideo())
                 .title(post.getTitle())
-                .chapter(post.getChapter())
                 .docs(post.getDocs())
                 .fileKey(post.getFileKey())
                 .name(post.getName())

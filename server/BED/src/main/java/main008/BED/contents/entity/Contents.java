@@ -1,7 +1,9 @@
 package main008.BED.contents.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "contenssId")
 public class Contents {
 
     @Id
@@ -168,6 +171,7 @@ public class Contents {
             likes.addContents(this);
         }
     }
+
 
     public void disclosureDecision() {
         if (this.countLecture == 0) {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 
 @RestController
 @RequestMapping
@@ -29,13 +30,13 @@ public class UsersController {
 
         UsersDto.UserResponseToMyPage response = usersMapper.usersToMyPage(users);
 
-        return new ResponseEntity<>("Sign up is complete.", HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/auth/{users-id}/userinfo")
-    public ResponseEntity getUser(@PathVariable("users-id") @Positive Long usersId){
+    @GetMapping("/auth/userinfo")
+    public ResponseEntity getUser(Principal principal){
 
-        Users user = usersService.getUsers(usersId);
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
         return new ResponseEntity<>(new SingleResponseDto<>(usersMapper.usersToUserResponseDto(user)), HttpStatus.OK);
     }
