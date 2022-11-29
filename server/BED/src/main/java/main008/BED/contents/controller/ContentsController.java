@@ -132,7 +132,7 @@ public class ContentsController {
                 contents.getThumbnail(),
                 contents.getLikesCount(),
                 contents.getCategories(),
-                0,
+                contentsService.calculateAvgStar(contentsId),
                 contents.getUsers().getUserName(),
                 contents.getDetails(),
                 contents.getTutorDetail()
@@ -147,24 +147,25 @@ public class ContentsController {
     /**
      * READ: 영상 재생 화면 Response DTO
      */
-    @GetMapping("/auth/{users-id}/contents/{contents-id}/video/{uploadClass-id}")
-    public ResponseEntity getStream(@PathVariable("users-id") @Positive Long usersId,
+    @GetMapping("/auth/contents/{contents-id}/video/{uploadClass-id}")
+    public ResponseEntity getStream(Principal principal,
                                     @PathVariable("contents-id") @Positive Long contentsId,
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
 
         Contents contents = contentsService.readContent(contentsId);
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
-        Users user = usersService.findOne(usersId);
+
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
 
         Users tutor = contents.getUsers();
         String title = contents.getTitle();
         Docs docs = uploadClass.getDocs();
         String video = uploadClass.getVideo();
-        List<Review> reviewList = uploadClass.getReviewList(); // Class의 모든 리뷰 전송
-//        List<Bookmark> bookmarkList = user.getBookmarkList(); // User 본인의 메모만 전송
-        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(usersId);
+        List<Review> reviewList = uploadClass.getReviewList(); // 해당 강의 모든 리뷰 전송
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
+
 
 
         ContentsDto.ResponseForStream responseForStream
