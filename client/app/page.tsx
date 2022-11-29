@@ -7,7 +7,6 @@ import HomeClassesSection from '../components/Card/HomeClassesSection';
 import styles from './styles/page.module.css';
 import CarouselImageWithText from '../components/Carousel/CarouselImageWithText';
 import { cookies, headers } from 'next/headers';
-import getUserInfoWithCookie from '../utils/helper/backendUserInfo';
 import getUserInfo from '../utils/helper/backendUserInfo';
 
 const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
@@ -67,36 +66,3 @@ const page = async () => {
 };
 
 export default page;
-
-// main page
-// {
-//   "contentsList": [
-//     {
-//       "contentsId": 8,
-//       "title": "제목입니다",
-//       "thumbnail": "https://s3.ap-northeast-2.amazonaws.com/s3-main-008/contents/thumbnail/25981af8-afba-4b23-890f-05cfc8d3b93e_KakaoTalk_20220619_173347706.png",
-//       "likesCount": 3,
-//       "categories": "마켓팅",
-//       "users": {
-//         "usersId": 2,
-//         "userName": "테스트유저2",
-//         "profileImage": "유저2 프로필 이미지"
-//       }
-//     },
-//   ]
-// }
-
-// category search
-// [
-//   {
-//     "contentsId": 4,
-//     "title": "제목입니다",
-//     "thumbnail": "https://s3.ap-northeast-2.amazonaws.com/s3-main-008/contents/thumbnail/0fb87848-eb33-40cb-81ef-fc904c1feace_KakaoTalk_20220619_173347706.png",
-//     "categories": "음악",
-//     "users": {
-//       "usersId": 1,
-//       "userName": "테스트유저1",
-//       "profileImage": "유저1 프로필 이미지"
-//     }
-//   },
-// ]
