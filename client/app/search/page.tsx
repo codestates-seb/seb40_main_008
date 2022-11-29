@@ -19,7 +19,7 @@ const SearchPage = async () => {
 
                 <SearchBar />
 
-                <div className={styles.title}>인기순</div>
+                {/* <div className={styles.title}>인기순</div>
 
                 {popularKeyword.map((e: any, idx: number) => {
                     return (
@@ -30,7 +30,7 @@ const SearchPage = async () => {
                             </li>
                         </ol>
                     )
-                })}
+                })} */}
 
             </div>
             <TabNavigator activeLink={'home'} />
