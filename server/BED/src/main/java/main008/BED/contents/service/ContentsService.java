@@ -220,9 +220,11 @@ public class ContentsService {
 
         List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByContentsIdDesc(keyword);
 
+        ArrayList<Contents> discloseList = getDiscloseContents(contentsList);
+
         int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), contentsList.size());
-        Page<Contents> contentsPage = new PageImpl<>(contentsList.subList(start, end), pageable, contentsList.size());
+        int end = Math.min((start + pageable.getPageSize()), discloseList.size());
+        Page<Contents> contentsPage = new PageImpl<>(discloseList.subList(start, end), pageable, discloseList.size());
 
         return contentsPage;
     }
@@ -251,11 +253,25 @@ public class ContentsService {
 
         List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByLikesCountDesc(keyword);
 
+        ArrayList<Contents> discloseList = getDiscloseContents(contentsList);
+
         int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), contentsList.size());
-        Page<Contents> contentsPage = new PageImpl<>(contentsList.subList(start, end), pageable, contentsList.size());
+        int end = Math.min((start + pageable.getPageSize()), discloseList.size());
+        Page<Contents> contentsPage = new PageImpl<>(discloseList.subList(start, end), pageable, discloseList.size());
 
         return contentsPage;
+    }
+
+    private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
+        ArrayList<Contents> discloseList = new ArrayList<>();
+
+        for (Contents content : contentsList) {
+            Boolean disclosure = content.getDisclosure();
+            if (disclosure) {
+                discloseList.add(content);
+            }
+        }
+        return discloseList;
     }
 
     /**
@@ -292,7 +308,7 @@ public class ContentsService {
             return 0;
         } else {
             float avg = (float) sum / count;
-            return Math.round(avg * 100) / 100.0;
+            return Math.round(avg * 100) / 100.0; // 소숫점 둘 째 자리까지
         }
 
     }
