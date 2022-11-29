@@ -21,16 +21,22 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 	const { show } = useScrollBar();
 	// console.log(window.scrollY);
 
+	if (typeof window === 'undefined') {
+		return null;
+	}
+
 	const scrollTopBtn = () => {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth',
-		});
+		if (typeof window !== 'undefined') {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth',
+			});
+		}
 	};
 
 	return (
 		<>
-			{window.scrollY < 60 ? (
+			{window && window.scrollY < 60 ? (
 				<nav className={styles.firstNav}>
 					<div className={styles.logowrapper}>
 						<Link href={'/categories'}>
