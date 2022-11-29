@@ -1,6 +1,8 @@
 package main008.BED.uploadClass.service;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.chapter.entity.Chapter;
+import main008.BED.chapter.repository.ChapterRepository;
 import main008.BED.contents.entity.Contents;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.repository.DocsRepository;
@@ -24,18 +26,21 @@ public class UploadClassService {
 
     private final UploadClassRepository uploadClassRepository;
     private final DocsRepository docsRepository;
-    private final ReviewRepository reviewRepository;
-
+    private final ChapterRepository chapterRepository;
 
 
     /**
      * SAVE - 강의 및 자료 저장
      */
-    public UploadClass saveLecture(UploadClass uploadClass) {
+    public UploadClass saveLecture(UploadClass uploadClass, Long chapterId) {
         // TODO: 중복 예외처리 기준을 타당한 것으로 바꿀 것.
         if (uploadClassRepository.existsByName(uploadClass.getName())) {
             throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_EXISTS);
         }
+
+        Chapter byChapterId = chapterRepository.findByChapterId(chapterId);
+        uploadClass.addChapter(byChapterId);
+
         // disclose content
         plusLecture(uploadClass);
 

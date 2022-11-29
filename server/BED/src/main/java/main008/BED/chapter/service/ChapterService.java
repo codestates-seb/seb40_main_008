@@ -40,11 +40,12 @@ public class ChapterService {
         }
         Contents byContentsId = contentsRepository.findByContentsId(contentsId);
 
-        List<Chapter> chapterList = byContentsId.getChapterList();
+/*        List<Chapter> chapterList = byContentsId.getChapterList();
         chapterList.add(chapter);
         byContentsId.setChapterList(chapterList);
 
-        chapter.setContents(byContentsId);
+        chapter.setContents(byContentsId);*/
+        chapter.addContents(byContentsId);
         Chapter save = chapterRepository.save(chapter);
         return save;
     }

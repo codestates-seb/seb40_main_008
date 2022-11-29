@@ -15,7 +15,6 @@ public class UploadClassDto {
         private String title;
         private String name;
         private String fileKey;
-        private Chapter chapter;
         private Docs docs;
     }
 

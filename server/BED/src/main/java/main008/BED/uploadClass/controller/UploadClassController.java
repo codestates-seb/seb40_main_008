@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("auth/chapter/lecture")
+@RequestMapping
 @RequiredArgsConstructor
 public class UploadClassController {
 
@@ -40,7 +40,7 @@ public class UploadClassController {
     /**
      * Post - 영상 & 강의 자료 올리기
      */
-    @PostMapping("{chapter-id}")
+    @PostMapping("auth/chapter/lecture/{chapter-id}")
     public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videoFile,
                                           @RequestParam("title") String title,
                                           @RequestParam("docsFile") MultipartFile docsFile,
@@ -50,15 +50,14 @@ public class UploadClassController {
         DocsDto.Post docsPost = new DocsDto.Post(docsFile, details);
         Docs docs = docsService.saveDocs(docsMapper.postDtoToEntity(docsPost));
 
-        Chapter chapter = chapterRepository.findById(chapterId).get();
 
         HashMap map = s3Service.uploadToS3(videoFile, "/UploadClass/video");
         String videoUrl = map.get("url").toString();
         String fileKey = map.get("fileKey").toString();
         String videoName = videoFile.getOriginalFilename();
 
-        UploadClassDto.Post post = new UploadClassDto.Post(videoUrl, title, videoName, fileKey, chapter, docs);
-        uploadClassService.saveLecture(uploadClassMapper.postDtoToEntity(post));
+        UploadClassDto.Post post = new UploadClassDto.Post(videoUrl, title, videoName, fileKey, docs);
+        uploadClassService.saveLecture(uploadClassMapper.postDtoToEntity(post), chapterId);
         return new ResponseEntity(new UploadClassDto.SingleResponseDto("Uploading Lecture is completed."),
                 HttpStatus.CREATED);
     }
@@ -66,7 +65,7 @@ public class UploadClassController {
     /**
      * Patch: 영상 & 자료 수정하기
      */
-    @PatchMapping("/{uploadClass-id}")
+    @PatchMapping("auth/chapter/lecture/{uploadClass-id}")
     public ResponseEntity patchUploadClass(@RequestParam(value = "videoFile") MultipartFile videoFile,
                                            @RequestParam(value = "title") String newTitle,
                                            @RequestParam(value = "docsFile") MultipartFile docsFile,
@@ -101,7 +100,7 @@ public class UploadClassController {
     /**
      * Delete: 영상 & 자료 삭제하기
      */
-    @DeleteMapping("/{uploadClass-id}")
+    @DeleteMapping("auth/chapter/lecture/{uploadClass-id}")
     public ResponseEntity deleteUploadClass(@PathVariable("uploadClass-id") @Positive Long uploadClassId) {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         uploadClassService.removeClassById(uploadClassId);
