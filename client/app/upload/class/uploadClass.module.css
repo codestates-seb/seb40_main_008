@@ -11,13 +11,18 @@
   margin: 0px auto;
 }
 .classtitle {
-  margin: 0;
   margin-bottom: 15px;
 }
-.title {
+.lecturetitle {
   margin: 0;
-  margin-top: 15px;
+  margin-top: 45px;
   margin-bottom: 15px;
+}
+
+.title {
+  margin: 15px 0px;
+  display: block;
+  width: 100%;
 }
 .chapternameinput {
   height: 40px;
@@ -44,22 +49,27 @@
   display: flex;
   align-items: center;
 }
+
+.uploadname {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 70%;
+  color: #999999;
+}
+
 .filebox label {
   display: inline-block;
-  margin-left: 10px;
-  margin-top: 11px;
-  color: #999;
-  font-size: inherit;
-  line-height: normal;
-  height: 25px;
-  width: 25px;
-  text-align: center;
+  padding: 10px 20px;
+  font-size: small;
+  color: #fff;
   vertical-align: middle;
-  background-color: #fdfdfd;
+  background-color: #999999;
   cursor: pointer;
-  border: 1px solid #ebebeb;
-  border-bottom-color: #e2e2e2;
-  border-radius: 2em;
+  height: 40px;
+  margin-left: 10px;
 }
 .filebox input[type="file"] {
   /* 파일 필드 숨기기 */
@@ -70,13 +80,30 @@
 }
 
 .uploadimg {
-  height: 200px;
+  height: 40px;
   align-items: center;
   background-color: white;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 90px;
   border-radius: 10px;
 }
+
+.lecturetitle {
+  margin-top: 60px;
+  margin-bottom: 10px;
+}
+
+.lectureinput {
+  height: 130px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.ex {
+  margin-left: 10px;
+  color: grey;
+}
+
 .uploadbtn {
   margin-left: 10px;
   height: 25px;
@@ -88,6 +115,21 @@
   color: white;
   border-radius: 3px;
   cursor: pointer;
+  box-shadow: 1px 1px gray;
+  background-color: #f2952f;
+}
+
+.uploadbt {
+  margin-left: 10px;
+  height: 25px;
+  width: 150px;
+  margin-top: 5px;
+  font-size: 12px;
+  border: 0;
+  outline: 0;
+  color: white;
+  border-radius: 3px;
+
   box-shadow: 1px 1px gray;
   background-color: #f2952f;
 }
