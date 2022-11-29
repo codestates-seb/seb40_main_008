@@ -40,19 +40,24 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().sameOrigin()
-                .and()
+//                .headers().frameOptions().sameOrigin()
+//                .and()
                 .csrf().disable()
-                .cors(withDefaults())
+                .cors()
+                .and()
+
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션을 생성하지 않도록 설정
                 .and()
+
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()  // 추가
                 .authenticationEntryPoint(new UserAuthenticationEntryPoint())  // 추가
                 .accessDeniedHandler(new UserAccessDeniedHandler())            // 추가
+
                 .and()
                 .apply(new CustomFilterConfigurer())  // 추가
+
                 .and()
                 .authorizeHttpRequests(authorize -> authorize // url authorization 전체 추가
                         .antMatchers(HttpMethod.POST, "/auth/**").hasRole("USER")
@@ -68,15 +73,20 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
+//
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
     // 추가
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
