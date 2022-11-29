@@ -1,0 +1,135 @@
+.uploadpage {
+  display: flex;
+  flex-direction: column;
+  margin-top: 45px;
+  padding: 0 30px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.form {
+  margin: 0px auto;
+}
+.classtitle {
+  margin-bottom: 15px;
+}
+.lecturetitle {
+  margin: 0;
+  margin-top: 45px;
+  margin-bottom: 15px;
+}
+
+.title {
+  margin: 15px 0px;
+  display: block;
+  width: 100%;
+}
+.chapternameinput {
+  height: 40px;
+  width: 100%;
+  border-radius: 10px;
+}
+.select {
+  /* 생략 */
+  height: 35px;
+  width: 100%;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #444;
+  background-color: #fff;
+  padding: 0.6em 1.4em 0.5em 0.8em;
+  margin: 0;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  z-index: 3;
+}
+
+.filebox {
+  display: flex;
+  align-items: center;
+}
+
+.uploadname {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 70%;
+  color: #999999;
+}
+
+.filebox label {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: small;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #999999;
+  cursor: pointer;
+  height: 40px;
+  margin-left: 10px;
+}
+.filebox input[type="file"] {
+  /* 파일 필드 숨기기 */
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.uploadimg {
+  height: 40px;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  margin-bottom: 90px;
+  border-radius: 10px;
+}
+
+.lecturetitle {
+  margin-top: 60px;
+  margin-bottom: 10px;
+}
+
+.lectureinput {
+  height: 130px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.ex {
+  margin-left: 10px;
+  color: grey;
+}
+
+.uploadbtn {
+  margin-left: 10px;
+  height: 25px;
+  width: 40px;
+  margin-top: 5px;
+  font-size: 12px;
+  border: 0;
+  outline: 0;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 1px 1px gray;
+  background-color: #f2952f;
+}
+
+.uploadbt {
+  margin-left: 10px;
+  height: 25px;
+  width: 150px;
+  margin-top: 5px;
+  font-size: 12px;
+  border: 0;
+  outline: 0;
+  color: white;
+  border-radius: 3px;
+
+  box-shadow: 1px 1px gray;
+  background-color: #f2952f;
+}

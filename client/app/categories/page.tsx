@@ -1,6 +1,6 @@
-import React from 'react'
-import BaseNavbar from '../../components/BaseNavBar/BaseNavbar'
-import styles from './categories.module.css'
+import React from "react";
+import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
+import styles from "./categories.module.css";
 import Link from "next/link";
 
 // 카테고리링크 누르면 categoryName 보내기
@@ -25,7 +25,7 @@ const Categories = () => {
                 </span>
             </div>
 
-            <div className={styles.line}></div>
+      <div className={styles.line}></div>
 
             <div className={styles.category}>
                 <span className={styles.categoryleft}>
@@ -37,7 +37,7 @@ const Categories = () => {
                 </span>
             </div>
 
-            <div className={styles.line}></div>
+      <div className={styles.line}></div>
 
             <div className={styles.category}>
                 <span className={styles.categoryleft}>
@@ -54,7 +54,7 @@ const Categories = () => {
                 </span>
             </div>
 
-            <div className={styles.line}></div>
+      <div className={styles.line}></div>
 
             <div className={styles.category}>
                 <span className={styles.categoryleft}>
@@ -66,7 +66,7 @@ const Categories = () => {
                 </span>
             </div>
 
-            <div className={styles.line}></div>
+      <div className={styles.line}></div>
 
             <div className={styles.category}>
                 <span className={styles.categoryleft}>
@@ -77,8 +77,4 @@ const Categories = () => {
                 </span>
             </div>
 
-        </div>
-    )
-}
-
-export default Categories
+export default Categories;
