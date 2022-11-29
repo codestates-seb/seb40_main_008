@@ -1,46 +1,48 @@
 :root {
-  --background-color: #0a191f;
-  --semi-info-text-color: #ababab;
-  --max-width: 412px;
-  color: #f3f3f3;
+	--background-color: #0a191f;
+	--semi-info-text-color: #ababab;
+	/* --max-width: 412px; */
+	--max-width: 500px;
+	color: #f3f3f3;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-  -webkit-text-size-adjust: 100%;
-  background-color: var(--background-color);
-  width: 410px;
-  min-height: 850px;
-
-  margin: 0 auto;
+	-webkit-text-size-adjust: 100%;
+	background-color: var(--background-color);
+	/* width: 410px; */
+	max-width: var(--max-width);
+	min-width: 300px;
+	border: 1px solid gray;
+	margin: 0 auto;
 }
 h1,
 h2,
 h3 {
-  white-space: pre-line;
+	white-space: pre-line;
 }
 
 select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
 }
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: #f3f3f3;
-    background: black;
-  }
+	html {
+		color-scheme: dark;
+	}
+	body {
+		color: #f3f3f3;
+		background: black;
+	}
 }
