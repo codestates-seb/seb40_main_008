@@ -41,4 +41,13 @@ public class Bookmark {
     @ManyToOne // 양방향, cascade.all, Lazy
     @JoinColumn(name = "USERS_ID")
     private Users users;
+
+
+    public void addUploadClass(UploadClass uploadClass) {
+        if (this.uploadClass != null) {
+            this.uploadClass.getBookmarkList().remove(this);
+        }
+        this.uploadClass = uploadClass;
+        uploadClass.getBookmarkList().add(this);
+    }
 }

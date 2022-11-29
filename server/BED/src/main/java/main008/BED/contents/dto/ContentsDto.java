@@ -56,9 +56,11 @@ public class ContentsDto {
         private String thumbnail;
         private int likesCount;
         private Contents.Categories categories;
+        private float grade;
+        private String tutorName;
         private String details;
         private String tutorDetail;
-        private List<ChapterDto.ResponseDto> curriculumInfo;
+//        private List<ChapterDto.ResponseDto> curriculumInfo;
     }
 
     @Getter

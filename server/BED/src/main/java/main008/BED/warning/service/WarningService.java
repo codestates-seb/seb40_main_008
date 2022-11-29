@@ -37,17 +37,17 @@ public class WarningService {
 
         warning.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         warning.setUsers(user);
-        warning.setUploadClass(uploadClass);
+        warning.addUploadClass(uploadClass);
 
-        Warning receivedWarning = warningRepository.save(warning);
+        warningRepository.save(warning);
 
-        List<Warning> warningListInUsers = user.getWarningList();
-        warningListInUsers.add(receivedWarning);
-        user.setWarningList(warningListInUsers);
-
-        List<Warning> warningListInUploadClass = uploadClass.getWarningList();
-        warningListInUploadClass.add(receivedWarning);
-        uploadClass.setWarningList(warningListInUploadClass);
+//        List<Warning> warningListInUsers = user.getWarningList();
+//        warningListInUsers.add(receivedWarning);
+//        user.setWarningList(warningListInUsers);
+//
+//        List<Warning> warningListInUploadClass = uploadClass.getWarningList();
+//        warningListInUploadClass.add(receivedWarning);
+//        uploadClass.setWarningList(warningListInUploadClass);
     }
 
     /**
@@ -62,8 +62,9 @@ public class WarningService {
         }
 
 
-        Users user = usersRepository.findByUsersId(usersId);
-        List<Warning> warningList = user.getWarningList();
+//        Users user = usersRepository.findByUsersId(usersId);
+//        List<Warning> warningList = user.getWarningList();
+        List<Warning> warningList = warningRepository.findByUsersId(usersId);
         boolean duplication = warningList.stream()
                 .map(warning -> warning.getUploadClass().getUploadClassId())
                 .anyMatch(classIdentity -> classIdentity.equals(uploadClassId));
@@ -74,15 +75,26 @@ public class WarningService {
 
     }
 
+
+//    public List<Warning> findWarningList(Long usersId) {
+//        if (!usersRepository.existsById(usersId)) {
+//            throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
+//        }
+//
+//        Users user = usersRepository.findByUsersId(usersId);
+//        List<Warning> warningList = user.getWarningList();
+//        return warningList;
+//    }
+
     /**
-     * FIND: 사용자 신고 내역 목록 조회
+     * FIND: 사용자 신고 내역 목록 조회 (Version 2: Query)
      */
-    public List<Warning> findWarningList(Long usersId) {
+    public List<Warning> findWarningListByUsersId(Long usersId) {
         if (!usersRepository.existsById(usersId)) {
             throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
         }
-        Users user = usersRepository.findByUsersId(usersId);
-        List<Warning> warningList = user.getWarningList();
-        return warningList;
+
+        List<Warning> warningListByUsersId = warningRepository.findByUsersId(usersId);
+        return warningListByUsersId;
     }
 }

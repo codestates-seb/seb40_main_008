@@ -1,5 +1,6 @@
 package main008.BED.warning.controller;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import main008.BED.warning.dto.WarningDto;
 import main008.BED.warning.entity.Warning;
@@ -42,9 +43,10 @@ public class WarningController {
      */
     @GetMapping("/auth/mypage/warning/{users-id}")
     public ResponseEntity getWarningList(@PathVariable("users-id") @Positive Long usersId) {
-        List<Warning> warningList = warningService.findWarningList(usersId);
+        List<Warning> warningList = warningService.findWarningListByUsersId(usersId);
         List<WarningDto.Response> responses = warningMapper.listEntityToListResponseDto(warningList);
         WarningDto.ResponseList responseList = new WarningDto.ResponseList(responses);
         return new ResponseEntity(responseList, HttpStatus.OK);
     }
+
 }

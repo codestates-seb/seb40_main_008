@@ -39,11 +39,12 @@ public class ChapterService {
         Contents byContentsId = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
-        List<Chapter> chapterList = byContentsId.getChapterList();
+/*        List<Chapter> chapterList = byContentsId.getChapterList();
         chapterList.add(chapter);
         byContentsId.setChapterList(chapterList);
 
-        chapter.setContents(byContentsId);
+        chapter.setContents(byContentsId);*/
+        chapter.addContents(byContentsId);
         Chapter save = chapterRepository.save(chapter);
         return save;
     }
