@@ -1,24 +1,81 @@
 import React from 'react';
+import CategoryNavBar from '../../../components/CategoryNavBar/CategoryNavBar';
+import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
+import SearchResultFilter from '../../../components/Search/SearchResultFilter';
+import HomeClassesSection from '../../../components/Card/HomeClassesSection';
+import styles from './categorydetail.module.css';
+import { fixedCategoriesEng } from '../../../constants/fixedCategorys';
+// geneticStaticParams 도 만들기,,,(detail,,,에 있는 것과 같이)
+// 검색어가 카테고리 arr에 포함되면 categoryName으로 아니면 검색어로 req보내기
 
-const fetchGet = async (category: any) => {
-	const res = await fetch(`https://pioneroroom.com/contentsList/${category}`);
-	return await res.json().then((res) => res.data);
+const getCategoryContents = async (
+	category: string,
+	sortingMethod: string
+): Promise<Array<ICategorySearchResult>> => {
+	try {
+		// https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
+		// request url : https://pioneroroom.com/search?categories=${category}&sort=${sortingMethod}
+		const response = await fetch(
+			`https://run.mocky.io/v3/072e5b64-e3fb-4b38-category-313b8b680818`,
+			{
+				next: {
+					revalidate: 60,
+				},
+			}
+		);
+		const { contentsList } = await response.json();
+		return contentsList;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 };
 
-const DetailCategoryPage = async ({ params }: any) => {
-	const get = await fetchGet(params.categoryId);
+const getSearchContents = async (searchVal: string, sortingMethod: string) => {
+	const sortCondition = sortingMethod === '' || sortingMethod === 'newest';
+	try {
+		// https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
+		// request url : https://pioneroroom.com/search?categories=${category}&sort=${sortingMethod}
+		const response = await fetch(
+			sortCondition
+				? `http://pioneroroom/search/title/lateast?keyword=${searchVal}`
+				: `http://pioneroroom/search/title?keyword=${searchVal}`
+		);
+		const { contentsList } = await response.json();
+		return contentsList;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
+};
+
+const DetailCategoryPage = async ({ params: { category } }: any) => {
+	let contentsList;
+	const [categoryName, sortingMethod] = category.includes('-')
+		? category.split('-')
+		: [category, ''];
+
+	if (!fixedCategoriesEng.includes(categoryName)) {
+		contentsList = await getSearchContents(categoryName, sortingMethod);
+	} else {
+		if (category.includes('-')) {
+			contentsList = await getCategoryContents(categoryName, sortingMethod);
+		} else {
+			contentsList = await getCategoryContents(category, 'likesCount');
+		}
+	}
+
 	return (
-		<div>
-			<p>{JSON.stringify(get)}</p>
-		</div>
+		<>
+			<CategoryNavBar />
+			<div className={styles.filterWrapper}>
+				<SearchResultFilter category={category} />
+			</div>
+			<div>
+				<HomeClassesSection contentsList={contentsList} />
+			</div>
+		</>
 	);
 };
 
 export default DetailCategoryPage;
-
-// 카테고리 필터링 작업
-
-// 1. categoryId별로 필터링된 api에서 가져오면 될지?(카테고리/최신순/인기순)
-// 2. 전체 카테고리 리스트를 주시면 프론트에서 필터링..?
-// 3. 카테고리 네이밍 BE에서 정한게 있는지?
-// --> 백엔드에 쿼리스트링으로 넘겨주기(스티랑 값/URL 받으면 이어 작업하기)

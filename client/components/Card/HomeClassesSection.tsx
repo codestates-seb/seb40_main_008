@@ -1,18 +1,18 @@
 import Image from "next/image";
-import { Content } from "../types/homeScreen/mainVideoContents";
-import { titleLengthFormatter } from "../utils/helper/titleLengthFormatter";
-import styles from "./styles/HomeClassesSection.module.css";
+import { ICategorySearchResult } from "../../types/category_search/categorySearchType";
+import { titleLengthFormatter } from "../../utils/helper/titleLengthFormatter";
+import styles from "./HomeClassesSection.module.css";
 
 interface HomeContentProps {
-  contentList: Content[];
+  contentsList: ICategorySearchResult[];
 }
 
-const HomeClassesSection = ({ contentList }: HomeContentProps) => {
+const HomeClassesSection = ({ contentsList }: HomeContentProps) => {
   return (
     <div className={styles.gridContainer}>
-      {contentList.map((e) => (
-        <div key={e.id} className={styles.content}>
-          <div key={e.id} className={styles.thumbnailContainer}>
+      {contentsList.map((e) => (
+        <div key={e.contentsId} className={styles.content}>
+          <div key={e.contentsId} className={styles.thumbnailContainer}>
             <Image
               src={e.thumbnail}
               alt="home lecture content thumbnail"
@@ -28,7 +28,7 @@ const HomeClassesSection = ({ contentList }: HomeContentProps) => {
             </span>
             <div className={styles.semiInfoContainer}>
               <span className={styles.category}>{e.categories}</span>
-              <span className={styles.username}>{e.users.username}</span>
+              <span className={styles.username}>{e.users.userName}</span>
             </div>
           </div>
         </div>

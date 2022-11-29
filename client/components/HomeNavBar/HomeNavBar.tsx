@@ -7,22 +7,36 @@ import styles from './HomeNavBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useSession } from 'next-auth/react';
+import IUserInfo from '../../types/user/userinfo';
 
-const HomeNavBar = () => {
-	const session = useSession();
+interface HomeNavBarProps {
+	userInfo: IUserInfo;
+}
+
+const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
+	// const session = useSession();
+	const session = {
+		status: 'authenticated',
+	};
 	const { show } = useScrollBar();
 	// console.log(window.scrollY);
 
+	if (typeof window === 'undefined') {
+		return null;
+	}
+
 	const scrollTopBtn = () => {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth',
-		});
+		if (typeof window !== 'undefined') {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth',
+			});
+		}
 	};
 
 	return (
 		<>
-			{window.scrollY < 60 ? (
+			{window && window.scrollY < 60 ? (
 				<nav className={styles.firstNav}>
 					<div className={styles.logowrapper}>
 						<Link href={'/categories'}>
@@ -34,7 +48,7 @@ const HomeNavBar = () => {
 						</button>
 					</div>
 					<div>
-						{session.status === 'authenticated' ? (
+						{userInfo ? (
 							<Link href={'/mypage'}>
 								<Image
 									className="myimg"
@@ -60,7 +74,7 @@ const HomeNavBar = () => {
 						</button>
 					</div>
 					<div>
-						{session.status === 'authenticated' ? (
+						{userInfo ? (
 							<Link href={'/mypage'}>
 								<Image
 									className="myimg"
