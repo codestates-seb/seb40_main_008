@@ -10,7 +10,7 @@ import CarouselImageWithText from '../components/Carousel/CarouselImageWithText'
 const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 	try {
 		const response = await fetch(
-			'https://run.mocky.io/v3/3990c908-5af6-4850-9501-fa41adb80109',
+			'https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818',
 			{
 				next: {
 					revalidate: 60,
@@ -54,6 +54,8 @@ const page = async () => {
 					/>
 				))}
 			</HomeCarouselSection>
+			<HomeClassesSection contentsList={contentsList} />
+			<TabNavigator activeLink={'home'} />
 		</>
 	);
 };

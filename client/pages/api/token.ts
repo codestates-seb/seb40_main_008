@@ -1,18 +1,31 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    // console.log('req', req);
-    // const token = await getToken({ req, secret: process.env.JWT_SECRET as string });
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
+	// console.log('req', req);
+	// const token = await getToken({ req, secret: process.env.JWT_SECRET as string });
 
-    const accessToken = req.query.access_token;
-    const refreshToken = req.query.refresh_token;
+	const accessToken = req.query.access_token;
+	console.log('🚀 ~ file: token.ts ~ line 11 ~ accessToken', accessToken);
+	const refreshToken = req.query.refresh_token;
+	if (accessToken)
+		res.setHeader(
+			'Set-Cookie',
+			'accessToken=' +
+				accessToken +
+				'; Path=/; Secure; HttpOnly; SameSite=None'
+		);
 
-    if (accessToken) res.setHeader('Set-Cookie', accessToken);
-
-    res.redirect(`/`);
-    // res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
+	res.redirect(`/`);
+	// res.status(200).json({ accessToken: accessToken, refreshToken: refreshToken });
 }
-
+/**
+ * eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWtkbHN6MjFAZ21haWwuY29tIiwic3ViIjoiYWtkbHN6MjFAZ21haWwuY29tIiwiaWF0IjoxNjY5NzAzMTA5LCJleHAiOjE2Njk3MDQ5MDl9.BG5cXN4sEA3-AfH8PYpWaz9nftJUin-KtTfZZ6KveSe6FTsszRVz182UxJgySzdzUH5jm3tpbfEInODr-HMJow
+ *
+ * eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWtkbHN6MjFAZ21haWwuY29tIiwic3ViIjoiYWtkbHN6MjFAZ21haWwuY29tIiwiaWF0IjoxNjY5NzAzMTA5LCJleHAiOjE2Njk3MDQ5MDl9.BG5cXN4sEA3-AfH8PYpWaz9nftJUin-KtTfZZ6KveSe6FTsszRVz182UxJgySzdzUH5jm3tpbfEInODr-HMJow
+ */
 // 토큰을 저장할 방법(local storage 접근)
 // setCookie -> header에 authorization에 넣어서 보관하기
 

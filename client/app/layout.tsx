@@ -13,7 +13,8 @@ const noto = Noto_Sans_KR({
 
 const RootLayout = async ({ children }: any) => {
 	const { segment } = children.props.childProp;
-	const session = await getSession(headers().get('cookie') ?? '');
+	// const session = await getSession(headers().get('cookie') ?? '');
+	const session = null;
 	const nextCookies = cookies();
 	return (
 		<html className={noto.className}>
