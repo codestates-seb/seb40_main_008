@@ -7,6 +7,7 @@ import main008.BED.users.entity.Users;
 import main008.BED.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
@@ -95,7 +97,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
 
-        String uri = createURI(accessToken, refreshToken, response).toString();   // (6-3)
+        String uri = createURI(accessToken, refreshToken, request).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
     }
 
@@ -124,36 +126,35 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         return refreshToken;
     }
 
-    private URI createURI(String accessToken, String refreshToken, HttpServletResponse response) {
+    private URI createURI(String accessToken, String refreshToken, HttpServletRequest request) {
 
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("access_token", accessToken);
         queryParams.add("refresh_token", refreshToken);
 
-        Cookie cookie_access = new Cookie("access_token", accessToken);
-        Cookie cookie_refresh = new Cookie("refresh_token", refreshToken);
-        ArrayList<Cookie> cookieList = new ArrayList<>();
-        cookieList.add(cookie_access);
-        cookieList.add(cookie_refresh);
-        for (Cookie cookie : cookieList) {
-//            cookie.setDomain(${Domain}); // backend server domain
-            cookie.setDomain("localhost");
-            cookie.setPath("/");
-            cookie.setMaxAge(3600);
-            cookie.setSecure(true);
-            response.addCookie(cookie);
-        }
 
+//        HttpServletRequestWrapper wrapperRequest = (HttpServletRequestWrapper) request;
+//        String path = wrapperRequest.getRequestURI();
+//        String URL = wrapperRequest.getRequestURL().toString();
+//
+//        String host = URL.replace(path, "");
+//
+//        String scheme = "";
+//        String domain = "";
+//        if (host.substring(4) == "s") {
+//            scheme = host.substring(0, 5);
+//            domain = host.substring(8);
+//        } else {
+//            scheme = host.substring(0, 4);
+//            domain = host.substring(7);
+//        }
 
         return UriComponentsBuilder
                 .newInstance()
-//                .scheme("https")
                 .scheme("http")
-//                .host(${Domain}) // backend server domain
                 .host("localhost")
                 .port(8081)
-//                .path("/")
-                .path("/my-page.html")
+                .path("/")
                 .queryParams(queryParams) // Cookie 사용 시 주석 처리
                 .build()
                 .toUri();

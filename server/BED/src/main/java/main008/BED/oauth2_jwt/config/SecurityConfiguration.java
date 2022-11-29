@@ -58,6 +58,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.POST, "/auth/**").hasRole("USER")
                         .antMatchers(HttpMethod.PATCH, "/auth/**").hasRole("USER")
                         .antMatchers(HttpMethod.DELETE, "/auth/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/auth/**").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .oauth2Login(oauth2 -> oauth2
