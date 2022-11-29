@@ -8,7 +8,6 @@ const fetchPost = async (id: any) => {
 };
 
 const DetailIdPage = async ({ params }: any) => {
-	console.log('params.questionId', params.questionId);
 	const post = await fetchPost(params.questionId);
 	return (
 		<div>

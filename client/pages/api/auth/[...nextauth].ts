@@ -1,8 +1,8 @@
 import { JWT } from 'next-auth/jwt';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
-import KakaoProvider from "next-auth/providers/kakao"
-import NaverProvider from "next-auth/providers/naver";
+import KakaoProvider from 'next-auth/providers/kakao';
+import NaverProvider from 'next-auth/providers/naver';
 
 export default NextAuth({
 	providers: [
@@ -33,16 +33,14 @@ export default NextAuth({
 		// },
 		async session({ session, token, user }) {
 			// console.log('session', session);
-			console.log('token', token);
+			// console.log('token', token);
 			// console.log('user', user);
 
 			return session;
-		}
-	}
+		},
+	},
 });
 
 // next cookies next-auth.session-token.
 
-async function refreshAccessToken(token: JWT) {
-
-}
+async function refreshAccessToken(token: JWT) {}

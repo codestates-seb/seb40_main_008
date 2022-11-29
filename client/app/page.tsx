@@ -9,11 +9,14 @@ import CarouselImageWithText from '../components/Carousel/CarouselImageWithText'
 
 const getClassesContents = async (): Promise<Array<Content>> => {
 	try {
-		const response = await fetch('https://run.mocky.io/v3/3990c908-5af6-4850-9501-fa41adb80109', {
-			next: {
-				revalidate: 60,
-			},
-		});
+		const response = await fetch(
+			'https://run.mocky.io/v3/3990c908-5af6-4850-9501-fa41adb80109',
+			{
+				next: {
+					revalidate: 60,
+				},
+			}
+		);
 		const { contentsList } = await response.json();
 		return contentsList;
 	} catch (error) {
@@ -36,10 +39,10 @@ const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 const page = async () => {
 	const contentsList = await getClassesContents();
 	const carouselList = await getCarouselInfo();
+
 	return (
 		<>
 			<HomeNavBar />
-
 			<HomeCarouselSection>
 				{carouselList.map((e) => (
 					<CarouselImageWithText
