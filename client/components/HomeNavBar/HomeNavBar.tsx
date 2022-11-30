@@ -34,6 +34,8 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 		}
 	};
 
+	console.log(userInfo);
+
 	return (
 		<>
 			{window && window.scrollY < 60 ? (
