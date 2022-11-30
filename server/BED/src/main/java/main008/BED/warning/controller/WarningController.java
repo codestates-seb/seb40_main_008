@@ -2,6 +2,10 @@ package main008.BED.warning.controller;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
+import main008.BED.uploadClass.entity.UploadClass;
+import main008.BED.uploadClass.service.UploadClassService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.service.UsersService;
 import main008.BED.warning.dto.WarningDto;
@@ -25,6 +29,8 @@ public class WarningController {
     private final WarningService warningService;
     private final WarningMapper warningMapper;
 
+    private final UploadClassService uploadClassService;
+
     private final UsersService usersService;
 
     // TODO 1: 신고하기 입력 폼
@@ -38,6 +44,13 @@ public class WarningController {
     public ResponseEntity postWarning(Principal principal,
                                       @PathVariable("uploadclass-id") @Positive Long uploadClassId,
                                       @RequestBody WarningDto.Post post) {
+
+        UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
+        Long reqUserId = usersService.findVerifiedUserByEmail(principal.getName()).getUsersId();
+        Long tutorId = uploadClass.getChapter().getContents().getUsers().getUsersId();
+        if (reqUserId == tutorId) { // tutor는 본인 강의에 대해 신고 불가능
+            throw new BusinessLogicException(ExceptionCode.FORBIDDEN_TUTOR);
+        }
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 

@@ -220,10 +220,12 @@ public class ContentsController {
         Page<Contents> contentsPage = contentsService.searchTitleContentsByLateast(keyword, page, size);
         PageInfo pageInfo = PageInfo.of(contentsPage);
 
-        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
-                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+//        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
+//                = contentsMapper.contentsPageToResponses(contentsPage.getContent()); // 페이징 리스트
+        List<ContentsDto.ResponseForCategories> searchList = contentsMapper.contentsToCategoriesResponses(contentsPage.getContent(), usersMapper);
 
-        return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
+
+        return new ResponseEntity(contentsMapper.toCategoryList(searchList), HttpStatus.OK);
     }
 
     /**
@@ -238,10 +240,12 @@ public class ContentsController {
         Page<Contents> contentsPage = contentsService.searchTitleContentsByPopular(keyword, page, size);
         PageInfo pageInfo = PageInfo.of(contentsPage);
 
-        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
-                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+//        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
+//                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+        List<ContentsDto.ResponseForCategories> searchList = contentsMapper.contentsToCategoriesResponses(contentsPage.getContent(), usersMapper);
 
-        return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
+
+        return new ResponseEntity(contentsMapper.toCategoryList(searchList), HttpStatus.OK);
     }
 
     /**
