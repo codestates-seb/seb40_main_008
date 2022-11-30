@@ -41,7 +41,7 @@ const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 const page = async () => {
   // console.log('cookies().get(accessToken).value', cookies().get('accessToken')?.value)
   const userInfo = await getUserInfo(cookies().get('accessToken')?.value ?? '');
-  console.log('🚀 ~ file: page.tsx ~ line 44 ~ page ~ userInfo', userInfo);
+  // console.log('🚀 ~ file: page.tsx ~ line 44 ~ page ~ userInfo', userInfo);
   const contentsList = await getClassesContents();
   const carouselList = await getCarouselInfo();
 

@@ -19,14 +19,37 @@ const MyclassTab = ({ takingClasses, wishClasses }: MyclassTabProps) => {
             onSelect={(tabIndex) => setTabIndex(tabIndex)}
         >
             <TabList className={styles.tablist}>
-                <Tab className={styles.tab}>수강중인 클래스</Tab>
-                <Tab className={styles.tab}>찜한 클래스</Tab>
+                {
+                    tabIndex === 0 ?
+                        <Tab className={styles.select_tab}>수강중인 클래스</Tab>
+                        :
+                        <Tab className={styles.tab}>수강중인 클래스</Tab>
+                }
+
+                {
+                    tabIndex === 1 ?
+                        <Tab className={styles.select_tab}>찜한 클래스</Tab>
+                        :
+                        <Tab className={styles.tab}>찜한 클래스</Tab>
+                }
             </TabList>
             <TabPanel>
-                <HomeClassesSection contentsList={takingClasses} />
+                {
+                    takingClasses === undefined ?
+                        (<div className={styles.tabpannel}>수강중인 클래스가 없습니다.</div>)
+                        :
+                        <HomeClassesSection contentsList={takingClasses} />
+                }
+
             </TabPanel>
             <TabPanel>
-                <HomeClassesSection contentsList={wishClasses} />
+                {
+                    wishClasses === undefined ?
+                        (<div className={styles.tabpannel}>찜한 클래스가 없습니다.</div>)
+                        :
+                        <HomeClassesSection contentsList={wishClasses} />
+                }
+
             </TabPanel>
         </Tabs>
     );
