@@ -3,17 +3,9 @@ package main008.BED.users.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
-import main008.BED.bookmark.entity.Bookmark;
-import main008.BED.myClass.entity.MyClass;
-import main008.BED.myUploadClass.entity.MyUploadClass;
-import main008.BED.payment.entity.Payment;
-import main008.BED.payment.entity.PaymentDetail;
-import main008.BED.userPage.entity.UserPage;
-import main008.BED.warning.entity.Warning;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -65,7 +57,5 @@ public class Users {
 
 //    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Bookmark> bookmarkList;
-
-
 
 }

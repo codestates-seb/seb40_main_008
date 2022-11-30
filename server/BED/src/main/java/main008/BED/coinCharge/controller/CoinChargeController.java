@@ -94,8 +94,8 @@ public class CoinChargeController {
 
         UserPage userPage = userPageService.findUserPage(users.getUsersId());
 
-        List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto =  coinChargeDetailMapper.entityToResponses(
-                        coinChargeService.getCoinChargeDetail(users.getUsersId()));
+        List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto = coinChargeDetailMapper.entityToResponses(
+                coinChargeService.getCoinChargeDetail(users.getUsersId()));
 
         return new ResponseEntity<>(coinChargeMapper.entityToResponse(userPage, coinChargeDetailResponseDto), HttpStatus.OK);
     }
@@ -106,8 +106,8 @@ public class CoinChargeController {
      * @return
      */
     @PostMapping("/auth/coincharge/{coin-charge-detail-id}")
-    public ResponseEntity refundCoinCharge(Principal principal,
-                                           @PathVariable("coin-charge-detail-id") @Positive Long coinChargeDetailId) {
+    public ResponseEntity refundCoinCharge(@PathVariable("coin-charge-detail-id") @Positive Long coinChargeDetailId,
+                                           Principal principal) {
 
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 

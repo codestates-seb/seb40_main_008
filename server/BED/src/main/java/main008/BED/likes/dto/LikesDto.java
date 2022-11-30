@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.contents.dto.ContentsDto;
-import main008.BED.likes.entity.LikesDetail;
 
 import java.util.List;
 

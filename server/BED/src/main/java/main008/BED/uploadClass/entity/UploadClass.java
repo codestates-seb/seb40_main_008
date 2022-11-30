@@ -6,9 +6,7 @@ import lombok.*;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.docs.entity.Docs;
-import main008.BED.mainPage.entity.MainPage;
 import main008.BED.review.entity.Review;
-import main008.BED.users.entity.Users;
 import main008.BED.warning.entity.Warning;
 
 import javax.persistence.*;

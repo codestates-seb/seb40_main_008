@@ -44,8 +44,7 @@ public class LikesController {
 
         List<LikesDetail> likesDetails = likesService.findTrueLikes(likes);
 
-        LikesDto.Response response = likesMapper.likesToResponse(likes, likesDetails, likesDetailMapper, contentsMapper);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(
+                likesMapper.likesToResponse(likes, likesDetails, likesDetailMapper, contentsMapper), HttpStatus.OK);
     }
 }

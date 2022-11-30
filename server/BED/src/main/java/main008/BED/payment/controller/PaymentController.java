@@ -3,7 +3,6 @@ package main008.BED.payment.controller;
 import lombok.RequiredArgsConstructor;
 import main008.BED.payment.dto.PaymentDetailDto;
 import main008.BED.payment.mapper.PaymentDetailMapper;
-import main008.BED.payment.mapper.PaymentMapper;
 import main008.BED.payment.service.PaymentService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.service.UsersService;

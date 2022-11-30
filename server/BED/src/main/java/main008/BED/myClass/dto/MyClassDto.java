@@ -1,7 +1,6 @@
 package main008.BED.myClass.dto;
 
 import lombok.*;
-import main008.BED.contents.dto.ContentsDto;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.wish.dto.WishDto;
 

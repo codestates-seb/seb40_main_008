@@ -43,10 +43,7 @@ public class MainPageController {
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
         return new ResponseEntity<>(
-                mainPageMapper.mainPageToLoginResponse(mainPage,
-                        contentsMapper,
-                        users.getUsersId(),
-                        usersMapper),
-                HttpStatus.OK);
+                mainPageMapper.mainPageToLoginResponse(
+                        mainPage, contentsMapper, users.getUsersId(), usersMapper), HttpStatus.OK);
     }
 }

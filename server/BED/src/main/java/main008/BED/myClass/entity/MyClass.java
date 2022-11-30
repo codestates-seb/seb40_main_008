@@ -1,7 +1,6 @@
 package main008.BED.myClass.entity;
 
 import lombok.*;
-import main008.BED.contents.entity.Contents;
 import main008.BED.payment.entity.Payment;
 import main008.BED.users.entity.Users;
 import main008.BED.wish.entity.Wish;

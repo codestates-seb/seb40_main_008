@@ -1,7 +1,6 @@
 package main008.BED.users.service;
 
 import lombok.RequiredArgsConstructor;
-import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.coinCharge.entity.CoinCharge;
 import main008.BED.coinCharge.entity.CoinChargeDetail;
 import main008.BED.coinCharge.repository.CoinChargeRepository;
@@ -13,7 +12,6 @@ import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.myUploadClass.repository.MyUploadClassRepository;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.repository.UserPageRepository;
-import main008.BED.users.dto.UsersDto;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
 import main008.BED.wish.entity.Wish;
@@ -24,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service

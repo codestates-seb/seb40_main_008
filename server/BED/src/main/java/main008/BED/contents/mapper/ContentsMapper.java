@@ -71,6 +71,7 @@ public interface ContentsMapper {
 
             return responseForTitleSearch;
     }
+
     default List<ContentsDto.ResponseForTitleSearch> contentsPageToResponses(List<Contents> contents) {
         return contents.stream()
                 .map(content -> contentsPageToResponse(content))
