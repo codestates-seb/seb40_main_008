@@ -152,6 +152,7 @@ public class ContentsController {
         ContentsMultiResponseDto<ContentsDto.ResponseInContent, List<ChapterDto.ResponseDto>> response
                 = new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo());
 
+
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -176,6 +177,7 @@ public class ContentsController {
         String video = uploadClass.getVideo();
         List<Review> reviewList = uploadClass.getReviewList(); // 해당 강의 모든 리뷰 전송
         List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
+
 
 
 
@@ -227,6 +229,7 @@ public class ContentsController {
 
         return new ResponseEntity(contentsMapper.toCategoryList(searchList), HttpStatus.OK);
     }
+
 
     /**
      * Search: Contents Title 검색 - 인기순

@@ -68,6 +68,7 @@ public class WarningController {
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
         List<Warning> warningList = warningService.findWarningListByUsersId(user.getUsersId());
+
         List<WarningDto.Response> responses = warningMapper.listEntityToListResponseDto(warningList);
         WarningDto.ResponseList responseList = new WarningDto.ResponseList(responses);
         return new ResponseEntity(responseList, HttpStatus.OK);
