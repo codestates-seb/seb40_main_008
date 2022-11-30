@@ -33,15 +33,19 @@ const getWishClasses = async (): Promise<Array<ICategorySearchResult>> => {
 	const token = cookies().get('accessToken')?.value;
 
 	try {
-		const response = await fetch(`https://pioneroroom.com/auth/myclass/wishclass`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		const { contentsList } = await response.json();
-		return contentsList;
+		if (token !== undefined) {
+			const response = await fetch(`https://pioneroroom.com/auth/myclass/wishclass`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			const { contentsList } = await response.json();
+			return contentsList;
+		}
+		alert('로그인이 필요한 서비스입니다.');
+		throw new Error('로그인이 필요한 서비스입니다.');
 	} catch (error) {
 		console.error(error);
 		return [];
