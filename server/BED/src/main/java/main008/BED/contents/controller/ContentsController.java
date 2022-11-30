@@ -180,7 +180,7 @@ public class ContentsController {
      * 카테고리 조회
      */
     @GetMapping("/search") // API에 대문자는 들어가면 안됨,,,, RESTful API
-    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories, // RESTful API에 어긋남. string(소문자)로 입력받아 enum으로 변경하는 로직 필요
+    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories, // 쿼리 스트링은 대문자 가능..?
                                         @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
                                         @RequestParam(name = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
