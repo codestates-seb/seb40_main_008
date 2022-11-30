@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,17 @@ public class LikesService {
     private final UsersRepository usersRepository;
     private final LikesRepository likesRepository;
     private final LikesDetailRepository likesDetailRepository;
+
+    public void createLikes(Contents contents) {
+
+        Likes likes = contents.getLikes();
+
+        likes.setLikesCount(0);
+        likes.setContents(contents);
+        likes.setLikesDetails(new ArrayList<>());
+
+        likesRepository.save(likes);
+    }
 
     /**
      * readOnly = true
