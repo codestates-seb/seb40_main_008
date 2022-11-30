@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import styles from './MyclassTab.module.css';
-import { useRouter } from 'next/navigation';
 import { ICategorySearchResult } from '../../types/category_search/categorySearchType';
 import HomeClassesSection from '../Card/HomeClassesSection';
 
