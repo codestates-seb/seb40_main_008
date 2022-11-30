@@ -1,0 +1,48 @@
+.myuploadclassWrapper {
+    width: 100%;
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumnailImg {
+    margin-top: 40px;
+    width: 300px;
+    height: 215px;
+    background-color: #666666;
+}
+
+.classinfoWrapper_line1 {
+    margin-top: 20px;
+    width: 300px;
+}
+
+.classtitle {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--faintwhite);
+}
+
+.classinfoWrapper_line2 {
+    margin-top: 10px;
+}
+
+.category_tutor {
+    font-size: 16px;
+    color: var(--faintwhite);
+}
+
+.btnWrapper {
+    margin-left: 90px;
+}
+
+.btn {
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--faintwhite);
+}
