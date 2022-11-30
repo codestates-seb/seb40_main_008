@@ -15,4 +15,7 @@ public interface MyUploadClassRepository extends JpaRepository<MyUploadClass, Lo
             "WHERE m.users_id = :users_id"
             , nativeQuery = true)
     Optional<MyUploadClass> findByUsersId(Long users_id);
+
+    @Query(value = "SELECT * FROM my_upload_class m WHERE m.user_page_id = :user_page_id", nativeQuery = true)
+    MyUploadClass findByUserPage(Long user_page_id);
 }

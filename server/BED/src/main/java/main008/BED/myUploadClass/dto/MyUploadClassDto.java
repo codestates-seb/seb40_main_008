@@ -10,16 +10,6 @@ public class MyUploadClassDto {
 
     @Getter
     @AllArgsConstructor
-    public static class Post {
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class Patch {
-    }
-
-    @Getter
-    @AllArgsConstructor
     public static class Response {
 
         private List<ContentsDto.Response> contentsList;

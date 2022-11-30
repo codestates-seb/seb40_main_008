@@ -23,10 +23,6 @@ public class Wish {
     @Column
     private Boolean wished;
 
-//    @OneToOne
-//    @JoinColumn(name = "USERS_ID")
-//    private Users users;
-
     @ManyToOne
     @JoinColumn(name = "CONTENTS_ID")
     private Contents contents;

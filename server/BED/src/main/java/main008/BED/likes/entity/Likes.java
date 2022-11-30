@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.contents.entity.Contents;
-import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
 import java.util.List;

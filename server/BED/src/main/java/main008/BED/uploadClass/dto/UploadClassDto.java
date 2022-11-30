@@ -4,7 +4,6 @@ import lombok.*;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.docs.entity.Docs;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
 
 public class UploadClassDto {
 

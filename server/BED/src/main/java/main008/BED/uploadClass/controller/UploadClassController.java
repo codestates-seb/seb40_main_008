@@ -107,10 +107,4 @@ public class UploadClassController {
         s3Service.delete(uploadClass.getFileKey(), "/UploadClass/video");
         return new ResponseEntity("The Lecture is removed.", HttpStatus.OK);
     }
-
-
-
-
-
-
 }

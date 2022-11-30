@@ -11,7 +11,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface LikesMapper {
 
-    default LikesDto.Response likesToResponse(Likes likes, List<LikesDetail> likesDetail, LikesDetailMapper likesDetailMapper, ContentsMapper contentsMapper) {
+    default LikesDto.Response likesToResponse(Likes likes, List<LikesDetail> likesDetail,
+                                              LikesDetailMapper likesDetailMapper,
+                                              ContentsMapper contentsMapper) {
 
         return new LikesDto.Response(
                 contentsMapper.contentsToResponse(likes.getContents()),

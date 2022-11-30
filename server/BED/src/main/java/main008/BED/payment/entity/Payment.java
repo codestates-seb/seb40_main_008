@@ -6,10 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.contents.entity.Contents;
 import main008.BED.myClass.entity.MyClass;
-import main008.BED.users.entity.Users;
 
 import javax.persistence.*;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
@@ -23,9 +21,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
-    /*
-    강좌 개설 시 가격 인풋
-    */
+    /*강좌 개설 시 가격 인풋*/
     @Column
     private Integer price;
 

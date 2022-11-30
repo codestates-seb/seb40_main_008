@@ -8,14 +8,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ContentsRepository extends JpaRepository<Contents, Long> {
 
-    Contents findByContentsId(Long contentsId);
+    Optional<Contents> findByContentsId(Long contentsId);
 
     boolean existsByContentsId(Long contentsId);
 

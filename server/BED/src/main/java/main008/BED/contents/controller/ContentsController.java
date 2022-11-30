@@ -105,14 +105,16 @@ public class ContentsController {
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/auth/{users-id}/{contents-id}/wish")
-    public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
+    @PostMapping("/auth/{contents-id}/wish")
+    public ResponseEntity wishContents(Principal principal,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {
 
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
         Wish wish = wishMapper.postToWish(post);
 
-        contentsService.wishContents(contentsId, usersId, wish);
+        contentsService.wishContents(contentsId, users.getUsersId(), wish);
 
 //        return new ResponseEntity<>(response, HttpStatus.OK);
         return ResponseEntity.status(HttpStatus.OK).body("Update your wishlist.");
@@ -152,6 +154,7 @@ public class ContentsController {
         ContentsMultiResponseDto<ContentsDto.ResponseInContent, List<ChapterDto.ResponseDto>> response
                 = new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo());
 
+
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -178,7 +181,6 @@ public class ContentsController {
         List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
 
 
-
         ContentsDto.ResponseForStream responseForStream
                 = new ContentsDto.ResponseForStream(
                 usersMapper.usersToUserResponseDto(tutor),
@@ -195,14 +197,16 @@ public class ContentsController {
     /**
      * 카테고리 조회
      */
-    @GetMapping("/search")
-    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories,
-                                        @RequestParam(name = "sort", required = false, defaultValue = "likesCount") String sort,
+    @GetMapping("/search") // API에 대문자는 들어가면 안됨,,,, RESTful API
+    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories, // 쿼리 스트링은 대문자 가능..?
+                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
                                         @RequestParam(name = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
 
         Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
-        List<ContentsDto.ResponseForCategories> categories1 = contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
+
+        List<ContentsDto.ResponseForCategories> categories1 =
+                contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
 
         return new ResponseEntity<>(contentsMapper.toCategoryList(categories1), HttpStatus.OK);
     }
@@ -227,6 +231,7 @@ public class ContentsController {
 
         return new ResponseEntity(contentsMapper.toCategoryList(searchList), HttpStatus.OK);
     }
+
 
     /**
      * Search: Contents Title 검색 - 인기순

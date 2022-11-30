@@ -88,6 +88,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     }
 
     private void saveUser(String email, String picture, String name) {
+
         if (!usersService.verifyExistsEmail(email)) {
             Users users = new Users();
 
@@ -99,6 +100,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
             users.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
             usersService.createUsers(users);
         }
+
     }
 
     private void redirect(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
