@@ -18,6 +18,7 @@ import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.PageInfo;
+import main008.BED.myClass.service.MyClassService;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
@@ -58,6 +59,7 @@ public class ContentsController {
     private final UploadClassService uploadClassService;
     private final S3Service s3Service;
     private final PaymentService paymentService;
+    private final MyClassService myClassService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
     private final PaymentMapper paymentMapper;
@@ -130,6 +132,8 @@ public class ContentsController {
 
         boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
 
+        boolean wished = myClassService.isWished(user.getUsersId(), contentsId);
+
 
         ContentsDto.ResponseInContent responseInContent
                 = new ContentsDto.ResponseInContent(contentsId,
@@ -140,6 +144,7 @@ public class ContentsController {
                 contentsService.calculateAvgStar(contentsId),
                 contents.getPayment().getPrice(),
                 bePaid,
+                wished,
                 contents.getUsers().getUserName(),
                 contents.getDetails(),
                 contents.getTutorDetail()

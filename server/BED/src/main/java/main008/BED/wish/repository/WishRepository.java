@@ -30,4 +30,5 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
             "AND wish.contents_id = :contents_id"
             , nativeQuery = true)
     Optional<Wish> findByMyClassIdAndContentsId(Long my_class_id, Long contents_id);
+
 }

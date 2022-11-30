@@ -71,4 +71,23 @@ public class MyClassService {
         myClass.setPayments(paymentList);
         return myClassRepository.save(myClass);
     }
+
+    /**
+     * 콘텐츠 상세화면 찜 여부 판단
+     */
+    public boolean isWished(Long usersId, Long contentsId) {
+        MyClass myClass = myClassRepository.findByUsersId(usersId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        List<Wish> wishes = myClass.getWishes();
+        boolean wished = wishes
+                        .stream()
+                        .anyMatch(wish -> wish.getWished() && wish.getContents().getContentsId() == contentsId);
+
+        if (wished) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
