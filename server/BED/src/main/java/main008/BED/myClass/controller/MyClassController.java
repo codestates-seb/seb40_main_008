@@ -5,14 +5,13 @@ import main008.BED.myClass.dto.MyClassDto;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myClass.mapper.MyClassMapper;
 import main008.BED.myClass.service.MyClassService;
+import main008.BED.users.entity.Users;
+import main008.BED.users.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Positive;
+import java.security.Principal;
 
 @RestController
 @RequestMapping
@@ -21,12 +20,15 @@ public class MyClassController {
 
     private final MyClassService myClassService;
     private final MyClassMapper myClassMapper;
+    private final UsersService usersService;
 
     // 내가 찜한 클래스
-    @GetMapping("/auth/{users-id}/myclass/wishclass") // principal 가능 시 users-id 필요없음, 토큰과 /auth/로 대체 가능
-    public ResponseEntity getMyClass(@PathVariable("users-id") @Positive Long usersId) {
+    @GetMapping("/auth/myclass/wishclass") // principal 가능 시 users-id 필요없음, 토큰과 /auth/로 대체 가능
+    public ResponseEntity getMyClass(Principal principal) {
 
-        MyClass myClass = myClassService.getWishClass(usersId);
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
+        MyClass myClass = myClassService.getWishClass(users.getUsersId());
 
         MyClassDto.WishClassResponse response = myClassMapper.myClassToWishResponse(myClass);
 
@@ -34,13 +36,39 @@ public class MyClassController {
     }
 
     // 수강중인 클래스
-    @GetMapping("/auth/{users-id}/myclass/takingclass")
-    public ResponseEntity getMyBuyClass(@PathVariable("users-id") @Positive Long usersId) {
+    @GetMapping("/auth/myclass/takingclass")
+    public ResponseEntity getMyBuyClass(Principal principal) {
 
-        MyClass myClass = myClassService.getBuyClass(usersId);
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
+        MyClass myClass = myClassService.getBuyClass(users.getUsersId());
 
         MyClassDto.TakingClassResponse response = myClassMapper.myClassToTakingResponse(myClass);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/auth")
+    public ResponseEntity getWhatMyClass(Principal principal,
+                                     @RequestParam("myclass") String myclass) {
+
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
+        MyClass myClass = myClassService.getMyClass(myclass, users.getUsersId());
+
+        switch (myclass) {
+
+            case "wishclass" :
+
+                return new ResponseEntity<>(
+                        myClassMapper.myClassToWishResponse(myClass), HttpStatus.OK);
+
+            case "takingclass" :
+
+                return new ResponseEntity<>(
+                        myClassMapper.myClassToTakingResponse(myClass), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

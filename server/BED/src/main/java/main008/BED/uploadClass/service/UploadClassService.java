@@ -15,7 +15,6 @@ import main008.BED.uploadClass.repository.UploadClassRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -27,7 +26,6 @@ public class UploadClassService {
     private final UploadClassRepository uploadClassRepository;
     private final DocsRepository docsRepository;
     private final ChapterRepository chapterRepository;
-
 
     /**
      * SAVE - 강의 및 자료 저장
@@ -117,7 +115,5 @@ public class UploadClassService {
         contents.setCountLecture(downCount);
         contents.disclosureDecision();
     }
-
-
 }
 

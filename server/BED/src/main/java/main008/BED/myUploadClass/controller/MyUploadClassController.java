@@ -5,12 +5,15 @@ import main008.BED.contents.service.ContentsService;
 import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.myUploadClass.mapper.MyUploadClassMapper;
 import main008.BED.myUploadClass.service.MyUploadClassService;
+import main008.BED.users.entity.Users;
+import main008.BED.users.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,12 +24,15 @@ public class MyUploadClassController {
     private final ContentsService contentsService;
     private final MyUploadClassMapper myUploadClassMapper;
     private final MyUploadClassService myUploadClassService;
+    private final UsersService usersService;
 
 
-    @GetMapping("/{users-id}/myuploadclass")
-    public ResponseEntity getMyUploadClass(@PathVariable("users-id") @Positive Long usersId) {
+    @GetMapping("/mypage/myuploadclass")
+    public ResponseEntity getMyUploadClass(Principal principal) {
 
-        MyUploadClass myUploadClass = myUploadClassService.getMyUploadClasses(usersId);
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
+        MyUploadClass myUploadClass = myUploadClassService.getMyUploadClasses(users.getUsersId());
 
         return new ResponseEntity<>(myUploadClassMapper.myUploadClassToResponse(myUploadClass), HttpStatus.OK);
     }

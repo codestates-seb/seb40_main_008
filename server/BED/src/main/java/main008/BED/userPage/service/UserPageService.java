@@ -1,6 +1,8 @@
 package main008.BED.userPage.service;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.exception.BusinessLogicException;
+import main008.BED.exception.ExceptionCode;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.repository.UserPageRepository;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ public class UserPageService {
 
     public UserPage findUserPage(Long userId) {
 
-        return userPageRepository.findByUsersUsersId(userId);
+        return userPageRepository.findByUsersId(userId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
 }

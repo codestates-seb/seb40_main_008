@@ -22,10 +22,11 @@ public class MyUploadClassService {
 
     public MyUploadClass getMyUploadClasses(Long usersId) {
 
-        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersId(usersId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND));
+        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersId(usersId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND));
 
-        List<Contents> contentsList = contentsRepository.findByUsersId(usersId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+        List<Contents> contentsList = contentsRepository.findByUsersId(usersId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
         myUploadClass.setContentsList(contentsList);
 

@@ -9,7 +9,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MainPageMapper {
 
-    default MainPageDto.NotLoginResponse mainPageToNotLoginResponse(MainPage mainPage, ContentsMapper contentsMapper,
+    default MainPageDto.NotLoginResponse mainPageToNotLoginResponse(MainPage mainPage,
+                                                                    ContentsMapper contentsMapper,
                                                                     UsersMapper usersMapper) {
 
         return MainPageDto.NotLoginResponse.builder()

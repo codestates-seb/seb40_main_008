@@ -68,36 +68,16 @@ public class ContentsService {
 
         return contents;
     }
-
-    /*set likes*/
-    private void setLikes(Contents contents) {
-
-        Likes likes = contents.getLikes();
-        likes.setLikesCount(0);
-        likes.setContents(contents);
-        likes.setLikesDetails(new ArrayList<>());
-        likesRepository.save(likes);
-    }
-
-    /*set myUploadClass*/
-    private void setMyUploadClass(Long usersId, Contents contents) {
-
-        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersId(usersId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND));
-
-        List<Contents> contentsList = myUploadClass.getContentsList();
-        contentsList.add(contents);
-        myUploadClass.setContentsList(contentsList);
-        myUploadClassRepository.save(myUploadClass);
-    }
-
     
     /**
      * contents 삭제
      */
     public void removeContents(Long contentId) {
+
         // TODO: 컨텐츠에 담긴 챕터, DOCS 연쇄 삭제
-        Contents byContentsId = contentsRepository.findByContentsId(contentId);
+        Contents byContentsId = contentsRepository.findByContentsId(contentId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
         String fileKey = byContentsId.getFileKey();
         s3ServiceImpl.delete(fileKey, "/contents/thumbnail");
         contentsRepository.delete(byContentsId);
@@ -108,13 +88,16 @@ public class ContentsService {
      * Read: 커리큘럼 (챕터 목록 끌어오기)
      */
     public List<Chapter> readChapterList(Long contentsId) {
+
         if (!contentsRepository.existsByContentsId(contentsId)) {
             throw new RuntimeException("The Content with this id is not found.");
         }
-        Contents contents = contentsRepository.findByContentsId(contentsId);
+
+        Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
         return contents.getChapterList();
     }
-
 
     @Transactional(readOnly = true)
     public Page<Contents> getContentsPage(int page, int size) {
@@ -126,88 +109,38 @@ public class ContentsService {
         return contentsRepository.findAll(pageable);
     }
 
-
     /**
      * 콘텐츠 찜 기능
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void wishContents(Long contentsId, Long usersId, Wish wish) {
 
-        Contents contents = contentsRepository.findByContentsId(contentsId);
+        Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
-        MyClass myClass = myClassRepository.findByUsersId(usersId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        MyClass myClass = myClassRepository.findByUsersId(usersId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
-        List<Wish> wishList = wishRepository.findByMyClassId(myClass.getMyClassId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
+        List<Wish> wishList = wishRepository.findByMyClassId(myClass.getMyClassId()).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
 
         for (Wish wishIndex : wishList) {
-            if (wishIndex.getContents() == null) {
-                firstWishContent(wishIndex, contents, myClass);
-            }
-            else {
-                if (wishIndex.getContents() == contents && wishIndex.getWished()) {
-                    reWishContent(myClass, contents);
-                }
-                else {
-                    reCancelWish(wish, myClass, contents);
-                }
-            }
+            ifWishHas(wishIndex, contents, myClass);
         }
     }
-    
-    /*찜한 적 없는 컨텐츠일 때*/
-    private void firstWishContent(Wish wish, Contents contents, MyClass myClass) {
-
-        wish.setContents(contents);
-        wish.setMyClass(myClass);
-        wish.setWished(true);
-        wishRepository.save(wish);
-        myClass.addWish(wish);
-        myClassRepository.save(myClass);
-        contents.addWish(wish);
-        contentsRepository.save(contents);
-    }
-    
-    /*찜한 적 있는 컨텐츠일 때*/
-    private void reWishContent(MyClass myClass, Contents contents) {
-
-        Wish wish = wishRepository.findByMyClassIdAndContentsId(myClass.getMyClassId(), contents.getContentsId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
-
-        List<Wish> wishes = wishRepository.findAll();
-
-        if (wishes.size() < 2) {
-            Wish wish1 = new Wish();
-            wish1.setMyClass(myClass);
-            wishRepository.save(wish1);
-        }
-        wishRepository.delete(wish);
-    }
-
-    /*찜했다가 취소한 적 있는 컨텐츠일 때*/
-    private void reCancelWish(Wish wish, MyClass myClass, Contents contents) {
-
-        wish.setWished(true);
-        wish.setMyClass(myClass);
-        wish.setContents(contents);
-        wishRepository.save(wish);
-        myClass.addWish(wish);
-        myClassRepository.save(myClass);
-        contents.addWish(wish);
-        contentsRepository.save(contents);
-    }
-
     
     /**
      * Read: Content One
      */
     @Transactional(readOnly = true)
     public Contents readContent(Long contentsId) {
+
         if (!contentsRepository.existsByContentsId(contentsId)) {
             throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
         }
-        return contentsRepository.findByContentsId(contentsId);
+
+        return contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
     }
 
     
@@ -237,10 +170,12 @@ public class ContentsService {
 
         if ("newest".equals(sort)) {
             sort = "contentsId";
+        } else if ("popular".equals(sort)){
+            sort = "likesCount";
         }
 
-        return contentsRepository.findByCategories(
-                categories, PageRequest.of(page - 1, size, Sort.by(sort).descending()));
+        return contentsRepository.findByCategories(categories,
+                PageRequest.of(page - 1, size, Sort.by(sort).descending()));
         }
 
         
@@ -262,6 +197,100 @@ public class ContentsService {
         return contentsPage;
     }
 
+    /*찜 기능 조건문*/
+    private void ifWishHas(Wish wish, Contents contents, MyClass myClass) {
+
+        if (wish.getContents() == null) {
+            firstWishContent(wish, contents, myClass);
+        }
+        else {
+            secondIfWishHad(wish, contents, myClass);
+        }
+    }
+
+    private void secondIfWishHad(Wish wish, Contents contents, MyClass myClass) {
+
+        if (wish.getContents() == contents && wish.getWished()) {
+            reWishContent(myClass, contents);
+        }
+        else {
+            reCancelWish(wish, myClass, contents);
+        }
+    }
+
+    /*찜한 적 없는 컨텐츠일 때*/
+    private void firstWishContent(Wish wish, Contents contents, MyClass myClass) {
+
+        wish.setContents(contents);
+        wish.setMyClass(myClass);
+        wish.setWished(true);
+        wishRepository.save(wish);
+
+        myClass.addWish(wish);
+        myClassRepository.save(myClass);
+
+        contents.addWish(wish);
+        contentsRepository.save(contents);
+    }
+
+    /*찜한 적 있는 컨텐츠일 때*/
+    private void reWishContent(MyClass myClass, Contents contents) {
+
+        Wish wish = wishRepository.findByMyClassIdAndContentsId(
+                myClass.getMyClassId(), contents.getContentsId()).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
+
+        List<Wish> wishes = wishRepository.findAll();
+
+        if (wishes.size() < 2) {
+            Wish wish1 = new Wish();
+            wish1.setMyClass(myClass);
+            wishRepository.save(wish1);
+        }
+        wishRepository.delete(wish);
+    }
+
+    /*찜했다가 취소한 적 있는 컨텐츠일 때*/
+    private void reCancelWish(Wish wish, MyClass myClass, Contents contents) {
+
+        wish.setWished(true);
+        wish.setMyClass(myClass);
+        wish.setContents(contents);
+        wishRepository.save(wish);
+
+        myClass.addWish(wish);
+        myClassRepository.save(myClass);
+
+        contents.addWish(wish);
+        contentsRepository.save(contents);
+    }
+
+    /*컨텐츠 올리기 set likes*/
+    private void setLikes(Contents contents) {
+
+        Likes likes = contents.getLikes();
+
+        likes.setLikesCount(0);
+        likes.setContents(contents);
+        likes.setLikesDetails(new ArrayList<>());
+
+        likesRepository.save(likes);
+    }
+
+    /*컨텐츠 올리기 set myUploadClass*/
+    private void setMyUploadClass(Long usersId, Contents contents) {
+
+        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersId(usersId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND));
+
+        List<Contents> contentsList = myUploadClass.getContentsList();
+
+        contentsList.add(contents);
+        myUploadClass.setContentsList(contentsList);
+
+        myUploadClassRepository.save(myUploadClass);
+    }
+    
     private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
         ArrayList<Contents> discloseList = new ArrayList<>();
 

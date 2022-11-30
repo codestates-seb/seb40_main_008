@@ -9,5 +9,4 @@ public interface PaymentDetailMapper {
 
     PaymentDetail payPostToEntity(PaymentDetailDto.PayPost post);
 
-    PaymentDetailDto.Response entityToResponse(PaymentDetail paymentDetail);
 }

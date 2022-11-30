@@ -9,7 +9,6 @@ import main008.BED.likes.entity.Likes;
 import main008.BED.likes.entity.LikesDetail;
 import main008.BED.likes.repository.LikesDetailRepository;
 import main008.BED.likes.repository.LikesRepository;
-import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -44,8 +43,8 @@ public class LikesService {
     @Transactional(readOnly = true)
     public List<LikesDetail> findTrueLikes(Likes likes) {
 
-        return likesDetailRepository.findByLikesLikesIdAndLikedTrue(likes.getLikesId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKES_NOT_FOUND));
+        return likesDetailRepository.findByLikesTrue(likes.getLikesId()).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.LIKES_NOT_FOUND));
     }
 
     /**
@@ -59,28 +58,34 @@ public class LikesService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public Likes likesContents(Long contentsId, Long usersId, LikesDetail likesDetail) {
 
-        Contents contents = contentsRepository.findByContentsId(contentsId);
-        Users users = usersRepository.findByUsersId(usersId);
+        Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
         Likes likes = contents.getLikes();
 
-        if (likesDetailRepository.findByUsersIdLikesId(usersId, likes.getLikesId()).isPresent()) {
-
-            LikesDetail likesDetail1 = likesDetailRepository
-                    .findByUsersIdLikesId(usersId, likes.getLikesId())
-                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.LIKES_NOT_FOUND));
-
-            reLikesClick(likesDetail1, likes, contents);
-        } else {
-
-            likesClick(likesDetail, likes, contents, users);
-        }
+        ifLikesHave(usersId, likes, contents, likesDetail);
 
         return likesRepository.save(likes);
     }
 
-    /**
-     * 이미 좋아요 누른 경우
-     */
+    /*좋아요 기능 조건문*/
+    private void ifLikesHave(Long usersId, Likes likes, Contents contents, LikesDetail likesDetail) {
+
+        if (likesDetailRepository.findByUsersLikes(usersId, likes.getLikesId()).isPresent()) {
+
+            LikesDetail likesDetail1 = likesDetailRepository.findByUsersLikes(
+                    usersId, likes.getLikesId()).orElseThrow(()
+                    -> new BusinessLogicException(ExceptionCode.LIKES_NOT_FOUND));
+
+            reLikesClick(likesDetail1, likes, contents);
+
+        } else {
+
+            likesClick(likesDetail, likes, contents, usersId);
+        }
+    }
+
+    /*좋아요를 누른 이력이 있는 경우*/
     private void reLikesClick(LikesDetail likesDetail, Likes likes, Contents contents) {
 
         if (likesDetail.getLiked()) {
@@ -98,18 +103,16 @@ public class LikesService {
         likesDetailRepository.save(likesDetail);
     }
 
-    /**
-     * 처음 좋아요를 누른 경우
-     */
-    private void likesClick(LikesDetail likesDetail, Likes likes, Contents contents, Users users) {
+    /*처음 좋아요를 누른 경우*/
+    private void likesClick(LikesDetail likesDetail, Likes likes, Contents contents, Long usersId) {
 
         likesDetail.setLikes(likes);
-        likesDetail.setUsers(users);
         likesDetail.setLiked(true);
+        likesDetail.setUsers(usersRepository.findByUsersId(usersId));
         likesDetail.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
 
-        likes.getLikesDetails().add(likesDetail);
         likes.setContents(contents);
+        likes.getLikesDetails().add(likesDetail);
         likesRepository.likesCountUp(likes);
         contentsRepository.likesCountForContentsUp(contents.getContentsId());
     }

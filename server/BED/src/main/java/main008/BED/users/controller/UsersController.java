@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.security.Principal;
 
 @RestController
@@ -38,24 +37,25 @@ public class UsersController {
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
-        return new ResponseEntity<>(new SingleResponseDto<>(usersMapper.usersToUserResponseDto(user)), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(usersMapper.usersToMyPage(user)), HttpStatus.OK);
     }
 
-    @PatchMapping("/auth/{users-id}/userinfo")
-    public ResponseEntity patchUser(@PathVariable("users-id") @Positive Long usersId,
-                                    @Valid @RequestBody UsersDto.Patch userPatchDto){
+    @PatchMapping("/auth/userinfo")
+    public ResponseEntity patchUser(@Valid @RequestBody UsersDto.Patch userPatchDto,
+                                    Principal principal){
 
-        userPatchDto.setUsersId(usersService.findVerifiedUserByEmail(usersService.getUsers(usersId).getEmail()).getUsersId());
+        Users user = usersService.patchUser(
+                usersMapper.usersPatchDtoToUser(userPatchDto), principal);
 
-        Users user = usersService.patchUser(usersMapper.usersPatchDtoToUser(userPatchDto));
-
-        return new ResponseEntity<>(new SingleResponseDto<>(usersMapper.usersToUserResponseDto(user)), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(usersMapper.usersToUserResponseDto(user)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/auth/{users-id}/userinfo")
-    public ResponseEntity deleteUser(@PathVariable("users-id") @Positive Long usersId){
+    @DeleteMapping("/auth/userinfo")
+    public ResponseEntity deleteUser(Principal principal){
 
-        usersService.deleteUser(usersId);
+        usersService.deleteUser(principal.getName());
 
         return new ResponseEntity<>("Your account has been deleted.", HttpStatus.OK);
     }

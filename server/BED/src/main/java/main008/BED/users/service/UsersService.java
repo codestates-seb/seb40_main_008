@@ -19,6 +19,7 @@ import main008.BED.wish.repository.WishRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,71 +39,50 @@ public class UsersService {
     public Users createUsers(Users users) {
 
         Users users1 = usersRepository.save(users);
+        UserPage userPage = createUserPage(users1);
 
-        UserPage userPage = new UserPage();
-        userPage.setUsers(users1);
-        userPage.setCoinCharge(new CoinCharge());
-        userPageRepository.save(userPage);
-
-        CoinCharge coinCharge = userPage.getCoinCharge();
-        coinCharge.setCoinChargeDetails(new ArrayList<>());
-        coinChargeRepository.save(coinCharge);
-
-        CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
-        List<CoinChargeDetail> coinChargeDetailList = coinCharge.getCoinChargeDetails();
-        coinChargeDetailList.add(coinChargeDetail);
-        coinCharge.setCoinChargeDetails(coinChargeDetailList);
-
-        coinCharge.setUserPage(userPage);
-        coinChargeRepository.save(coinCharge);
-
-        MyUploadClass myUploadClass = new MyUploadClass();
-        myUploadClass.setUsers(users1);
-        myUploadClass.setUserPage(userPage);
-        myUploadClass.setContentsList(new ArrayList<>());
-        myUploadClassRepository.save(myUploadClass);
-
-        MyClass myClass = new MyClass();
-        myClass.setWishes(new ArrayList<>());
-        myClass.setPayments(new ArrayList<>());
-        myClass.setUsers(users1);
-
-        Wish wish = new Wish();
-        wish.setWished(false);
-        wish.setMyClass(myClass);
-        wishRepository.save(wish);
-
-        myClass.addWish(wish);
-        myClassRepository.save(myClass);
+        createCoinCharge(userPage);
+        createMyUploadClass(users1, userPage);
+        createMyClass(users1);
 
         return users1;
     }
 
-    public Users getUsers(Long usersId) {
+    public Users patchUser(Users users, Principal principal) {
 
-        return usersRepository.findByUsersId(usersId);
-    }
+        Users patchUser = findVerifiedUserByEmail(principal.getName());
 
-    public Users patchUser(Users users) {
-
-        Users patchUser = usersRepository.findByUsersId(users.getUsersId());
-
-        if(users.getUserName() != null) patchUser.setUserName(users.getUserName());
-        if(users.getEmail() != null) patchUser.setEmail(users.getEmail());
-        if(users.getProfileImage() != null) patchUser.setProfileImage(users.getProfileImage());
+        /**
+         * 토큰 속에 있는 유저 이메일을 통해 유저를 찾기 때문에
+         * 유저 이메일은 수정이 가능해서는 안된다.
+         * why?
+         * 소셜 로그인으로 받아온 토큰 속의 유저 이메일은 변경이 되지 않기 때문
+         * -> 소셜의 이메일이 변경되지 않는 한 이메일이 변경될 수는 없다
+         */
+        if(users.getEmail() != null) {
+            throw new BusinessLogicException(ExceptionCode. CARVED_IN_STONE);
+        }
+        if(users.getUserName() != null) {
+            patchUser.setUserName(users.getUserName());
+        }
+        if(users.getProfileImage() != null) {
+            patchUser.setProfileImage(users.getProfileImage());
+        }
 
         return usersRepository.save(patchUser);
     }
 
-    public void deleteUser(Long usersId) {
+    public void deleteUser(String email) {
 
-        Users users = usersRepository.findByUsersId(usersId);
+        Users users = findVerifiedUserByEmail(email);
 
-//        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersUsersId(usersId);
-//        myUploadClassRepository.delete(myUploadClass);
-//
-//        UserPage userPage = userPageRepository.findByUsersUsersId(usersId);
-//        userPageRepository.delete(userPage);
+        MyClass myClass = myClassRepository.findByUsersId(users.getUsersId()).orElseThrow();
+        myClassRepository.delete(myClass);
+
+        UserPage userPage = userPageRepository.findByUsersId(users.getUsersId()).orElseThrow();
+        MyUploadClass mu = myUploadClassRepository.findByUserPage(userPage.getUserPageId());
+        myUploadClassRepository.delete(mu);
+        userPageRepository.delete(userPage);
 
         usersRepository.delete(users);
     }
@@ -124,5 +104,61 @@ public class UsersService {
             throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
         }
         return usersRepository.findByUsersId(usersId);
+    }
+
+    /*userpage*/
+    private UserPage createUserPage(Users users) {
+
+        UserPage userPage = new UserPage();
+        userPage.setUsers(users);
+        userPage.setCoinCharge(new CoinCharge());
+        return userPageRepository.save(userPage);
+    }
+
+    /*coinCharge*/
+    private void createCoinCharge(UserPage userPage) {
+
+        CoinCharge coinCharge = userPage.getCoinCharge();
+        coinCharge.setCoinChargeDetails(new ArrayList<>());
+        coinChargeRepository.save(coinCharge);
+
+        CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
+        List<CoinChargeDetail> coinChargeDetailList = coinCharge.getCoinChargeDetails();
+        coinChargeDetailList.add(coinChargeDetail);
+        coinCharge.setCoinChargeDetails(coinChargeDetailList);
+
+        coinCharge.setUserPage(userPage);
+        coinChargeRepository.save(coinCharge);
+    }
+
+    /*myUploadClass*/
+    private void createMyUploadClass(Users users, UserPage userPage) {
+
+        MyUploadClass myUploadClass = new MyUploadClass();
+        myUploadClass.setUsers(users);
+        myUploadClass.setUserPage(userPage);
+        myUploadClass.setContentsList(new ArrayList<>());
+        myUploadClassRepository.save(myUploadClass);
+    }
+
+    /*myClass*/
+    private void createMyClass(Users users) {
+
+        MyClass myClass = new MyClass();
+        myClass.setWishes(new ArrayList<>());
+        myClass.setPayments(new ArrayList<>());
+        myClass.setUsers(users);
+
+        myClass.addWish(createWish(myClass));
+        myClassRepository.save(myClass);
+    }
+
+    /*wish*/
+    private Wish createWish(MyClass myClass) {
+
+        Wish wish = new Wish();
+        wish.setWished(false);
+        wish.setMyClass(myClass);
+        return wishRepository.save(wish);
     }
 }

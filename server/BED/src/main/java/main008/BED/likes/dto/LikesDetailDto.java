@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main008.BED.users.dto.UsersDto;
-import main008.BED.users.entity.Users;
 
 import java.time.ZonedDateTime;
 
