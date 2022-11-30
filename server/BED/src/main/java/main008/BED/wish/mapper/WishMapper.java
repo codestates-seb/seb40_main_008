@@ -11,5 +11,4 @@ public interface WishMapper {
 
     Wish postToWish(WishDto.Post post);
 
-    List<WishDto.Response> wishToResponse(List<Wish> wish);
 }

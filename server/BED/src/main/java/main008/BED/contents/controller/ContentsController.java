@@ -41,7 +41,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.awt.print.Pageable;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -187,7 +186,9 @@ public class ContentsController {
                                         @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
 
         Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
-        List<ContentsDto.ResponseForCategories> categories1 = contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
+
+        List<ContentsDto.ResponseForCategories> categories1 =
+                contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
 
         return new ResponseEntity<>(contentsMapper.toCategoryList(categories1), HttpStatus.OK);
     }
