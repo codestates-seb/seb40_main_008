@@ -235,15 +235,13 @@ public class ContentsService {
     /*찜한 적 있는 컨텐츠일 때*/
     private void reWishContent(MyClass myClass, Contents contents) {
 
-        Wish wish = wishRepository.findByMyClassIdAndContentsId(
+        Wish wish1 = wishRepository.findByMyClassIdAndContentsId(
                 myClass.getMyClassId(), contents.getContentsId()).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
 
-        Wish wish1 = new Wish();
-        wish1.setMyClass(myClass);
-        wishRepository.save(wish1);
+        wish1.setWished(false);
 
-        wishRepository.delete(wish);
+        wishRepository.save(wish1);
     }
 
     /*찜했다가 취소한 적 있는 컨텐츠일 때*/
