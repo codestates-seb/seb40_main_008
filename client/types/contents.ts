@@ -6,6 +6,8 @@ export interface IContent {
   categories: string;
   details: string;
   grade: number;
+  price: number;
+  bepaid: boolean;
   tutorname: string;
   tutorDetail: string;
 }

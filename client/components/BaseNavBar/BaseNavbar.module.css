@@ -6,7 +6,7 @@
   background-color: #0a191f;
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 1;
   animation: fadein 400ms;
 }
 @keyframes fadein {
@@ -27,7 +27,7 @@
   margin: 0 auto;
   background-color: transparent;
   position: fixed;
-  z-index: 10;
+  z-index: 1;
   top: 0;
 }
 

@@ -10,7 +10,7 @@ const Categories = () => {
       <div className={styles.categorytop}>
         <span className={styles.categoryleft}>
           <span className={styles.link}>
-            <Link href={"/categories/digitaldrawing"}>디지털 드로잉</Link>
+            <Link href={"/categories/digitaldrawing"}>PROGRAMMING</Link>
           </span>
           <span className={styles.link}>
             <Link href={"/categories/drawing"}>드로잉</Link>

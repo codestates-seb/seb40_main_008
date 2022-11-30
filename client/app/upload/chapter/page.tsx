@@ -13,6 +13,8 @@ import { useSearchParams } from "next/navigation";
 import { ICurriculumContent } from "../../../types/contents";
 import { fetchEditChapter } from "../../../api/fetchDelete";
 
+const formData = new FormData();
+
 const UploadChapterPage = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("slug");
@@ -23,9 +25,9 @@ const UploadChapterPage = () => {
   console.log("썸네일", thumbnail);
 
   const queryChapter = {
-    thumbnail,
-    chapterOrder,
-    title,
+    thumbnail: thumbnail,
+    chapterOrder: chapterOrder,
+    title: title,
   };
 
   const img = {
@@ -77,6 +79,23 @@ const UploadChapterPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert(JSON.stringify(values, null, 2));
+
+    formData.append("chapterOrder", values.chapterOrder);
+    formData.append("title", values.title);
+
+    console.log("formData:chapteror:: ", formData.getAll("chapterOrder"));
+    console.log("formData:title:: ", formData.getAll("title"));
+    // fetch("https://pioneroroom.com/auth/contents/chapter/&{contents-id}", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //     Authorization:
+    //       "Bearer " +
+    //       "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoic2V1bmdpbGJhbmdAa2h1LmFjLmtyIiwic3ViIjoic2V1bmdpbGJhbmdAa2h1LmFjLmtyIiwiaWF0IjoxNjY5NzA2MDc4LCJleHAiOjE2Njk3MDc4Nzh9.HOZLX9fRfYoXeT-Yb3EcsT9TMIuUUFCYZFnpOJpC-OZKpyf0iAKtN5b11ZOlp5dt8OQPRBCfF5c7IIJNELbong",
+    //   },
+    //   //body: JSON.stringify(formData),
+    //   body: formData,
+    // });
   };
 
   const handleClickFileInput = () => {
@@ -88,6 +107,7 @@ const UploadChapterPage = () => {
 
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
+      formData.append("thumbnail", fileList[0]);
 
       setImageFile({
         file: fileList[0],

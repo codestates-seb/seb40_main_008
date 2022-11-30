@@ -16,7 +16,6 @@ const formData = new FormData();
 const UploadPage = () => {
   const session = useSession();
   const fileInput = useRef<HTMLInputElement>(null);
-  const reader = new FileReader();
   const [values, setValues] = useState<UploadClassType>(initialClass);
   const [imageFile, setImageFile] = useState<UploadImage | null>(null);
 
@@ -25,7 +24,13 @@ const UploadPage = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
-    //formData.append(`"${e.target.name}"`, e.target.value);
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
@@ -42,19 +47,45 @@ const UploadPage = () => {
     e.preventDefault();
     console.log("formData: ", formData);
     console.log("formData.get(`thumbnail`): ", formData.get("thumbnail"));
-    fetch("api/temp", {
+    alert(JSON.stringify(values, null, 2));
+
+    formData.append("title", values.title);
+    formData.append("categories", values.categories);
+    formData.append("details", values.details);
+    formData.append("price", values.price);
+    formData.append("tutorDetail", values.tutorDetail);
+    //formData.append("tumbnail", values.thumbnail);
+
+    console.log("formData:title:: ", formData.getAll("categories"));
+    console.log("formData:title:: ", formData.getAll("price"));
+    console.log("formData:thumb:: ", formData.getAll("thumbnail"));
+
+    fetch("https://pioneroroom.com/auth/uploadcontents", {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
+        Authorization:
+          "Bearer " +
+          "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoidG1kZGxmMjVAbmF2ZXIuY29tIiwic3ViIjoidG1kZGxmMjVAbmF2ZXIuY29tIiwiaWF0IjoxNjY5NzE2MjY3LCJleHAiOjE2Njk3MTgwNjd9.EVhZJKXoCJBprhFi_w1rfVRqnaQCPV6g0MoK_lhBYhN2-T92vWX36aMQW2Gp9aYf8MazHgKXt9GUmDXdwD92UQ",
       },
       //body: JSON.stringify(formData),
       body: formData,
     });
+
+    // fetch("https://pioneroroom.com/auth/userinfo", {
+    //   method: "GET",
+    //   headers: {
+    //     accept: "application/json",
+    //     Authorization:
+    //       "Bearer " +
+    //       "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoidG1kZGxmMjVAbmF2ZXIuY29tIiwic3ViIjoidG1kZGxmMjVAbmF2ZXIuY29tIiwiaWF0IjoxNjY5NzExMjYzLCJleHAiOjE2Njk3MTMwNjN9.1UAXnFSyVzgy93ZXJbr6qeIxnan_3-dtQQqqao_joMIpkbljaUrOJ9Toqtx6WO910Om8HwDyKSPVjsS0tEU3qg",
+    //   },
+    // });
   };
 
-  useEffect(() => {
-    console.log("formData: ", formData.get("thumbnail"));
-  }, [imageFile]);
+  // useEffect(() => {
+  //   console.log("formData: ", formData.get("thumbnail"));
+  //   console.log("formData:title:: ", formData.getAll("title"));
+  // }, [imageFile, values]);
 
   const handleClickFileInput = () => {
     fileInput.current?.click();
@@ -65,17 +96,16 @@ const UploadPage = () => {
 
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
-
       formData.append("thumbnail", fileList[0]);
 
-      console.log("form get thumbnail", formData.get("thumbnail"));
+      //console.log("form get thumbnail", formData.get("thumbnail"));
 
       setImageFile({
         file: fileList[0],
         thumbnail: url,
         type: fileList[0].type.slice(0, 5),
       });
-
+      console.log("tas", fileList[0]);
       setValues({
         ...values,
         thumbnail: fileList[0],
@@ -116,6 +146,7 @@ const UploadPage = () => {
         <BaseNavbar />
         <section className={styles.uploadpage}>
           <form
+            encType="multipart/from-data"
             onSubmit={(e) => handleSubmit(e, formData)}
             className={styles.form}
           >
@@ -138,7 +169,7 @@ const UploadPage = () => {
                 label="----------------개발전용----------------"
                 className={styles.label}
               >
-                <option value="drawing">디지털드로잉</option>
+                <option value="PROGRAMMING">PROGRAMMING</option>
                 <option value="success_mind">성공 마인드</option>
                 <option value="baking">베이킹</option>
               </optgroup>
@@ -158,12 +189,12 @@ const UploadPage = () => {
 
             <p className={styles.title}>강의 가격</p>
             <input
-              type="number"
+              type="text"
               name="price"
               onChange={handleChange}
               className={styles.classPrice}
             />
-            {values.price % 1000 === 0 ? null : (
+            {/* {values.price % 1000 === 0 ? null : (
               <div className={styles.alertMessage}>
                 1,000원 단위로 입력 해주세요.
               </div>
@@ -172,28 +203,26 @@ const UploadPage = () => {
               <div className={styles.alertMessage}>
                 50,000원 이하로 입력 해주세요.
               </div>
-            )}
+            )} */}
 
             <p className={styles.title}>강의 소개</p>
-            <input
-              type="text"
+            <textarea
               name="details"
-              onChange={handleChange}
+              onChange={handleTextChange}
               className={styles.introduceClass}
-            ></input>
+            ></textarea>
             <p className={styles.title}>강사 소개</p>
-            <input
-              type="text"
+            <textarea
               name="tutorDetail"
-              onChange={handleChange}
+              onChange={handleTextChange}
               className={styles.introduceInstructor}
-            ></input>
+            ></textarea>
 
             <div className={styles.filebox}>
               <p className={styles.title}>클래스 썸네일</p>
               <input
                 type="file"
-                accept="image/jpg, image/jpeg, image/png"
+                accept="image/png"
                 name="thumbnail"
                 ref={fileInput}
                 id="ex_file"
