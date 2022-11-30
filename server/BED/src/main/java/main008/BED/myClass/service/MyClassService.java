@@ -5,16 +5,14 @@ import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.myClass.repository.MyClassRepository;
-import main008.BED.payment.entity.Payment;
-import main008.BED.payment.entity.PaymentDetail;
-import main008.BED.payment.repository.PaymentDetailRepository;
-import main008.BED.payment.repository.PaymentRepository;
+import main008.BED.payment.service.PaymentService;
+import main008.BED.users.entity.Users;
 import main008.BED.wish.entity.Wish;
-import main008.BED.wish.repository.WishRepository;
+import main008.BED.wish.service.WishService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +20,20 @@ import java.util.List;
 public class MyClassService {
 
     private final MyClassRepository myClassRepository;
-    private final WishRepository wishRepository;
-    private final PaymentRepository paymentRepository;
-    private final PaymentDetailRepository paymentDetailRepository;
+    private final PaymentService paymentService;
+    private final WishService wishService;
+
+    public void createMyClass(Users users) {
+
+        MyClass myClass = new MyClass();
+        myClass.setWishes(new ArrayList<>());
+        myClass.setPayments(new ArrayList<>());
+        myClass.setUsers(users);
+
+        myClass.addWish(wishService.createWish(myClass));
+
+        myClassRepository.save(myClass);
+    }
 
     /*
     내가 찜한 컨텐츠
@@ -32,13 +41,10 @@ public class MyClassService {
     @Transactional(readOnly = true)
     public MyClass getWishClass(Long usersId) {
 
-        MyClass myClass = myClassRepository.findByUsersId(usersId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        MyClass myClass = myClassRepository.findByUsersId(usersId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
-        List<Wish> wishes = wishRepository.findByMyClassIdAndTrue(myClass.getMyClassId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
-
-        myClass.setWishes(wishes);
+        myClass.setWishes(wishService.findTrueWishes(myClass.getMyClassId()));
 
         return myClassRepository.save(myClass);
     }
@@ -52,23 +58,28 @@ public class MyClassService {
         MyClass myClass = myClassRepository.findByUsersId(usersId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
-        List<PaymentDetail> paymentDetails = paymentDetailRepository.findByUsersId(usersId);
+        myClass.setPayments(paymentService.getPayContent(usersId, myClass));
 
-        List<Payment> paymentList = myClass.getPayments();
-
-        for (PaymentDetail paymentDetail : paymentDetails) {
-
-            Payment payment = paymentRepository.findByPaymentId(
-                    paymentDetail.getPayment().getPaymentId()).orElseThrow(()
-                    -> new BusinessLogicException(ExceptionCode.PAYMENT_NOT_FOUND));
-
-            payment.setMyClass(myClass);
-            paymentRepository.save(payment);
-
-            paymentList.add(payment);
-        }
-
-        myClass.setPayments(paymentList);
         return myClassRepository.save(myClass);
+    }
+
+    public void deleteMyClass(Users users) {
+
+        MyClass myClass = myClassRepository.findByUsersId(users.getUsersId()).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        myClassRepository.delete(myClass);
+    }
+
+    public MyClass findMyClass(Long usersId) {
+
+        return myClassRepository.findByUsersId(usersId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+    }
+
+    public void setWishForMyClass(Wish wish, MyClass myClass) {
+
+        myClass.addWish(wish);
+        myClassRepository.save(myClass);
     }
 }

@@ -8,20 +8,17 @@ import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
 import main008.BED.likes.entity.Likes;
-import main008.BED.likes.repository.LikesRepository;
+import main008.BED.likes.service.LikesService;
 import main008.BED.myClass.entity.MyClass;
-import main008.BED.myClass.repository.MyClassRepository;
-import main008.BED.myUploadClass.entity.MyUploadClass;
-import main008.BED.myUploadClass.repository.MyUploadClassRepository;
+import main008.BED.myClass.service.MyClassService;
+import main008.BED.myUploadClass.service.MyUploadClassService;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.service.PaymentService;
 import main008.BED.review.entity.Review;
 import main008.BED.uploadClass.entity.UploadClass;
-import main008.BED.uploadClass.repository.UploadClassRepository;
-import main008.BED.users.entity.Users;
-import main008.BED.users.repository.UsersRepository;
+import main008.BED.users.service.UsersService;
 import main008.BED.wish.entity.Wish;
-import main008.BED.wish.repository.WishRepository;
+import main008.BED.wish.service.WishService;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -36,15 +33,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ContentsService {
 
+    private final MyUploadClassService myUploadClassService;
     private final ContentsRepository contentsRepository;
-    private final UsersRepository usersRepository;
-    private final WishRepository wishRepository;
-    private final MyUploadClassRepository myUploadClassRepository;
-    private final MyClassRepository myClassRepository;
-    private final LikesRepository likesRepository;
-    private final S3ServiceImpl s3ServiceImpl;
     private final PaymentService paymentService;
-    
+    private final MyClassService myClassService;
+    private final S3ServiceImpl s3ServiceImpl;
+    private final LikesService likesService;
+    private final UsersService usersService;
+    private final WishService wishService;
+
     
     // contents 올리기
     public Contents createContents(Contents contents, Long usersId, Payment payment) {
@@ -53,19 +50,24 @@ public class ContentsService {
         contents.setLikes(new Likes());
         contents.setLikesCount(0);
 
-        setLikes(contents);
+        likesService.createLikes(contents);
 
         contents = contentsRepository.save(contents);
 
-        Users users = usersRepository.findByUsersId(usersId);
-        contents.setUsers(users);
+        contents.setUsers(usersService.findOne(usersId));
 
-        setMyUploadClass(usersId, contents);
+        myUploadClassService.setContentsToMyUploadClass(usersId, contents);
 
         payment.setContents(contents);
         paymentService.createPaymentWithContent(payment);
 
         return contents;
+    }
+
+    public Contents getContent(Long contentsId) {
+
+        return contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
     }
     
     /**
@@ -114,17 +116,34 @@ public class ContentsService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void wishContents(Long contentsId, Long usersId, Wish wish) {
 
+        MyClass myClass = myClassService.findMyClass(usersId);
+
+        List<Wish> wishList = wishService.findWish(myClass.getMyClassId());
+
         Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
-        MyClass myClass = myClassRepository.findByUsersId(usersId).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
-
-        List<Wish> wishList = wishRepository.findByMyClassId(myClass.getMyClassId()).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
-
         for (Wish wishIndex : wishList) {
             ifWishHas(wishIndex, contents, myClass);
+        }
+    }
+
+    /*찜 기능 조건문*/
+    private void ifWishHas(Wish wish, Contents contents, MyClass myClass) {
+
+        if (wish.getContents() == null) {
+
+            Wish wish1 = wishService.firstWishContent(wish, contents, myClass);
+            myClassService.setWishForMyClass(wish1, myClass);
+            contents.addWish(wish1);
+            contentsRepository.save(contents);
+        } else {
+
+            if (wish.getContents() == contents && wish.getWished()) {
+                wishService.reWishContent(myClass, contents);
+            } else {
+                wishService.reCancelWish(wish, myClass, contents);
+            }
         }
     }
     
@@ -165,7 +184,9 @@ public class ContentsService {
     /**
      * find Categories
      */
-    public Page<Contents> findContentsByCategory(int page, int size, Contents.Categories categories, String sort) {
+    public Page<Contents> findContentsByCategory(int page, int size,
+                                                 Contents.Categories categories,
+                                                 String sort) {
 
         if ("newest".equals(sort)) {
             sort = "contentsId";
@@ -194,95 +215,6 @@ public class ContentsService {
         Page<Contents> contentsPage = new PageImpl<>(discloseList.subList(start, end), pageable, discloseList.size());
 
         return contentsPage;
-    }
-
-    /*찜 기능 조건문*/
-    private void ifWishHas(Wish wish, Contents contents, MyClass myClass) {
-
-        if (wish.getContents() == null) {
-            firstWishContent(wish, contents, myClass);
-        }
-        else {
-            secondIfWishHad(wish, contents, myClass);
-        }
-    }
-
-    private void secondIfWishHad(Wish wish, Contents contents, MyClass myClass) {
-
-        if (wish.getContents() == contents && wish.getWished()) {
-            reWishContent(myClass, contents);
-        }
-        else {
-            reCancelWish(wish, myClass, contents);
-        }
-    }
-
-    /*찜한 적 없는 컨텐츠일 때*/
-    private void firstWishContent(Wish wish, Contents contents, MyClass myClass) {
-
-        wish.setContents(contents);
-        wish.setMyClass(myClass);
-        wish.setWished(true);
-        wishRepository.save(wish);
-
-        myClass.addWish(wish);
-        myClassRepository.save(myClass);
-
-        contents.addWish(wish);
-        contentsRepository.save(contents);
-    }
-
-    /*찜한 적 있는 컨텐츠일 때*/
-    private void reWishContent(MyClass myClass, Contents contents) {
-
-        Wish wish1 = wishRepository.findByMyClassIdAndContentsId(
-                myClass.getMyClassId(), contents.getContentsId()).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
-
-        wish1.setWished(false);
-
-        wishRepository.save(wish1);
-    }
-
-    /*찜했다가 취소한 적 있는 컨텐츠일 때*/
-    private void reCancelWish(Wish wish, MyClass myClass, Contents contents) {
-
-        wish.setWished(true);
-        wish.setMyClass(myClass);
-        wish.setContents(contents);
-        wishRepository.save(wish);
-
-        myClass.addWish(wish);
-        myClassRepository.save(myClass);
-
-        contents.addWish(wish);
-        contentsRepository.save(contents);
-    }
-
-    /*컨텐츠 올리기 set likes*/
-    private void setLikes(Contents contents) {
-
-        Likes likes = contents.getLikes();
-
-        likes.setLikesCount(0);
-        likes.setContents(contents);
-        likes.setLikesDetails(new ArrayList<>());
-
-        likesRepository.save(likes);
-    }
-
-    /*컨텐츠 올리기 set myUploadClass*/
-    private void setMyUploadClass(Long usersId, Contents contents) {
-
-        MyUploadClass myUploadClass = myUploadClassRepository.findByUsersId(usersId).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_NOT_FOUND));
-
-        List<Contents> contentsList = myUploadClass.getContentsList();
-
-        contentsList.add(contents);
-        myUploadClass.setContentsList(contentsList);
-
-        myUploadClassRepository.save(myUploadClass);
     }
     
     private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
