@@ -12,9 +12,7 @@ export default async function handler(
 	if (accessToken)
 		res.setHeader(
 			'Set-Cookie',
-			'accessToken=' +
-				accessToken +
-				'; Path=/; Secure; HttpOnly; SameSite=None'
+			'accessToken=' + accessToken + '; Path=/; Secure; SameSite=None'
 		);
 
 	res.redirect(`/`);
