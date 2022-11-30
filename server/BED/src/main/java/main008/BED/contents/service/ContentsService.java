@@ -116,6 +116,11 @@ public class ContentsService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void wishContents(Long contentsId, Long usersId, Boolean wishTrue) {
 
+        if (!wishTrue) {
+
+            throw new BusinessLogicException(ExceptionCode.WISHED_NOT_NULL);
+        }
+
         MyClass myClass = myClassService.findMyClass(usersId);
 
         List<Wish> wishList = wishService.findWish(myClass.getMyClassId());

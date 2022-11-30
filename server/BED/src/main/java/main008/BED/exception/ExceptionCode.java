@@ -59,7 +59,8 @@ public enum ExceptionCode {
     WISH_NOT_FOUND(404, "Wish not found"),
 
     /*Payment*/
-    PAYMENT_NOT_FOUND(404, "Payment not found")
+    PAYMENT_NOT_FOUND(404, "Payment not found"),
+    WISHED_NOT_NULL(400, "Wished must not be null!")
 
     ;
 
