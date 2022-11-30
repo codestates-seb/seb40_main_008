@@ -42,7 +42,6 @@ public class ContentsService {
     private final MyUploadClassRepository myUploadClassRepository;
     private final MyClassRepository myClassRepository;
     private final LikesRepository likesRepository;
-    private final UploadClassRepository uploadClassRepository;
     private final S3ServiceImpl s3ServiceImpl;
     private final PaymentService paymentService;
     
@@ -240,13 +239,10 @@ public class ContentsService {
                 myClass.getMyClassId(), contents.getContentsId()).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
 
-        List<Wish> wishes = wishRepository.findAll();
+        Wish wish1 = new Wish();
+        wish1.setMyClass(myClass);
+        wishRepository.save(wish1);
 
-        if (wishes.size() < 2) {
-            Wish wish1 = new Wish();
-            wish1.setMyClass(myClass);
-            wishRepository.save(wish1);
-        }
         wishRepository.delete(wish);
     }
 
@@ -308,8 +304,8 @@ public class ContentsService {
      */
     public double calculateAvgStar(Long contentsId) {
 
-        Contents content = contentsRepository.findByContentsId(contentsId);
-
+        Contents content = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
         List<Chapter> chapterList = content.getChapterList();
         if (chapterList == null) {
