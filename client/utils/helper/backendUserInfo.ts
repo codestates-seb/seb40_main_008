@@ -23,7 +23,7 @@ const getUserInfo = async (cookie: string): Promise<IUserInfo> => {
 		'🚀 ~ file: backendUserInfo.ts ~ line 18 ~ getUserInfo ~ body',
 		body
 	);
-	if (!body.data.userName) {
+	if (!body.data?.userName) {
 		console.log('user info not found');
 		return null;
 	}
