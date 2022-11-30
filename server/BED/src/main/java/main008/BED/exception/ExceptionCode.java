@@ -22,7 +22,7 @@ public enum ExceptionCode {
 
     /*UploadClass*/
     UPLOAD_CLASS_NOT_FOUND(404, "UploadClass Not Found"),
-    UPLOAD_CLASS_EXISTS(409, "UploadClass Already exists"),
+    UPLOAD_CLASS_EXISTS(409, "해당 비디오 이름의 파일이 이미 업로드 되어 있습니다."),
 
     /*Docs*/
     DOCS_NOT_FOUND(404, "Docs Not Found"),
