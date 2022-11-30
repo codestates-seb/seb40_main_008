@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @RestController
 @RequiredArgsConstructor
 public class MainPageController {
@@ -35,15 +37,15 @@ public class MainPageController {
 
     // 로그인 후
     @GetMapping("/auth/home")
-    public ResponseEntity getLoginHome() {
+    public ResponseEntity getLoginHome(Principal principal) {
 
         MainPage mainPage = mainPageService.getHome();
-        Users users = usersService.getUsers(1L);
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
         return new ResponseEntity<>(
                 mainPageMapper.mainPageToLoginResponse(mainPage,
                         contentsMapper,
-                        1L,
+                        users.getUsersId(),
                         usersMapper),
                 HttpStatus.OK);
     }

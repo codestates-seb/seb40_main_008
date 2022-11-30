@@ -23,6 +23,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.security.Principal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -47,14 +48,15 @@ public class CoinChargeService {
 
     /**
      * 카카오페이 결제 준비
-     * @param usersId : 구매 유저 식별자
      * @param coinChargePost : 구매 코인 금액
      * @return : 카톡에게 결제번호 및 url 받음
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public CoinChargeDetailDto.KakaoReadyResponse kakaoPayReady(Long usersId, CoinCharge coinChargePost) {
+    public CoinChargeDetailDto.KakaoReadyResponse kakaoPayReady(Principal principal, CoinCharge coinChargePost) {
 
-        UserPage userPage = userPageRepository.findByUsersId(usersId).orElseThrow(()
+        Users users = usersRepository.findByEmail(principal.getName());
+
+        UserPage userPage = userPageRepository.findByUsersId(users.getUsersId()).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         CoinCharge coinCharge = coinChargeRepository.findByUserPage(userPage.getUserPageId()).orElseThrow(()
@@ -77,15 +79,15 @@ public class CoinChargeService {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", cid);
         parameters.add("partner_order_id", String.valueOf(coinChargeDetail.getCoinChargeDetailId()));
-        parameters.add("partner_user_id", String.valueOf(usersId));
+        parameters.add("partner_user_id", String.valueOf(users.getUsersId()));
         parameters.add("item_name", coinChargeDetail.getItemName());
         parameters.add("quantity", String.valueOf(coinChargeDetail.getQuantity()));
         parameters.add("total_amount", String.valueOf(coinChargeDetail.getChargeAmount()));
         parameters.add("vat_amount", String.valueOf(coinChargeDetail.getTax()));
         parameters.add("tax_free_amount", "0");
-        parameters.add("approval_url", "https://pioneroroom.com/auth/coincharge/success");
-        parameters.add("cancel_url", "https://pioneroroom.com/auth/coincharge/cancel");
-        parameters.add("fail_url", "https://pioneroroom.com/auth/coincharge/fail");
+        parameters.add("approval_url", "http://localhost:8080/coincharge/success");
+        parameters.add("cancel_url", "http://localhost:8080/coincharge/cancel");
+        parameters.add("fail_url", "http://localhost:8080/coincharge/fail");
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());

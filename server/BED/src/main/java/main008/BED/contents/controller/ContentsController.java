@@ -42,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.awt.print.Pageable;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,41 +68,45 @@ public class ContentsController {
 
 
     // 컨텐츠 개설
-    @PostMapping("/auth/{users-id}/uploadcontents")
-    public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
+    @PostMapping("/auth/uploadcontents")
+    public ResponseEntity postContents(Principal principal,
                                        @RequestParam("title") String title,
                                        @RequestParam("categories") Contents.Categories categories,
                                        @RequestParam("details") String details,
                                        @RequestParam("tutorDetail") String tutorDetail,
                                        @RequestParam("thumbnail") MultipartFile thumbnail,
-                                       @RequestParam("price") Integer price) {
+                                       @RequestParam("price") String price) {
+
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
         // thumbnail -> S3 업로드
         HashMap map = s3Service.uploadToS3(thumbnail, "/contents/thumbnail");
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 
-        PaymentDto.Post paymentPost = new PaymentDto.Post(price);
+        PaymentDto.Post paymentPost = new PaymentDto.Post(Integer.parseInt(price));
 
         Payment payment = paymentMapper.postToEntity(paymentPost);
 
         ContentsDto.Post post = new ContentsDto.Post(title, categories, details, tutorDetail, thumbnailUrl, fileKey);
 
-        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId, payment);
+        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), users.getUsersId(), payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
     }
 
 
     // 컨텐츠 찜 기능
-    @PostMapping("/auth/{users-id}/{contents-id}/wish")
-    public ResponseEntity wishContents(@PathVariable("users-id") @Positive Long usersId,
+    @PostMapping("/auth/{contents-id}/wish")
+    public ResponseEntity wishContents(Principal principal,
                                        @PathVariable("contents-id") @Positive Long contentsId,
                                        @Valid @RequestBody WishDto.Post post) {
 
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
         Wish wish = wishMapper.postToWish(post);
 
-        contentsService.wishContents(contentsId, usersId, wish);
+        contentsService.wishContents(contentsId, users.getUsersId(), wish);
 
 //        return new ResponseEntity<>(response, HttpStatus.OK);
         return ResponseEntity.status(HttpStatus.OK).body("Update your wishlist.");

@@ -12,16 +12,19 @@ import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.service.UserPageService;
+import main008.BED.users.entity.Users;
+import main008.BED.users.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping()
 @RequiredArgsConstructor
 @Validated
 //@SessionAttributes({"tid"}) // 세션에 저장된 값 사용 시 쓰는 어노테이션, session에 없을 시 model까지 훑어서 찾음
@@ -31,19 +34,19 @@ public class CoinChargeController {
     private final CoinChargeMapper coinChargeMapper;
     private final CoinChargeDetailMapper coinChargeDetailMapper;
     private final UserPageService userPageService;
+    private final UsersService usersService;
 
     /**
      * 코인 충전
      * @param post
-     * @param usersId
      * @return
      */
-    @PostMapping("/{users-id}/coincharge/ready")
+    @PostMapping("/auth/coincharge/ready")
     public ResponseEntity readyToCoinCharge(@RequestBody CoinChargeDto.Post post,
-                                            @PathVariable("users-id") @Positive Long usersId) {
+                                            Principal principal) {
 
         CoinChargeDetailDto.KakaoReadyResponse readyToPay =
-                coinChargeService.kakaoPayReady(usersId, coinChargeMapper.postToEntity(post));
+                coinChargeService.kakaoPayReady(principal, coinChargeMapper.postToEntity(post));
 
         return new ResponseEntity<>(new SingleResponseDto<>(readyToPay), HttpStatus.OK);
     }
@@ -84,28 +87,32 @@ public class CoinChargeController {
     /**
     * 충전 내역 조회
     */
-    @GetMapping("/{users-id}/coincharge")
-    public ResponseEntity getCoinCharge(@PathVariable("users-id") @Positive Long usersId) {
+    @GetMapping("/auth/coincharge")
+    public ResponseEntity getCoinCharge(Principal principal) {
 
-        UserPage userPage = userPageService.findUserPage(usersId);
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
+        UserPage userPage = userPageService.findUserPage(users.getUsersId());
 
         List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto =  coinChargeDetailMapper.entityToResponses(
-                        coinChargeService.getCoinChargeDetail(usersId));
+                        coinChargeService.getCoinChargeDetail(users.getUsersId()));
 
         return new ResponseEntity<>(coinChargeMapper.entityToResponse(userPage, coinChargeDetailResponseDto), HttpStatus.OK);
     }
 
     /**
      * 코인 환불
-     * @param usersId
      * @param coinChargeDetailId
      * @return
      */
-    @PostMapping("/{users-id}/coincharge/{coin-charge-detail-id}")
-    public ResponseEntity refundCoinCharge(@PathVariable("users-id") @Positive Long usersId,
+    @PostMapping("/auth/coincharge/{coin-charge-detail-id}")
+    public ResponseEntity refundCoinCharge(Principal principal,
                                            @PathVariable("coin-charge-detail-id") @Positive Long coinChargeDetailId) {
 
-        CoinChargeDetailDto.KakaoCancelResponse kakaoCancelResponse = coinChargeService.kakaoCancel(usersId, coinChargeDetailId);
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
+
+        CoinChargeDetailDto.KakaoCancelResponse kakaoCancelResponse =
+                coinChargeService.kakaoCancel(users.getUsersId(), coinChargeDetailId);
 
         return new ResponseEntity<>(coinChargeDetailMapper.cancelToResponse(kakaoCancelResponse), HttpStatus.OK);
     }
