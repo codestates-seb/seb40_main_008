@@ -179,9 +179,9 @@ public class ContentsController {
     /**
      * 카테고리 조회
      */
-    @GetMapping("/search")
+    @GetMapping("/search") // API에 대문자는 들어가면 안됨,,,, RESTful API
     public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories,
-                                        @RequestParam(name = "sort", required = false, defaultValue = "likesCount") String sort,
+                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
                                         @RequestParam(name = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
 

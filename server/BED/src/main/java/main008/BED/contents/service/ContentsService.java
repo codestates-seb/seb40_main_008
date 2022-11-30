@@ -163,6 +163,8 @@ public class ContentsService {
 
         if ("newest".equals(sort)) {
             sort = "contentsId";
+        } else if ("popular".equals(sort)){
+            sort = "likesCount";
         }
 
         return contentsRepository.findByCategories(categories,
