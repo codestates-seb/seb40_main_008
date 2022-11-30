@@ -33,7 +33,7 @@ const SearchPage = async () => {
                 })} */}
 
             </div>
-            <TabNavigator activeLink={'home'} />
+            <TabNavigator activeLink={'search'} />
         </>
     )
 }
