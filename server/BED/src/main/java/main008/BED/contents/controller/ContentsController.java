@@ -14,6 +14,7 @@ import main008.BED.contents.entity.EnumModel;
 import main008.BED.contents.entity.EnumValue;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
+import main008.BED.converter.StringToCategoryEnum;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
@@ -22,6 +23,7 @@ import main008.BED.dto.PageInfo;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
+import main008.BED.payment.service.PaymentService;
 import main008.BED.review.entity.Review;
 import main008.BED.review.mapper.ReviewMapper;
 import main008.BED.uploadClass.entity.UploadClass;
@@ -42,6 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.awt.print.Pageable;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,6 +59,9 @@ public class ContentsController {
     private final ChapterService chapterService;
     private final BookmarkService bookmarkService;
     private final UploadClassService uploadClassService;
+    private final S3Service s3Service;
+
+    private final PaymentService paymentService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
     private final PaymentMapper paymentMapper;
@@ -63,31 +69,36 @@ public class ContentsController {
     private final DocsMapper docsMapper;
     private final ReviewMapper reviewMapper;
     private final WishMapper wishMapper;
-    private final S3Service s3Service;
+
+    private final StringToCategoryEnum stringToCategoryEnum;
 
 
     // 컨텐츠 개설
-    @PostMapping("/auth/{users-id}/uploadcontents")
-    public ResponseEntity postContents(@PathVariable("users-id") @Positive Long usersId,
+    @PostMapping("/auth/uploadcontents")
+    public ResponseEntity postContents(Principal principal,
                                        @RequestParam("title") String title,
-                                       @RequestParam("categories") Contents.Categories categories,
+                                       @RequestParam("categories") String categories,
                                        @RequestParam("details") String details,
                                        @RequestParam("tutorDetail") String tutorDetail,
                                        @RequestParam("thumbnail") MultipartFile thumbnail,
-                                       @RequestParam("price") Integer price) {
+                                       @RequestParam("price") String price) {
+
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
         // thumbnail -> S3 업로드
         HashMap map = s3Service.uploadToS3(thumbnail, "/contents/thumbnail");
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 
-        PaymentDto.Post paymentPost = new PaymentDto.Post(price);
+        PaymentDto.Post paymentPost = new PaymentDto.Post(Integer.parseInt(price));
 
         Payment payment = paymentMapper.postToEntity(paymentPost);
 
-        ContentsDto.Post post = new ContentsDto.Post(title, categories, details, tutorDetail, thumbnailUrl, fileKey);
+        Contents.Categories category = stringToCategoryEnum.convert(categories);
 
-        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), usersId, payment);
+        ContentsDto.Post post = new ContentsDto.Post(title, category, details, tutorDetail, thumbnailUrl, fileKey);
+
+        Contents contents = contentsService.createContents(contentsMapper.postToContents(post), user.getUsersId(), payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
     }
@@ -111,12 +122,18 @@ public class ContentsController {
      * READ: 컨텐츠 상세화면 Response DTO
      */
     @GetMapping("/auth/contents/{contents-id}")
-    public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId) {
+    public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
+                                     Principal principal) {
+
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
         Contents contents = contentsService.readContent(contentsId);
 
         ChapterDto.CurriculumInContent curriculumInContent
                 = chapterService.readCurriculumInContent(contentsId);
+
+        boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
+
 
         ContentsDto.ResponseInContent responseInContent
                 = new ContentsDto.ResponseInContent(contentsId,
@@ -124,7 +141,9 @@ public class ContentsController {
                 contents.getThumbnail(),
                 contents.getLikesCount(),
                 contents.getCategories(),
-                0,
+                contentsService.calculateAvgStar(contentsId),
+                contents.getPayment().getPrice(),
+                bePaid,
                 contents.getUsers().getUserName(),
                 contents.getDetails(),
                 contents.getTutorDetail()
@@ -133,30 +152,33 @@ public class ContentsController {
         ContentsMultiResponseDto<ContentsDto.ResponseInContent, List<ChapterDto.ResponseDto>> response
                 = new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo());
 
+
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
     /**
      * READ: 영상 재생 화면 Response DTO
      */
-    @GetMapping("/auth/{users-id}/contents/{contents-id}/video/{uploadClass-id}")
-    public ResponseEntity getStream(@PathVariable("users-id") @Positive Long usersId,
+    @GetMapping("/auth/contents/{contents-id}/video/{uploadClass-id}")
+    public ResponseEntity getStream(Principal principal,
                                     @PathVariable("contents-id") @Positive Long contentsId,
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
 
         Contents contents = contentsService.readContent(contentsId);
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
-        Users user = usersService.findOne(usersId);
+
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
 
         Users tutor = contents.getUsers();
         String title = contents.getTitle();
         Docs docs = uploadClass.getDocs();
         String video = uploadClass.getVideo();
-        List<Review> reviewList = uploadClass.getReviewList(); // Class의 모든 리뷰 전송
-//        List<Bookmark> bookmarkList = user.getBookmarkList(); // User 본인의 메모만 전송
-        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(usersId);
+        List<Review> reviewList = uploadClass.getReviewList(); // 해당 강의 모든 리뷰 전송
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
+
+
 
 
         ContentsDto.ResponseForStream responseForStream
@@ -200,11 +222,14 @@ public class ContentsController {
         Page<Contents> contentsPage = contentsService.searchTitleContentsByLateast(keyword, page, size);
         PageInfo pageInfo = PageInfo.of(contentsPage);
 
-        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
-                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+//        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
+//                = contentsMapper.contentsPageToResponses(contentsPage.getContent()); // 페이징 리스트
+        List<ContentsDto.ResponseForCategories> searchList = contentsMapper.contentsToCategoriesResponses(contentsPage.getContent(), usersMapper);
 
-        return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
+
+        return new ResponseEntity(contentsMapper.toCategoryList(searchList), HttpStatus.OK);
     }
+
 
     /**
      * Search: Contents Title 검색 - 인기순
@@ -218,10 +243,12 @@ public class ContentsController {
         Page<Contents> contentsPage = contentsService.searchTitleContentsByPopular(keyword, page, size);
         PageInfo pageInfo = PageInfo.of(contentsPage);
 
-        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
-                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+//        List<ContentsDto.ResponseForTitleSearch> responseForTitleSearch
+//                = contentsMapper.contentsPageToResponses(contentsPage.getContent());
+        List<ContentsDto.ResponseForCategories> searchList = contentsMapper.contentsToCategoriesResponses(contentsPage.getContent(), usersMapper);
 
-        return new ResponseEntity(new MultiResponseDto<>(responseForTitleSearch, pageInfo), HttpStatus.OK);
+
+        return new ResponseEntity(contentsMapper.toCategoryList(searchList), HttpStatus.OK);
     }
 
     /**

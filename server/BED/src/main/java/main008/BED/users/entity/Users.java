@@ -12,6 +12,7 @@ import main008.BED.userPage.entity.UserPage;
 import main008.BED.warning.entity.Warning;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class Users {
     private Long usersId;
 
     @Column
+    @Email
     private String email;
 
     @Column

@@ -33,7 +33,7 @@ public class UploadClassService {
      * SAVE - 강의 및 자료 저장
      */
     public UploadClass saveLecture(UploadClass uploadClass, Long chapterId) {
-        // TODO: 중복 예외처리 기준을 타당한 것으로 바꿀 것.
+
         if (uploadClassRepository.existsByName(uploadClass.getName())) {
             throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_EXISTS);
         }

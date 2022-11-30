@@ -114,9 +114,9 @@ public class UsersService {
         return user.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
 
-    private void verifyExistsEmail(String email) {
-        Optional<Users> user = Optional.ofNullable(usersRepository.findByEmail(email));
-        if(user.isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
+    public boolean verifyExistsEmail(String email) {
+        return usersRepository.existsByEmail(email);
+
     }
 
     public Users findOne(Long usersId) {

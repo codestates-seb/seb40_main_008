@@ -16,4 +16,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
             , nativeQuery = true)
     Optional<Payment> findByContentsId(Long contents_id);
     Optional<Payment> findByPaymentId(Long paymentId);
+
 }
