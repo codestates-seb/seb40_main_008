@@ -2,22 +2,24 @@
 import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import styles from './MyclassTab.module.css';
-
-export const handleSortChange = (e: any) => {
-    const value = e.target.value;
-    console.log('value', value);
-    return value;
-}
+import { useRouter } from 'next/navigation';
 
 const MyclassTab = () => {
 
     const [tabIndex, setTabIndex] = useState(0);
+    // console.log('tabIndex', tabIndex);
+
+    // const router = useRouter();
+    // if (tabIndex === 0) {
+    //     router.push(`/myclass#takingclass`);
+    // } else if (tabIndex === 1) {
+    //     router.push(`/myclass#wishclass`);
+    // }
 
     return (
         <Tabs
             selectedIndex={tabIndex}
             onSelect={(tabIndex) => setTabIndex(tabIndex)}
-            onChange={(e) => handleSortChange(e)}
         >
 
             <TabList className={styles.tablist} >
@@ -25,34 +27,32 @@ const MyclassTab = () => {
                 <Tab className={styles.tab} value='wishclass'>찜한 클래스</Tab>
             </TabList>
 
-            <div className={styles.tabpanelWrapper}>
-                <TabPanel>
-                    <div
-                        style={{
-                            width: "90%",
-                            padding: "20px",
-                            height: "100%",
-                            border: "1px solid white",
-                            margin: "20px auto",
-                        }}
-                    >
-                        수강중인 클래스
-                    </div>
-                </TabPanel>
-                <TabPanel>
-                    <div
-                        style={{
-                            width: "90%",
-                            padding: "20px",
-                            height: "100%",
-                            border: "1px solid white",
-                            margin: "20px auto",
-                        }}
-                    >
-                        찜한 클래스
-                    </div>
-                </TabPanel>
-            </div>
+            {/* <div className={styles.tabpanelWrapper}> */}
+            <TabPanel>
+                <div
+                    style={{
+                        width: "100%",
+                        padding: "20px",
+                        height: "0px",
+                        border: "1px solid white",
+                        margin: "20px auto",
+                    }}
+                >
+                </div>
+            </TabPanel>
+            <TabPanel>
+                <div
+                    style={{
+                        width: "90%",
+                        padding: "20px",
+                        height: "0px",
+                        border: "1px solid white",
+                        margin: "20px auto",
+                    }}
+                >
+                </div>
+            </TabPanel>
+            {/* </div> */}
         </Tabs>
     )
 }
