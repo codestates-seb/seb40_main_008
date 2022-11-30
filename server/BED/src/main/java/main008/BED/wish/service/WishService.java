@@ -40,11 +40,11 @@ public class WishService {
     }
 
     /*찜한 적 없는 컨텐츠일 때*/
-    public Wish firstWishContent(Wish wish, Contents contents, MyClass myClass) {
+    public Wish firstWishContent(Wish wish, Contents contents, MyClass myClass, Boolean wishTrue) {
 
         wish.setContents(contents);
         wish.setMyClass(myClass);
-        wish.setWished(true);
+        wish.setWished(wishTrue);
 
         return wishRepository.save(wish);
     }

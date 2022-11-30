@@ -13,7 +13,7 @@ public class WishDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        private Boolean wished;
+        private String wished;
     }
 
     @Getter

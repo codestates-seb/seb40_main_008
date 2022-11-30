@@ -114,7 +114,7 @@ public class ContentsService {
      * 콘텐츠 찜 기능
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void wishContents(Long contentsId, Long usersId, Wish wish) {
+    public void wishContents(Long contentsId, Long usersId, Boolean wishTrue) {
 
         MyClass myClass = myClassService.findMyClass(usersId);
 
@@ -124,16 +124,16 @@ public class ContentsService {
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
         for (Wish wishIndex : wishList) {
-            ifWishHas(wishIndex, contents, myClass);
+            ifWishHas(wishIndex, contents, myClass, wishTrue);
         }
     }
 
     /*찜 기능 조건문*/
-    private void ifWishHas(Wish wish, Contents contents, MyClass myClass) {
+    private void ifWishHas(Wish wish, Contents contents, MyClass myClass, Boolean wishTrue) {
 
         if (wish.getContents() == null) {
 
-            Wish wish1 = wishService.firstWishContent(wish, contents, myClass);
+            Wish wish1 = wishService.firstWishContent(wish, contents, myClass, wishTrue);
             myClassService.setWishForMyClass(wish1, myClass);
             contents.addWish(wish1);
             contentsRepository.save(contents);
