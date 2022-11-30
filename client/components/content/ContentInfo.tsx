@@ -28,14 +28,13 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
           </div>
 
           <ContentCardWishBtn contentId={contentInfo?.contentsId} />
-          {/* {contentInfo.bepaid ? (
+          <p>{contentInfo.bepaid}</p>
+
+          {contentInfo?.bepaid == false ? (
             <ContentCardWishBtn contentId={contentInfo?.contentsId} />
           ) : (
-            <ContentCardFavoriteBtn
-              likecount={contentInfo?.likesCount}
-              contentId={contentInfo?.contentsId}
-            />
-          )} */}
+            <ContentCardFavoriteBtn contentId={contentInfo?.contentsId} />
+          )}
         </div>
 
         <div className={styles.classWrapper}>

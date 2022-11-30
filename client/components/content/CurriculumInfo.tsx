@@ -10,9 +10,11 @@ import { UploadChapterType } from "../../types/uploadclass";
 interface CurriculumInfoProps {
   curriculumInfo: ICurriculumContent[];
   contentsId: number;
+  bePaid: boolean;
 }
 
 const CurriculumInfo = ({
+  bePaid,
   contentsId,
   curriculumInfo,
 }: CurriculumInfoProps) => {
@@ -21,7 +23,7 @@ const CurriculumInfo = ({
   const handleChapterDeleteClick = async (chapterId: number) => {
     try {
       const status = await fetchDelete(
-        `http://localhost:8080/auth/contents/chapter/`,
+        `https://pioneroroom.com/auth/contents/chapter/${chapterId}`,
         chapterId
       );
       if (status !== 200) throw new Error("status is not good");
@@ -34,7 +36,7 @@ const CurriculumInfo = ({
   const handleClassDeleteClick = async (uploadClassId: number) => {
     try {
       const status = await fetchDelete(
-        `localhost:8080/auth/chapter/lecture/`,
+        `https://pioneroroom.com/auth/chapter/lecture/${uploadClassId}`,
         uploadClassId
       );
       if (status !== 200) throw new Error("status is not good");

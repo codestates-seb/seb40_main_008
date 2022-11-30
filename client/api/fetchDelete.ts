@@ -1,8 +1,11 @@
+import { getCookie } from "cookies-next";
+
 export async function fetchDelete(url: string, id: number) {
+  const token = getCookie("accessToken");
   const requestOptions = {
     method: "DELETE",
     headers: {
-      Authorization: "Bearer my-token",
+      Authorization: `Bearer ${token}`,
     },
   };
 
@@ -20,10 +23,11 @@ export async function fetchEditChapter(
   title: string,
   chapterId: number
 ) {
+  const token = getCookie("accessToken");
   const requestOptions = {
     method: "PATCH",
     headers: {
-      Authorization: "Bearer my-token",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ thumbnail, chapterOrder, title }),
   };
@@ -45,10 +49,11 @@ export async function fetchEditClass(
   details: string,
   uploadClassid: number
 ) {
+  const token = getCookie("accessToken");
   const requestOptions = {
     method: "PATCH",
     headers: {
-      Authorization: "Bearer my-token",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ videoFile, title, docsFile, details }),
   };

@@ -13,6 +13,7 @@ interface ContentTabsProps {
 
 const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
   const [tabIndex, setTabIndex] = useState(0);
+
   return (
     <>
       <Tabs
@@ -52,6 +53,7 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
         </TabPanel>
         <TabPanel>
           <CurriculumInfo
+            bePaid={contentInfo?.bepaid}
             contentsId={contentInfo?.contentsId}
             curriculumInfo={curriculumInfo}
           />

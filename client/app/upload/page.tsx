@@ -14,10 +14,10 @@ import {
 const formData = new FormData();
 
 const UploadPage = () => {
-  // const session = useSession();
-  const session = {
-    status: "loading",
-  };
+  const session = useSession();
+  // const session = {
+  //   status: "loading",
+  // };
   const fileInput = useRef<HTMLInputElement>(null);
   const reader = new FileReader();
   const [values, setValues] = useState<UploadClassType>(initialClass);
@@ -28,7 +28,6 @@ const UploadPage = () => {
       ...values,
       [e.target.name]: e.target.value,
     });
-    //formData.append(`"${e.target.name}"`, e.target.value);
   };
 
   const handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
