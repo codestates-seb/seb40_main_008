@@ -68,7 +68,7 @@ public class CoinChargeService {
 
         CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
         coinChargeDetail.setChargeAmount(coinChargePost.getChargeAmount().getAmount());
-        coinChargeDetail.setItemName(String.valueOf(coinChargePost.getChargeAmount()));
+        coinChargeDetail.setItemName("CLASS4989_"+ coinChargePost.getChargeAmount());
         coinChargeDetail.setQuantity(1);
         coinChargeDetail.setTax(0);
         coinChargeDetail.setCoinCharge(coinCharge);
