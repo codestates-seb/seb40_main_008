@@ -34,7 +34,7 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
               margin: "20px auto",
             }}
           >
-            {contentInfo.details}
+            {contentInfo?.details}
           </div>
         </TabPanel>
         <TabPanel>
@@ -47,12 +47,12 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
               margin: "20px auto",
             }}
           >
-            {contentInfo.tutorDetail}
+            {contentInfo?.tutorDetail}
           </div>
         </TabPanel>
         <TabPanel>
           <CurriculumInfo
-            contentsId={contentInfo.contentsId}
+            contentsId={contentInfo?.contentsId}
             curriculumInfo={curriculumInfo}
           />
         </TabPanel>

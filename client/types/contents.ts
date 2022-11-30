@@ -8,7 +8,7 @@ export interface IContent {
   grade: number;
   price: number;
   bepaid: boolean;
-  tutorname: string;
+  tutorName: string;
   tutorDetail: string;
 }
 

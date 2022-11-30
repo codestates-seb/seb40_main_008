@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "../content/ContentInfo.module.css";
-
+import { getCookie } from "cookies-next";
+import { patchWish } from "../../api/fetchWish";
 interface ContentCardWishProps {
   contentId: number;
 }
 
-export const ContentCardWishBtn = ({ contentId }: ContentCardWishProps) => {
+export const ContentCardWishBtn = (props: ContentCardWishProps) => {
+  const { contentId } = props;
+
   const [wish, setWish] = useState(false);
 
   const handleWishCheck = () => {
@@ -17,24 +20,27 @@ export const ContentCardWishBtn = ({ contentId }: ContentCardWishProps) => {
   };
 
   useEffect(() => {
-    fetch(`https://pioneroroom.com/auth/${contentId}/wish`, {
-      method: "POST",
-      headers: {
-        Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoidG1kZGxmMjVAbmF2ZXIuY29tIiwic3ViIjoidG1kZGxmMjVAbmF2ZXIuY29tIiwiaWF0IjoxNjY5NzE2MjY3LCJleHAiOjE2Njk3MTgwNjd9.EVhZJKXoCJBprhFi_w1rfVRqnaQCPV6g0MoK_lhBYhN2-T92vWX36aMQW2Gp9aYf8MazHgKXt9GUmDXdwD92UQ",
-      },
-      body: JSON.stringify({ wish: wish }),
-    })
-      .then((res) => {
-        res.json();
-      })
-      .then((data) => {
-        console.log("성공", data);
-      })
-      .catch((error) => {
+    // fetch(`https://pioneroroom.com/auth/${contentId}/wish`, {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify({ wish: wish }),
+    // })
+    //   .then((res) => {
+    //     res.json();
+    //   })
+    //   .then((data) => {
+    //     console.log("성공", data);
+    //   })
+    //   .catch((error) => {
+    //     setWish(!wish);
+    //   });
+    patchWish(contentId, wish).then((res) => {
+      if (res !== 200) {
         setWish(!wish);
-      });
+      }
+    });
   }, [wish]);
 
   return (
