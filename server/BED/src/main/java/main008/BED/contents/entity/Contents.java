@@ -48,9 +48,6 @@ public class Contents {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String details;
 
-//    @Column
-//    private Boolean wish;
-
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Categories categories;
@@ -90,7 +87,6 @@ public class Contents {
         CHILD_EDUCATION("아이 교육"),
         PARENTS_EDUCATION("부모 교육");
 
-//        @Getter
         private final String value;
 
 
@@ -171,7 +167,6 @@ public class Contents {
             likes.addContents(this);
         }
     }
-
 
     public void disclosureDecision() {
         if (this.countLecture == 0) {

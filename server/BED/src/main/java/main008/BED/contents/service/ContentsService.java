@@ -42,7 +42,6 @@ public class ContentsService {
     private final MyUploadClassRepository myUploadClassRepository;
     private final MyClassRepository myClassRepository;
     private final LikesRepository likesRepository;
-    private final UploadClassRepository uploadClassRepository;
     private final S3ServiceImpl s3ServiceImpl;
     private final PaymentService paymentService;
     
@@ -236,18 +235,13 @@ public class ContentsService {
     /*찜한 적 있는 컨텐츠일 때*/
     private void reWishContent(MyClass myClass, Contents contents) {
 
-        Wish wish = wishRepository.findByMyClassIdAndContentsId(
+        Wish wish1 = wishRepository.findByMyClassIdAndContentsId(
                 myClass.getMyClassId(), contents.getContentsId()).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
 
-        List<Wish> wishes = wishRepository.findAll();
+        wish1.setWished(false);
 
-        if (wishes.size() < 2) {
-            Wish wish1 = new Wish();
-            wish1.setMyClass(myClass);
-            wishRepository.save(wish1);
-        }
-        wishRepository.delete(wish);
+        wishRepository.save(wish1);
     }
 
     /*찜했다가 취소한 적 있는 컨텐츠일 때*/
@@ -297,8 +291,8 @@ public class ContentsService {
      */
     public double calculateAvgStar(Long contentsId) {
 
-        Contents content = contentsRepository.findByContentsId(contentsId).get();
-
+        Contents content = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
         List<Chapter> chapterList = content.getChapterList();
         if (chapterList == null) {

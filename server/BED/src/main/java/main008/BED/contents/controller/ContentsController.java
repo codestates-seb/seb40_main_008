@@ -6,7 +6,6 @@ import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.bookmark.mapper.BookmarkMapper;
 import main008.BED.bookmark.service.BookmarkService;
 import main008.BED.chapter.dto.ChapterDto;
-import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.service.ChapterService;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
@@ -18,7 +17,6 @@ import main008.BED.converter.StringToCategoryEnum;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
-import main008.BED.dto.MultiResponseDto;
 import main008.BED.dto.PageInfo;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
@@ -43,7 +41,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.awt.print.Pageable;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -60,7 +57,6 @@ public class ContentsController {
     private final BookmarkService bookmarkService;
     private final UploadClassService uploadClassService;
     private final S3Service s3Service;
-
     private final PaymentService paymentService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
@@ -69,7 +65,6 @@ public class ContentsController {
     private final DocsMapper docsMapper;
     private final ReviewMapper reviewMapper;
     private final WishMapper wishMapper;
-
     private final StringToCategoryEnum stringToCategoryEnum;
 
 
@@ -116,7 +111,6 @@ public class ContentsController {
 
         contentsService.wishContents(contentsId, users.getUsersId(), wish);
 
-//        return new ResponseEntity<>(response, HttpStatus.OK);
         return ResponseEntity.status(HttpStatus.OK).body("Update your wishlist.");
     }
 
