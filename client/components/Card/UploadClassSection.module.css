@@ -11,7 +11,10 @@
     margin-top: 40px;
     width: 300px;
     height: 215px;
-    background-color: #666666;
+    position: relative;
+    display: block;
+    object-fit: cover;
+    overflow: hidden;
 }
 
 .classinfoWrapper_line1 {
@@ -20,29 +23,35 @@
 }
 
 .classtitle {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     color: var(--faintwhite);
 }
 
 .classinfoWrapper_line2 {
     margin-top: 10px;
+    width: 300px;
 }
 
 .category_tutor {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--faintwhite);
 }
 
+.classinfoWrapper_line3 {
+    width: 300px;
+}
+
 .btnWrapper {
-    margin-left: 90px;
+    display: flex;
+    justify-content: right;
 }
 
 .btn {
     margin-left: 10px;
     background-color: transparent;
     border: none;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     color: var(--faintwhite);
 }
