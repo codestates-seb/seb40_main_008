@@ -3,6 +3,12 @@ import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import styles from './MyclassTab.module.css';
 
+export const handleSortChange = (e: any) => {
+    const value = e.target.value;
+    console.log('value', value);
+    return value;
+}
+
 const MyclassTab = () => {
 
     const [tabIndex, setTabIndex] = useState(0);
@@ -11,12 +17,14 @@ const MyclassTab = () => {
         <Tabs
             selectedIndex={tabIndex}
             onSelect={(tabIndex) => setTabIndex(tabIndex)}
+            onChange={(e) => handleSortChange(e)}
         >
 
-            <TabList className={styles.tablist}>
-                <Tab className={styles.tab}>수강중인 클래스</Tab>
-                <Tab className={styles.tab}>찜한 클래스</Tab>
+            <TabList className={styles.tablist} >
+                <Tab className={styles.tab} value='takingclass'>수강중인 클래스</Tab>
+                <Tab className={styles.tab} value='wishclass'>찜한 클래스</Tab>
             </TabList>
+
             <div className={styles.tabpanelWrapper}>
                 <TabPanel>
                     <div
