@@ -25,7 +25,7 @@ const TabNavigator = ({ activeLink }: TabNavigatorProps) => {
 					<p className={styles.font}>검색</p>
 				</div>
 			</Link>
-			<Link href={`/upload`}>
+			<Link href={`/myclass`}>
 				<div className={`${styles.tabItem} ${activeLink === 'myclass' && styles.active}`}>
 					<FontAwesomeIcon icon={faPlay} className={styles.Icon} />
 					<p className={styles.font}>내 클래스</p>

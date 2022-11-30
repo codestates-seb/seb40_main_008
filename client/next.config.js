@@ -3,7 +3,7 @@ const withPwa = require('next-pwa')({
 	dest: 'public',
 });
 
-module.exports = withPwa({
+const settings = {
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: { appDir: true },
@@ -16,6 +16,9 @@ module.exports = withPwa({
 			},
 		],
 	},
-});
+};
+
+module.exports =
+	process.env.NODE_ENV === 'development' ? settings : withPwa(settings);
 
 //picsum.photos/seed/picsum/200/300
