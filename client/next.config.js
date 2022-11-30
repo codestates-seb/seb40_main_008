@@ -19,6 +19,6 @@ const settings = {
 };
 
 module.exports =
-	process.env.NODE_ENV === 'development' ? settings : withPWA(settings);
+	process.env.NODE_ENV === 'development' ? settings : withPwa(settings);
 
 //picsum.photos/seed/picsum/200/300
