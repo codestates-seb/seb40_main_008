@@ -47,28 +47,4 @@ public class MyClassController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    @GetMapping("/auth")
-    public ResponseEntity getWhatMyClass(Principal principal,
-                                     @RequestParam("myclass") String myclass) {
-
-        Users users = usersService.findVerifiedUserByEmail(principal.getName());
-
-        MyClass myClass = myClassService.getMyClass(myclass, users.getUsersId());
-
-        switch (myclass) {
-
-            case "wishclass" :
-
-                return new ResponseEntity<>(
-                        myClassMapper.myClassToWishResponse(myClass), HttpStatus.OK);
-
-            case "takingclass" :
-
-                return new ResponseEntity<>(
-                        myClassMapper.myClassToTakingResponse(myClass), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

@@ -26,23 +26,6 @@ public class MyClassService {
     private final PaymentRepository paymentRepository;
     private final PaymentDetailRepository paymentDetailRepository;
 
-    @Transactional(readOnly = true)
-    public MyClass getMyClass(String kind, Long userId) {
-
-        MyClass myClass = new MyClass();
-
-        switch (kind) {
-
-            case "wishclass" :
-                myClass = getWishClass(userId);
-                break;
-            case "takingclass" :
-                myClass = getBuyClass(userId);
-                break;
-        }
-        return myClass;
-    }
-
     /*
     내가 찜한 컨텐츠
     */

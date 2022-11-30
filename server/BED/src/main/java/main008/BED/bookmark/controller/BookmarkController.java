@@ -20,7 +20,6 @@ import java.security.Principal;
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
-
     private final UsersService usersService;
     private final BookmarkMapper bookmarkMapper;
 
