@@ -2,13 +2,10 @@ package main008.BED.contents.dto;
 
 import lombok.*;
 import main008.BED.bookmark.dto.BookmarkDto;
-import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.docs.dto.DocsDto;
-import main008.BED.likes.dto.LikesDto;
 import main008.BED.review.dto.ReviewDto;
-import main008.BED.review.entity.Review;
 import main008.BED.users.dto.UsersDto;
 
 import java.util.List;
@@ -25,12 +22,6 @@ public class ContentsDto {
         private String tutorDetail;
         private String thumbnail;
         private String fileKey;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class Patch {
-
     }
 
     @Getter

@@ -173,8 +173,10 @@ public class CoinChargeService {
                 -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
 
         CoinChargeDetail coinChargeDetail =
-                coinChargeDetailRepository.findByCoinChargeAndId(coinCharge.getCoinChargeId(), coinDetailDetailId).orElseThrow(()
-                        -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
+                coinChargeDetailRepository.findByCoinChargeAndId(
+                        coinCharge.getCoinChargeId(),
+                        coinDetailDetailId
+                ).orElseThrow(() -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
 
         // 카카오페이 요청
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
