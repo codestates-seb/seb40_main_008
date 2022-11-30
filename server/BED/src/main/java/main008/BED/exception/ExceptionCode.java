@@ -15,6 +15,7 @@ public enum ExceptionCode {
 
     /*Review*/
     BAD_STAR_RATE(400, "별점은 1~5 사이의 정수 값을 입력해주세요."),
+    FORBIDDEN_USER(403, "해당 기능은 작성자만 수행할 수 있습니다."),
 
     /*Contents*/
     CONTENTS_NOT_FOUND(404, "Contents Not Found"),
@@ -24,7 +25,7 @@ public enum ExceptionCode {
 
     /*UploadClass*/
     UPLOAD_CLASS_NOT_FOUND(404, "UploadClass Not Found"),
-    UPLOAD_CLASS_EXISTS(409, "UploadClass Already exists"),
+    UPLOAD_CLASS_EXISTS(409, "해당 비디오 이름의 파일이 이미 업로드 되어 있습니다."),
 
     /*Docs*/
     DOCS_NOT_FOUND(404, "Docs Not Found"),
@@ -32,6 +33,7 @@ public enum ExceptionCode {
 
     /*Warning*/
     DUPLICATE_WARNING(409, "해당 강의에 대하여 이미 신고한 내역이 있습니다."),
+    FORBIDDEN_TUTOR(403, "강사는 해당 기능을 수행할 수 없습니다."),
 
     /*Payment Coin*/
     COIN_SHORTAGE(400, "잔액이 부족합니다."),
@@ -58,6 +60,7 @@ public enum ExceptionCode {
 
     /*Payment*/
     PAYMENT_NOT_FOUND(404, "Payment not found")
+
     ;
 
 

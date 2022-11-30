@@ -14,6 +14,7 @@ import main008.BED.uploadClass.mapper.UploadClassMapper;
 import main008.BED.uploadClass.service.UploadClassService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
@@ -29,8 +30,6 @@ public class UploadClassController {
 
     private final UploadClassService uploadClassService;
     private final UploadClassMapper uploadClassMapper;
-
-    private final ChapterRepository chapterRepository;
     private final DocsService docsService;
     private final DocsMapper docsMapper;
 
@@ -41,6 +40,7 @@ public class UploadClassController {
      * Post - 영상 & 강의 자료 올리기
      */
     @PostMapping("auth/chapter/lecture/{chapter-id}")
+    @Transactional // 트랜잭션 실패 시 docs만 저장 방지
     public ResponseEntity postUploadClass(@RequestParam("videoFile") MultipartFile videoFile,
                                           @RequestParam("title") String title,
                                           @RequestParam("docsFile") MultipartFile docsFile,

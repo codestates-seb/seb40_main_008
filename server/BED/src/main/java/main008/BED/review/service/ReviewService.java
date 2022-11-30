@@ -102,4 +102,12 @@ public class ReviewService {
             throw new BusinessLogicException(ExceptionCode.BAD_STAR_RATE);
         }
     }
+
+    /**
+     * FIND
+     */
+    public Long findReviewerId(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).get();
+        return review.getUsers().getUsersId();
+    }
 }

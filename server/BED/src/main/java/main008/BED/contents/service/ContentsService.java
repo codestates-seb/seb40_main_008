@@ -15,6 +15,9 @@ import main008.BED.myUploadClass.entity.MyUploadClass;
 import main008.BED.myUploadClass.repository.MyUploadClassRepository;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.service.PaymentService;
+import main008.BED.review.entity.Review;
+import main008.BED.uploadClass.entity.UploadClass;
+import main008.BED.uploadClass.repository.UploadClassRepository;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
 import main008.BED.wish.entity.Wish;
@@ -26,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,6 +42,7 @@ public class ContentsService {
     private final MyUploadClassRepository myUploadClassRepository;
     private final MyClassRepository myClassRepository;
     private final LikesRepository likesRepository;
+    private final UploadClassRepository uploadClassRepository;
     private final S3ServiceImpl s3ServiceImpl;
     private final PaymentService paymentService;
     
@@ -148,9 +153,11 @@ public class ContentsService {
 
         List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByContentsIdDesc(keyword);
 
+        ArrayList<Contents> discloseList = getDiscloseContents(contentsList);
+
         int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), contentsList.size());
-        Page<Contents> contentsPage = new PageImpl<>(contentsList.subList(start, end), pageable, contentsList.size());
+        int end = Math.min((start + pageable.getPageSize()), discloseList.size());
+        Page<Contents> contentsPage = new PageImpl<>(discloseList.subList(start, end), pageable, discloseList.size());
 
         return contentsPage;
     }
@@ -181,9 +188,11 @@ public class ContentsService {
 
         List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByLikesCountDesc(keyword);
 
+        ArrayList<Contents> discloseList = getDiscloseContents(contentsList);
+
         int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), contentsList.size());
-        Page<Contents> contentsPage = new PageImpl<>(contentsList.subList(start, end), pageable, contentsList.size());
+        int end = Math.min((start + pageable.getPageSize()), discloseList.size());
+        Page<Contents> contentsPage = new PageImpl<>(discloseList.subList(start, end), pageable, discloseList.size());
 
         return contentsPage;
     }
@@ -280,6 +289,57 @@ public class ContentsService {
         myUploadClass.setContentsList(contentsList);
 
         myUploadClassRepository.save(myUploadClass);
+    }
+    
+    private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
+        ArrayList<Contents> discloseList = new ArrayList<>();
+
+        for (Contents content : contentsList) {
+            Boolean disclosure = content.getDisclosure();
+            if (disclosure) {
+                discloseList.add(content);
+            }
+        }
+        return discloseList;
+    }
+
+    /**
+     * 총 별점 계산
+     */
+    public double calculateAvgStar(Long contentsId) {
+
+        Contents content = contentsRepository.findByContentsId(contentsId);
+
+
+        List<Chapter> chapterList = content.getChapterList();
+        if (chapterList == null) {
+            return 0;
+        }
+
+        List<List<UploadClass>> collect = chapterList.stream()
+                .map(chapter -> chapter.getUploadClassList())
+                .collect(Collectors.toList());
+
+        int sum = 0;
+        int count = 0;
+
+        for (List<UploadClass> uploadClassList : collect) {
+            for (UploadClass uploadClass : uploadClassList) {
+                List<Review> reviewList = uploadClass.getReviewList();
+                for (Review review : reviewList) {
+                    sum += review.getStarRate();
+                    count++;
+                }
+            }
+        }
+
+        if (count == 0) { // Review가 0개인 경우
+            return 0;
+        } else {
+            float avg = (float) sum / count;
+            return Math.round(avg * 100) / 100.0; // 소숫점 둘 째 자리까지
+        }
+
     }
 
 }

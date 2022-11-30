@@ -44,9 +44,7 @@ public class DocsService {
      * Create: Docs 저장
      */
     public Docs saveDocs(Docs docs) throws IOException {
-        if (docsRepository.existsByName(docs.getName())) {
-            throw new BusinessLogicException(ExceptionCode.DOCS_EXISTS);
-        }
+
         return docsRepository.save(docs);
     }
 

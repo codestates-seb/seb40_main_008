@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -21,6 +22,7 @@ public class Users {
     private Long usersId;
 
     @Column
+    @Email
     private String email;
 
     @Column

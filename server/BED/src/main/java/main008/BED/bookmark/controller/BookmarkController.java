@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import main008.BED.bookmark.dto.BookmarkDto;
 import main008.BED.bookmark.mapper.BookmarkMapper;
 import main008.BED.bookmark.service.BookmarkService;
+import main008.BED.users.entity.Users;
+import main008.BED.users.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 
 @RestController
 @RequestMapping
@@ -17,18 +20,21 @@ import javax.validation.constraints.Positive;
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
+
+    private final UsersService usersService;
     private final BookmarkMapper bookmarkMapper;
 
 
     /**
      * POST: 메모 작성
      */
-    @PostMapping("auth/{users-id}/bookmark/{uploadclass-id}")
-    public ResponseEntity postBookmark(@PathVariable("users-id") @Positive Long usersId,
+    @PostMapping("auth/bookmark/{uploadclass-id}")
+    public ResponseEntity postBookmark(Principal principal,
                                        @PathVariable("uploadclass-id") @Positive Long uploadClassId,
                                        @RequestBody @Valid BookmarkDto.Post post) {
 
-        bookmarkService.saveBookmark(bookmarkMapper.postDtoToEntity(post), usersId, uploadClassId);
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
+        bookmarkService.saveBookmark(bookmarkMapper.postDtoToEntity(post), user.getUsersId(), uploadClassId);
 
         return new ResponseEntity("The Bookmark is saved.", HttpStatus.OK);
     }
@@ -36,14 +42,16 @@ public class BookmarkController {
     /**
      * PATCH: 메모 수정
      */
-    @PatchMapping("auth/{users-id}/bookmark/{uploadclass-id}/{bookmark-id}")
-    public ResponseEntity patchBookmark(@PathVariable("users-id") @Positive Long usersId,
+    @PatchMapping("auth/bookmark/{uploadclass-id}/{bookmark-id}")
+    public ResponseEntity patchBookmark(Principal principal,
                                         @PathVariable("uploadclass-id") @Positive Long uploadClassId,
                                         @PathVariable("bookmark-id") @Positive Long bookmarkId,
                                         @RequestBody @Valid BookmarkDto.Patch patch) {
+
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
         bookmarkService.updateBookmark(
                 bookmarkMapper.patchDtoToEntity(patch),
-                usersId,
+                user.getUsersId(),
                 uploadClassId,
                 bookmarkId);
 
@@ -54,12 +62,14 @@ public class BookmarkController {
     /**
      * DELETE: 메모 삭제
      */
-    @DeleteMapping("auth/{users-id}/bookmark/{uploadclass-id}/{bookmark-id}")
-    public ResponseEntity deleteBookmark(@PathVariable("users-id") @Positive Long usersId,
+    @DeleteMapping("auth/bookmark/{uploadclass-id}/{bookmark-id}")
+    public ResponseEntity deleteBookmark(Principal principal,
                                          @PathVariable("uploadclass-id") @Positive Long uploadClassId,
                                          @PathVariable("bookmark-id") @Positive Long bookmarkId) {
 
-        bookmarkService.removeBookmark(usersId, uploadClassId, bookmarkId);
+        Users user = usersService.findVerifiedUserByEmail(principal.getName());
+
+        bookmarkService.removeBookmark(user.getUsersId(), uploadClassId, bookmarkId);
 
         return new ResponseEntity("The Memo is removed.", HttpStatus.OK);
     }

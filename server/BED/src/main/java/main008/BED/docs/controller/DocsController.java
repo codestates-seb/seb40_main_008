@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("auth/contents/chapter/docs")
+@RequestMapping
 @RequiredArgsConstructor
 public class DocsController {
 
@@ -35,7 +35,7 @@ public class DocsController {
     /**
      * Create
      */
-    @PostMapping()
+    @PostMapping("/auth/docs")
     public ResponseEntity postDocs(@RequestParam("file") MultipartFile file,
                                    @RequestParam("details") String details) throws IOException {
 
@@ -49,7 +49,7 @@ public class DocsController {
     /**
      * Read - User Downloads
      */
-    @GetMapping("{docs-id}")
+    @GetMapping("/auth/docs/{docs-id}")
     public ResponseEntity getDocs(@PathVariable("docs-id") Long id) {
 
         Docs docs = docsService.readDocs(id);
@@ -64,7 +64,7 @@ public class DocsController {
     /**
      * Read All - Docs Name List
      */
-    @GetMapping("all")
+    @GetMapping("/auth/docs/all")
     public ResponseEntity getAllDocsNames() {
         List<Docs> docsList = docsService.readAllDocs();
         return ResponseEntity
@@ -76,7 +76,7 @@ public class DocsController {
     /**
      * Patch
      */
-    @PatchMapping("{docs-id}")
+    @PatchMapping("/auth/docs/{docs-id}")
     public ResponseEntity patchDocs(@PathVariable("docs-id") Long id,
                                     @RequestParam("file") MultipartFile file,
                                     @RequestParam("details") String details) throws IOException {
@@ -93,7 +93,7 @@ public class DocsController {
     /**
      * Delete
      */
-    @DeleteMapping("{docs-id}")
+    @DeleteMapping("auth/contents/chapter/docs/{docs-id}")
     public ResponseEntity deleteDocs(@PathVariable("docs-id") Long id) {
         docsService.removeDocs(id);
         return new ResponseEntity<>(new DocsDto.SingleResponseDto("The Docs is removed."), HttpStatus.OK);
