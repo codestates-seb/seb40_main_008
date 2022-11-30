@@ -1,15 +1,19 @@
 import IUserInfo from '../../types/user/userinfo';
-import { extractToken } from './extractToken';
+// import { extractToken } from './extractToken';
 
 const getUserInfo = async (cookie: string): Promise<IUserInfo> => {
-	const token = extractToken(cookie);
-	console.log(
-		'🚀 ~ file: backendUserInfo.ts ~ line 6 ~ getUserInfo ~ token',
-		token
-	);
+	const token = cookie;
+	console.log('token', token);
+	// console.log('cookie', cookie);
+	// console.log(
+	// 	'🚀 ~ file: backendUserInfo.ts ~ line 6 ~ getUserInfo ~ token',
+	// 	token
+	// );
 
 	const res = await fetch('https://pioneroroom.com/auth/userinfo', {
+		method: 'GET',
 		headers: {
+			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`,
 		},
 	});
@@ -19,16 +23,14 @@ const getUserInfo = async (cookie: string): Promise<IUserInfo> => {
 		'🚀 ~ file: backendUserInfo.ts ~ line 18 ~ getUserInfo ~ body',
 		body
 	);
-	if (!body.userName) {
+	if (!body.data.userName) {
 		console.log('user info not found');
 		return null;
 	}
-	const { userInfo } = body;
-	return userInfo;
+	return body.data;
 };
 
 export default getUserInfo;
 
-// eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWtkbHN6MjFAZ21haWwuY29tIiwic3ViIjoiYWtkbHN6MjFAZ21haWwuY29tIiwiaWF0IjoxNjY5NzA3ODk4LCJleHAiOjE2Njk3MDk2OTh9.KKMhyzfs0eH8qf1ktbUzo16B92EgsNnnNgfeuqTPamqpQBhcm3ldCbSSKiy0W5m39kOahWw0VhhgVCH4yAP7QA
-
-// eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWtkbHN6MjFAZ21haWwuY29tIiwic3ViIjoiYWtkbHN6MjFAZ21haWwuY29tIiwiaWF0IjoxNjY5NzA3ODk4LCJleHAiOjE2Njk3MDk2OTh9.KKMhyzfs0eH8qf1ktbUzo16B92EgsNnnNgfeuqTPamqpQBhcm3ldCbSSKiy0W5m39kOahWw0VhhgVCH4yAP7QA
+// eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiamh3b245MzA0QGdtYWlsLmNvbSIsInN1YiI6Impod29uOTMwNEBnbWFpbC5jb20iLCJpYXQiOjE2Njk3ODE4NjQsImV4cCI6MTY2OTc4MzY2NH0.g0II9j7VdXIFiHNtQEfCHisCB9v3L69kPueizVcqkR07H9uHhQQpSZ9sV4WJT5uRV5UMSqOsXvk1IRRMACqtaQ
+// eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiamh3b245MzA0QGdtYWlsLmNvbSIsInN1YiI6Impod29uOTMwNEBnbWFpbC5jb20iLCJpYXQiOjE2Njk3ODE4NjQsImV4cCI6MTY2OTc4MzY2NH0.g0II9j7VdXIFiHNtQEfCHisCB9v3L69kPueizVcqkR07H9uHhQQpSZ9sV4WJT5uRV5UMSqOsXvk1IRRMACqtaQ

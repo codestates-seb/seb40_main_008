@@ -16,7 +16,6 @@ const MyclassTab = () => {
             <TabList className={styles.tablist}>
                 <Tab className={styles.tab}>수강중인 클래스</Tab>
                 <Tab className={styles.tab}>찜한 클래스</Tab>
-                <Tab className={styles.tab}>찜한 클래스</Tab>
             </TabList>
             <div className={styles.tabpanelWrapper}>
                 <TabPanel>
@@ -43,19 +42,6 @@ const MyclassTab = () => {
                         }}
                     >
                         찜한 클래스
-                    </div>
-                </TabPanel>
-                <TabPanel>
-                    <div
-                        style={{
-                            width: "90%",
-                            padding: "20px",
-                            height: "100%",
-                            border: "1px solid white",
-                            margin: "20px auto",
-                        }}
-                    >
-                        내가올린 클래스
                     </div>
                 </TabPanel>
             </div>
