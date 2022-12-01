@@ -4,7 +4,7 @@ import { ICategorySearchResult } from '../../types/category_search/categorySearc
 import styles from './UploadClassSection.module.css';
 import { titleLengthFormatter } from '../../utils/helper/titleLengthFormatter';
 
-// 수정, 삭제 logic 만들기
+// 수정, 삭제 버튼 logic 추가
 
 interface HomeContentProps {
     contentsList: ICategorySearchResult[];
