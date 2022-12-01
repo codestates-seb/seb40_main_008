@@ -40,9 +40,9 @@ public class MyUploadClassController {
     /**
      * Delete: 마이 페이지 화면 -> 내가 올린 클래스 -> 컨텐츠 삭제 기능
      */
-    @DeleteMapping("/{users-id}/myuploadclass/{contents-id}")
+    @DeleteMapping("/auth/myuploadclass/{contents-id}")
     public void deleteContents(@PathVariable("contents-id") @Positive Long contentsId,
-                               @PathVariable("users-id") @Positive Long usersId) {
-        contentsService.removeContents(contentsId);
+                               Principal principal) {
+        contentsService.removeContents(contentsId, principal);
     }
 }

@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,11 +74,17 @@ public class ContentsService {
     /**
      * contents 삭제
      */
-    public void removeContents(Long contentId) {
+    public void removeContents(Long contentId, Principal principal) {
 
         // TODO: 컨텐츠에 담긴 챕터, DOCS 연쇄 삭제
         Contents byContentsId = contentsRepository.findByContentsId(contentId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
+        Users byEmail = usersRepository.findByEmail(principal.getName());
+
+        if (byContentsId.getUsers().getUsersId() != byEmail.getUsersId()) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_DELETE);
+        }
 
         String fileKey = byContentsId.getFileKey();
         s3ServiceImpl.delete(fileKey, "/contents/thumbnail");

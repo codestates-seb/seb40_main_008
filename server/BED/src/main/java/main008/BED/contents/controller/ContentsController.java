@@ -119,21 +119,31 @@ public class ContentsController {
     /**
      * READ: 컨텐츠 상세화면 Response DTO
      */
-    @GetMapping("/auth/contents/{contents-id}")
+    @GetMapping("/contents/{contents-id}")
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
                                      Principal principal) {
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
-
+        boolean wished = false;
+        String role = "";
         Contents contents = contentsService.readContent(contentsId);
-
         ChapterDto.CurriculumInContent curriculumInContent
                 = chapterService.readCurriculumInContent(contentsId);
+        if (principal == null) {
+            role = "Unpaid_customer";
+        } else {
+            Users user = usersService.findVerifiedUserByEmail(principal.getName());
+            wished = myClassService.isWished(user.getUsersId(), contentsId);
+            boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
+            boolean isTutor = contents.getUsers().getUsersId().equals(user.getUsersId());
 
-        boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
-
-        boolean wished = myClassService.isWished(user.getUsersId(), contentsId);
-
+            if (isTutor) {
+                role = "creator";
+            } else if (bePaid) {
+                role = "Paid_customer";
+            } else {
+                role = "Unpaid_customer";
+            }
+        }
 
         ContentsDto.ResponseInContent responseInContent
                 = new ContentsDto.ResponseInContent(contentsId,
@@ -143,7 +153,7 @@ public class ContentsController {
                 contents.getCategories(),
                 contentsService.calculateAvgStar(contentsId),
                 contents.getPayment().getPrice(),
-                bePaid,
+                role,
                 wished,
                 contents.getUsers().getUserName(),
                 contents.getDetails(),
@@ -273,6 +283,17 @@ public class ContentsController {
                 .stream(e.getEnumConstants())
                 .map(EnumValue::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * DELETE: Contents 삭제
+     */
+    @DeleteMapping("/auth/contents/{contents-id}")
+    public ResponseEntity deleteContents(@PathVariable("contents-id") @Positive Long contentsId,
+                                         Principal principal) {
+
+        contentsService.removeContents(contentsId, principal);
+        return new ResponseEntity("The Content is removed.", HttpStatus.OK);
     }
 
 }
