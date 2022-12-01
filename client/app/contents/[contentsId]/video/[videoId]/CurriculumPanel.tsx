@@ -7,10 +7,6 @@ interface CurriculumProps {
 }
 
 const VideoPageCurriculumPanel = ({ curriculumInfo }: CurriculumProps) => {
-	console.log(
-		'🚀 ~ file: CurriculumPanel.tsx:9 ~ VideoPageCurriculumPanel ~ curriculumInfo',
-		curriculumInfo
-	);
 	return (
 		<section className={styles.container}>
 			{curriculumInfo.map((el, idx) => {

@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IVideoPage } from '../../../../../types/videoPage/video';
 import VideoPlayer from './VideoPlayer';
 import ReactPlayer from 'react-player';
@@ -15,9 +15,9 @@ interface VideoPageSectionProps {
 
 const VideoPageSection = ({ data }: VideoPageSectionProps) => {
 	const playerRef = useRef<ReactPlayer>(null);
+
 	return (
 		<>
-			<h2>Hi</h2>
 			<VideoPlayer url={data.video} videoRef={playerRef} />
 			<CustomTab
 				tabs={['커리큘럼', '수업 자료', '댓글', '메모하기']}
