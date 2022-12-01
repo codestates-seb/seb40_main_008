@@ -18,13 +18,15 @@ const getVideoPageContent = async (id: string) => {
 		);
 		const data = await res.json();
 		return data;
-	} catch (error) {}
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 const VideoIdPage = async ({ params: { videoId } }: VideoIdPageProps) => {
 	const userInfo = await getUserInfo(cookies().get('accessToken'));
 	const data = await getVideoPageContent(videoId);
-	console.log('🚀 ~ file: page.tsx:27 ~ VideoIdPage ~ data', data);
+
 	if (!userInfo) {
 		return (
 			<div>
@@ -32,7 +34,7 @@ const VideoIdPage = async ({ params: { videoId } }: VideoIdPageProps) => {
 			</div>
 		);
 	}
-	return <VideoPageSection />;
+	return <VideoPageSection data={data} />;
 };
 
 export default VideoIdPage;

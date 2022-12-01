@@ -3,7 +3,7 @@ import IUserInfo from '../../types/user/userinfo';
 // import { extractToken } from './extractToken';
 
 const getUserInfo = async (
-	cookie: RequestCookie | undefined
+	cookie: RequestCookie | undefined | null
 ): Promise<IUserInfo> => {
 	if (!cookie) return null;
 	const token = cookie.value;

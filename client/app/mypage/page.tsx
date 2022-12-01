@@ -13,11 +13,11 @@ import OrangeButton from '../../components/Buttons/orangeButton';
 import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import getUserInfo from '../../utils/helper/backendUserInfo';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 const MyPage = async () => {
 	// const session = useSession();
-	const userInfo = await getUserInfo(headers().get('cookie') ?? '');
+	const userInfo = await getUserInfo(cookies().get('accessToken'));
 
 	const session = {
 		status: 'authenticated',
