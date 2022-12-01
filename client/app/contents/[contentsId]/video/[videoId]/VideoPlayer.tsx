@@ -4,18 +4,19 @@ import ReactPlayer from 'react-player';
 import styles from './VideoPage.module.css';
 interface VideoPlayerProps {
 	url: string;
+	videoRef: any;
 }
 
-const VideoPlayer = ({ url }: VideoPlayerProps) => {
+const VideoPlayer = ({ url, videoRef }: VideoPlayerProps) => {
 	return (
 		<ReactPlayer
+			ref={videoRef}
 			url={url}
 			muted={true}
 			controls={true}
 			playing={true}
 			className={styles.videoPlayer}
 			width="100%"
-			height="100%"
 		/>
 	);
 };

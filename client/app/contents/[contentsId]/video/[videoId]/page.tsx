@@ -15,7 +15,7 @@ interface VideoIdPageProps {
 const getVideoPageContent = async (id: string) => {
 	try {
 		const res = await fetch(
-			`https://run.mocky.io/v3/c0c7dcd0-4ac8-4d00-a958-713cae6af257`
+			`https://run.mocky.io/v3/93226b14-071b-4741-b732-e48f9846dff0`
 		);
 		const data = await res.json();
 		return data;
