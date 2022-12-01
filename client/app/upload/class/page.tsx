@@ -1,17 +1,20 @@
 "use client";
 import styles from "./uploadClass.module.css";
 import { useRef, useState } from "react";
-
 import OrangeButton from "../../../components/Buttons/orangeButton";
 import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
 import { initialLecture, UploadLectureType } from "../../../types/uploadclass";
 import { useSearchParams } from "next/navigation";
+import { getCookie } from "cookies-next";
 
+import { redirect } from "next/navigation";
 const formData = new FormData();
 
 const UploadClassPage = () => {
+  const token = getCookie("accessToken");
   const searchParams = useSearchParams();
   const query = searchParams.get("slug");
+  const chapterId = searchParams.get("chapterId");
   console.log(query);
 
   const [file, setFile] = useState<any>();
@@ -37,21 +40,18 @@ const UploadClassPage = () => {
     alert(JSON.stringify(values, null, 2));
     formData.append("title", values.title);
     formData.append("details", values.details);
+
     console.log("formData:video:: ", formData.getAll("videoFile"));
     console.log("formData:docs:: ", formData.getAll("docsFile"));
     console.log("formData:title:: ", formData.getAll("title"));
 
-    // fetch("https://pioneroroom.com/auth/chapter/lecture/1", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //     Authorization:
-    //       "Bearer " +
-    //       "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoic2V1bmdpbGJhbmdAa2h1LmFjLmtyIiwic3ViIjoic2V1bmdpbGJhbmdAa2h1LmFjLmtyIiwiaWF0IjoxNjY5NzA2MDc4LCJleHAiOjE2Njk3MDc4Nzh9.HOZLX9fRfYoXeT-Yb3EcsT9TMIuUUFCYZFnpOJpC-OZKpyf0iAKtN5b11ZOlp5dt8OQPRBCfF5c7IIJNELbong",
-    //   },
-    //   //body: JSON.stringify(formData),
-    //   body: formData,
-    // });
+    fetch(`https://pioneroroom.com/auth/chapter/lecture/${chapterId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
   };
 
   const uploadVideofile = (e: React.ChangeEvent<HTMLInputElement>) => {

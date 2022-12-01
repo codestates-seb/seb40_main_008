@@ -10,18 +10,21 @@ import {
 import { useMemo, useRef, useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
 import { useSearchParams } from "next/navigation";
+import { getCookie } from "cookies-next";
 import { ICurriculumContent } from "../../../types/contents";
 import { fetchEditChapter } from "../../../api/fetchDelete";
 
 const formData = new FormData();
 
 const UploadChapterPage = () => {
+  const token = getCookie("accessToken");
   const searchParams = useSearchParams();
   const query = searchParams.get("slug");
   const thumbnail = searchParams.get("thumbnail");
   const chapterOrder = searchParams.get("chapterOrder");
   const title = searchParams.get("title");
-
+  const contentId = searchParams.get("contentId");
+  const chapterId = searchParams.get("chapterId");
   console.log("썸네일", thumbnail);
 
   const queryChapter = {
@@ -60,6 +63,9 @@ const UploadChapterPage = () => {
   //     console.error(err);
   //   }
   // };
+  //  const handlechapterEdit(){
+
+  //  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -83,19 +89,13 @@ const UploadChapterPage = () => {
     formData.append("chapterOrder", values.chapterOrder);
     formData.append("title", values.title);
 
-    console.log("formData:chapteror:: ", formData.getAll("chapterOrder"));
-    console.log("formData:title:: ", formData.getAll("title"));
-    // fetch("https://pioneroroom.com/auth/contents/chapter/&{contents-id}", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //     Authorization:
-    //       "Bearer " +
-    //       "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoic2V1bmdpbGJhbmdAa2h1LmFjLmtyIiwic3ViIjoic2V1bmdpbGJhbmdAa2h1LmFjLmtyIiwiaWF0IjoxNjY5NzA2MDc4LCJleHAiOjE2Njk3MDc4Nzh9.HOZLX9fRfYoXeT-Yb3EcsT9TMIuUUFCYZFnpOJpC-OZKpyf0iAKtN5b11ZOlp5dt8OQPRBCfF5c7IIJNELbong",
-    //   },
-    //   //body: JSON.stringify(formData),
-    //   body: formData,
-    // });
+    fetch(`https://pioneroroom.com/auth/contents/chapter/${contentId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
   };
 
   const handleClickFileInput = () => {
@@ -165,10 +165,10 @@ const UploadChapterPage = () => {
             <option>-- 선택하세요 --</option>
             <optgroup>
               <option value="chapter 1">Chapter 1</option>
-              <option value="chapter 1">Chapter 2</option>
-              <option value="chapter 1">Chapter 3</option>
-              <option value="chapter 1">Chapter 4</option>
-              <option value="chapter 1">Chapter 5</option>
+              <option value="chapter 2">Chapter 2</option>
+              <option value="chapter 3">Chapter 3</option>
+              <option value="chapter 4">Chapter 4</option>
+              <option value="chapter 5">Chapter 5</option>
             </optgroup>
           </select>
 
@@ -185,7 +185,7 @@ const UploadChapterPage = () => {
             <p className={styles.title}>챕터 썸네일</p>
             <input
               type="file"
-              accept="image/jpg, image/jpeg, image/png string"
+              accept="image/png"
               name="thumbnail"
               ref={fileInput}
               id="ex_file"
@@ -205,7 +205,7 @@ const UploadChapterPage = () => {
           <div className={styles.uploadimg}>{showImage}</div>
 
           {query == "edit" ? (
-            <OrangeButton name={"수정하기"} />
+            <OrangeButton type={"submit"} name={"수정하기"} />
           ) : (
             <OrangeButton type={"submit"} name={"올리기"} />
           )}

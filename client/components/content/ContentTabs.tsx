@@ -53,7 +53,7 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
         </TabPanel>
         <TabPanel>
           <CurriculumInfo
-            bePaid={contentInfo?.bepaid}
+            role={contentInfo?.role}
             contentsId={contentInfo?.contentsId}
             curriculumInfo={curriculumInfo}
           />

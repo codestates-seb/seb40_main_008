@@ -11,6 +11,7 @@ export async function fetchDelete(url: string, id: number) {
 
   try {
     const response = await fetch(`${url}${id}`, requestOptions);
+    console.log("adsadsad", `${url}${id}`);
     return response.status;
   } catch (err) {
     console.error(err);

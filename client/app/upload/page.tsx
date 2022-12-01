@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import SignInButton from "../../components/Buttons/SignInButton";
 import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
 import Image from "next/image";
+import { getCookie } from "cookies-next";
+
 import {
   initialClass,
   UploadClassType,
@@ -14,16 +16,25 @@ import {
 const formData = new FormData();
 
 const UploadPage = () => {
-  const session = useSession();
-  // const session = {
-  //   status: "loading",
-  // };
+  const token = getCookie("accessToken");
+
+  const session = {
+    status: "authenticated",
+  };
+
   const fileInput = useRef<HTMLInputElement>(null);
-  const reader = new FileReader();
+
   const [values, setValues] = useState<UploadClassType>(initialClass);
   const [imageFile, setImageFile] = useState<UploadImage | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value,
@@ -44,12 +55,19 @@ const UploadPage = () => {
     e.preventDefault();
     console.log("formData: ", formData);
     console.log("formData.get(`thumbnail`): ", formData.get("thumbnail"));
-    fetch("api/temp", {
+    console.log("토근", token);
+
+    formData.append("categories", values.categories);
+    formData.append("details", values.details);
+    formData.append("price", values.price);
+    formData.append("tutorDetail", values.tutorDetail);
+    formData.append("title", values.title);
+
+    fetch("https://pioneroroom.com/auth/uploadcontents", {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
-      //body: JSON.stringify(formData),
       body: formData,
     });
   };
@@ -177,25 +195,23 @@ const UploadPage = () => {
             )} */}
 
             <p className={styles.title}>강의 소개</p>
-            <input
-              type="text"
+            <textarea
               name="details"
-              onChange={handleChange}
+              onChange={handleTextChange}
               className={styles.introduceClass}
-            ></input>
+            ></textarea>
             <p className={styles.title}>강사 소개</p>
-            <input
-              type="text"
+            <textarea
               name="tutorDetail"
-              onChange={handleChange}
+              onChange={handleTextChange}
               className={styles.introduceInstructor}
-            ></input>
+            ></textarea>
 
             <div className={styles.filebox}>
               <p className={styles.title}>클래스 썸네일</p>
               <input
                 type="file"
-                accept="image/jpg, image/jpeg, image/png"
+                accept="image/png"
                 name="thumbnail"
                 ref={fileInput}
                 id="ex_file"

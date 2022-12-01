@@ -10,11 +10,11 @@ import { UploadChapterType } from "../../types/uploadclass";
 interface CurriculumInfoProps {
   curriculumInfo: ICurriculumContent[];
   contentsId: number;
-  bePaid: boolean;
+  role: "creator" | "Unpaid_customer" | "Paid_customer";
 }
 
 const CurriculumInfo = ({
-  bePaid,
+  role,
   contentsId,
   curriculumInfo,
 }: CurriculumInfoProps) => {
@@ -23,7 +23,7 @@ const CurriculumInfo = ({
   const handleChapterDeleteClick = async (chapterId: number) => {
     try {
       const status = await fetchDelete(
-        `https://pioneroroom.com/auth/contents/chapter/${chapterId}`,
+        `https://pioneroroom.com/auth/contents/chapter/`,
         chapterId
       );
       if (status !== 200) throw new Error("status is not good");
@@ -36,7 +36,7 @@ const CurriculumInfo = ({
   const handleClassDeleteClick = async (uploadClassId: number) => {
     try {
       const status = await fetchDelete(
-        `https://pioneroroom.com/auth/chapter/lecture/${uploadClassId}`,
+        `https://pioneroroom.com/auth/chapter/lecture/`,
         uploadClassId
       );
       if (status !== 200) throw new Error("status is not good");
@@ -48,81 +48,111 @@ const CurriculumInfo = ({
 
   return (
     <>
-      {curriculumInfo.map((e, index) => (
-        <div key={index} className={styles.Wrapper}>
-          <div className={styles.thumbnail}>
-            <Image src={e.thumbnail} alt={e.title} fill={true} />
-          </div>
-          <div className={styles.chapterWrapper}>
-            <div className={styles.chapterTitle}>
-              <h4>{e.chapterOrder}</h4>
-              <div className={styles.chapter}>
-                <h3>{e.title}</h3>
-                <span>
+      {curriculumInfo &&
+        curriculumInfo.map((e, index) => (
+          <div key={index} className={styles.Wrapper}>
+            <div className={styles.thumbnail}>
+              <Image src={e.thumbnail} alt={e.title} fill={true} />
+            </div>
+            <div className={styles.chapterWrapper}>
+              <div className={styles.chapterTitle}>
+                <h4>{e.chapterOrder}</h4>
+                <div className={styles.chapter}>
+                  <h3>{e.title}</h3>
+                  {/* <h1>{role}</h1> */}
+                  <span>
+                    {role == "creator" ? (
+                      <>
+                        <Link
+                          href={{
+                            pathname: "/upload/chapter",
+                            query: {
+                              slug: "edit",
+                              chapterId: e.chapterId,
+                              thumbnail: e.thumbnail,
+                              title: e.title,
+                              chapterOrder: e.chapterOrder,
+                            },
+                          }}
+                        >
+                          <button className={styles.btn}>수정</button>
+                        </Link>
+                        <button
+                          onClick={() => handleChapterDeleteClick(e.chapterId)}
+                          className={styles.btn}
+                        >
+                          삭제
+                        </button>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </span>
+                </div>
+
+                {e.uploadClassList.map((e, index) => (
+                  <>
+                    <div key={index} className={styles.class}>
+                      <div>
+                        <Link
+                          href={{
+                            pathname: "/video",
+                            query: { classID: e.uploadClassId },
+                          }}
+                        >
+                          <h4>{e.title}</h4>
+                        </Link>
+                      </div>
+                      <div>
+                        {role == "creator" ? (
+                          <>
+                            <Link
+                              href={{
+                                pathname: "/upload/class",
+                                query: { slug: "edit" },
+                              }}
+                            >
+                              <button className={styles.btn}>수정</button>
+                            </Link>
+                            <button
+                              onClick={() =>
+                                handleClassDeleteClick(e.uploadClassId)
+                              }
+                              className={styles.btn}
+                            >
+                              삭제
+                            </button>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ))}
+
+                <div className={styles.addbtnWrapper}>
                   <Link
                     href={{
-                      pathname: "/upload/chapter",
+                      pathname: "/upload/class",
                       query: {
-                        slug: "edit",
-                        thumbnail: e.thumbnail,
-                        title: e.title,
-                        chapterOrder: e.chapterOrder,
+                        chapterId: e.chapterId,
                       },
                     }}
                   >
-                    <button className={styles.btn}>수정</button>
+                    <button className={styles.addbtn}>
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        className={styles.fontimg}
+                      />
+                      강의 추가하기
+                    </button>
                   </Link>
-                  <button
-                    onClick={() => handleChapterDeleteClick(e.chapterId)}
-                    className={styles.btn}
-                  >
-                    삭제
-                  </button>
-                </span>
-              </div>
-
-              {e.uploadClassList.map((e, index) => (
-                <>
-                  <div className={styles.class}>
-                    <div>
-                      <h4 key={index}>{e.title}</h4>
-                      <h5>영상길이</h5>
-                    </div>
-                    <div>
-                      <Link
-                        href={{
-                          pathname: "/upload/class",
-                          query: { slug: "edit" },
-                        }}
-                      >
-                        <button className={styles.btn}>수정</button>
-                      </Link>
-                      <button
-                        onClick={() => handleClassDeleteClick(e.uploadClassId)}
-                        className={styles.btn}
-                      >
-                        삭제
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ))}
-
-              <div className={styles.addbtnWrapper}>
-                <Link href={"/upload/class"}>
-                  <button className={styles.addbtn}>
-                    <FontAwesomeIcon
-                      icon={faPencil}
-                      className={styles.fontimg}
-                    />
-                    강의 추가하기
-                  </button>
-                </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
     </>
   );
 };

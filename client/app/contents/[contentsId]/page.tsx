@@ -3,23 +3,11 @@ import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
 import ContentInfo from "../../../components/content/ContentInfo";
 import ContentTabs from "../../../components/content/ContentTabs";
 import { IContent, ICurriculumContent } from "../../../types/contents";
-import { cookies } from "next/headers";
 
-const getContentInfo = async (
-  cookie: string,
-  contentsId: string
-): Promise<IContent> => {
-  const token = cookie;
-  console.log("dadsadsadasdasd", token);
-  const res = await fetch(
-    `https://pioneroroom.com/auth/contents/${contentsId}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+const getContentInfo = async (contentsId: string): Promise<IContent> => {
+  const res = await fetch(`https://pioneroroom.com/contents/${contentsId}`, {
+    method: "GET",
+  });
   const { contentInfo } = await res.json();
   return contentInfo;
 };
@@ -33,33 +21,19 @@ const getContentInfo = async (
 // };
 
 const getCurriculum = async (
-  cookie: string,
   contentsId: string
 ): Promise<Array<ICurriculumContent>> => {
-  const token = cookie;
-  const res = await fetch(
-    `https://pioneroroom.com/auth/contents/${contentsId}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const res = await fetch(`https://pioneroroom.com/contents/${contentsId}`, {
+    method: "GET",
+  });
   const { curriculumInfo } = await res.json();
   return curriculumInfo;
 };
 
 const ContentsIdPage = async ({ params }: any) => {
-  const contentInfo = await getContentInfo(
-    cookies().get("accessToken")?.value ?? "",
-    params.contentsId
-  );
+  const contentInfo = await getContentInfo(params.contentsId);
   // const contentInfo = await getContentInfo2();
-  const curriculumInfo = await getCurriculum(
-    cookies().get("accessToken")?.value ?? "",
-    params.contentsId
-  );
+  const curriculumInfo = await getCurriculum(params.contentsId);
   console.log("parm", params);
   return (
     <>
