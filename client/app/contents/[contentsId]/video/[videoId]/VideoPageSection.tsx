@@ -15,7 +15,6 @@ interface VideoPageSectionProps {
 
 const VideoPageSection = ({ data }: VideoPageSectionProps) => {
 	const playerRef = useRef<ReactPlayer>(null);
-
 	return (
 		<>
 			<VideoPlayer url={data.video} videoRef={playerRef} />

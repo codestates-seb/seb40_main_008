@@ -3,16 +3,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import React, { useState } from 'react';
 import styles from './CustomTab.module.css';
 
-// 형태
-// <CustomTab
-// tabs={['탭제목1', '탭제목2', '탭제목3']}
-// contents={[
-//     <CurriculumPanel curriculum={Question.curriculum}></CurriculumPanel>
-//     <CurriculumPanel curriculum={Question.curriculum}></CurriculumPanel>
-//     <CurriculumPanel curriculum={Question.curriculum}></CurriculumPanel>
-// ]}
-// />
-
 interface CustomTabProps {
 	tabs: string[];
 	contents: JSX.Element[];
