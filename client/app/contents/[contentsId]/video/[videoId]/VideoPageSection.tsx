@@ -34,8 +34,8 @@ const VideoPageSection = ({ data }: VideoPageSectionProps) => {
 function getPanels(data: IVideoPage) {
 	return [
 		<CurriculumPanel curriculumInfo={data.curriculumInfo} key={1} />,
-		<HandOutsPanel key={2} />,
-		<CommentsPanel key={3} />,
+		<HandOutsPanel handOutInfo={data.docsInfo} key={2} />,
+		<CommentsPanel reviews={data.reviewInfo} key={3} />,
 		<MemoPanel key={4} />,
 	];
 }
