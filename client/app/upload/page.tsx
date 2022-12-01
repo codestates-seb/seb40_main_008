@@ -17,6 +17,7 @@ const formData = new FormData();
 
 const UploadPage = () => {
   const token = getCookie("accessToken");
+  console.log(token);
 
   const session = {
     status: "authenticated",
@@ -121,7 +122,7 @@ const UploadPage = () => {
     );
   }, [imageFile]);
 
-  if (session.status === "loading") return <p>loading</p>;
+  // if (session.status === "loading") return <p>loading</p>;
   if (session.status === "unauthenticated")
     return (
       <>

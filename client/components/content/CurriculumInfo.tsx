@@ -101,6 +101,7 @@ const CurriculumInfo = ({
                           }}
                         >
                           <h4>{e.title}</h4>
+                          <h1>{role}</h1>
                         </Link>
                       </div>
                       <div>

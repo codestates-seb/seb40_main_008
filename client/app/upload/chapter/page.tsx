@@ -9,7 +9,7 @@ import {
 } from "../../../types/uploadclass";
 import { useMemo, useRef, useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { ICurriculumContent } from "../../../types/contents";
 import { fetchEditChapter } from "../../../api/fetchDelete";
@@ -95,7 +95,17 @@ const UploadChapterPage = () => {
         Authorization: `Bearer ${token}`,
       },
       body: formData,
+    }).then((res) => {
+      if (res.status === 201) {
+        redirect(`/contents/${contentId}`);
+      }
     });
+
+    // try{
+    //   const response = await postChapter(contentId)
+    //   redirect(`/contents/${contentId}`);
+    // } catch(err){
+    //   console.error(err);
   };
 
   const handleClickFileInput = () => {
