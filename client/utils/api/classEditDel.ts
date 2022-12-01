@@ -1,7 +1,9 @@
 import { getCookie } from "cookies-next";
+// import { cookies } from 'next/headers';
 
 export const editMyClass = async (id: number) => {
 
+    // const token = cookies().get('accessToken')?.value;
     const token = getCookie('accessToken');
     console.log("🚀 ~ file: classEditDel.ts:6 ~ editMyClass ~ token", token)
 

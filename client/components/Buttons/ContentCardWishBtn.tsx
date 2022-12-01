@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import styles from "../content/ContentInfo.module.css";
-import { patchWish } from "../../api/fetchWish";
+import { patchWish } from "../../utils/api/fetchWish";
+
 interface ContentCardWishProps {
   contentId: number;
 }
