@@ -12,7 +12,7 @@ public class WishDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        
+
         private String wished;
     }
 

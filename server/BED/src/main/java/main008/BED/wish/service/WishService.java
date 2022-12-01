@@ -7,6 +7,7 @@ import main008.BED.exception.ExceptionCode;
 import main008.BED.myClass.entity.MyClass;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.repository.WishRepository;
+import main008.BED.wish.service.statePattern.WishButton;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class WishService {
 
     private final WishRepository wishRepository;
+    public static WishButton wishButton = new WishButton();
 
     public Wish createWish(MyClass myClass) {
 
@@ -49,25 +51,9 @@ public class WishService {
         return wishRepository.save(wish);
     }
 
-    /*찜한 적 있는 컨텐츠일 때*/
-    public void reWishContent(MyClass myClass, Contents contents) {
+    /*찜한 적 있는 컨텐츠일 때 State Pattern*/
+    public void wishStatePattern(MyClass myClass, Contents contents) {
 
-        Wish wish1 = wishRepository.findByMyClassIdAndContentsId(
-                myClass.getMyClassId(), contents.getContentsId()).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.WISH_NOT_FOUND));
-
-        wish1.setWished(false);
-
-        wishRepository.save(wish1);
-    }
-
-    /*찜했다가 취소한 적 있는 컨텐츠일 때*/
-    public Wish reCancelWish(Wish wish, MyClass myClass, Contents contents) {
-
-        wish.setWished(true);
-        wish.setMyClass(myClass);
-        wish.setContents(contents);
-
-        return wishRepository.save(wish);
+        wishButton.clickButton(wishButton, wishRepository, myClass, contents);
     }
 }

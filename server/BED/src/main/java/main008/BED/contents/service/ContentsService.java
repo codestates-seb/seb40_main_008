@@ -136,19 +136,16 @@ public class ContentsService {
     /*찜 기능 조건문*/
     private void ifWishHas(Wish wish, Contents contents, MyClass myClass, Boolean wishTrue) {
 
-        if (wish.getContents() == null) {
+        if (wish.getContents() == contents && wish.getWished()) {
+
+            wishService.wishStatePattern(myClass, contents);
+
+        } else {
 
             Wish wish1 = wishService.firstWishContent(wish, contents, myClass, wishTrue);
             myClassService.setWishForMyClass(wish1, myClass);
             contents.addWish(wish1);
             contentsRepository.save(contents);
-        } else {
-
-            if (wish.getContents() == contents && wish.getWished()) {
-                wishService.reWishContent(myClass, contents);
-            } else {
-                wishService.reCancelWish(wish, myClass, contents);
-            }
         }
     }
     

@@ -2,9 +2,12 @@ package main008.BED.likes.repository;
 
 import main008.BED.likes.entity.Likes;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.LockModeType;
 
 @Repository
 public interface LikesRepository extends JpaRepository<Likes, Long> {
@@ -15,5 +18,6 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
 
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE likes SET likes_Count = likes_Count - 1", nativeQuery = true)
+//    @Lock(LockModeType.PESSIMISTIC_WRITE) // 비관적 행 베타잠금, 동시성 처리. 아직 이해 부족
     void likesCountDown(Likes likes);
 }
