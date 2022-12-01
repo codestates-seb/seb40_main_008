@@ -97,7 +97,7 @@ const UploadChapterPage = () => {
       body: formData,
     }).then((res) => {
       if (res.status === 201) {
-        redirect(`/contents/${contentId}`);
+        //redirect(`/contents/${contentId}`);
       }
     });
 
