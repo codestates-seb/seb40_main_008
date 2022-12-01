@@ -7,7 +7,8 @@ const settings = {
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: { appDir: true },
-	fontLoaders: [{ loader: '@next/font/google' }],
+	// fontLoaders is not a proper key
+	// fontLoaders: [{ loader: '@next/font/google' }],
 	images: {
 		remotePatterns: [
 			{
@@ -18,7 +19,9 @@ const settings = {
 	},
 };
 
-module.exports =
-	process.env.NODE_ENV === 'development' ? settings : withPwa(settings);
+// module.exports =
+// 	process.env.NODE_ENV === 'development' ? settings : withPwa(settings);
+
+module.exports = settings;
 
 //picsum.photos/seed/picsum/200/300
