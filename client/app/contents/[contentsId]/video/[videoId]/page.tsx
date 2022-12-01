@@ -1,8 +1,4 @@
-import { cookies } from 'next/headers';
 import React from 'react';
-import HomeNavBar from '../../../../../components/HomeNavBar/HomeNavBar';
-import TabNavigator from '../../../../../components/TabNavigator/TabNavigator';
-import getUserInfo from '../../../../../utils/helper/backendUserInfo';
 import verifyLogin from '../../../../../utils/VerifyLogin';
 import VideoPageSection from './VideoPageSection';
 
@@ -15,7 +11,7 @@ interface VideoIdPageProps {
 const getVideoPageContent = async (id: string) => {
 	try {
 		const res = await fetch(
-			`https://run.mocky.io/v3/93226b14-071b-4741-b732-e48f9846dff0`
+			`https://run.mocky.io/v3/4ff0e774-4fe1-4022-a420-0b2334bda7a5`
 		);
 		const data = await res.json();
 		return data;

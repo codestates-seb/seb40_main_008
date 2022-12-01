@@ -4,5 +4,16 @@
 	top: 0;
 	left: 0;
 	z-index: 1;
-	border: 2px solid white;
+}
+
+.Container {
+	margin: 40px 20px;
+}
+
+.curriculumSection {
+	margin-top: 12px;
+}
+
+.curriChapter {
+	list-style: none;
 }
