@@ -6,7 +6,10 @@ export interface IContent {
   categories: string;
   details: string;
   grade: number;
-  tutorname: string;
+  price: number;
+  role: "creator" | "Unpaid_customer" | "Paid_customer";
+  wished: boolean;
+  tutorName: string;
   tutorDetail: string;
 }
 

@@ -6,7 +6,7 @@ export interface UploadClassType {
   details: string;
   tutorDetail: string;
   thumbnail: any;
-  price: number;
+  price: string;
 }
 
 export const initialClass = {
@@ -15,7 +15,7 @@ export const initialClass = {
   details: "",
   tutorDetail: "",
   thumbnail: null,
-  price: 0,
+  price: "",
 };
 
 export interface UploadImage {
@@ -25,9 +25,9 @@ export interface UploadImage {
 }
 
 export interface UploadChapterType {
-  thumbnail: string | null;
-  chapterOrder: string | null;
-  title: string | null;
+  thumbnail: any;
+  chapterOrder: any;
+  title: any;
 }
 
 export const initialChapter = {
