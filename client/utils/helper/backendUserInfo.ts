@@ -1,9 +1,13 @@
+import { RequestCookie } from 'next/dist/server/web/spec-extension/cookies';
 import IUserInfo from '../../types/user/userinfo';
 // import { extractToken } from './extractToken';
 
-const getUserInfo = async (cookie: string): Promise<IUserInfo> => {
-	const token = cookie;
-	console.log('token', token);
+const getUserInfo = async (
+	cookie: RequestCookie | undefined
+): Promise<IUserInfo> => {
+	if (!cookie) return null;
+	const token = cookie.value;
+	console.log('🚀 ~ file: backendUserInfo.ts:9 ~ token', token);
 	// console.log('cookie', cookie);
 	// console.log(
 	// 	'🚀 ~ file: backendUserInfo.ts ~ line 6 ~ getUserInfo ~ token',
