@@ -27,7 +27,7 @@ const getTakingClasses = async (): Promise<Array<ICategorySearchResult>> => {
 		})
 		return paymentsArray;
 	} catch (error) {
-		console.error(error);
+		console.log(error);
 		// redirect(`/`);
 		return [];
 	}
@@ -64,7 +64,7 @@ const MyclassPage = async () => {
 	const wishClasses = await getWishClasses();
 	const isLogin = await verifyLogin();
 
-	if (!isLogin) redirect(`/`);
+	if (!isLogin) redirect(`/login`);
 
 	return (
 		<>
