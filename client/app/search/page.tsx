@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import styles from './search.module.css';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
 import SearchBar from '../../components/Search/SearchBar';
@@ -9,14 +9,12 @@ import getSearchData from '../../components/Search/PopularKeyword';
 // params.categoryName으로 받기
 
 const SearchPage = async () => {
-
     // 인기 검색어(무한 fetching 문제 발생...)
-    const popularKeyword = await getSearchData();
+    // const popularKeyword = await getSearchData();
 
     return (
         <>
             <div className={styles.searchpageWrapper}>
-
                 <SearchBar />
 
                 {/* <div className={styles.title}>인기순</div>
@@ -31,11 +29,10 @@ const SearchPage = async () => {
                         </ol>
                     )
                 })} */}
-
             </div>
-            <TabNavigator activeLink={'home'} />
+            <TabNavigator activeLink={'search'} />
         </>
-    )
-}
+    );
+};
 
 export default SearchPage;
