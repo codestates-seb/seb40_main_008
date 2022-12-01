@@ -19,6 +19,7 @@ import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.users.service.UsersService;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.service.WishService;
+import main008.BED.wish.service.statePattern.WishButton;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -136,19 +137,16 @@ public class ContentsService {
     /*찜 기능 조건문*/
     private void ifWishHas(Wish wish, Contents contents, MyClass myClass, Boolean wishTrue) {
 
-        if (wish.getContents() == null) {
+        if (wish.getContents() == contents && wish.getWished()) {
+
+            wishService.wishStatePattern(myClass, contents);
+
+        } else {
 
             Wish wish1 = wishService.firstWishContent(wish, contents, myClass, wishTrue);
             myClassService.setWishForMyClass(wish1, myClass);
             contents.addWish(wish1);
             contentsRepository.save(contents);
-        } else {
-
-            if (wish.getContents() == contents && wish.getWished()) {
-                wishService.reWishContent(myClass, contents);
-            } else {
-                wishService.reCancelWish(wish, myClass, contents);
-            }
         }
     }
     
