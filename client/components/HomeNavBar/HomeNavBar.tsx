@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 import IUserInfo from '../../types/user/userinfo';
 
 interface HomeNavBarProps {
-	userInfo: IUserInfo;
+	userInfo: IUserInfo | undefined;
 }
 
 const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {

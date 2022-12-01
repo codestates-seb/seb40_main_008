@@ -3,6 +3,7 @@ import React from 'react';
 import HomeNavBar from '../../../../../components/HomeNavBar/HomeNavBar';
 import TabNavigator from '../../../../../components/TabNavigator/TabNavigator';
 import getUserInfo from '../../../../../utils/helper/backendUserInfo';
+import verifyLogin from '../../../../../utils/VerifyLogin';
 import VideoPageSection from './VideoPageSection';
 
 interface VideoIdPageProps {
@@ -24,7 +25,7 @@ const getVideoPageContent = async (id: string) => {
 };
 
 const VideoIdPage = async ({ params: { videoId } }: VideoIdPageProps) => {
-	const userInfo = await getUserInfo(cookies().get('accessToken'));
+	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(videoId);
 
 	if (!userInfo) {
