@@ -19,7 +19,6 @@ import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.users.service.UsersService;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.service.WishService;
-import main008.BED.wish.service.statePattern.WishButton;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
