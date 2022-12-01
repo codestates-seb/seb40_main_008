@@ -7,7 +7,7 @@ const getUserInfo = async (
 ): Promise<IUserInfo> => {
 	if (!cookie) return null;
 	const token = cookie.value;
-	console.log('🚀 ~ file: backendUserInfo.ts:9 ~ token', token);
+	// console.log('🚀 ~ file: backendUserInfo.ts:9 ~ token', token);
 	// console.log('cookie', cookie);
 	// console.log(
 	// 	'🚀 ~ file: backendUserInfo.ts ~ line 6 ~ getUserInfo ~ token',
@@ -23,10 +23,10 @@ const getUserInfo = async (
 	});
 
 	const body = await res.json();
-	console.log(
-		'🚀 ~ file: backendUserInfo.ts ~ line 18 ~ getUserInfo ~ body',
-		body
-	);
+	// console.log(
+	// 	'🚀 ~ file: backendUserInfo.ts ~ line 18 ~ getUserInfo ~ body',
+	// 	body
+	// );
 	if (!body.data?.userName) {
 		console.log('user info not found');
 		return null;

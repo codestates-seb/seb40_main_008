@@ -3,6 +3,7 @@ import React from 'react';
 import HomeNavBar from '../../../../../components/HomeNavBar/HomeNavBar';
 import TabNavigator from '../../../../../components/TabNavigator/TabNavigator';
 import getUserInfo from '../../../../../utils/helper/backendUserInfo';
+import VideoPageSection from './VideoPageSection';
 
 interface VideoIdPageProps {
 	params: {
@@ -10,12 +11,20 @@ interface VideoIdPageProps {
 	};
 }
 
-const getVideoPageContent = async () => {};
+const getVideoPageContent = async (id: string) => {
+	try {
+		const res = await fetch(
+			`https://run.mocky.io/v3/c0c7dcd0-4ac8-4d00-a958-713cae6af257`
+		);
+		const data = await res.json();
+		return data;
+	} catch (error) {}
+};
 
 const VideoIdPage = async ({ params: { videoId } }: VideoIdPageProps) => {
-	console.log('🚀 ~ file: page.tsx:12 ~ VideoIdPage ~ videoId', videoId);
 	const userInfo = await getUserInfo(cookies().get('accessToken'));
-
+	const data = await getVideoPageContent(videoId);
+	console.log('🚀 ~ file: page.tsx:27 ~ VideoIdPage ~ data', data);
 	if (!userInfo) {
 		return (
 			<div>
@@ -23,11 +32,7 @@ const VideoIdPage = async ({ params: { videoId } }: VideoIdPageProps) => {
 			</div>
 		);
 	}
-	return (
-		<>
-			<div>{JSON.stringify(userInfo)}</div>
-		</>
-	);
+	return <VideoPageSection />;
 };
 
 export default VideoIdPage;
