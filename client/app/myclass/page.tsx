@@ -3,16 +3,16 @@ import styles from './myclass.module.css';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
 import { ICategorySearchResult } from '../../types/homeScreen/mainVideoContents';
 import MyclassTab from '../../components/Tab/MyclassTab';
-import getUserInfo from '../../utils/helper/backendUserInfo';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import verifyLogin from '../../utils/VerifyLogin';
 
 const getTakingClasses = async (): Promise<Array<ICategorySearchResult>> => {
 
 	const token = cookies().get('accessToken')?.value;
 	try {
 		if (!token) {
-			throw new Error('error');
+			throw new Error('token is not defined');
 		}
 		const response = await fetch(`https://run.mocky.io/v3/a63e1d37-5ef1-4f49-ba19-d8e65cd8d7c7`, {
 			method: 'GET',
@@ -38,6 +38,9 @@ const getWishClasses = async (): Promise<Array<ICategorySearchResult>> => {
 	const token = cookies().get('accessToken')?.value;
 
 	try {
+		if (!token) {
+			throw new Error('error');
+		}
 		const response = await fetch(`https://run.mocky.io/v3/58bcfdf3-cafe-42d2-a460-0725cee3d02f`, {
 			method: 'GET',
 			headers: {
@@ -59,23 +62,16 @@ const getWishClasses = async (): Promise<Array<ICategorySearchResult>> => {
 const MyclassPage = async () => {
 	const takingClasses = await getTakingClasses();
 	const wishClasses = await getWishClasses();
+	const isLogin = await verifyLogin();
 
-	const userInfo = await getUserInfo(cookies().get('accessToken')?.value ?? '');
+	if (!isLogin) redirect(`/`);
 
 	return (
 		<>
-			{userInfo ?
-				(
-					<>
-						<div className={styles.title}>내 클래스</div>
-						<MyclassTab takingClasses={takingClasses} wishClasses={wishClasses} />
+			<h1 className={styles.title}>내 클래스</h1>
+			<MyclassTab takingClasses={takingClasses} wishClasses={wishClasses} />
 
-						<TabNavigator activeLink={'myclass'} />
-					</>
-				)
-				:
-				redirect(`/login`)
-			}
+			<TabNavigator activeLink={'myclass'} />
 		</>
 
 	);
