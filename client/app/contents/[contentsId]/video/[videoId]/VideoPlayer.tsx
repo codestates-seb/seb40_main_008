@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
+import { useHasWindow } from '../../../../../utils/hooks/useHasWindow';
 import styles from './VideoPage.module.css';
 interface VideoPlayerProps {
 	url: string;
@@ -8,14 +9,7 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ url, videoRef }: VideoPlayerProps) => {
-	const [hasWindow, setHasWindow] = useState(false);
-	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			setHasWindow(true);
-		}
-	}, []);
-	console.log('height', videoRef.current);
-
+	const hasWindow = useHasWindow();
 	if (!hasWindow) {
 		return (
 			<div
