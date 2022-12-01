@@ -40,7 +40,7 @@ public class LikesController {
 
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
-        Likes likes = likesService.likesContents(contentsId, users.getUsersId(), likesDetailMapper.postToEntity(post));
+        Likes likes = likesService.likesContents(contentsId, users, likesDetailMapper.postToEntity(post));
 
         List<LikesDetail> likesDetails = likesService.findTrueLikes(likes);
 

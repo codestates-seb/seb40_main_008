@@ -9,7 +9,8 @@ import main008.BED.likes.entity.Likes;
 import main008.BED.likes.entity.LikesDetail;
 import main008.BED.likes.repository.LikesDetailRepository;
 import main008.BED.likes.repository.LikesRepository;
-import main008.BED.users.repository.UsersRepository;
+import main008.BED.likes.service.statePattern.LikesButton;
+import main008.BED.users.entity.Users;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +26,9 @@ import java.util.List;
 public class LikesService {
 
     private final ContentsRepository contentsRepository;
-    private final UsersRepository usersRepository;
     private final LikesRepository likesRepository;
     private final LikesDetailRepository likesDetailRepository;
+    public static LikesButton likesButton = new LikesButton();
 
     public void createLikes(Contents contents) {
 
@@ -66,61 +67,45 @@ public class LikesService {
      * isolation 어트리뷰트를 사용하여 격리 조정 옵션 지정이 가능하다.
      *
      * isolation = Isolation.SERIALIZABLE : 동일한 데이터에 대해 동시에 둘 이상의 트랜잭션 수행이 불가하도록 한다.
+     * 하지만 DB에서 많이 사용하지 않음
+     * why?
+     * 동시 처리 성능 최하위이기 때문
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Likes likesContents(Long contentsId, Long usersId, LikesDetail likesDetail) {
+    public Likes likesContents(Long contentsId, Users users, LikesDetail likesDetail) {
 
         Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
         Likes likes = contents.getLikes();
 
-        ifLikesHave(usersId, likes, contents, likesDetail);
+        ifLikesHave(users, likes, contents, likesDetail);
 
         return likesRepository.save(likes);
     }
 
     /*좋아요 기능 조건문*/
-    private void ifLikesHave(Long usersId, Likes likes, Contents contents, LikesDetail likesDetail) {
+    private void ifLikesHave(Users users, Likes likes, Contents contents, LikesDetail likesDetail) {
 
-        if (likesDetailRepository.findByUsersLikes(usersId, likes.getLikesId()).isPresent()) {
+        LikesDetail likesDetail1 = likesDetailRepository.findByUsersLikes(users.getUsersId(), likes.getLikesId());
 
-            LikesDetail likesDetail1 = likesDetailRepository.findByUsersLikes(
-                    usersId, likes.getLikesId()).orElseThrow(()
-                    -> new BusinessLogicException(ExceptionCode.LIKES_NOT_FOUND));
+        if (likesDetail1 != null) {
 
-            reLikesClick(likesDetail1, likes, contents);
+            // State Pattern
+            likesButton.clickButton(likesButton, likes, likesDetail1, contents, likesRepository, contentsRepository);
 
         } else {
 
-            likesClick(likesDetail, likes, contents, usersId);
+            likesClick(likesDetail, likes, contents, users);
         }
-    }
-
-    /*좋아요를 누른 이력이 있는 경우*/
-    private void reLikesClick(LikesDetail likesDetail, Likes likes, Contents contents) {
-
-        if (likesDetail.getLiked()) {
-
-            likesDetail.setLiked(false);
-            likesRepository.likesCountDown(likes);
-            contentsRepository.likesCountForContentsDown(contents.getContentsId());
-        } else {
-
-            likesDetail.setLiked(true);
-            likesRepository.likesCountUp(likes);
-            contentsRepository.likesCountForContentsUp(contents.getContentsId());
-        }
-
-        likesDetailRepository.save(likesDetail);
     }
 
     /*처음 좋아요를 누른 경우*/
-    private void likesClick(LikesDetail likesDetail, Likes likes, Contents contents, Long usersId) {
+    private void likesClick(LikesDetail likesDetail, Likes likes, Contents contents, Users users) {
 
         likesDetail.setLikes(likes);
         likesDetail.setLiked(true);
-        likesDetail.setUsers(usersRepository.findByUsersId(usersId));
+        likesDetail.setUsers(users);
         likesDetail.setCreatedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
 
         likes.setContents(contents);
