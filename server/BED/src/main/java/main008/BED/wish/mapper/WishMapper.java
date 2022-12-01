@@ -7,6 +7,12 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface WishMapper {
 
-    Wish postToWish(WishDto.Post post);
+    default Wish postToWish(WishDto.Post post) {
+
+        Wish wish = new Wish();
+        wish.setWished(Boolean.valueOf(post.getWished()));
+
+        return wish;
+    }
 
 }

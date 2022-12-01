@@ -9,11 +9,11 @@ import main008.BED.contents.dto.ContentsDto;
 public class WishDto {
 
     @Getter
-    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Post {
-        private Boolean wished;
+
+        private String wished;
     }
 
     @Getter

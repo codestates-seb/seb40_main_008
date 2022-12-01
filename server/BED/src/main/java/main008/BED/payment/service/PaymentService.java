@@ -2,9 +2,9 @@ package main008.BED.payment.service;
 
 import lombok.RequiredArgsConstructor;
 import main008.BED.contents.entity.Contents;
-import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
+import main008.BED.myClass.entity.MyClass;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.entity.PaymentDetail;
 import main008.BED.payment.repository.PaymentDetailRepository;
@@ -26,9 +26,8 @@ import java.util.List;
 public class PaymentService {
 
     private final PaymentDetailRepository paymentDetailRepository;
-    private final PaymentRepository paymentRepository;
-    private final ContentsRepository contentsRepository;
     private final UsersRepository usersRepository;
+    private final PaymentRepository paymentRepository;
 
     /**
      * 컨텐츠 개설 시 가격 등록
@@ -47,20 +46,16 @@ public class PaymentService {
      * 컨텐츠 결제
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public void payContent(PaymentDetail paymentDetail, Long userId, Long contentsId) {
+    public void payContent(PaymentDetail paymentDetail, Users users, Contents contents) {
 
-        Payment payment = paymentRepository.findByContentsId(contentsId).orElseThrow(()
+        Payment payment = paymentRepository.findByContentsId(contents.getContentsId()).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.PAYMENT_NOT_FOUND));
 
         List<PaymentDetail> paymentDetails = paymentDetailRepository.findByPaymentId(payment.getPaymentId());
 
-        Users buyUsers = usersRepository.findByUsersId(userId);
-
-        moveCoinBuyerToSeller(payment, buyUsers, contentsId);
-
-        paymentDetail.setPayment(payment);
+        paymentDetail.setUsers(setCoinToUsers(payment, users.getUsersId(), contents));
         paymentDetail.setPayedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
-        paymentDetail.setUsers(buyUsers);
+        paymentDetail.setPayment(payment);
 
         paymentDetails.add(paymentDetail);
 
@@ -68,26 +63,31 @@ public class PaymentService {
         paymentRepository.save(payment);
     }
 
-    /**
-     * 구매자의 코인이 판매자에게로
-     */
-    private void moveCoinBuyerToSeller(Payment payment, Users users, Long contentsId) {
+    @Transactional(readOnly = true)
+    public List<Payment> getPayContent(Long usersId, MyClass myClass) {
 
-        Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+        List<Payment> paymentList = myClass.getPayments();
+        List<PaymentDetail> paymentDetails = paymentDetailRepository.findByUsersId(usersId);
 
-        Users tutorUsers = usersRepository.findByUsersId(contents.getUsers().getUsersId());
+        for (PaymentDetail paymentDetail : paymentDetails) {
 
-        verifiedBuyContents(payment, users.getUsersId());
+            Payment payment = findPayment(paymentDetail);
 
-        users.setTotalCoin(users.getTotalCoin() - payment.getPrice());
+            payment.setMyClass(myClass);
+            paymentList.add(paymentRepository.save(payment));
+        }
 
-        verifyCountOfCoin(users.getTotalCoin());
+        return paymentList;
+    }
 
-        tutorUsers.setTotalCoin(tutorUsers.getTotalCoin() + payment.getPrice());
+    @Transactional(readOnly = true)
+    public Payment findPayment(PaymentDetail paymentDetail) {
 
-        usersRepository.save(tutorUsers);
-        usersRepository.save(users);
+        return paymentRepository.findByPaymentId(
+                paymentDetail
+                        .getPayment()
+                        .getPaymentId()).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.PAYMENT_NOT_FOUND));
     }
 
     /**
@@ -102,10 +102,27 @@ public class PaymentService {
         }
     }
 
+    public Users setCoinToUsers(Payment payment, Long usersId, Contents contents) {
+
+        Users users = usersRepository.findByUsersId(usersId);
+        Users tutorUsers = usersRepository.findByUsersId(contents.getUsers().getUsersId());
+
+        verifiedBuyContents(payment, users.getUsersId());
+
+        users.setTotalCoin(users.getTotalCoin() - payment.getPrice());
+
+        verifyCountOfCoin(users.getTotalCoin());
+
+        tutorUsers.setTotalCoin(tutorUsers.getTotalCoin() + payment.getPrice());
+
+        usersRepository.save(tutorUsers);
+        return usersRepository.save(users);
+    }
+
     /**
      * 결제 시 코인 부족 확인
      */
-    private void verifyCountOfCoin(Integer totalCoin) {
+    public void verifyCountOfCoin(Integer totalCoin) {
 
         if (totalCoin < 0) {
             throw new BusinessLogicException(ExceptionCode.COIN_SHORTAGE);
@@ -115,7 +132,7 @@ public class PaymentService {
     /**
      * 이미 구매했던 컨텐츠인지 확인
      */
-    private void verifiedBuyContents(Payment payment, Long usersId) {
+    public void verifiedBuyContents(Payment payment, Long usersId) {
 
         if (paymentDetailRepository.findBoughtContents(payment.getPaymentId(), usersId) != null) {
             throw new BusinessLogicException(ExceptionCode.DUPLICATE_PAY);

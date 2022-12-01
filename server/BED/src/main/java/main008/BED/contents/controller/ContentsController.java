@@ -111,7 +111,7 @@ public class ContentsController {
 
         Wish wish = wishMapper.postToWish(post);
 
-        contentsService.wishContents(contentsId, users.getUsersId(), wish);
+        contentsService.wishContents(contentsId, users.getUsersId(), wish.getWished());
 
         return ResponseEntity.status(HttpStatus.OK).body("Update your wishlist.");
     }

@@ -10,7 +10,7 @@ import main008.BED.coinCharge.repository.CoinChargeRepository;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
 import main008.BED.userPage.entity.UserPage;
-import main008.BED.userPage.repository.UserPageRepository;
+import main008.BED.userPage.service.UserPageService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import java.security.Principal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,10 +42,36 @@ public class CoinChargeService {
 
     private final CoinChargeDetailRepository coinChargeDetailRepository;
     private final CoinChargeRepository coinChargeRepository;
-    private final UserPageRepository userPageRepository;
+    private final UserPageService userPageService;
     private final UsersRepository usersRepository;
     private CoinChargeDetailDto.KakaoReadyResponse kakaoReady;
 
+    public void createCoinCharge(UserPage userPage) {
+
+        CoinCharge coinCharge = userPage.getCoinCharge();
+        coinCharge.setCoinChargeDetails(new ArrayList<>());
+        coinChargeRepository.save(coinCharge);
+
+        CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
+        List<CoinChargeDetail> coinChargeDetailList = coinCharge.getCoinChargeDetails();
+        coinChargeDetailList.add(coinChargeDetail);
+        coinCharge.setCoinChargeDetails(coinChargeDetailList);
+
+        coinCharge.setUserPage(userPage);
+        coinChargeRepository.save(coinCharge);
+    }
+
+    private CoinCharge findCoinCharge(Long userPageId) {
+
+        return coinChargeRepository.findByUserPage(userPageId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
+    }
+
+    private List<CoinChargeDetail> findCoinChargeDetails(Long coinChargeId) {
+
+        return coinChargeDetailRepository.findByCoinCharge(coinChargeId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
+    }
 
     /**
      * 카카오페이 결제 준비
@@ -55,16 +82,11 @@ public class CoinChargeService {
     public CoinChargeDetailDto.KakaoReadyResponse kakaoPayReady(Principal principal, CoinCharge coinChargePost) {
 
         Users users = usersRepository.findByEmail(principal.getName());
+        UserPage userPage = userPageService.findUserPage(users.getUsersId());
 
-        UserPage userPage = userPageRepository.findByUsersId(users.getUsersId()).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        CoinCharge coinCharge = findCoinCharge(userPage.getUserPageId());
 
-        CoinCharge coinCharge = coinChargeRepository.findByUserPage(userPage.getUserPageId()).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
-
-        List<CoinChargeDetail> coinChargeDetails =
-                coinChargeDetailRepository.findByCoinCharge(coinCharge.getCoinChargeId()).orElseThrow(()
-                        -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
+        List<CoinChargeDetail> coinChargeDetails = findCoinChargeDetails(coinCharge.getCoinChargeId());
 
         CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
         coinChargeDetail.setChargeAmount(coinChargePost.getChargeAmount().getAmount());
@@ -166,11 +188,8 @@ public class CoinChargeService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public CoinChargeDetailDto.KakaoCancelResponse kakaoCancel(Long usersId, Long coinDetailDetailId) {
 
-        UserPage userPage = userPageRepository.findByUsersId(usersId).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
-
-        CoinCharge coinCharge = coinChargeRepository.findByUserPage(userPage.getUserPageId()).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
+        UserPage userPage = userPageService.findUserPage(usersId);
+        CoinCharge coinCharge = findCoinCharge(userPage.getUserPageId());
 
         CoinChargeDetail coinChargeDetail =
                 coinChargeDetailRepository.findByCoinChargeAndId(
@@ -258,12 +277,8 @@ public class CoinChargeService {
     @Transactional(readOnly = true)
     public List<CoinChargeDetail> getCoinChargeDetail(Long usersId) {
 
-        UserPage userPage = userPageRepository.findByUsersId(usersId).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
-
-        CoinCharge coinCharge =
-                coinChargeRepository.findByUserPage(userPage.getUserPageId()).orElseThrow(()
-                -> new BusinessLogicException(ExceptionCode.COIN_CHARGE_NOT_FOUND));
+        UserPage userPage = userPageService.findUserPage(usersId);
+        CoinCharge coinCharge = findCoinCharge(userPage.getUserPageId());
 
         return coinChargeDetailRepository.findByCoinCharge(coinCharge.getCoinChargeId()).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.DETAIL_NOT_FOUND));
