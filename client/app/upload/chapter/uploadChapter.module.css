@@ -11,22 +11,23 @@
   margin: 0px auto;
 }
 .classtitle {
-  margin: 0;
+  margin-top: 15px;
   margin-bottom: 15px;
 }
 .title {
   margin: 0;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 .chapternameinput {
   height: 40px;
   width: 100%;
+  background-color: white;
   border-radius: 10px;
 }
 .select {
   /* 생략 */
-  height: 35px;
+  height: 40px;
   width: 100%;
   font-weight: 400;
   line-height: 1.5;
@@ -42,6 +43,7 @@
 
 .filebox {
   display: flex;
+  margin-top: 30px;
   align-items: center;
 }
 .filebox label {
@@ -70,18 +72,18 @@
 }
 
 .uploadimg {
-  height: 200px;
+  height: 240px;
   align-items: center;
   background-color: white;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 80px;
   border-radius: 10px;
 }
 .uploadbtn {
   margin-left: 10px;
   height: 25px;
   width: 40px;
-  margin-top: 5px;
+
   font-size: 12px;
   border: 0;
   outline: 0;

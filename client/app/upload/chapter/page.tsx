@@ -9,23 +9,28 @@ import {
 } from "../../../types/uploadclass";
 import { useMemo, useRef, useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
+import { getCookie } from "cookies-next";
 import { ICurriculumContent } from "../../../types/contents";
 import { fetchEditChapter } from "../../../utils/api/fetchDelete";
 
+const formData = new FormData();
+
 const UploadChapterPage = () => {
+  const token = getCookie("accessToken");
   const searchParams = useSearchParams();
   const query = searchParams.get("slug");
   const thumbnail = searchParams.get("thumbnail");
   const chapterOrder = searchParams.get("chapterOrder");
   const title = searchParams.get("title");
-
+  const contentId = searchParams.get("contentId");
+  const chapterId = searchParams.get("chapterId");
   console.log("썸네일", thumbnail);
 
   const queryChapter = {
-    thumbnail,
-    chapterOrder,
-    title,
+    thumbnail: thumbnail,
+    chapterOrder: chapterOrder,
+    title: title,
   };
 
   const img = {
@@ -58,6 +63,9 @@ const UploadChapterPage = () => {
   //     console.error(err);
   //   }
   // };
+  //  const handlechapterEdit(){
+
+  //  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -77,6 +85,27 @@ const UploadChapterPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert(JSON.stringify(values, null, 2));
+
+    formData.append("chapterOrder", values.chapterOrder);
+    formData.append("title", values.title);
+
+    fetch(`https://pioneroroom.com/auth/contents/chapter/${contentId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }).then((res) => {
+      if (res.status === 201) {
+        //redirect(`/contents/${contentId}`);
+      }
+    });
+
+    // try{
+    //   const response = await postChapter(contentId)
+    //   redirect(`/contents/${contentId}`);
+    // } catch(err){
+    //   console.error(err);
   };
 
   const handleClickFileInput = () => {
@@ -88,6 +117,7 @@ const UploadChapterPage = () => {
 
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
+      formData.append("thumbnail", fileList[0]);
 
       setImageFile({
         file: fileList[0],
@@ -145,10 +175,10 @@ const UploadChapterPage = () => {
             <option>-- 선택하세요 --</option>
             <optgroup>
               <option value="chapter 1">Chapter 1</option>
-              <option value="chapter 1">Chapter 2</option>
-              <option value="chapter 1">Chapter 3</option>
-              <option value="chapter 1">Chapter 4</option>
-              <option value="chapter 1">Chapter 5</option>
+              <option value="chapter 2">Chapter 2</option>
+              <option value="chapter 3">Chapter 3</option>
+              <option value="chapter 4">Chapter 4</option>
+              <option value="chapter 5">Chapter 5</option>
             </optgroup>
           </select>
 
@@ -165,7 +195,7 @@ const UploadChapterPage = () => {
             <p className={styles.title}>챕터 썸네일</p>
             <input
               type="file"
-              accept="image/jpg, image/jpeg, image/png string"
+              accept="image/png"
               name="thumbnail"
               ref={fileInput}
               id="ex_file"
@@ -185,7 +215,7 @@ const UploadChapterPage = () => {
           <div className={styles.uploadimg}>{showImage}</div>
 
           {query == "edit" ? (
-            <OrangeButton name={"수정하기"} />
+            <OrangeButton type={"submit"} name={"수정하기"} />
           ) : (
             <OrangeButton type={"submit"} name={"올리기"} />
           )}

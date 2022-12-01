@@ -37,16 +37,14 @@
   z-index: 3;
 }
 
-.introduceClass {
-  height: 100px;
-  width: 300px;
-  border-radius: 10px;
-}
+.introduceClass,
 .introduceInstructor {
   height: 100px;
   width: 300px;
+  padding: 5px;
   border-radius: 10px;
 }
+
 .filebox {
   display: flex;
   align-items: center;
@@ -127,6 +125,6 @@
 }
 
 /* Firefox */
-.classPrice[type=number] {
+.classPrice[type="number"] {
   -moz-appearance: textfield;
 }

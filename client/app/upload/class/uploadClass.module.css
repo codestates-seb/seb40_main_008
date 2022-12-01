@@ -27,6 +27,7 @@
 .chapternameinput {
   height: 40px;
   width: 100%;
+  background-color: white;
   border-radius: 10px;
 }
 .select {
@@ -39,7 +40,7 @@
   background-color: #fff;
   padding: 0.6em 1.4em 0.5em 0.8em;
   margin: 0;
-  border: 1px solid #aaa;
+
   border-radius: 10px;
   margin-bottom: 10px;
   z-index: 3;
@@ -55,9 +56,12 @@
   height: 40px;
   padding: 0 10px;
   vertical-align: middle;
-  border: 1px solid #dddddd;
+
   width: 70%;
   color: #999999;
+}
+.filebox {
+  margin-bottom: 70px;
 }
 
 .filebox label {
@@ -97,6 +101,8 @@
   height: 130px;
   width: 100%;
   border-radius: 10px;
+  padding: 5px;
+  background-color: white;
   margin-bottom: 20px;
 }
 .ex {
@@ -129,7 +135,6 @@
   outline: 0;
   color: white;
   border-radius: 3px;
-
   box-shadow: 1px 1px gray;
   background-color: #f2952f;
 }

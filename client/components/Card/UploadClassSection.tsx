@@ -12,7 +12,6 @@ interface HomeContentProps {
 }
 
 const UploadClassSection = ({ contentsList }: HomeContentProps) => {
-
     return (
         <div className={styles.myuploadclassWrapper}>
             {contentsList.map((e) => (
