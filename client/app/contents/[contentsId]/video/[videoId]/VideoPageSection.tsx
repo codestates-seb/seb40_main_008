@@ -14,10 +14,6 @@ interface VideoPageSectionProps {
 }
 
 const VideoPageSection = ({ data }: VideoPageSectionProps) => {
-	console.log(
-		'🚀 ~ file: VideoPageSection.tsx:13 ~ VideoPageSection ~ data',
-		data.curriculumInfo
-	);
 	const playerRef = useRef<ReactPlayer>(null);
 	return (
 		<>
@@ -36,7 +32,7 @@ function getPanels(data: IVideoPage) {
 		<CurriculumPanel curriculumInfo={data.curriculumInfo} key={1} />,
 		<HandOutsPanel handOutInfo={data.docsInfo} key={2} />,
 		<CommentsPanel reviews={data.reviewInfo} key={3} />,
-		<MemoPanel key={4} />,
+		<MemoPanel memoInfo={data.bookmarkInfo} key={4} />,
 	];
 }
 
