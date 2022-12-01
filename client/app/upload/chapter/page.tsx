@@ -11,7 +11,7 @@ import { useMemo, useRef, useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
 import { useSearchParams } from "next/navigation";
 import { ICurriculumContent } from "../../../types/contents";
-import { fetchEditChapter } from "../../../api/fetchDelete";
+import { fetchEditChapter } from "../../../utils/api/fetchDelete";
 
 const UploadChapterPage = () => {
   const searchParams = useSearchParams();

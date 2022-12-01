@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ICategorySearchResult } from '../../types/category_search/categorySearchType';
 import styles from './UploadClassSection.module.css';
 import { titleLengthFormatter } from '../../utils/helper/titleLengthFormatter';
+import DelEditbtn from '../Buttons/DelEditbtn';
 
 // 수정, 삭제 버튼 logic 추가
 
@@ -11,6 +12,7 @@ interface HomeContentProps {
 }
 
 const UploadClassSection = ({ contentsList }: HomeContentProps) => {
+
     return (
         <div className={styles.myuploadclassWrapper}>
             {contentsList.map((e) => (
@@ -32,15 +34,12 @@ const UploadClassSection = ({ contentsList }: HomeContentProps) => {
                         </div>
                         <div className={styles.classinfoWrapper_line3}>
                             <span className={styles.btnWrapper}>
-                                <button className={styles.btn}>수정</button>
-                                <button className={styles.btn}>삭제</button>
+                                <DelEditbtn id={e.contentsId} />
                             </span>
                         </div>
-
                     </div>
                 </div>
             ))}
-
         </div>
     )
 }

@@ -1,9 +1,7 @@
-import { cookies } from 'next/headers';
 import React from 'react'
 import BaseNavbar from '../../../components/BaseNavBar/BaseNavbar';
 import UploadClassSection from '../../../components/Card/UploadClassSection';
 import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
-import styles from './myuploadclass.module.css';
 
 // 로그인 로직 추가해야 함.
 // http://pioneroroom/auth/mypage/myuploadclass
