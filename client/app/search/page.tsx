@@ -9,15 +9,15 @@ import getSearchData from '../../components/Search/PopularKeyword';
 // params.categoryName으로 받기
 
 const SearchPage = async () => {
-	// 인기 검색어(무한 fetching 문제 발생...)
-	// const popularKeyword = await getSearchData();
+    // 인기 검색어(무한 fetching 문제 발생...)
+    // const popularKeyword = await getSearchData();
 
-	return (
-		<>
-			<div className={styles.searchpageWrapper}>
-				<SearchBar />
+    return (
+        <>
+            <div className={styles.searchpageWrapper}>
+                <SearchBar />
 
-				{/* <div className={styles.title}>인기순</div>
+                {/* <div className={styles.title}>인기순</div>
 
                 {popularKeyword.map((e: any, idx: number) => {
                     return (
@@ -29,10 +29,10 @@ const SearchPage = async () => {
                         </ol>
                     )
                 })} */}
-			</div>
-			<TabNavigator activeLink={'home'} />
-		</>
-	);
+            </div>
+            <TabNavigator activeLink={'search'} />
+        </>
+    );
 };
 
 export default SearchPage;
