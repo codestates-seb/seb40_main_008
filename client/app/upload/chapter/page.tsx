@@ -186,6 +186,7 @@ const UploadChapterPage = () => {
           <div className={styles.uploadimg}>{showImage}</div>
 
           {query == "edit" ? (
+
             // <OrangeButton type={"submit"} name={"수정하기"} />
             <CurriculumEdit
               url={"http://localhost:8080/auth/contents/chapter/"}
@@ -195,6 +196,7 @@ const UploadChapterPage = () => {
               Id={chapterId}
               contentId={contentId}
             />
+
           ) : (
             <OrangeButton type={"submit"} name={"올리기"} />
           )}

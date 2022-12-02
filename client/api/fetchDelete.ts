@@ -24,6 +24,7 @@ export async function fetchEditChapter(
   chapterOrder: string,
   title: string,
   Id: any
+
 ) {
   const token = getCookie("accessToken");
   const requestOptions = {
