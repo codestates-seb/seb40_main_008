@@ -18,7 +18,6 @@ const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
 
 	const handleSubmit = (time: string) => {
 		const token = getCookie('accessToken');
-		console.log('🚀 ~ file: MemoPanel.tsx:19 ~ handleSubmit ~ token', token);
 		fetch(`https://pioneroroom.com/auth/bookmark/${uploadClassId}`, {
 			method: 'POST',
 			headers: {
@@ -32,23 +31,11 @@ const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
 		});
 	};
 
-	const handleSkipToTimeStamp = () => {
+	const handleSkipToTimeStamp = (timeLine: string) => {
 		if (playerRef.current) {
-			console.log(
-				'🚀 ~ file: MemoPanel.tsx:50 ~ handleSkipToTimeStamp ~ time',
-				time
-			);
-			// format hh:mm:ss to seconds
-			const timeArr = time.split(':');
-			const seconds =
-				parseInt(timeArr[0]) * 3600 +
-				parseInt(timeArr[1]) * 60 +
-				parseInt(timeArr[2]);
-			console.log(
-				'🚀 ~ file: MemoPanel.tsx:40 ~ handleSkipToTimeStamp ~ seconds',
-				seconds
-			);
-			// playerRef.current.seekTo(seconds);
+			const timeArr = timeLine.split(':');
+			const seconds = parseInt(timeArr[0]) * 60 + parseInt(timeArr[1]);
+			playerRef.current.seekTo(seconds);
 		}
 	};
 
@@ -71,9 +58,9 @@ const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
 							marginRight: '16px',
 						}}
 					>
-						{/* time stamp, on clicked, goes to specific time of video */}
-						{/* <button onClick={handleSkipToTimeStamp}>{time}</button> */}
-						<button onClick={handleSkipToTimeStamp}>00:00:01</button>
+						<button onClick={() => handleSkipToTimeStamp(memo.timeLine)}>
+							{memo.timeLine}
+						</button>
 					</div>
 					<p>{memo.memo}</p>
 				</div>

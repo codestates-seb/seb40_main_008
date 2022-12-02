@@ -20,7 +20,7 @@
 			"comments": "이것은 새로운 리뷰이다",
 			"createdAt": "2022-12-01T11:07:48.577521+09:00",
 			"modifiedAt": "2022-12-01T11:07:51.366907+09:00",
-         "profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
+			"profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg"
 		},
 		{
 			"usersId": 2,
@@ -28,7 +28,7 @@
 			"starRate": 3,
 			"comments": "이것은 새로운 리뷰이다",
 			"createdAt": "2022-12-01T11:07:48.577521+09:00",
-         "profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
+			"profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
 			"modifiedAt": "2022-12-01T11:07:51.366907+09:00"
 		},
 		{
@@ -37,7 +37,7 @@
 			"starRate": 3,
 			"comments": "이것은 새로운 리뷰이다",
 			"createdAt": "2022-12-01T11:07:48.577521+09:00",
-         "profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
+			"profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
 			"modifiedAt": "2022-12-01T11:07:51.366907+09:00"
 		}
 	],
@@ -47,14 +47,16 @@
 			"bookmarkId": 2,
 			"memo": "메모하기 입니다.",
 			"createdAt": "2022-12-01T11:08:22.662882+09:00",
-			"modifiedAt": null
+			"modifiedAt": null,
+			"timeLine": "04:29"
 		},
 		{
 			"usersId": 2,
 			"bookmarkId": 1,
 			"memo": "메모하기 입니다.",
 			"createdAt": "2022-12-01T11:08:22.662882+09:00",
-			"modifiedAt": null
+			"modifiedAt": null,
+			"timeLine": "00:02"
 		}
 	],
 	"curriculumInfo": [
@@ -105,53 +107,3 @@
 		}
 	]
 }
-
-{
-   "userInfo": {
-     "usersId": 1,
-     "email": "ghldhfltlqjaeks@nate.com",
-     "userName": "방승일",
-     "profileImage": "http://k.kakaocdn.net/dn/rdCzw/btrQYskVZLG/E0CALEYHql7MbDVNr8Wm81/img_640x640.jpg"
-   },
-   "title": "java4",
-   "video": "https://s3.ap-northeast-2.amazonaws.com/s3-main-008/UploadClass/video/e4c347ce-5764-40a5-a588-0790f60a58f4_mov_bbb.mp4",
-   "docsInfo": {
-     "docsId": 1,
-     "details": "test_pdf",
-     "name": "test.pdf"
-   },
-   "reviewInfo": [
-     {
-       "usersId": 2,
-       "userName": "방승일",
-       "profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
-       "reviewId": 1,
-       "starRate": 5,
-       "comments": "이것은 리뷰222",
-       "createdAt": "2022-12-02T10:44:58.291534+09:00",
-       "modifiedAt": null
-     }
-   ],
-   "bookmarkInfo": [
-     {
-       "usersId": 2,
-       "bookmarkId": 1,
-       "memo": "메모하기 입니다.",
-       "createdAt": "2022-12-02T10:45:43.563461+09:00",
-       "modifiedAt": null
-     }
-   ],
-   "curriculumInfo": [
-     {
-       "chapterId": 1,
-       "chapterOrder": "CHAPTER.01",
-       "title": "Part.01",
-       "uploadClassList": [
-         {
-           "uploadClassId": 1,
-           "title": "test_video"
-         }
-       ]
-     }
-   ]
- }

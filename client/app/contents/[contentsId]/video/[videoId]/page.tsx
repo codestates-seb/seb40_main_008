@@ -23,7 +23,7 @@ const getVideoPageContent = async (contentsId: string, videoId: string) => {
 		// 	}
 		// );
 		const res = await fetch(
-			`https://run.mocky.io/v3/4ff0e774-4fe1-4022-a420-0b2334bda7a5`
+			`https://run.mocky.io/v3/22e05b93-2b82-42ba-86d6-7deeb33755c7`
 		);
 		const data = await res.json();
 		console.log('🚀 ~ file: page.tsx:29 ~ getVideoPageContent ~ data', data);

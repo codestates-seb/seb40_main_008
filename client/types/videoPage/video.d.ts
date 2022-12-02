@@ -16,7 +16,7 @@ export interface BookmarkInfo {
 	memo: string;
 	createdAt: string;
 	modifiedAt: null;
-	timeLine: null;
+	timeLine: string;
 }
 
 export interface CurriculumInfo {
