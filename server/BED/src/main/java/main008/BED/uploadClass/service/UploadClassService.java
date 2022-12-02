@@ -33,9 +33,7 @@ public class UploadClassService {
      */
     public UploadClass saveLecture(UploadClass uploadClass, Long chapterId) {
 
-        if (uploadClassRepository.existsByName(uploadClass.getName())) {
-            throw new BusinessLogicException(ExceptionCode.UPLOAD_CLASS_EXISTS);
-        }
+        //TODO: 중복 저장 예외 처리
 
         Chapter byChapterId = chapterRepository.findByChapterId(chapterId);
         uploadClass.addChapter(byChapterId);

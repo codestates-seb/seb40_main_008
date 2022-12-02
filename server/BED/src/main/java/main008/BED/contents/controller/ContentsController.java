@@ -42,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -78,7 +79,7 @@ public class ContentsController {
                                        @RequestParam("details") String details,
                                        @RequestParam("tutorDetail") String tutorDetail,
                                        @RequestParam("thumbnail") MultipartFile thumbnail,
-                                       @RequestParam("price") String price) {
+                                       @RequestParam("price") String price) throws UnsupportedEncodingException {
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
@@ -296,23 +297,37 @@ public class ContentsController {
         return new ResponseEntity("The Content is removed.", HttpStatus.OK);
     }
 
-//    /**
-//     * PATCH: Contents 수정
-//     */
-//    @PatchMapping("/auth/contents/{contents-id}")
-//    public ResponseEntity patchContents(@PathVariable("contents-id") @Positive Long contentsId,
-//                                        @RequestParam("title") String title,
-//                                        @RequestParam("categories") String categories,
-//                                        @RequestParam("details") String details,
-//                                        @RequestParam("tutorDetail") String tutorDetail,
-//                                        @RequestParam("thumbnail") MultipartFile thumbnail,
-//                                        @RequestParam("price") String price,
-//                                        Principal principal) {
-//
-//
-//
-//        ContentsDto.Patch patch = new ContentsDto.Patch(title, categories, details, tutorDetail, thumbnail, fileKey, price);
-//
-//        contentsService.updateContents(contentsId, principal);
-//    }
+    /**
+     * PATCH: Contents 수정
+     */
+    @PatchMapping("/auth/contents/{contents-id}")
+    public ResponseEntity patchContents(@PathVariable("contents-id") @Positive Long contentsId,
+                                        @RequestParam("title") String title,
+                                        @RequestParam("categories") String categories,
+                                        @RequestParam("details") String details,
+                                        @RequestParam("tutorDetail") String tutorDetail,
+                                        @RequestParam("thumbnail") MultipartFile thumbnail,
+                                        @RequestParam("price") String price,
+                                        Principal principal) throws UnsupportedEncodingException {
+
+        Contents contents = contentsService.readContent(contentsId);
+        String oldFileKey = contents.getFileKey();
+
+        // thumbnail -> S3 업로드
+        HashMap map = s3Service.updateToS3(thumbnail, "/contents/thumbnail", oldFileKey);
+        String fileKey = map.get("fileKey").toString();
+        String thumbnailUrl = map.get("url").toString();
+
+        Contents.Categories category = stringToCategoryEnum.convert(categories);
+
+        PaymentDto.Patch paymentPatch = new PaymentDto.Patch(Integer.parseInt(price));
+
+        Payment payment = paymentMapper.patchToEntity(paymentPatch);
+
+        ContentsDto.Patch patch = new ContentsDto.Patch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
+
+        contentsService.updateContents(contentsId, principal, contentsMapper.patchToContents(patch), payment);
+
+        return new ResponseEntity("The Content is updated.", HttpStatus.OK);
+    }
 }

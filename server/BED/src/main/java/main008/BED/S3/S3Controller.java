@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 
 @RestController
@@ -33,7 +34,7 @@ public class S3Controller {
     public ResponseEntity upload(@RequestParam("image") MultipartFile image,
                                  @RequestParam("title") String title,
                                  @RequestParam("subTitle") String subTitle,
-                                 @RequestParam("redirectUrl") String redirectUrl) {
+                                 @RequestParam("redirectUrl") String redirectUrl) throws UnsupportedEncodingException {
         HashMap map = s3ServiceImpl.uploadToS3(image, "/carousel");
         String url = map.get("url").toString();
         String fileKey = map.get("fileKey").toString();

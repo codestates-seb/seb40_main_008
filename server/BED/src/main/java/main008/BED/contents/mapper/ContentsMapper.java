@@ -13,6 +13,8 @@ public interface ContentsMapper {
 
     Contents postToContents(ContentsDto.Post post);
 
+    Contents patchToContents(ContentsDto.Patch patch);
+
     ContentsDto.Response contentsToResponse(Contents contents);
 
     default List<ContentsDto.Response> contentsToResponses(List<Contents> contents, UsersMapper usersMapper) {

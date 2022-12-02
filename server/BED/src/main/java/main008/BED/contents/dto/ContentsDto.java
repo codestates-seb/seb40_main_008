@@ -34,6 +34,7 @@ public class ContentsDto {
         private String tutorDetail;
         private String thumbnail;
         private String fileKey;
+
     }
 
     @Getter

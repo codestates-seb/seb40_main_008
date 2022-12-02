@@ -3,6 +3,7 @@ package main008.BED.contents.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3ServiceImpl;
 import main008.BED.chapter.entity.Chapter;
+import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.exception.BusinessLogicException;
@@ -284,19 +285,24 @@ public class ContentsService {
     /**
      * UPDATE: Contents 업데이트
      */
-//    public void updateContents(Long contentsId, Principal principal) {
-//        Contents byContentsId = contentsRepository.findByContentsId(contentsId).orElseThrow(()
-//                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
-//
-//        Users byEmail = usersRepository.findByEmail(principal.getName());
-//
-//        if (byContentsId.getUsers().getUsersId() != byEmail.getUsersId()) {
-//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_DELETE);
-//        }
-//
-//        String fileKey = byContentsId.getFileKey();
-//        s3ServiceImpl.updateToS3()
-//
-//    }
+    public void updateContents(Long contentsId, Principal principal, Contents newContents, Payment newPayment) {
+        Contents oldContents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
+        Users reqUser = usersRepository.findByEmail(principal.getName());
+
+        if (oldContents.getUsers().getUsersId() != reqUser.getUsersId()) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_PATCH);
+        }
+
+        oldContents.setCategories(newContents.getCategories());
+        oldContents.setDetails(newContents.getDetails());
+        oldContents.setTitle(newContents.getTitle());
+        oldContents.setThumbnail(newContents.getThumbnail());
+        oldContents.setTutorDetail(newContents.getTutorDetail());
+        Payment oldPayment = oldContents.getPayment();
+        oldPayment.setPrice(newPayment.getPrice());
+
+    }
 
 }

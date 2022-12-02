@@ -19,6 +19,14 @@ public class PaymentDto {
         private Integer price;
     }
 
+    @Getter
+    @AllArgsConstructor
+    public static class Patch {
+
+        @Range(max= 50000, message = "50,000원 이하로 입력해주세요.")
+        private Integer price;
+    }
+
 
     @Getter
     @Setter

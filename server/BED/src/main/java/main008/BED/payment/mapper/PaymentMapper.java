@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 public interface PaymentMapper {
 
     Payment postToEntity(PaymentDto.Post post);
+
+    Payment patchToEntity(PaymentDto.Patch patch);
 }

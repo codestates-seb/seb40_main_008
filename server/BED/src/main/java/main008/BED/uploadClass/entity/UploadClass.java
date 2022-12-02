@@ -30,7 +30,7 @@ public class UploadClass {
     @Column
     private String title;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String video;
 
     @Column

@@ -11,9 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -28,8 +31,9 @@ public class S3ServiceImpl implements S3Service {
 
 
     @Override
-    public HashMap uploadToS3(MultipartFile file, String folderSrc) {
-        String fileKey = UUID.randomUUID() + "_" + file.getOriginalFilename();
+    public HashMap uploadToS3(MultipartFile file, String folderSrc) throws UnsupportedEncodingException {
+        String encodedFileName = new String(file.getOriginalFilename().getBytes("UTF-8")); // 한글 인코딩
+        String fileKey = UUID.randomUUID() + "_" + encodedFileName;
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
@@ -63,7 +67,7 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public HashMap updateToS3(MultipartFile file, String folderSrc, String oldFileKey) {
+    public HashMap updateToS3(MultipartFile file, String folderSrc, String oldFileKey) throws UnsupportedEncodingException {
         delete(oldFileKey, folderSrc);
         HashMap hashMap = uploadToS3(file, folderSrc);
         return hashMap;

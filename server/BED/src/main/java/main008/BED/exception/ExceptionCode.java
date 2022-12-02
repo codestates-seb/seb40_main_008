@@ -20,6 +20,7 @@ public enum ExceptionCode {
     /*Contents*/
     CONTENTS_NOT_FOUND(404, "Contents Not Found"),
     UNAUTHORIZED_DELETE(404, "콘텐츠 삭제는 해당 콘텐츠의 크리에이터만 가능합니다"),
+    UNAUTHORIZED_PATCH(404, "콘텐츠 수정은 해당 콘텐츠의 크리에이터만 가능합니다"),
 
     /*Chapter*/
     CHAPTER_NOT_FOUND(404, "Chapter Not Found"),
