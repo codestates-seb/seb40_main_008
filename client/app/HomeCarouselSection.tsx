@@ -153,10 +153,6 @@ const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
 					display: 'flex',
 				}}
 			>
-				0{current} | 0{children.length}
-				<div className={styles.progress}>
-					<div className={styles.color}></div>
-				</div>
 			</div>
 		</section>
 	);
