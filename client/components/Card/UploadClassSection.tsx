@@ -4,7 +4,7 @@ import { ICategorySearchResult } from "../../types/category_search/categorySearc
 import styles from "./UploadClassSection.module.css";
 import { titleLengthFormatter } from "../../utils/helper/titleLengthFormatter";
 import DelEditbtn from "../Buttons/DelEditbtn";
-
+import Link from "next/link";
 // 수정, 삭제 버튼 logic 추가
 
 interface HomeContentProps {
@@ -17,16 +17,23 @@ const UploadClassSection = ({ contentsList }: HomeContentProps) => {
       {contentsList &&
         contentsList.map((e, index) => (
           <div key={index}>
-            <div key={e.contentsId} className={styles.thumnailImg}>
-              <Image
-                src={e.thumbnail}
-                alt="myuploadclass thumbnail"
-                placeholder="blur"
-                blurDataURL="../public/images/blur.png"
-                fill={true}
-                style={{ objectFit: "cover", borderRadius: "4px" }}
-              />
-            </div>
+            <Link href={`/contents/${e.contentsId}`}>
+              <div key={e.contentsId} className={styles.thumnailImg}>
+                <Image
+                  src={e.thumbnail}
+                  alt="myuploadclass thumbnail"
+                  placeholder="blur"
+                  blurDataURL="../public/images/blur.png"
+                  fill={true}
+                  style={{
+                    objectFit: "cover",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+            </Link>
+
             <div className={styles.classinfoWrapper_line1}>
               <div className={styles.classtitle}>
                 {titleLengthFormatter(e.title)}

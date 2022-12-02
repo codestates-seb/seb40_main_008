@@ -79,7 +79,7 @@ const UploadPage = () => {
         formData.delete("title");
         formData.delete("thumbnail");
         console.log(res);
-        //router.push(`/contents/${contentId}`);
+        router.push(`/mypage/uploadclass`);
       }
     });
   };
