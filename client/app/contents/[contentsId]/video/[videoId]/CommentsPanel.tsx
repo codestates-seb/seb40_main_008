@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
 import { ReviewInfo } from '../../../../../types/videoPage/video';
+import VideoComment from './VideoComment';
 import styles from './VideoPage.module.css';
 interface Props {
 	reviews: ReviewInfo[];
+	uploadClassId: string;
 }
 
-const CommentsPanel = ({ reviews }: Props) => {
+const CommentsPanel = ({ reviews, uploadClassId }: Props) => {
 	return (
 		<section
 			style={{
@@ -62,6 +64,7 @@ const CommentsPanel = ({ reviews }: Props) => {
 					</div>
 				</div>
 			))}
+			<VideoComment uploadClassId={uploadClassId} />
 		</section>
 	);
 };
