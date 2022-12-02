@@ -35,6 +35,14 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
     return <div>cannot find</div>;
   };
 
+  const getIconButton = (role: string) => {
+    if (role === "Paid_customer") {
+      return <ContentCardFavoriteBtn contentId={contentInfo?.contentsId} />;
+    } else if (role === "Unpaid_customer") {
+      return <ContentCardWishBtn contentId={contentInfo?.contentsId} />;
+    }
+  };
+
   return (
     <div>
       <div className={styles.thumbnail}>
@@ -51,19 +59,14 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
               {contentInfo?.categories} &nbsp; {contentInfo?.tutorName}
             </h4>
           </div>
-
-          {contentInfo?.role == "creator" ? (
-            <ContentCardFavoriteBtn contentId={contentInfo?.contentsId} />
-          ) : (
-            <ContentCardWishBtn contentId={contentInfo?.contentsId} />
-          )}
+          {getIconButton(contentInfo?.role)}
         </div>
 
         <div className={styles.classWrapper}>
           <div className={styles.classtitle}>
             <h2>{contentInfo?.title}</h2>
           </div>
-          <h2>{contentInfo?.price}$</h2>
+          <h2>{contentInfo?.price} ₩</h2>
         </div>
         <h3> 별점{contentInfo?.grade}</h3>
         <div className={styles.btn}>{getRoleButton(contentInfo?.role)}</div>

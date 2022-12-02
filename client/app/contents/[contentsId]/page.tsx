@@ -34,6 +34,9 @@ const getCurriculum = async (
 const ContentsIdPage = async ({ params }: any) => {
   const contentInfo = await getContentInfo(params.contentsId);
   const curriculumInfo = await getCurriculum(params.contentsId);
+  console.log(params.contentsId);
+  const token = cookies().get("accessToken")?.value;
+  console.log(token);
   return (
     <>
       <BaseNavbar />

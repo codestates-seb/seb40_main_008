@@ -55,6 +55,10 @@ const UploadClassPage = () => {
       body: formData,
     }).then((res) => {
       if (res.ok) {
+        formData.delete("title");
+        formData.delete("details");
+        formData.delete("videoFile");
+        formData.delete("docsFile");
         router.push(`/contents/${contentsId}`);
       }
     });

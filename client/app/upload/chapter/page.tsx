@@ -70,6 +70,9 @@ const UploadChapterPage = () => {
       body: formData,
     }).then((res) => {
       if (res.ok) {
+        formData.delete("chapterOrder");
+        formData.delete("title");
+        formData.delete("thumbnail");
         router.push(`/contents/${contentId}`);
       }
     });

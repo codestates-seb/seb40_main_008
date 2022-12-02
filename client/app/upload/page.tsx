@@ -72,8 +72,14 @@ const UploadPage = () => {
       body: formData,
     }).then((res) => {
       if (res.ok) {
+        formData.delete("categories");
+        formData.delete("details");
+        formData.delete("price");
+        formData.delete("tutorDetail");
+        formData.delete("title");
+        formData.delete("thumbnail");
         console.log(res);
-        // router.push(`/contents/${contentId}`);
+        //router.push(`/contents/${contentId}`);
       }
     });
   };
