@@ -8,16 +8,19 @@ import {
 	faCoins,
 	faPenToSquare,
 	faPencil,
-} from '@fortawesome/free-solid-svg-icons';
-import OrangeButton from '../../components/Buttons/orangeButton';
-import { signOut, useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-import getUserInfo from '../../utils/helper/backendUserInfo';
-import { cookies, headers } from 'next/headers';
+} from "@fortawesome/free-solid-svg-icons";
+import OrangeButton from "../../components/Buttons/orangeButton";
+import { signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import getUserInfo from "../../utils/helper/backendUserInfo";
+import { headers } from "next/headers";
+import verifyLogin from "../../utils/VerifyLogin";
+import { SignOut } from "../../components/Buttons/SignOut";
 
 const MyPage = async () => {
 	// const session = useSession();
-	const userInfo = await getUserInfo(cookies().get('accessToken'));
+	const userInfo = await verifyLogin();
+	console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo)
 
 	const session = {
 		status: 'authenticated',
@@ -63,23 +66,17 @@ const MyPage = async () => {
 					</div>
 
 					<div className={styles.CourseWrapper}>
-						<FontAwesomeIcon
-							icon={faPenToSquare}
-							className={styles.fontimg}
-						/>
+						<FontAwesomeIcon icon={faPenToSquare} className={styles.fontimg} />
 						<Link href={`/upload`}>
 							<h2 className={styles.font}>강좌 개설하기</h2>
 						</Link>
 					</div>
-					<OrangeButton
-						onClick={() => signOut()}
-						name={'로그 아웃'}
-					></OrangeButton>
-				</div>
+					<SignOut />
+				</div >
 			</>
 		);
 	else {
-		redirect('/');
+		redirect("/");
 	}
 };
 

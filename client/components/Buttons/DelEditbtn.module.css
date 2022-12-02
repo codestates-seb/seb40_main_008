@@ -1,0 +1,9 @@
+.btn {
+    cursor: pointer;
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--faintwhite);
+}
