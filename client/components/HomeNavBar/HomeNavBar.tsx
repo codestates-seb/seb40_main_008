@@ -8,18 +8,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useSession } from 'next-auth/react';
 import IUserInfo from '../../types/user/userinfo';
+import { useHasWindow } from '../../utils/hooks/useHasWindow';
 
 interface HomeNavBarProps {
-	userInfo: IUserInfo;
+	userInfo: IUserInfo | undefined;
 }
 
 const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 	// const session = useSession();
+	const hasWindow = useHasWindow();
 	const session = {
 		status: 'authenticated',
 	};
 	const { show } = useScrollBar();
 	// console.log(window.scrollY);
+	if (!hasWindow) {
+		return null;
+	}
 
 	if (typeof window === 'undefined') {
 		return null;

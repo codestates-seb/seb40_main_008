@@ -5,9 +5,14 @@ import { useScrollBar } from '../../hooks/\bScrollBar/UseScrollBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faHouse } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { useHasWindow } from '../../utils/hooks/useHasWindow';
 
 const CategoryNavBar = () => {
 	const { show } = useScrollBar();
+	const hasWindow = useHasWindow();
+	if (!hasWindow) {
+		return null;
+	}
 	return (
 		<>
 			{window.scrollY < 45 ? (
