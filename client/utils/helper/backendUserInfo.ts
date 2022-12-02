@@ -14,7 +14,6 @@ const getUserInfo = async (
 			Authorization: `Bearer ${token}`,
 		},
 	});
-
 	const body = await res.json();
 	if (!body.data?.userName) {
 		return null;

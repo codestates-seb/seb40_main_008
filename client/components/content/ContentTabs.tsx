@@ -13,6 +13,7 @@ interface ContentTabsProps {
 
 const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
   const [tabIndex, setTabIndex] = useState(0);
+
   return (
     <>
       <Tabs
@@ -34,7 +35,7 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
               margin: "20px auto",
             }}
           >
-            {contentInfo.details}
+            {contentInfo?.details}
           </div>
         </TabPanel>
         <TabPanel>
@@ -47,12 +48,13 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
               margin: "20px auto",
             }}
           >
-            {contentInfo.tutorDetail}
+            {contentInfo?.tutorDetail}
           </div>
         </TabPanel>
         <TabPanel>
           <CurriculumInfo
-            contentsId={contentInfo.contentsId}
+            role={contentInfo?.role}
+            contentsId={contentInfo?.contentsId}
             curriculumInfo={curriculumInfo}
           />
         </TabPanel>
