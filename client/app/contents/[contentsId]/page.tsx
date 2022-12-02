@@ -3,10 +3,15 @@ import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
 import ContentInfo from "../../../components/content/ContentInfo";
 import ContentTabs from "../../../components/content/ContentTabs";
 import { IContent, ICurriculumContent } from "../../../types/contents";
+import { cookies } from "next/headers";
 
 const getContentInfo = async (contentsId: string): Promise<IContent> => {
+  const token = cookies().get("accessToken")?.value;
   const res = await fetch(`https://pioneroroom.com/contents/${contentsId}`, {
     method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   const { contentInfo } = await res.json();
   return contentInfo;
@@ -23,8 +28,12 @@ const getContentInfo = async (contentsId: string): Promise<IContent> => {
 const getCurriculum = async (
   contentsId: string
 ): Promise<Array<ICurriculumContent>> => {
+  const token = cookies().get("accessToken")?.value;
   const res = await fetch(`https://pioneroroom.com/contents/${contentsId}`, {
     method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   const { curriculumInfo } = await res.json();
   return curriculumInfo;

@@ -1,11 +1,11 @@
 "use client";
 import styles from "./upload.module.css";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useSession } from "next-auth/react";
 import SignInButton from "../../components/Buttons/SignInButton";
 import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
 import Image from "next/image";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 import {
   initialClass,
@@ -17,7 +17,7 @@ const formData = new FormData();
 
 const UploadPage = () => {
   const token = getCookie("accessToken");
-  console.log(token);
+  const router = useRouter();
 
   const session = {
     status: "authenticated",
@@ -70,6 +70,11 @@ const UploadPage = () => {
         Authorization: `Bearer ${token}`,
       },
       body: formData,
+    }).then((res) => {
+      if (res.ok) {
+        console.log(res);
+        // router.push(`/contents/${contentId}`);
+      }
     });
   };
 

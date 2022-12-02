@@ -59,9 +59,10 @@ const CurriculumInfo = ({
                 <h4>{e.chapterOrder}</h4>
                 <div className={styles.chapter}>
                   <h3>{e.title}</h3>
+                  <h1>{role}</h1>
                   {/* <h1>{role}</h1> */}
                   <span>
-                    {role == "creator" ? (
+                    {role == "Unpaid_customer" ? (
                       <>
                         <Link
                           href={{
@@ -138,6 +139,7 @@ const CurriculumInfo = ({
                       pathname: "/upload/class",
                       query: {
                         chapterId: e.chapterId,
+                        contentsId: contentsId,
                       },
                     }}
                   >
