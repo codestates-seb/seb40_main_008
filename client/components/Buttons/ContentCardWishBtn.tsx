@@ -3,28 +3,35 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import styles from "../content/ContentInfo.module.css";
-import { patchWish } from "../../utils/api/fetchWish";
-
+import { getCookie } from "cookies-next";
 interface ContentCardWishProps {
   contentId: number;
 }
 
 export const ContentCardWishBtn = (props: ContentCardWishProps) => {
   const { contentId } = props;
-
+  const token = getCookie("accessToken");
   const [wish, setWish] = useState(false);
 
   const handleWishCheck = () => {
-    patchWish(contentId, wish).then((res) => {
-      console.log(
-        "🚀 ~ file: ContentCardWishBtn.tsx:19 ~ patchWish ~ res",
-        res
-      );
-      if (res === 200) {
-        setWish((prev) => !prev);
-      }
-    });
+    setWish((prev) => !prev);
   };
+
+  useEffect(() => {
+    fetch(`https://pioneroroom.com/auth/${contentId}/wish`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        res.json();
+      })
+      .then((data) => {
+        console.log("성공", data);
+      })
+      .catch((error) => { });
+  }, [wish]);
 
   return (
     <>
@@ -35,7 +42,7 @@ export const ContentCardWishBtn = (props: ContentCardWishProps) => {
           icon={faCartShopping}
           className={`${wish ? styles.icon : styles.clickicon}`}
         />
-        북마크
+        찜하기
       </button>
     </>
   );
