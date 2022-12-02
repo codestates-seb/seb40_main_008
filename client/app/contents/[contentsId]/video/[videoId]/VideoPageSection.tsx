@@ -11,24 +11,29 @@ import MemoPanel from './MemoPanel';
 
 interface VideoPageSectionProps {
 	data: IVideoPage;
+	contentsId: string;
 }
 
-const VideoPageSection = ({ data }: VideoPageSectionProps) => {
+const VideoPageSection = ({ data, contentsId }: VideoPageSectionProps) => {
 	const playerRef = useRef<ReactPlayer>(null);
 	return (
 		<>
 			<VideoPlayer url={data.video} videoRef={playerRef} />
 			<CustomTab
 				tabs={['커리큘럼', '수업 자료', '댓글', '메모하기']}
-				contents={getPanels(data)}
+				contents={getPanels(data, contentsId)}
 			/>
 		</>
 	);
 };
 
-function getPanels(data: IVideoPage) {
+function getPanels(data: IVideoPage, contentsId: string) {
 	return [
-		<CurriculumPanel curriculumInfo={data.curriculumInfo} key={1} />,
+		<CurriculumPanel
+			curriculumInfo={data.curriculumInfo}
+			key={1}
+			contentsId={contentsId}
+		/>,
 		<HandOutsPanel handOutInfo={data.docsInfo} key={2} />,
 		<CommentsPanel reviews={data.reviewInfo} key={3} />,
 		<MemoPanel memoInfo={data.bookmarkInfo} key={4} />,

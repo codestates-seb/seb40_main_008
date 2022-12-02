@@ -5,6 +5,7 @@ import VideoPageSection from './VideoPageSection';
 interface VideoIdPageProps {
 	params: {
 		videoId: string;
+		contentsId: string;
 	};
 }
 
@@ -20,9 +21,11 @@ const getVideoPageContent = async (id: string) => {
 	}
 };
 
-const VideoIdPage = async ({ params: { videoId } }: VideoIdPageProps) => {
+const VideoIdPage = async ({
+	params: { videoId, contentsId },
+}: VideoIdPageProps) => {
 	const userInfo = await verifyLogin();
-	const data = await getVideoPageContent(videoId);
+	const data = await getVideoPageContent('1');
 
 	if (!userInfo) {
 		return (
@@ -31,7 +34,7 @@ const VideoIdPage = async ({ params: { videoId } }: VideoIdPageProps) => {
 			</div>
 		);
 	}
-	return <VideoPageSection data={data} />;
+	return <VideoPageSection data={data} contentsId={contentsId} />;
 };
 
 export default VideoIdPage;
