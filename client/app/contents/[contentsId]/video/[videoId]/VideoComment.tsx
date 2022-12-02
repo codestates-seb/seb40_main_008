@@ -9,7 +9,7 @@ interface Props {
 }
 
 const VideoComment = ({ uploadClassId }: Props) => {
-	const [comment, setComment] = useState('');
+	const [comments, setComments] = useState('');
 
 	const handleSubmit = () => {
 		const token = getCookie('accessToken');
@@ -20,7 +20,8 @@ const VideoComment = ({ uploadClassId }: Props) => {
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
-				comment,
+				comments,
+				starRate: 5,
 			}),
 		});
 	};
@@ -48,8 +49,8 @@ const VideoComment = ({ uploadClassId }: Props) => {
 					marginRight: '10px',
 				}}
 				type="text"
-				value={comment}
-				onChange={(e) => setComment(e.target.value)}
+				value={comments}
+				onChange={(e) => setComments(e.target.value)}
 			/>
 			<FontAwesomeIcon
 				onClick={handleSubmit}

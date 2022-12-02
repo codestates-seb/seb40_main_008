@@ -1,6 +1,7 @@
 'use client';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
+import { OnProgressProps } from 'react-player/base';
 import { useHasWindow } from '../../../../../utils/hooks/useHasWindow';
 import styles from './VideoPage.module.css';
 interface VideoPlayerProps {
@@ -10,21 +11,9 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
+	console.log('🚀 ~ file: VideoPlayer.tsx:13 ~ VideoPlayer ~ url', url);
 	const hasWindow = useHasWindow();
-	return (
-		// <video src={url}></video>
 
-		<ReactPlayer
-			// ref={videoRef}
-			url={url}
-			controls={true}
-			playing={true}
-			width="100%"
-			height="360px"
-			// progressInterval={1000}
-			// onProgress={(e) => console.log(e)}
-		/>
-	);
 	if (!hasWindow) {
 		return (
 			<div
@@ -36,6 +25,17 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 			></div>
 		);
 	}
+
+	const handleProgress = (e: OnProgressProps) => {
+		const { playedSeconds } = e;
+		// format playedSeconds to mm:ss format
+		const minutes = Math.floor(playedSeconds / 60);
+		const seconds = Math.floor(playedSeconds % 60);
+		const secondsString = seconds < 10 ? `0${seconds}` : seconds;
+		const minutesString = minutes < 10 ? `0${minutes}` : minutes;
+		setTime(`${minutesString}:${secondsString}`);
+	};
+
 	return (
 		<ReactPlayer
 			ref={videoRef}
@@ -46,8 +46,8 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 			className={styles.videoPlayer}
 			width="100%"
 			height="360px"
-			// progressInterval={1000}
-			// onProgress={(e) => console.log(e)}
+			progressInterval={1000}
+			onProgress={handleProgress}
 		/>
 	);
 };

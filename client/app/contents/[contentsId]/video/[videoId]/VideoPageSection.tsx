@@ -21,13 +21,13 @@ const VideoPageSection = ({
 	uploadClassId,
 }: VideoPageSectionProps) => {
 	const playerRef = useRef<ReactPlayer>(null);
-	const [time, setTime] = useState('00:00:00');
+	const [time, setTime] = useState('00:00');
 	return (
 		<>
 			<VideoPlayer url={data.video} videoRef={playerRef} setTime={setTime} />
 			<CustomTab
 				tabs={['커리큘럼', '수업 자료', '댓글', '메모하기']}
-				contents={getPanels(data, contentsId, uploadClassId)}
+				contents={getPanels(data, contentsId, uploadClassId, time)}
 			/>
 		</>
 	);
@@ -36,7 +36,8 @@ const VideoPageSection = ({
 function getPanels(
 	data: IVideoPage,
 	contentsId: string,
-	uploadClassId: string
+	uploadClassId: string,
+	time: string
 ) {
 	return [
 		<CurriculumPanel
@@ -50,7 +51,12 @@ function getPanels(
 			key={3}
 			uploadClassId={uploadClassId}
 		/>,
-		<MemoPanel memoInfo={data.bookmarkInfo} key={4} />,
+		<MemoPanel
+			memoInfo={data.bookmarkInfo}
+			key={4}
+			time={time}
+			uploadClassId={uploadClassId}
+		/>,
 	];
 }
 
