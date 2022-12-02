@@ -80,4 +80,16 @@ public interface ContentsMapper {
                 .collect(Collectors.toList());
     }
 
+    default List<ContentsDto.ContentsId> contentsToId(List<Contents> list) {
+
+        List<ContentsDto.ContentsId> collect = list.stream()
+                .map(contents -> new ContentsDto.ContentsId()
+                        .builder()
+                        .contentsId(contents.getContentsId())
+                        .build())
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
 }

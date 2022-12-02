@@ -328,4 +328,15 @@ public class ContentsController {
 
         return new ResponseEntity("The Content is updated.", HttpStatus.OK);
     }
+
+    /**
+     * GET: 모든 컨텐츠 아이디 리스트 조회
+     */
+    @GetMapping("/contents")
+    public ResponseEntity getContentsIdList() {
+        List<Contents> contents = contentsService.readContentsIdList();
+        List<ContentsDto.ContentsId> contentsIds = contentsMapper.contentsToId(contents);
+        return new ResponseEntity(contentsIds, HttpStatus.OK);
+    }
+
 }

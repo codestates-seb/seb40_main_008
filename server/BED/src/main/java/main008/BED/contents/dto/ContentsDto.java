@@ -130,4 +130,14 @@ public class ContentsDto {
 
         private List<ResponseForCategories> contentsList;
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ContentsId {
+
+        private Long contentsId;
+    }
+
 }

@@ -305,4 +305,9 @@ public class ContentsService {
 
     }
 
+    public List<Contents> readContentsIdList() {
+        List<Contents> all = contentsRepository.findAll();
+        return all;
+    }
+
 }
