@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import main008.BED.contents.entity.Contents;
 import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.users.entity.Users;
 

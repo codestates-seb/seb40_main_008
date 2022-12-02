@@ -7,10 +7,6 @@ import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.mapper.ChapterMapper;
 import main008.BED.chapter.service.ChapterService;
 import main008.BED.contents.service.ContentsService;
-import main008.BED.uploadClass.dto.UploadClassDto;
-import main008.BED.uploadClass.entity.UploadClass;
-import main008.BED.uploadClass.mapper.UploadClassMapper;
-import main008.BED.uploadClass.repository.UploadClassRepository;
 import main008.BED.uploadClass.service.UploadClassService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Positive;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("auth/contents")
@@ -30,10 +24,6 @@ public class ChapterController {
 
     private final ChapterService chapterService;
     private final ChapterMapper chapterMapper;
-
-    private final ContentsService contentsService;
-
-    private final UploadClassService uploadClassService;
     private final S3ServiceImpl s3ServiceImpl;
 
 

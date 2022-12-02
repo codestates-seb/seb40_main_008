@@ -14,25 +14,18 @@ import main008.BED.contents.entity.EnumValue;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.converter.StringToCategoryEnum;
-import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.PageInfo;
-import main008.BED.myClass.service.MyClassService;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
-import main008.BED.payment.service.PaymentService;
-import main008.BED.review.entity.Review;
 import main008.BED.review.mapper.ReviewMapper;
 import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.service.UploadClassService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
 import main008.BED.users.service.UsersService;
-import main008.BED.wish.dto.WishDto;
-import main008.BED.wish.entity.Wish;
-import main008.BED.wish.mapper.WishMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +33,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
@@ -54,20 +46,17 @@ import java.util.stream.Collectors;
 public class ContentsController {
 
     private final ContentsService contentsService;
-    private final UsersService usersService;
-    private final ChapterService chapterService;
-    private final BookmarkService bookmarkService;
-    private final UploadClassService uploadClassService;
-    private final S3Service s3Service;
-    private final PaymentService paymentService;
-    private final MyClassService myClassService;
     private final ContentsMapper contentsMapper;
+    private final UsersService usersService;
     private final UsersMapper usersMapper;
-    private final PaymentMapper paymentMapper;
-    private final BookmarkMapper bookmarkMapper;
+    private final S3Service s3Service;
     private final DocsMapper docsMapper;
+    private final BookmarkService bookmarkService;
+    private final BookmarkMapper bookmarkMapper;
+    private final ChapterService chapterService;
+    private final PaymentMapper paymentMapper;
     private final ReviewMapper reviewMapper;
-    private final WishMapper wishMapper;
+    private final UploadClassService uploadClassService;
     private final StringToCategoryEnum stringToCategoryEnum;
 
 
@@ -122,48 +111,17 @@ public class ContentsController {
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
                                      Principal principal) {
 
-        boolean wished = false;
-        String role = "";
         Contents contents = contentsService.readContent(contentsId);
-        ChapterDto.CurriculumInContent curriculumInContent
-                = chapterService.readCurriculumInContent(contentsId);
-        if (principal == null) {
-            role = "Unpaid_customer";
-        } else {
-            Users user = usersService.findVerifiedUserByEmail(principal.getName());
-            wished = myClassService.isWished(user.getUsersId(), contentsId);
-            boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
-            boolean isTutor = contents.getUsers().getUsersId().equals(user.getUsersId());
 
-            if (isTutor) {
-                role = "creator";
-            } else if (bePaid) {
-                role = "Paid_customer";
-            } else {
-                role = "Unpaid_customer";
-            }
-        }
+        ChapterDto.CurriculumInContent curriculumInContent = chapterService.readCurriculumInContent(contentsId);
 
-        ContentsDto.ResponseInContent responseInContent
-                = new ContentsDto.ResponseInContent(contentsId,
-                contents.getTitle(),
-                contents.getThumbnail(),
-                contents.getLikesCount(),
-                contents.getCategories(),
-                contentsService.calculateAvgStar(contentsId),
-                contents.getPayment().getPrice(),
-                role,
-                wished,
-                contents.getUsers().getUserName(),
-                contents.getDetails(),
-                contents.getTutorDetail()
-                );
+        HashMap<String, String> roleAndWish = contentsService.userRoleDivision(contents, principal);
 
-        ContentsMultiResponseDto<ContentsDto.ResponseInContent, List<ChapterDto.ResponseDto>> response
-                = new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo());
+        ContentsDto.ResponseInContent responseInContent =
+                contentsMapper.contentToResponseInContent(contents, roleAndWish, contentsService);
 
-
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(
+                new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo()), HttpStatus.OK);
     }
 
     /**
@@ -180,26 +138,17 @@ public class ContentsController {
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
-
-        Users tutor = contents.getUsers();
-        String title = contents.getTitle();
-        Docs docs = uploadClass.getDocs();
-        String video = uploadClass.getVideo();
-        List<Review> reviewList = uploadClass.getReviewList(); // 해당 강의 모든 리뷰 전송
         List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
 
+        ContentsDto.ResponseForStream responseForStream =
+                contentsMapper.contentsResponseForStream(
+                        contents, uploadClass,
+                        usersMapper, docsMapper,
+                        reviewMapper, bookmarkMapper,
+                        bookmarkList, curriculumInStream.getCurriculumInfo());
 
-        ContentsDto.ResponseForStream responseForStream
-                = new ContentsDto.ResponseForStream(
-                usersMapper.usersToUserResponseDto(tutor),
-                title,
-                video,
-                docsMapper.entityToResponseDto(docs),
-                reviewMapper.listEntityToListResponseDto(reviewList),
-                bookmarkMapper.listEntityToListResponseDto(bookmarkList),
-                curriculumInStream.getCurriculumInfo());
 
-        return new ResponseEntity(responseForStream, HttpStatus.OK);
+        return new ResponseEntity<>(responseForStream, HttpStatus.OK);
     }
 
     /**
