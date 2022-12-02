@@ -5,7 +5,8 @@
     position: fixed;
     top: 0;
     margin: 0 auto;
-    width: 410px;
+    width: 100%;
+	  max-width: var(--max-width);
     height: 45px;
     background-color: #0a191f;
     z-index: 1;
@@ -29,14 +30,16 @@
     position: fixed;
     top: 0;
     margin: 0 auto;
-    width: 410px;
+    width: 100%;
+	  max-width: var(--max-width);
     height: 45px;
     background-color: transparent;
   }
   
   .change_nav {
     padding: 20px 16px;
-    width: 410px;
+    width: 100%;
+	  max-width: var(--max-width);
     display: none;
     justify-content: space-between;
   }

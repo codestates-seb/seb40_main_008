@@ -1,104 +1,32 @@
 {
-	"userInfo": {
-		"usersId": 1,
-		"email": "ghldhfltlqjaeks@nate.com",
-		"userName": "방승일",
-		"profileImage": "http://k.kakaocdn.net/dn/rdCzw/btrQYskVZLG/E0CALEYHql7MbDVNr8Wm81/img_640x640.jpg"
-	},
-	"title": "java4",
-	"video": "https://s3.ap-northeast-2.amazonaws.com/s3-main-008/UploadClass/video/867bfd69-4eb0-42a3-b022-5056e983a9b8_mov_bbb.mp4",
-	"docsInfo": {
-		"docsId": 1,
-		"details": "test_pdf",
-		"name": "test.pdf"
-	},
-	"reviewInfo": [
+	"carouselInfo": [
 		{
-			"usersId": 2,
-			"reviewId": 1,
-			"starRate": 3,
-			"comments": "이것은 새로운 리뷰이다",
-			"createdAt": "2022-12-01T11:07:48.577521+09:00",
-			"modifiedAt": "2022-12-01T11:07:51.366907+09:00"
+			"carouselId": 2,
+			"imageUrl": "https://images.unsplash.com/photo-1579621970795-87facc2f976d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+			"title": "회원가입시 코인 \n30000개 지급!",
+			"subTitle": "지금  가입하고 혜택 받아보세요!",
+			"redirectUrl": "login"
 		},
 		{
-			"usersId": 2,
-			"reviewId": 2,
-			"starRate": 3,
-			"comments": "이것은 새로운 리뷰이다",
-			"createdAt": "2022-12-01T11:07:48.577521+09:00",
-			"modifiedAt": "2022-12-01T11:07:51.366907+09:00"
+			"carouselId": 3,
+			"imageUrl": "https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+			"title": "디지털 드로잉 \n시작해보세요",
+			"subTitle": "포토샵을 배워보세요!",
+			"redirectUrl": "categories/DIGITAL_DRAWING"
 		},
 		{
-			"usersId": 2,
-			"reviewId": 3,
-			"starRate": 3,
-			"comments": "이것은 새로운 리뷰이다",
-			"createdAt": "2022-12-01T11:07:48.577521+09:00",
-			"modifiedAt": "2022-12-01T11:07:51.366907+09:00"
-		}
-	],
-	"bookmarkInfo": [
-		{
-			"usersId": 2,
-			"bookmarkId": 2,
-			"memo": "메모하기 입니다.",
-			"createdAt": "2022-12-01T11:08:22.662882+09:00",
-			"modifiedAt": null
+			"carouselId": 4,
+			"imageUrl": "https://images.unsplash.com/photo-1614030390499-f2d2c691b1c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+			"title": "자신감을 심어주는",
+			"subTitle": "강의를 지금 만나보세요!",
+			"redirectUrl": "categories/SUCCESS_MIND"
 		},
 		{
-			"usersId": 2,
-			"bookmarkId": 1,
-			"memo": "메모하기 입니다.",
-			"createdAt": "2022-12-01T11:08:22.662882+09:00",
-			"modifiedAt": null
-		}
-	],
-	"curriculumInfo": [
-		{
-			"chapterId": 1,
-			"chapterOrder": "CHAPTER.01",
-			"title": "Part.01",
-			"uploadClassList": [
-				{
-					"uploadClassId": 1,
-					"title": "test_video"
-				},
-				{
-					"uploadClassId": 2,
-					"title": "아나까나 까나리"
-				},
-				{
-					"uploadClassId": 3,
-					"title": "까나키퍼웨이"
-				}
-			]
-		},
-		{
-			"chapterId": 2,
-			"chapterOrder": "CHAPTER.02",
-			"title": "파트장님",
-			"uploadClassList": [
-				{
-					"uploadClassId": 2,
-					"title": "빅맥 vs 1955"
-				},
-				{
-					"uploadClassId": 3,
-					"title": "메로나 vs 구구콘"
-				}
-			]
-		},
-		{
-			"chapterId": 3,
-			"chapterOrder": "CHAPTER.03",
-			"title": "Part.03",
-			"uploadClassList": [
-				{
-					"uploadClassId": 3,
-					"title": "test_video"
-				}
-			]
+			"carouselId": 5,
+			"imageUrl": "https://images.unsplash.com/photo-1543588978-fad7bfb4b664?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80",
+			"title": "NEW 이달의 \n신규 클래스",
+			"subTitle": "지금 가장 주목받고 있어요!",
+			"redirectUrl": "contents/5"
 		}
 	]
 }
