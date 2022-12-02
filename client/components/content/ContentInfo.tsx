@@ -29,7 +29,7 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
 				</Link>
 			);
 		} else if (role === 'Unpaid_customer') {
-			return <PurchaseButton />;
+			return <PurchaseButton contentInfo={contentInfo} />;
 		} else if (role === 'Paid_customer') {
 			return <OrangeButton name={'재생하기'} />;
 		}
