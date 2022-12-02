@@ -18,7 +18,7 @@ const ChargeCoin = () => {
       <div className={styles.ChargeWrapper}>
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
-            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
             <h2>5000원</h2>
           </div>
           <button className={styles.chargeBtn}> $ 충전하기 </button>
@@ -26,7 +26,7 @@ const ChargeCoin = () => {
 
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
-            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
             <h2>10000원</h2>
           </div>
           <button className={styles.chargeBtn}> $ 충전하기 </button>
@@ -34,14 +34,14 @@ const ChargeCoin = () => {
 
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
-            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
             <h2>20000원</h2>
           </div>
           <button className={styles.chargeBtn}> $ 충전하기 </button>
         </div>
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
-            <FontAwesomeIcon icon={faCoins} className={styles.coinfont} />
+            <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
             <h2>50000원</h2>
           </div>
           <button className={styles.chargeBtn}> $ 충전하기 </button>

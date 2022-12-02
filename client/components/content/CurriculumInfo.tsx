@@ -144,6 +144,7 @@ const CurriculumInfo = ({
                     <button className={styles.addbtn}>
                       <FontAwesomeIcon
                         icon={faPencil}
+                        width={24}
                         className={styles.fontimg}
                       />
                       강의 추가하기

@@ -31,6 +31,7 @@ export const ContentCardWishBtn = (props: ContentCardWishProps) => {
       <button onClick={handleWishCheck} className={styles.zzimbtn}>
         <FontAwesomeIcon
           color="red"
+          width={24}
           icon={faCartShopping}
           className={`${wish ? styles.icon : styles.clickicon}`}
         />

@@ -42,6 +42,7 @@ export const ContentCardFavoriteBtn = ({
       <button onClick={handleWishCheck} className={styles.zzimbtn}>
         <FontAwesomeIcon
           icon={faHeart}
+          width={24}
           className={`${like ? styles.icon : styles.clickicon}`}
         />
         북마크

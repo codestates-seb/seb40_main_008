@@ -37,8 +37,9 @@ const SearchBar = () => {
 						/>
 						<button className={styles.submitbtn} type="submit">
 							<FontAwesomeIcon
+								width={24}
 								icon={faMagnifyingGlass}
-								className={styles.magnifyingglass}
+							// className={styles.magnifyingglass}
 							/>
 						</button>
 					</form>
