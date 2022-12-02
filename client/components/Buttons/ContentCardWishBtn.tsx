@@ -30,9 +30,7 @@ export const ContentCardWishBtn = (props: ContentCardWishProps) => {
       .then((data) => {
         console.log("성공", data);
       })
-      .catch((error) => {
-        setWish(!wish);
-      });
+      .catch((error) => {});
   }, [wish]);
 
   return (

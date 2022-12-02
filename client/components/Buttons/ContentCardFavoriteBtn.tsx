@@ -31,9 +31,7 @@ export const ContentCardFavoriteBtn = ({
       .then((data) => {
         console.log("성공", data);
       })
-      .catch((error) => {
-        setLike(!like);
-      });
+      .catch((error) => {});
   }, [like]);
 
   return (
