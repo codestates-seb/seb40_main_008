@@ -1,7 +1,6 @@
 package main008.BED.bookmark.repository;
 
 import main008.BED.bookmark.entity.Bookmark;
-import main008.BED.warning.entity.Warning;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

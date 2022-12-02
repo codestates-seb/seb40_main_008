@@ -9,7 +9,6 @@ import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.repository.UploadClassRepository;
 import main008.BED.users.entity.Users;
 import main008.BED.users.repository.UsersRepository;
-import main008.BED.warning.entity.Warning;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

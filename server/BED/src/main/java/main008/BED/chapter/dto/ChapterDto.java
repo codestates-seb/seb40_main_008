@@ -2,8 +2,6 @@ package main008.BED.chapter.dto;
 
 import lombok.*;
 import main008.BED.uploadClass.dto.UploadClassDto;
-import main008.BED.uploadClass.entity.UploadClass;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

@@ -1,10 +1,13 @@
 package main008.BED.contents.mapper;
 
+import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
+import main008.BED.contents.service.ContentsService;
 import main008.BED.users.mapper.UsersMapper;
 import org.mapstruct.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +81,26 @@ public interface ContentsMapper {
         return contents.stream()
                 .map(content -> contentsPageToResponse(content))
                 .collect(Collectors.toList());
+    }
+
+    default ContentsDto.ResponseInContent contentToResponseInContent(Contents contents,
+                                                                     HashMap<String, String> roleAndWish,
+                                                                     ContentsService contentsService) {
+
+        return new ContentsDto.ResponseInContent(
+                contents.getContentsId(),
+                contents.getTitle(),
+                contents.getThumbnail(),
+                contents.getLikesCount(),
+                contents.getCategories(),
+                contentsService.calculateAvgStar(contents.getContentsId()),
+                contents.getPayment().getPrice(),
+                roleAndWish.get("role"),
+                Boolean.parseBoolean(roleAndWish.get("wished")),
+                contents.getUsers().getUserName(),
+                contents.getDetails(),
+                contents.getTutorDetail()
+        );
     }
 
 }

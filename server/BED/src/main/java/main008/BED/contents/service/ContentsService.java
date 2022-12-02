@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -271,6 +272,7 @@ public class ContentsService {
     }
 
     private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
+
         ArrayList<Contents> discloseList = new ArrayList<>();
 
         for (Contents content : contentsList) {
@@ -286,6 +288,7 @@ public class ContentsService {
      * UPDATE: Contents 업데이트
      */
     public void updateContents(Long contentsId, Principal principal, Contents newContents, Payment newPayment) {
+
         Contents oldContents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
@@ -300,9 +303,40 @@ public class ContentsService {
         oldContents.setTitle(newContents.getTitle());
         oldContents.setThumbnail(newContents.getThumbnail());
         oldContents.setTutorDetail(newContents.getTutorDetail());
+
         Payment oldPayment = oldContents.getPayment();
         oldPayment.setPrice(newPayment.getPrice());
 
+    }
+
+    /**
+     * user role 구분
+     */
+    public HashMap<String, String> userRoleDivision(Contents contents, Principal principal) {
+
+        boolean wished = false;
+        String role = "";
+
+        if (principal == null) {
+            role = "Unpaid_customer";
+        } else {
+            Users user = usersService.findVerifiedUserByEmail(principal.getName());
+            wished = myClassService.isWished(user.getUsersId(), contents.getContentsId());
+
+            if (contents.getUsers().getUsersId().equals(user.getUsersId())) {
+                role = "creator";
+            } else if (paymentService.verifyPaidByUser(contents.getContentsId(), user.getUsersId())) {
+                role = "Paid_customer";
+            } else {
+                role = "Unpaid_customer";
+            }
+        }
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("wished", String.valueOf(wished));
+        hashMap.put("role", role);
+
+        return hashMap;
     }
 
 }
