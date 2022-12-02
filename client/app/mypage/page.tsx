@@ -48,7 +48,7 @@ const MyPage = async () => {
 
 						<div className={styles.Wrapper}>
 							<FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
-							<h3 className={styles.mycoin}>코인갯수</h3>
+							<h3 className={styles.mycoin}>보유 코인: {userInfo.totalCoin}</h3>
 						</div>
 						<hr className={styles.line}></hr>
 					</div>

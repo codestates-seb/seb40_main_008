@@ -11,7 +11,8 @@
 .btn {
   border: none;
   outline: none;
-  width: 350px;
+  /* width: 350px; */
+  width: 80%;
   height: 50px;
   border-radius: 10px;
   color: white;
