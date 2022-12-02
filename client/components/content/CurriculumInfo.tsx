@@ -59,10 +59,8 @@ const CurriculumInfo = ({
                 <h4>{e.chapterOrder}</h4>
                 <div className={styles.chapter}>
                   <h3>{e.title}</h3>
-                  <h1>{role}</h1>
-                  {/* <h1>{role}</h1> */}
                   <span>
-                    {role == "Unpaid_customer" ? (
+                    {role == "creator" ? (
                       <>
                         <Link
                           href={{
@@ -143,13 +141,17 @@ const CurriculumInfo = ({
                       },
                     }}
                   >
-                    <button className={styles.addbtn}>
-                      <FontAwesomeIcon
-                        icon={faPencil}
-                        className={styles.fontimg}
-                      />
-                      강의 추가하기
-                    </button>
+                    {role == "creator" ? (
+                      <button className={styles.addbtn}>
+                        <FontAwesomeIcon
+                          icon={faPencil}
+                          className={styles.fontimg}
+                        />
+                        강의 추가하기
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </Link>
                 </div>
               </div>
