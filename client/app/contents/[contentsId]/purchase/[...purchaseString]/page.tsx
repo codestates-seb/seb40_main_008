@@ -35,7 +35,7 @@ const PurchaseStringPage = async ({ searchParams }: Props) => {
 					alignItems: 'center',
 					flexDirection: 'column',
 					height: '80vh',
-					border: '1px solid red',
+					// border: '1px solid red',
 				}}
 			>
 				<div
@@ -44,7 +44,7 @@ const PurchaseStringPage = async ({ searchParams }: Props) => {
 						justifyContent: 'center',
 						alignItems: 'center',
 						flexDirection: 'column',
-						border: '1px solid white',
+						// border: '1px solid white',
 						width: '92%',
 						// height: '80vh',
 					}}
@@ -103,7 +103,7 @@ const PurchaseStringPage = async ({ searchParams }: Props) => {
 					style={{
 						position: 'absolute',
 						bottom: '0',
-						border: '1px solid white',
+						// border: '1px solid white',
 						width: '92%',
 					}}
 				>
@@ -123,7 +123,6 @@ const PurchaseStringPage = async ({ searchParams }: Props) => {
 							잔액이 마이너스일 경우, 충전하기
 						</p>
 					</div>
-					<OrangeButton name="구매하기" />
 				</div>
 			</div>
 		</>

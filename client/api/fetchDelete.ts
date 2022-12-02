@@ -11,7 +11,6 @@ export async function fetchDelete(url: string, id: number) {
 
 	try {
 		const response = await fetch(`${url}${id}`, requestOptions);
-		console.log('adsadsad', `${url}${id}`);
 		return response.status;
 	} catch (err) {
 		console.error(err);
@@ -25,8 +24,6 @@ export async function fetchEditChapter(
 	title: string,
 	Id: any
 ) {
-	console.log('🚀 ~ file: fetchDelete.ts:29 ~ Id', Id);
-	console.log('🚀 ~ file: fetchDelete.ts:30 ~ thumbnail', thumbnail);
 	const formData = new FormData();
 	formData.append('thumbnail', thumbnail);
 	formData.append('chapterOrder', chapterOrder);
@@ -40,7 +37,6 @@ export async function fetchEditChapter(
 		},
 		body: formData,
 	};
-	console.log('🚀 ~ file: fetchDelete.ts:40 ~ url', url);
 	try {
 		const response = await fetch(
 			`https://pioneroroom.com/auth/contents/chapter/${Id}`,
