@@ -22,6 +22,7 @@ public interface BookmarkMapper {
                 .memo(bookmark.getMemo())
                 .createdAt(bookmark.getCreatedAt())
                 .modifiedAt(bookmark.getModifiedAt())
+                .timeLine(bookmark.getTimeLine())
                 .build();
     }
 

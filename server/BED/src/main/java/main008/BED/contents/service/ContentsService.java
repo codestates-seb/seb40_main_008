@@ -16,6 +16,8 @@ import main008.BED.payment.entity.Payment;
 import main008.BED.payment.service.PaymentService;
 import main008.BED.review.entity.Review;
 import main008.BED.uploadClass.entity.UploadClass;
+import main008.BED.users.entity.Users;
+import main008.BED.users.repository.UsersRepository;
 import main008.BED.users.service.UsersService;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.service.WishService;
@@ -36,6 +38,7 @@ public class ContentsService {
 
     private final MyUploadClassService myUploadClassService;
     private final ContentsRepository contentsRepository;
+    private final UsersRepository usersRepository;
     private final PaymentService paymentService;
     private final MyClassService myClassService;
     private final S3ServiceImpl s3ServiceImpl;
@@ -278,5 +281,22 @@ public class ContentsService {
         return discloseList;
     }
 
+    /**
+     * UPDATE: Contents 업데이트
+     */
+//    public void updateContents(Long contentsId, Principal principal) {
+//        Contents byContentsId = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+//                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+//
+//        Users byEmail = usersRepository.findByEmail(principal.getName());
+//
+//        if (byContentsId.getUsers().getUsersId() != byEmail.getUsersId()) {
+//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_DELETE);
+//        }
+//
+//        String fileKey = byContentsId.getFileKey();
+//        s3ServiceImpl.updateToS3()
+//
+//    }
 
 }

@@ -25,6 +25,18 @@ public class ContentsDto {
     }
 
     @Getter
+    @AllArgsConstructor
+    public static class Patch {
+
+        private String title;
+        private Contents.Categories categories;
+        private String details;
+        private String tutorDetail;
+        private String thumbnail;
+        private String fileKey;
+    }
+
+    @Getter
     @Builder
     @AllArgsConstructor
     public static class Response {

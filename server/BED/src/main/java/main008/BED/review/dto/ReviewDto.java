@@ -30,6 +30,8 @@ public class ReviewDto {
     public static class Response {
 
         private Long usersId;
+        private String userName;
+        private String profileImage;
         private Long reviewId;
         private int starRate;
         private String comments;

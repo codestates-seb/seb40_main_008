@@ -296,4 +296,23 @@ public class ContentsController {
         return new ResponseEntity("The Content is removed.", HttpStatus.OK);
     }
 
+//    /**
+//     * PATCH: Contents 수정
+//     */
+//    @PatchMapping("/auth/contents/{contents-id}")
+//    public ResponseEntity patchContents(@PathVariable("contents-id") @Positive Long contentsId,
+//                                        @RequestParam("title") String title,
+//                                        @RequestParam("categories") String categories,
+//                                        @RequestParam("details") String details,
+//                                        @RequestParam("tutorDetail") String tutorDetail,
+//                                        @RequestParam("thumbnail") MultipartFile thumbnail,
+//                                        @RequestParam("price") String price,
+//                                        Principal principal) {
+//
+//
+//
+//        ContentsDto.Patch patch = new ContentsDto.Patch(title, categories, details, tutorDetail, thumbnail, fileKey, price);
+//
+//        contentsService.updateContents(contentsId, principal);
+//    }
 }

@@ -26,6 +26,8 @@ public interface ReviewMapper {
         ZonedDateTime createdAt = null;
         ZonedDateTime modifiedAt = null;
         Long usersId = null;
+        String userName = null;
+        String profileImage = null;
 
         reviewId = review.getReviewId();
         starRate = review.getStarRate();
@@ -33,8 +35,11 @@ public interface ReviewMapper {
         createdAt = review.getCreatedAt();
         modifiedAt = review.getModifiedAt();
         usersId = review.getUsers().getUsersId();
+        userName = review.getUsers().getUserName();
+        profileImage = review.getUsers().getProfileImage();
 
-        ReviewDto.Response response = new ReviewDto.Response( usersId, reviewId, starRate, comments, createdAt, modifiedAt );
+
+        ReviewDto.Response response = new ReviewDto.Response( usersId, userName, profileImage, reviewId, starRate, comments, createdAt, modifiedAt );
 
         return response;
     }
