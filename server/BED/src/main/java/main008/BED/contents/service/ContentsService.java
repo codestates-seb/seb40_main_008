@@ -216,7 +216,7 @@ public class ContentsService {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("likesCount").descending());
 
-        List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByLikesCountDesc(keyword);
+        List<Contents> contentsList = contentsRepository.searchTitleSortLikesCount(keyword);
 
         ArrayList<Contents> discloseList = getDiscloseContents(contentsList);
 
