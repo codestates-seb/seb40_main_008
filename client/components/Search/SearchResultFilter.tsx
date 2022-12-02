@@ -35,9 +35,6 @@ const SearchResultFilter = (params: any) => {
                 <option value="newest" className={styles.options}>
                     최신순
                 </option>
-                {/* <FontAwesomeIcon
-                    icon={faCaretDown}
-                    className={styles.faCaretDown} /> */}
             </select>
         </div>
     );

@@ -1,3 +1,9 @@
+.categoryWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .title{
     position: fixed;
     font: 18px;
