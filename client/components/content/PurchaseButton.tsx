@@ -1,22 +1,22 @@
 'use client';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { getUserInfoClient } from '../../utils/helper/getUserInfoClient';
 import OrangeButton from '../Buttons/orangeButton';
+import { useRouter } from 'next/navigation';
+import { getLastDynamicRouteId } from '../../utils/helper/getLastDynamicRouteId';
 
 const PurchaseButton = () => {
 	const router = useRouter();
-	const query = router.query;
-	console.log(
-		'🚀 ~ file: PurchaseButton.tsx:11 ~ PurchaseButton ~ query',
-		query
-	);
+	const contentId = getLastDynamicRouteId();
 
 	const handleToPurchase = async () => {
 		const userInfo = await getUserInfoClient();
-		if (!userInfo) router.push('/login');
+		if (!userInfo) {
+			router.push('/login');
+			return;
+		}
 
-		router.push('/contents/[contentsId]/purchase');
+		router.push(`/contents/${contentId}/purchase`);
 	};
 
 	return (
