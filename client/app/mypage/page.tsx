@@ -1,9 +1,9 @@
-import React from 'react';
-import BaseNavbar from '../../components/BaseNavBar/BaseNavbar';
-import styles from './Mypage.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
+import styles from "./Mypage.module.css";
+import Link from "next/link";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCoins,
 	faPenToSquare,
@@ -20,10 +20,10 @@ import { SignOut } from "../../components/Buttons/SignOut";
 const MyPage = async () => {
 	// const session = useSession();
 	const userInfo = await verifyLogin();
-	console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo)
+	console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo);
 
 	const session = {
-		status: 'authenticated',
+		status: "authenticated",
 	};
 
 	// if (session.status === 'authenticated')
@@ -32,7 +32,7 @@ const MyPage = async () => {
 			<>
 				<BaseNavbar />
 				<div className={styles.myinfo}>
-					<Link href={'/editmypage'}>
+					<Link href={"/editmypage"}>
 						<Image
 							className={styles.myimg}
 							alt="myimg"
@@ -40,9 +40,9 @@ const MyPage = async () => {
 							width={70}
 							height={70}
 						/>
-						닉네임 &#62;
+						{userInfo.userName} &#62;
 					</Link>
-					<h3 className={styles.id}>아이디</h3>
+					<h3 className={styles.id}>{userInfo.email}</h3>
 
 					<div className={styles.Wrapper}>
 						<FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />

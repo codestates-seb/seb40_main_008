@@ -9,8 +9,7 @@ export async function patchWish(contentId: number, wish: boolean) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    // BUG: payload not being accepted
-    body: { wished: true },
+
   };
   try {
     const response = await fetch(
