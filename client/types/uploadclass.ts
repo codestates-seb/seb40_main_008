@@ -1,51 +1,51 @@
-import { type } from "os";
+import { type } from 'os';
 
 export interface UploadClassType {
-  title: string;
-  categories: string;
-  details: string;
-  tutorDetail: string;
-  thumbnail: any;
-  price: string;
+	title: string;
+	categories: string;
+	details: string;
+	tutorDetail: string;
+	thumbnail: any;
+	price: string;
 }
 
 export const initialClass = {
-  title: "",
-  categories: "",
-  details: "",
-  tutorDetail: "",
-  thumbnail: null,
-  price: "",
+	title: '',
+	categories: '',
+	details: '',
+	tutorDetail: '',
+	thumbnail: null,
+	price: '',
 };
 
 export interface UploadImage {
-  file: any;
-  thumbnail: any;
-  type: string | null;
+	file: any;
+	thumbnail: string;
+	type: string | null;
 }
 
 export interface UploadChapterType {
-  thumbnail: any;
-  chapterOrder: any;
-  title: any;
+	thumbnail: any;
+	chapterOrder: any;
+	title: any;
 }
 
 export const initialChapter = {
-  thumbnail: null,
-  chapterOrder: "",
-  title: "",
+	thumbnail: null,
+	chapterOrder: '',
+	title: '',
 };
 
 export interface UploadLectureType {
-  videoFile: File | null;
-  title: string;
-  docsFile: File | null;
-  details: string;
+	videoFile: File | null;
+	title: string;
+	docsFile: File | null;
+	details: string;
 }
 
 export const initialLecture = {
-  videoFile: null,
-  title: "",
-  docsFile: null,
-  details: "",
+	videoFile: null,
+	title: '',
+	docsFile: null,
+	details: '',
 };
