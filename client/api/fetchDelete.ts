@@ -19,10 +19,11 @@ export async function fetchDelete(url: string, id: number) {
 }
 
 export async function fetchEditChapter(
+  url: string,
   thumbnail: string,
   chapterOrder: string,
   title: string,
-  chapterId: number
+  Id: any
 ) {
   const token = getCookie("accessToken");
   const requestOptions = {
@@ -33,10 +34,7 @@ export async function fetchEditChapter(
     body: JSON.stringify({ thumbnail, chapterOrder, title }),
   };
   try {
-    const response = await fetch(
-      `http://localhost:8080/auth/contents/chapter/${chapterId}`,
-      requestOptions
-    );
+    const response = await fetch(`${url}${Id}`, requestOptions);
     return response.status;
   } catch (err) {
     console.error(err);

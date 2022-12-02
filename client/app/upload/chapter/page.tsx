@@ -9,6 +9,7 @@ import { redirect, useSearchParams } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { ICurriculumContent } from "../../../types/contents";
 import { useRouter } from "next/navigation";
+import CurriculumEdit from "../../../components/Buttons/CurriculumEdit";
 
 const formData = new FormData();
 
@@ -97,7 +98,7 @@ const UploadChapterPage = () => {
 
       setValues({
         ...values,
-        thumbnail: url,
+        thumbnail: fileList[0],
       });
       console.log("fileList", fileList);
       console.log("fileList[0]", fileList[0]);
@@ -185,7 +186,15 @@ const UploadChapterPage = () => {
           <div className={styles.uploadimg}>{showImage}</div>
 
           {query == "edit" ? (
-            <OrangeButton type={"submit"} name={"수정하기"} />
+            // <OrangeButton type={"submit"} name={"수정하기"} />
+            <CurriculumEdit
+              url={"http://localhost:8080/auth/contents/chapter/"}
+              thumbnail={imageFile?.file}
+              chapterOrder={values.chapterOrder}
+              title={values.title}
+              Id={chapterId}
+              contentId={contentId}
+            />
           ) : (
             <OrangeButton type={"submit"} name={"올리기"} />
           )}
