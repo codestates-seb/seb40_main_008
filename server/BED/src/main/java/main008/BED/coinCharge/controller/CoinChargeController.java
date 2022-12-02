@@ -24,15 +24,15 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping
 @RequiredArgsConstructor
 @Validated
 //@SessionAttributes({"tid"}) // 세션에 저장된 값 사용 시 쓰는 어노테이션, session에 없을 시 model까지 훑어서 찾음
 public class CoinChargeController {
 
+    private final CoinChargeDetailMapper coinChargeDetailMapper;
     private final CoinChargeService coinChargeService;
     private final CoinChargeMapper coinChargeMapper;
-    private final CoinChargeDetailMapper coinChargeDetailMapper;
     private final UserPageService userPageService;
     private final UsersService usersService;
 

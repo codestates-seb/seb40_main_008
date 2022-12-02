@@ -103,13 +103,11 @@ public class ContentsController {
     @PostMapping("/auth/{contents-id}/wish")
     public ResponseEntity wishContents(Principal principal,
                                        @PathVariable("contents-id") @Positive Long contentsId,
-                                       @Valid @RequestBody WishDto.Post post) {
+                                       @RequestParam(name = "wished", required = false, defaultValue = "true") Boolean wished) {
 
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
-        Wish wish = wishMapper.postToWish(post);
-
-        contentsService.wishContents(contentsId, users.getUsersId(), wish.getWished());
+        contentsService.wishContents(contentsId, users.getUsersId(), wished);
 
         return ResponseEntity.status(HttpStatus.OK).body("Update your wishlist.");
     }
