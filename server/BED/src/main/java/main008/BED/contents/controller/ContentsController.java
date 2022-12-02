@@ -156,14 +156,12 @@ public class ContentsController {
      */
     @GetMapping("/search") // API에 대문자는 들어가면 안됨,,,, RESTful API
     public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories, // 쿼리 스트링은 대문자 가능..?
-                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
-                                        @RequestParam(name = "page", required = false, defaultValue = "1") int page,
-                                        @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
+                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort) {
 
-        Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
-
+        List<Contents> contents = contentsService.findContentsByCategory(categories, sort);
+        
         List<ContentsDto.ResponseForCategories> categories1 =
-                contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
+                contentsMapper.contentsToCategoriesResponses(contents, usersMapper);
 
         return new ResponseEntity<>(contentsMapper.toCategoryList(categories1), HttpStatus.OK);
     }

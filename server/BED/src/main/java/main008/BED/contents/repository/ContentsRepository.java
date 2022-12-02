@@ -24,12 +24,23 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
             , nativeQuery = true)
     Optional<List<Contents>> findByUsersId(Long users_id);
 
-    Page<Contents> findByCategories(Contents.Categories categories, Pageable pageable);
-
     List<Contents> findContentsByTitleContainingOrderByContentsIdDesc(String keyword);
 
     List<Contents> findContentsByTitleContainingOrderByLikesCountDesc(String keyword);
 
+    @Query(value =
+            "SELECT * FROM contents c " +
+            "WHERE c.categories = :categories " +
+            "ORDER BY contents_id DESC"
+            , nativeQuery = true)
+    List<Contents> categoryNewestSort(String categories);
+
+    @Query(value =
+            "SELECT * FROM contents c " +
+            "WHERE c.categories = :categories " +
+            "ORDER BY likes_count DESC, contents_id DESC"
+            , nativeQuery = true)
+    List<Contents> categoryPopularSort(String categories);
 
     /**
      * clearAutomatically = true
