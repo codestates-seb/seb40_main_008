@@ -4,10 +4,7 @@ import { CarouselInfo } from '../types/homeScreen/carousel';
 import { ICategorySearchResult } from '../types/category_search/categorySearchType';
 import HomeCarouselSection from './HomeCarouselSection';
 import HomeClassesSection from '../components/Card/HomeClassesSection';
-import styles from './styles/page.module.css';
 import CarouselImageWithText from '../components/Carousel/CarouselImageWithText';
-import { cookies, headers } from 'next/headers';
-import getUserInfo from '../utils/helper/backendUserInfo';
 import verifyLogin from '../utils/VerifyLogin';
 
 const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
