@@ -8,7 +8,6 @@ import OrangeButton from "../../../components/Buttons/orangeButton";
 import { redirect, useSearchParams } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { ICurriculumContent } from "../../../types/contents";
-import { fetchEditChapter } from "../../../api/fetchDelete";
 import { useRouter } from "next/navigation";
 
 const formData = new FormData();

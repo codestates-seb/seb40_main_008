@@ -17,14 +17,6 @@ const getContentInfo = async (contentsId: string): Promise<IContent> => {
   return contentInfo;
 };
 
-// const getContentInfo2 = async (): Promise<IContent> => {
-//   const res = await fetch(
-//     `https://run.mocky.io/v3/1557f956-b2ac-461f-b17d-fd4005379b44`
-//   );
-//   const { contentInfo } = await res.json();
-//   return contentInfo;
-// };
-
 const getCurriculum = async (
   contentsId: string
 ): Promise<Array<ICurriculumContent>> => {
@@ -41,9 +33,7 @@ const getCurriculum = async (
 
 const ContentsIdPage = async ({ params }: any) => {
   const contentInfo = await getContentInfo(params.contentsId);
-  // const contentInfo = await getContentInfo2();
   const curriculumInfo = await getCurriculum(params.contentsId);
-  console.log("parm", params);
   return (
     <>
       <BaseNavbar />

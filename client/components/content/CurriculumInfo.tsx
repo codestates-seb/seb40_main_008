@@ -5,7 +5,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { ICurriculumContent } from "../../types/contents";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchDelete, fetchEditChapter } from "../../api/fetchDelete";
+import { fetchDelete, fetchEditChapter } from "../../utils/api/fetchDelete";
 import { UploadChapterType } from "../../types/uploadclass";
 interface CurriculumInfoProps {
   curriculumInfo: ICurriculumContent[];
