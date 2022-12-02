@@ -23,7 +23,7 @@ https://documenter.getpostman.com/view/22568988/2s8YmSrfq3
      </td>
      <td align="center"><a href="https://github.com/akdlsz21"><img src=https://avatars.githubusercontent.com/u/81629070?v=4 width="100px;"/><br/><sub><b>@akdlsz21</b></sub></a><br/>
      </td>
-     <td align="center"><a href="https://github.com/iJisung"><img src=https://avatars.githubusercontent.com/u/88229250?v=4 width="100px;" alt=""/><br/><sub><b>iJisung</b></sub></a><br /></td>
+     <td align="center"><a href="https://github.com/iJisung"><img src=https://avatars.githubusercontent.com/u/13814876?v=4 width="100px;" alt=""/><br/><sub><b>iJisung</b></sub></a><br /></td>
      <td align="center"><a href="https://github.com/Seung-IL-Bang"><img src=https://avatars.githubusercontent.com/u/87510898?v=4 width="100px;"/><br /><sub><b>@Seung-IL-Bang</b></sub></a><br /></td>
      <td align="center"><a href="https://github.com/hyoreal"><img src=https://avatars.githubusercontent.com/u/102732425?v=4 width="100px;"/><br /><sub><b>@hyoreal</b></sub></a><br /></td>
   </tr>
