@@ -26,7 +26,6 @@ const getVideoPageContent = async (contentsId: string, videoId: string) => {
 			`https://run.mocky.io/v3/22e05b93-2b82-42ba-86d6-7deeb33755c7`
 		);
 		const data = await res.json();
-		console.log('🚀 ~ file: page.tsx:29 ~ getVideoPageContent ~ data', data);
 		return data;
 	} catch (error) {
 		console.error(error);

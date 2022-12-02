@@ -12,14 +12,11 @@ import verifyLogin from '../utils/VerifyLogin';
 
 const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 	try {
-		const response = await fetch(
-			'https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818',
-			{
-				next: {
-					revalidate: 60,
-				},
-			}
-		);
+		const response = await fetch('https://pioneroroom.com/home', {
+			next: {
+				revalidate: 60,
+			},
+		});
 		const { contentsList } = await response.json();
 		return contentsList;
 	} catch (error) {
