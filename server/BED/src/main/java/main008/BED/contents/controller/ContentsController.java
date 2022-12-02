@@ -14,23 +14,18 @@ import main008.BED.contents.entity.EnumValue;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.converter.StringToCategoryEnum;
-import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.PageInfo;
-import main008.BED.myClass.service.MyClassService;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
-import main008.BED.payment.service.PaymentService;
-import main008.BED.review.entity.Review;
 import main008.BED.review.mapper.ReviewMapper;
 import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.service.UploadClassService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
 import main008.BED.users.service.UsersService;
-import main008.BED.wish.mapper.WishMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -143,26 +138,17 @@ public class ContentsController {
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
-
-        Users tutor = contents.getUsers();
-        String title = contents.getTitle();
-        Docs docs = uploadClass.getDocs();
-        String video = uploadClass.getVideo();
-        List<Review> reviewList = uploadClass.getReviewList(); // 해당 강의 모든 리뷰 전송
         List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
 
+        ContentsDto.ResponseForStream responseForStream =
+                contentsMapper.contentsResponseForStream(
+                        contents, uploadClass,
+                        usersMapper, docsMapper,
+                        reviewMapper, bookmarkMapper,
+                        bookmarkList, curriculumInStream.getCurriculumInfo());
 
-        ContentsDto.ResponseForStream responseForStream
-                = new ContentsDto.ResponseForStream(
-                usersMapper.usersToUserResponseDto(tutor),
-                title,
-                video,
-                docsMapper.entityToResponseDto(docs),
-                reviewMapper.listEntityToListResponseDto(reviewList),
-                bookmarkMapper.listEntityToListResponseDto(bookmarkList),
-                curriculumInStream.getCurriculumInfo());
 
-        return new ResponseEntity(responseForStream, HttpStatus.OK);
+        return new ResponseEntity<>(responseForStream, HttpStatus.OK);
     }
 
     /**
