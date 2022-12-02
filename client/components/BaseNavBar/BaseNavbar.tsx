@@ -4,9 +4,14 @@ import styles from './BaseNavbar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { useScrollBar } from '../../hooks/\bScrollBar/UseScrollBar';
+import { useHasWindow } from '../../utils/hooks/useHasWindow';
 
 const BaseNavbar = () => {
 	const { show } = useScrollBar();
+	const hasWindow = useHasWindow();
+	if (!hasWindow) {
+		return null;
+	}
 	return (
 		<>
 			{window.scrollY < 45 ? (

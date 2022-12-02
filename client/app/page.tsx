@@ -8,6 +8,7 @@ import styles from './styles/page.module.css';
 import CarouselImageWithText from '../components/Carousel/CarouselImageWithText';
 import { cookies, headers } from 'next/headers';
 import getUserInfo from '../utils/helper/backendUserInfo';
+import verifyLogin from '../utils/VerifyLogin';
 
 const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 	try {
@@ -40,7 +41,7 @@ const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 
 const page = async () => {
 	// console.log('cookies().get(accessToken).value', cookies().get('accessToken')?.value)
-	const userInfo = await getUserInfo(cookies().get('accessToken')?.value ?? '');
+	const userInfo = await verifyLogin();
 	// console.log('🚀 ~ file: page.tsx ~ line 44 ~ page ~ userInfo', userInfo);
 	const contentsList = await getClassesContents();
 	const carouselList = await getCarouselInfo();
