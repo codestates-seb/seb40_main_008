@@ -159,7 +159,7 @@ public class ContentsController {
                                         @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort) {
 
         List<Contents> contents = contentsService.findContentsByCategory(categories, sort);
-        
+
         List<ContentsDto.ResponseForCategories> categories1 =
                 contentsMapper.contentsToCategoriesResponses(contents, usersMapper);
 
