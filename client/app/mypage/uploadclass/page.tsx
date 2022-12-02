@@ -11,8 +11,9 @@ const getMyUploadClasses = async (): Promise<Array<ICategorySearchResult>> => {
     const token = cookies().get('accessToken')?.value;
 
     try {
+        //http://pioneroroom/auth/mypage/myuploadclass
         // https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
-        const response = await fetch(`http://pioneroroom/auth/mypage/myuploadclass`,
+        const response = await fetch(`https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818`,
             {
                 method: 'GET',
                 headers: {

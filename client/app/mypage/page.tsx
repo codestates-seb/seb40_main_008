@@ -14,10 +14,13 @@ import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import getUserInfo from "../../utils/helper/backendUserInfo";
 import { headers } from "next/headers";
+import verifyLogin from "../../utils/VerifyLogin";
+import { SignOut } from "../../components/Buttons/SignOut";
 
 const MyPage = async () => {
   // const session = useSession();
-  const userInfo = await getUserInfo(headers().get("cookie") ?? "");
+  const userInfo = await verifyLogin();
+  console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo)
 
   const session = {
     status: "authenticated",
@@ -68,10 +71,7 @@ const MyPage = async () => {
               <h2 className={styles.font}>강좌 개설하기</h2>
             </Link>
           </div>
-          <OrangeButton
-            onClick={() => signOut()}
-            name={"로그 아웃"}
-          ></OrangeButton>
+          <SignOut />
         </div>
       </>
     );
