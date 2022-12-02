@@ -12,6 +12,7 @@ const settings = {
 	// fontLoaders is not a proper key
 	// fontLoaders: [{ loader: '@next/font/google' }],
 	images: {
+		domains: ['k.kakaocdn.net', 'lh3.googleusercontent.com'],
 		remotePatterns: [
 			{
 				protocol: 'https',
@@ -20,6 +21,7 @@ const settings = {
 		],
 	},
 };
+
 /*
 const settings = {
 	// BUG: Strict mode true makes video streaming network be severed during request.

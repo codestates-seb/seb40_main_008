@@ -39,7 +39,9 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 		}
 	};
 
-	console.log(userInfo);
+	const myprofileImg = userInfo?.profileImage;
+
+	console.log('type-myprofileImg', typeof myprofileImg);
 
 	return (
 		<>
@@ -56,11 +58,12 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 					</div>
 					<div>
 						{userInfo ? (
-							<Link href={'/mypage'}>
+							<Link href={'/mypage'} className="myimg" >
 								<Image
+									style={{ borderRadius: '50%', marginTop: '5px' }}
 									className="myimg"
 									alt="myimg"
-									src="/img/myimg.png"
+									src={userInfo.profileImage}
 									width={35}
 									height={35}
 								/>
@@ -84,9 +87,10 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 						{userInfo ? (
 							<Link href={'/mypage'}>
 								<Image
+									style={{ borderRadius: '50%', marginTop: '5px' }}
 									className="myimg"
 									alt="myimg"
-									src="/img/myimg.png"
+									src={userInfo.profileImage}
 									width={40}
 									height={40}
 								/>
@@ -102,5 +106,4 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 		</>
 	);
 };
-
 export default HomeNavBar;
