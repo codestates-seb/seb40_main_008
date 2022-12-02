@@ -1,13 +1,13 @@
 "use client";
 import styles from "./uploadClass.module.css";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
 import BaseNavbar from "../../../components/BaseNavBar/BaseNavbar";
 import { initialLecture, UploadLectureType } from "../../../types/uploadclass";
 import { useSearchParams } from "next/navigation";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
-import { redirect } from "next/navigation";
 const formData = new FormData();
 
 const UploadClassPage = () => {
@@ -15,6 +15,8 @@ const UploadClassPage = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("slug");
   const chapterId = searchParams.get("chapterId");
+  const contentsId = searchParams.get("contentsId");
+  const router = useRouter();
   console.log(query);
 
   const [file, setFile] = useState<any>();
@@ -51,6 +53,14 @@ const UploadClassPage = () => {
         Authorization: `Bearer ${token}`,
       },
       body: formData,
+    }).then((res) => {
+      if (res.ok) {
+        formData.delete("title");
+        formData.delete("details");
+        formData.delete("videoFile");
+        formData.delete("docsFile");
+        router.push(`/contents/${contentsId}`);
+      }
     });
   };
 

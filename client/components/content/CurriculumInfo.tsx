@@ -5,8 +5,9 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { ICurriculumContent } from "../../types/contents";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchDelete, fetchEditChapter } from "../../utils/api/fetchDelete";
-import { UploadChapterType } from "../../types/uploadclass";
+import Curriculumdelete from "../Buttons/Curriculumdelete";
+import { useRouter } from "next/navigation";
+
 interface CurriculumInfoProps {
   curriculumInfo: ICurriculumContent[];
   contentsId: number;
@@ -18,34 +19,7 @@ const CurriculumInfo = ({
   contentsId,
   curriculumInfo,
 }: CurriculumInfoProps) => {
-  console.log("dadsa", contentsId);
-
-  const handleChapterDeleteClick = async (chapterId: number) => {
-    try {
-      const status = await fetchDelete(
-        `https://pioneroroom.com/auth/contents/chapter/`,
-        chapterId
-      );
-      if (status !== 200) throw new Error("status is not good");
-      //렌더링 필요
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleClassDeleteClick = async (uploadClassId: number) => {
-    try {
-      const status = await fetchDelete(
-        `https://pioneroroom.com/auth/chapter/lecture/`,
-        uploadClassId
-      );
-      if (status !== 200) throw new Error("status is not good");
-      //렌더링 필요
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  const router = useRouter();
   return (
     <>
       {curriculumInfo &&
@@ -59,7 +33,6 @@ const CurriculumInfo = ({
                 <h4>{e.chapterOrder}</h4>
                 <div className={styles.chapter}>
                   <h3>{e.title}</h3>
-                  {/* <h1>{role}</h1> */}
                   <span>
                     {role == "creator" ? (
                       <>
@@ -77,12 +50,11 @@ const CurriculumInfo = ({
                         >
                           <button className={styles.btn}>수정</button>
                         </Link>
-                        <button
-                          onClick={() => handleChapterDeleteClick(e.chapterId)}
-                          className={styles.btn}
-                        >
-                          삭제
-                        </button>
+
+                        <Curriculumdelete
+                          url={`https://pioneroroom.com/auth/contents/chapter/`}
+                          Id={e.chapterId}
+                        />
                       </>
                     ) : (
                       ""
@@ -101,7 +73,6 @@ const CurriculumInfo = ({
                           }}
                         >
                           <h4>{e.title}</h4>
-                          <h1>{role}</h1>
                         </Link>
                       </div>
                       <div>
@@ -115,14 +86,11 @@ const CurriculumInfo = ({
                             >
                               <button className={styles.btn}>수정</button>
                             </Link>
-                            <button
-                              onClick={() =>
-                                handleClassDeleteClick(e.uploadClassId)
-                              }
-                              className={styles.btn}
-                            >
-                              삭제
-                            </button>
+
+                            <Curriculumdelete
+                              url={`https://pioneroroom.com/auth/chapter/lecture/`}
+                              Id={e.uploadClassId}
+                            />
                           </>
                         ) : (
                           ""
@@ -133,22 +101,27 @@ const CurriculumInfo = ({
                 ))}
 
                 <div className={styles.addbtnWrapper}>
-                  <Link
-                    href={{
-                      pathname: "/upload/class",
-                      query: {
-                        chapterId: e.chapterId,
-                      },
-                    }}
-                  >
-                    <button className={styles.addbtn}>
-                      <FontAwesomeIcon
-                        icon={faPencil}
-                        className={styles.fontimg}
-                      />
-                      강의 추가하기
-                    </button>
-                  </Link>
+                  {role == "creator" ? (
+                    <Link
+                      href={{
+                        pathname: "/upload/class",
+                        query: {
+                          chapterId: e.chapterId,
+                          contentsId: contentsId,
+                        },
+                      }}
+                    >
+                      <button className={styles.addbtn}>
+                        <FontAwesomeIcon
+                          icon={faPencil}
+                          className={styles.fontimg}
+                        />
+                        강의 추가하기
+                      </button>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
