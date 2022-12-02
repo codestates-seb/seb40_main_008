@@ -21,11 +21,11 @@ const CategoryNavBar = () => {
 						onClick={() => window.history.back()}
 						className={styles.leftbtn}
 					>
-						<FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
+						<FontAwesomeIcon icon={faAngleLeft} width={24} className={styles.font} />
 					</button>
 					<button className={styles.rightbtn}>
 						<Link href={'/'}>
-							<FontAwesomeIcon icon={faHouse} className={styles.font} />
+							<FontAwesomeIcon icon={faHouse} width={24} className={styles.font} />
 						</Link>
 					</button>
 				</nav>
@@ -35,11 +35,11 @@ const CategoryNavBar = () => {
 						onClick={() => window.history.back()}
 						className={styles.leftbtn}
 					>
-						<FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
+						<FontAwesomeIcon icon={faAngleLeft} width={24} className={styles.font} />
 					</button>
 					<button className={styles.rightbtn}>
 						<Link href={'/'}>
-							<FontAwesomeIcon icon={faHouse} className={styles.font} />
+							<FontAwesomeIcon icon={faHouse} width={24} className={styles.font} />
 						</Link>
 					</button>
 				</nav>

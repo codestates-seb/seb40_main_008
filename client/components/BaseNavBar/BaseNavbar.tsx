@@ -20,7 +20,7 @@ const BaseNavbar = () => {
 						onClick={() => window.history.back()}
 						className={styles.leftbtn}
 					>
-						<FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
+						<FontAwesomeIcon icon={faAngleLeft} width={24} className={styles.font} />
 					</button>
 				</nav>
 			) : (
@@ -29,7 +29,7 @@ const BaseNavbar = () => {
 						onClick={() => window.history.back()}
 						className={styles.leftbtn}
 					>
-						<FontAwesomeIcon icon={faAngleLeft} className={styles.font} />
+						<FontAwesomeIcon icon={faAngleLeft} width={24} className={styles.font} />
 					</button>
 				</nav>
 			)}
