@@ -20,7 +20,7 @@ import { SignOut } from "../../components/Buttons/SignOut";
 const MyPage = async () => {
 	// const session = useSession();
 	const userInfo = await verifyLogin();
-	console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo);
+	// console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo);
 
 	const session = {
 		status: "authenticated",
@@ -35,9 +35,10 @@ const MyPage = async () => {
 					<div className={styles.myinfo}>
 						<Link href={"/editmypage"}>
 							<Image
+								style={{ borderRadius: '50%' }}
 								className={styles.myimg}
 								alt="myimg"
-								src="/img/myimg.png"
+								src={userInfo.profileImage}
 								width={70}
 								height={70}
 							/>
