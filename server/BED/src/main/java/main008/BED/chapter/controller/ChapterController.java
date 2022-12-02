@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,7 +44,7 @@ public class ChapterController {
     public ResponseEntity postChapter(@PathVariable("contents-id") @Positive Long contentsId,
                                       @RequestParam("thumbnail") MultipartFile thumbnail,
                                       @RequestParam("chapterOrder") String chapterOrder,
-                                      @RequestParam("title") String title) {
+                                      @RequestParam("title") String title) throws UnsupportedEncodingException {
 
         HashMap map = s3ServiceImpl.uploadToS3(thumbnail, "/chapter/thumbnail");
         String url = map.get("url").toString();
@@ -103,7 +104,7 @@ public class ChapterController {
     public ResponseEntity patchChapter(@PathVariable("chapter-id") @Positive Long oldChapterId,
                                        @RequestParam("thumbnail") MultipartFile thumbnail,
                                        @RequestParam("chapterOrder") String chapterOrder,
-                                       @RequestParam("title") String title) {
+                                       @RequestParam("title") String title) throws UnsupportedEncodingException {
 
         Chapter oldChapter = chapterService.readOne(oldChapterId);
 

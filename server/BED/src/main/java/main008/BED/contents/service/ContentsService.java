@@ -3,6 +3,7 @@ package main008.BED.contents.service;
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3ServiceImpl;
 import main008.BED.chapter.entity.Chapter;
+import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.repository.ContentsRepository;
 import main008.BED.exception.BusinessLogicException;
@@ -16,6 +17,8 @@ import main008.BED.payment.entity.Payment;
 import main008.BED.payment.service.PaymentService;
 import main008.BED.review.entity.Review;
 import main008.BED.uploadClass.entity.UploadClass;
+import main008.BED.users.entity.Users;
+import main008.BED.users.repository.UsersRepository;
 import main008.BED.users.service.UsersService;
 import main008.BED.wish.entity.Wish;
 import main008.BED.wish.service.WishService;
@@ -24,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +39,7 @@ public class ContentsService {
 
     private final MyUploadClassService myUploadClassService;
     private final ContentsRepository contentsRepository;
+    private final UsersRepository usersRepository;
     private final PaymentService paymentService;
     private final MyClassService myClassService;
     private final S3ServiceImpl s3ServiceImpl;
@@ -73,11 +78,17 @@ public class ContentsService {
     /**
      * contents 삭제
      */
-    public void removeContents(Long contentId) {
+    public void removeContents(Long contentId, Principal principal) {
 
         // TODO: 컨텐츠에 담긴 챕터, DOCS 연쇄 삭제
         Contents byContentsId = contentsRepository.findByContentsId(contentId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
+        Users byEmail = usersRepository.findByEmail(principal.getName());
+
+        if (byContentsId.getUsers().getUsersId() != byEmail.getUsersId()) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_DELETE);
+        }
 
         String fileKey = byContentsId.getFileKey();
         s3ServiceImpl.delete(fileKey, "/contents/thumbnail");
@@ -218,18 +229,7 @@ public class ContentsService {
 
         return contentsPage;
     }
-    
-    private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
-        ArrayList<Contents> discloseList = new ArrayList<>();
 
-        for (Contents content : contentsList) {
-            Boolean disclosure = content.getDisclosure();
-            if (disclosure) {
-                discloseList.add(content);
-            }
-        }
-        return discloseList;
-    }
 
     /**
      * 총 별점 계산
@@ -267,6 +267,41 @@ public class ContentsService {
             float avg = (float) sum / count;
             return Math.round(avg * 100) / 100.0; // 소숫점 둘 째 자리까지
         }
+
+    }
+
+    private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
+        ArrayList<Contents> discloseList = new ArrayList<>();
+
+        for (Contents content : contentsList) {
+            Boolean disclosure = content.getDisclosure();
+            if (disclosure) {
+                discloseList.add(content);
+            }
+        }
+        return discloseList;
+    }
+
+    /**
+     * UPDATE: Contents 업데이트
+     */
+    public void updateContents(Long contentsId, Principal principal, Contents newContents, Payment newPayment) {
+        Contents oldContents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
+
+        Users reqUser = usersRepository.findByEmail(principal.getName());
+
+        if (oldContents.getUsers().getUsersId() != reqUser.getUsersId()) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_PATCH);
+        }
+
+        oldContents.setCategories(newContents.getCategories());
+        oldContents.setDetails(newContents.getDetails());
+        oldContents.setTitle(newContents.getTitle());
+        oldContents.setThumbnail(newContents.getThumbnail());
+        oldContents.setTutorDetail(newContents.getTutorDetail());
+        Payment oldPayment = oldContents.getPayment();
+        oldPayment.setPrice(newPayment.getPrice());
 
     }
 

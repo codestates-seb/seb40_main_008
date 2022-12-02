@@ -31,8 +31,8 @@ public class Bookmark {
     @Column
     private ZonedDateTime modifiedAt;
 
-//    @Column
-//    private String timeline;
+    @Column
+    private String timeLine;
 
     @ManyToOne // 양방향, cascade.all, Lazy
     @JoinColumn(name = "UPLOAD_CLASS_ID")

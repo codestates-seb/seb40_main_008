@@ -73,6 +73,7 @@ public class BookmarkService {
         // update
         oldBookmark.setModifiedAt(ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         oldBookmark.setMemo(newBookmark.getMemo());
+        oldBookmark.setTimeLine(newBookmark.getTimeLine());
 
     }
 

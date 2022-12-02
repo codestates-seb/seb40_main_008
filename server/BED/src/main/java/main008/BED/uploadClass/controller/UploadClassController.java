@@ -54,7 +54,7 @@ public class UploadClassController {
         HashMap map = s3Service.uploadToS3(videoFile, "/UploadClass/video");
         String videoUrl = map.get("url").toString();
         String fileKey = map.get("fileKey").toString();
-        String videoName = videoFile.getOriginalFilename();
+        String videoName = new String(videoFile.getOriginalFilename().getBytes("UTF-8"));
 
         UploadClassDto.Post post = new UploadClassDto.Post(videoUrl, title, videoName, fileKey, docs);
         uploadClassService.saveLecture(uploadClassMapper.postDtoToEntity(post), chapterId);

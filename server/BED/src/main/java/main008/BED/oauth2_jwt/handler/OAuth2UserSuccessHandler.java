@@ -80,7 +80,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 List<String> authorities = authorityUtils.createRoles(email); // (4)
 
                 saveUser(email, picture, name);  // (5)
-                redirect(request, response, email, authorities);  // (6)
+                redirectGoogle(request, response, email, authorities);  // (6)
             }
         } catch (Exception e) {
             throw e;
@@ -88,7 +88,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     }
 
     private void saveUser(String email, String picture, String name) {
-    
+
         if (!usersService.verifyExistsEmail(email)) {
             Users users = new Users();
 
@@ -108,6 +108,14 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         String refreshToken = delegateRefreshToken(username);     // (6-2)
 
         String uri = createURI(accessToken, refreshToken, request).toString();   // (6-3)
+        getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
+    }
+
+    private void redirectGoogle(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
+        String accessToken = delegateAccessToken(username, authorities);  // (6-1)
+        String refreshToken = delegateRefreshToken(username);     // (6-2)
+
+        String uri = createGoogleURI(accessToken, refreshToken, request).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
     }
 
@@ -163,8 +171,26 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 .newInstance()
                 .scheme("http")
                 .host("localhost")
-                .port(8081)
-                .path("/receive-token.html")
+                .port(3000)
+                .path("/api/token")
+                .queryParams(queryParams)
+                .build()
+                .toUri();
+    }
+
+    private URI createGoogleURI(String accessToken, String refreshToken, HttpServletRequest request) {
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("access_token", accessToken);
+        queryParams.add("refresh_token", refreshToken);
+
+
+        return UriComponentsBuilder
+                .newInstance()
+                .scheme("https")
+                .host("class4989.one")
+//                .port(8081)
+                .path("/api/token")
                 .queryParams(queryParams)
                 .build()
                 .toUri();

@@ -25,6 +25,19 @@ public class ContentsDto {
     }
 
     @Getter
+    @AllArgsConstructor
+    public static class Patch {
+
+        private String title;
+        private Contents.Categories categories;
+        private String details;
+        private String tutorDetail;
+        private String thumbnail;
+        private String fileKey;
+
+    }
+
+    @Getter
     @Builder
     @AllArgsConstructor
     public static class Response {
@@ -49,7 +62,8 @@ public class ContentsDto {
         private Contents.Categories categories;
         private double grade;
         private int price;
-        private boolean bePaid;
+        private String role;
+        private boolean wished;
         private String tutorName;
         private String details;
         private String tutorDetail;

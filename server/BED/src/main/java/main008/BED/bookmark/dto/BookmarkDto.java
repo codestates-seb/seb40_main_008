@@ -15,7 +15,7 @@ public class BookmarkDto {
     public static class Post {
 
         private String memo;
-//        private String timeline; // advanced
+        private String timeLine;
 
     }
 
@@ -25,6 +25,7 @@ public class BookmarkDto {
     public static class Patch {
 
         private String memo;
+        private String timeLine;
     }
 
     @Getter
@@ -38,6 +39,7 @@ public class BookmarkDto {
         private String memo;
         private ZonedDateTime createdAt;
         private ZonedDateTime modifiedAt;
+        private String timeLine;
 
     }
 

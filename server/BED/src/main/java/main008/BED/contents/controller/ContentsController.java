@@ -18,6 +18,7 @@ import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.PageInfo;
+import main008.BED.myClass.service.MyClassService;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
@@ -41,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -58,6 +60,7 @@ public class ContentsController {
     private final UploadClassService uploadClassService;
     private final S3Service s3Service;
     private final PaymentService paymentService;
+    private final MyClassService myClassService;
     private final ContentsMapper contentsMapper;
     private final UsersMapper usersMapper;
     private final PaymentMapper paymentMapper;
@@ -76,7 +79,7 @@ public class ContentsController {
                                        @RequestParam("details") String details,
                                        @RequestParam("tutorDetail") String tutorDetail,
                                        @RequestParam("thumbnail") MultipartFile thumbnail,
-                                       @RequestParam("price") String price) {
+                                       @RequestParam("price") String price) throws UnsupportedEncodingException {
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
@@ -115,19 +118,31 @@ public class ContentsController {
     /**
      * READ: 컨텐츠 상세화면 Response DTO
      */
-    @GetMapping("/auth/contents/{contents-id}")
+    @GetMapping("/contents/{contents-id}")
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
                                      Principal principal) {
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
-
+        boolean wished = false;
+        String role = "";
         Contents contents = contentsService.readContent(contentsId);
-
         ChapterDto.CurriculumInContent curriculumInContent
                 = chapterService.readCurriculumInContent(contentsId);
+        if (principal == null) {
+            role = "Unpaid_customer";
+        } else {
+            Users user = usersService.findVerifiedUserByEmail(principal.getName());
+            wished = myClassService.isWished(user.getUsersId(), contentsId);
+            boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
+            boolean isTutor = contents.getUsers().getUsersId().equals(user.getUsersId());
 
-        boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
-
+            if (isTutor) {
+                role = "creator";
+            } else if (bePaid) {
+                role = "Paid_customer";
+            } else {
+                role = "Unpaid_customer";
+            }
+        }
 
         ContentsDto.ResponseInContent responseInContent
                 = new ContentsDto.ResponseInContent(contentsId,
@@ -137,7 +152,8 @@ public class ContentsController {
                 contents.getCategories(),
                 contentsService.calculateAvgStar(contentsId),
                 contents.getPayment().getPrice(),
-                bePaid,
+                role,
+                wished,
                 contents.getUsers().getUserName(),
                 contents.getDetails(),
                 contents.getTutorDetail()
@@ -171,8 +187,6 @@ public class ContentsController {
         String video = uploadClass.getVideo();
         List<Review> reviewList = uploadClass.getReviewList(); // 해당 강의 모든 리뷰 전송
         List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
-
-
 
 
         ContentsDto.ResponseForStream responseForStream
@@ -270,4 +284,48 @@ public class ContentsController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * DELETE: Contents 삭제
+     */
+    @DeleteMapping("/auth/contents/{contents-id}")
+    public ResponseEntity deleteContents(@PathVariable("contents-id") @Positive Long contentsId,
+                                         Principal principal) {
+
+        contentsService.removeContents(contentsId, principal);
+        return new ResponseEntity("The Content is removed.", HttpStatus.OK);
+    }
+
+    /**
+     * PATCH: Contents 수정
+     */
+    @PatchMapping("/auth/contents/{contents-id}")
+    public ResponseEntity patchContents(@PathVariable("contents-id") @Positive Long contentsId,
+                                        @RequestParam("title") String title,
+                                        @RequestParam("categories") String categories,
+                                        @RequestParam("details") String details,
+                                        @RequestParam("tutorDetail") String tutorDetail,
+                                        @RequestParam("thumbnail") MultipartFile thumbnail,
+                                        @RequestParam("price") String price,
+                                        Principal principal) throws UnsupportedEncodingException {
+
+        Contents contents = contentsService.readContent(contentsId);
+        String oldFileKey = contents.getFileKey();
+
+        // thumbnail -> S3 업로드
+        HashMap map = s3Service.updateToS3(thumbnail, "/contents/thumbnail", oldFileKey);
+        String fileKey = map.get("fileKey").toString();
+        String thumbnailUrl = map.get("url").toString();
+
+        Contents.Categories category = stringToCategoryEnum.convert(categories);
+
+        PaymentDto.Patch paymentPatch = new PaymentDto.Patch(Integer.parseInt(price));
+
+        Payment payment = paymentMapper.patchToEntity(paymentPatch);
+
+        ContentsDto.Patch patch = new ContentsDto.Patch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
+
+        contentsService.updateContents(contentsId, principal, contentsMapper.patchToContents(patch), payment);
+
+        return new ResponseEntity("The Content is updated.", HttpStatus.OK);
+    }
 }
