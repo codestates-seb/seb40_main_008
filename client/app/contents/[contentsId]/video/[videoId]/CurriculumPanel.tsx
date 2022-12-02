@@ -1,12 +1,17 @@
+import Link from 'next/link';
 import React from 'react';
 import { CurriculumInfo } from '../../../../../types/videoPage/video';
 import styles from './VideoPage.module.css';
 
 interface CurriculumProps {
 	curriculumInfo: CurriculumInfo[];
+	contentsId: string;
 }
 
-const VideoPageCurriculumPanel = ({ curriculumInfo }: CurriculumProps) => {
+const VideoPageCurriculumPanel = ({
+	curriculumInfo,
+	contentsId,
+}: CurriculumProps) => {
 	return (
 		<section className={styles.container}>
 			{curriculumInfo.map((el, idx) => {
@@ -29,7 +34,11 @@ const VideoPageCurriculumPanel = ({ curriculumInfo }: CurriculumProps) => {
 									className={styles.curriChapter}
 									key={el.uploadClassId}
 								>
-									{el.title}
+									<Link
+										href={`/contents/${contentsId}/video/${el.uploadClassId}`}
+									>
+										{el.title}
+									</Link>
 								</li>
 							))}
 						</ul>

@@ -1,11 +1,44 @@
-import React from 'react';
+'use client';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getCookie } from 'cookies-next';
+import React, { useState } from 'react';
+import ReactPlayer from 'react-player';
 import { BookmarkInfo } from '../../../../../types/videoPage/video';
 import styles from './VideoPage.module.css';
 interface Props {
+	uploadClassId: string;
 	memoInfo: BookmarkInfo[];
+	time: string;
+	playerRef: React.RefObject<ReactPlayer>;
 }
 
-const MemoPanel = ({ memoInfo }: Props) => {
+const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
+	const [memo, setMemo] = useState('');
+
+	const handleSubmit = (time: string) => {
+		const token = getCookie('accessToken');
+		fetch(`https://pioneroroom.com/auth/bookmark/${uploadClassId}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				memo: memo,
+				timeLine: time,
+			}),
+		});
+	};
+
+	const handleSkipToTimeStamp = (timeLine: string) => {
+		if (playerRef.current) {
+			const timeArr = timeLine.split(':');
+			const seconds = parseInt(timeArr[0]) * 60 + parseInt(timeArr[1]);
+			playerRef.current.seekTo(seconds);
+		}
+	};
+
 	return (
 		<section className={styles.container}>
 			{memoInfo.map((memo) => (
@@ -25,12 +58,34 @@ const MemoPanel = ({ memoInfo }: Props) => {
 							marginRight: '16px',
 						}}
 					>
-						{/* time stamp, on clicked, goes to specific time of video */}
-						0: 00
+						<button onClick={() => handleSkipToTimeStamp(memo.timeLine)}>
+							{memo.timeLine}
+						</button>
 					</div>
 					<p>{memo.memo}</p>
 				</div>
 			))}
+			<input
+				style={{
+					width: '80%',
+					height: '30px',
+					border: '1px solid white',
+					borderRadius: '5px',
+					backgroundColor: '#d9d9d926',
+					color: 'white',
+					paddingLeft: '10px',
+					marginRight: '10px',
+				}}
+				type="text"
+				value={memo}
+				onChange={(e) => setMemo(e.target.value)}
+			/>
+			<FontAwesomeIcon
+				onClick={() => handleSubmit(time)}
+				size={'lg'}
+				icon={faPaperPlane}
+				width={24}
+			/>
 		</section>
 	);
 };

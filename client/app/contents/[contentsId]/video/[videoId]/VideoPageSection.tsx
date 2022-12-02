@@ -11,27 +11,60 @@ import MemoPanel from './MemoPanel';
 
 interface VideoPageSectionProps {
 	data: IVideoPage;
+	contentsId: string;
+	uploadClassId: string;
 }
 
-const VideoPageSection = ({ data }: VideoPageSectionProps) => {
+const VideoPageSection = ({
+	data,
+	contentsId,
+	uploadClassId,
+}: VideoPageSectionProps) => {
 	const playerRef = useRef<ReactPlayer>(null);
+	const [time, setTime] = useState('00:00');
 	return (
 		<>
-			<VideoPlayer url={data.video} videoRef={playerRef} />
+			<VideoPlayer url={data.video} videoRef={playerRef} setTime={setTime} />
 			<CustomTab
 				tabs={['커리큘럼', '수업 자료', '댓글', '메모하기']}
-				contents={getPanels(data)}
+				contents={getPanels(
+					data,
+					contentsId,
+					uploadClassId,
+					time,
+					playerRef
+				)}
 			/>
 		</>
 	);
 };
 
-function getPanels(data: IVideoPage) {
+function getPanels(
+	data: IVideoPage,
+	contentsId: string,
+	uploadClassId: string,
+	time: string,
+	playerRef: React.RefObject<ReactPlayer>
+) {
 	return [
-		<CurriculumPanel curriculumInfo={data.curriculumInfo} key={1} />,
+		<CurriculumPanel
+			curriculumInfo={data.curriculumInfo}
+			key={1}
+			contentsId={contentsId}
+		/>,
 		<HandOutsPanel handOutInfo={data.docsInfo} key={2} />,
-		<CommentsPanel reviews={data.reviewInfo} key={3} />,
-		<MemoPanel memoInfo={data.bookmarkInfo} key={4} />,
+		<CommentsPanel
+			reviews={data.reviewInfo}
+			key={3}
+			uploadClassId={uploadClassId}
+		/>,
+		<MemoPanel
+			memoInfo={data.bookmarkInfo}
+			key={4}
+			time={time}
+			uploadClassId={uploadClassId}
+			playerRef={playerRef}
+		/>,
 	];
 }
 

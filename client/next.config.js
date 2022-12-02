@@ -4,7 +4,9 @@ const withPwa = require('next-pwa')({
 });
 
 const settings = {
-	reactStrictMode: true,
+	// BUG: Strict mode true makes video streaming network be severed during request.
+	// reactStrictMode: true,
+	reactStrictMode: false,
 	swcMinify: true,
 	experimental: { appDir: true },
 	// fontLoaders is not a proper key
@@ -18,6 +20,25 @@ const settings = {
 		],
 	},
 };
+/*
+const settings = {
+	// BUG: Strict mode true makes video streaming network be severed during request.
+	// reactStrictMode: true,
+	reactStrictMode: false,
+	swcMinify: true,
+	experimental: { appDir: true },
+	// fontLoaders is not a proper key
+	// fontLoaders: [{ loader: '@next/font/google' }],
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '**',
+			},
+		],
+	},
+};
+*/
 
 // module.exports =
 // 	process.env.NODE_ENV === 'development' ? settings : withPwa(settings);
