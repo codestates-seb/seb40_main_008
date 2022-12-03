@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -345,6 +346,17 @@ public class ContentsService {
         if (role == "Unpaid_customer") {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_GET);
         }
+    }
+
+    /**
+     * enum value로 key 찾기
+     */
+    public Contents.Categories engOfKor(String kor) {
+
+        return Arrays.stream(Contents.Categories.values())
+                .filter(eng -> eng.getValue().equals(kor))
+                .findAny()
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.WRONG_INPUT));
     }
 
 }
