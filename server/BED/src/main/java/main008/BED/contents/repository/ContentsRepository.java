@@ -1,11 +1,10 @@
 package main008.BED.contents.repository;
 
 import main008.BED.contents.entity.Contents;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,12 +23,28 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
             , nativeQuery = true)
     Optional<List<Contents>> findByUsersId(Long users_id);
 
-    Page<Contents> findByCategories(Contents.Categories categories, Pageable pageable);
-
     List<Contents> findContentsByTitleContainingOrderByContentsIdDesc(String keyword);
 
-    List<Contents> findContentsByTitleContainingOrderByLikesCountDesc(String keyword);
+    @Query(value = "SELECT * FROM contents c " +
+                    "WHERE c.title " +
+                    "LIKE %:keyword% " +
+                    "ORDER BY likes_count DESC, contents_id DESC"
+            , nativeQuery = true)
+    List<Contents> searchTitleSortLikesCount(@Param("keyword") String keyword);
 
+    @Query(value =
+            "SELECT * FROM contents c " +
+            "WHERE c.categories = :categories " +
+            "ORDER BY contents_id DESC"
+            , nativeQuery = true)
+    List<Contents> categoryNewestSort(String categories);
+
+    @Query(value =
+            "SELECT * FROM contents c " +
+            "WHERE c.categories = :categories " +
+            "ORDER BY likes_count DESC, contents_id DESC"
+            , nativeQuery = true)
+    List<Contents> categoryPopularSort(String categories);
 
     /**
      * clearAutomatically = true

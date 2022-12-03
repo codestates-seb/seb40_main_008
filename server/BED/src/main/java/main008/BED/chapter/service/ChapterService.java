@@ -32,18 +32,17 @@ public class ChapterService {
      */
     public Chapter saveChapter(Chapter chapter, Long contentsId) {
 
-        if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
-        }
-
         Contents byContentsId = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
-/*        List<Chapter> chapterList = byContentsId.getChapterList();
+        /*
+        List<Chapter> chapterList = byContentsId.getChapterList();
         chapterList.add(chapter);
         byContentsId.setChapterList(chapterList);
 
-        chapter.setContents(byContentsId);*/
+        chapter.setContents(byContentsId);
+        */
+
         chapter.addContents(byContentsId);
         Chapter save = chapterRepository.save(chapter);
         return save;
@@ -54,9 +53,7 @@ public class ChapterService {
      */
     public Chapter readOne(Long chapterId) {
 
-        if (!chapterRepository.existsByChapterId(chapterId)) {
-            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
-        }
+        existChapter(chapterId);
 
         return chapterRepository.findById(chapterId).get();
     }
@@ -66,15 +63,13 @@ public class ChapterService {
      */
     public void updateChapter(Long chapterId, Chapter newChapter) {
 
-        if (!chapterRepository.existsByChapterId(chapterId)) {
-            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
-        }
+        existChapter(chapterId);
 
         Chapter oldChapter = chapterRepository.findByChapterId(chapterId);
-        oldChapter.setChapterOrder(newChapter.getChapterOrder());
         oldChapter.setTitle(newChapter.getTitle());
-        oldChapter.setThumbnail(newChapter.getThumbnail());
         oldChapter.setFileKey(newChapter.getFileKey());
+        oldChapter.setThumbnail(newChapter.getThumbnail());
+        oldChapter.setChapterOrder(newChapter.getChapterOrder());
     }
 
     /**
@@ -83,13 +78,14 @@ public class ChapterService {
     public void removeChapter(Chapter chapter) {
 
         List<UploadClass> uploadClassList = chapter.getUploadClassList();
-        List<Docs> docsListInChapter =
-                uploadClassList.stream()
-                        .map(uploadClass -> uploadClass.getDocs())
-                        .collect(Collectors.toList());
+
+        List<Docs> docsListInChapter = uploadClassList.stream()
+                .map(uploadClass -> uploadClass.getDocs())
+                .collect(Collectors.toList());
 
         docsListInChapter.stream()
-                        .forEach(docs -> docsRepository.delete(docs)); // Docs 연쇄 삭제
+                         .forEach(docs -> docsRepository.delete(docs)); // Docs 연쇄 삭제
+
         chapterRepository.delete(chapter); // UploadClass, Review - cascade 연쇄 삭제
     }
 
@@ -98,10 +94,6 @@ public class ChapterService {
      * Read: 컨텐츠 상세화면 커리큘럼 읽어오기 - 컨텐츠 API에서 호출
      */
     public ChapterDto.CurriculumInContent readCurriculumInContent(Long contentsId) {
-
-        if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
-        }
 
         Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
@@ -122,10 +114,6 @@ public class ChapterService {
      */
     public ChapterDto.CurriculumInStream readCurriculumInStream(Long contentsId) {
 
-        if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
-        }
-
         Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
@@ -138,6 +126,13 @@ public class ChapterService {
         ChapterDto.CurriculumInStream curriculumInStream = new ChapterDto.CurriculumInStream(responseList);
 
         return curriculumInStream;
+    }
+
+    private void existChapter(Long chapterId) {
+
+        if (!chapterRepository.existsByChapterId(chapterId)) {
+            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
+        }
     }
 }
 

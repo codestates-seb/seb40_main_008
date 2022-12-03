@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("carousel")
@@ -24,15 +22,13 @@ public class CarouselController {
     private final S3ServiceImpl s3ServiceImpl;
 
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity getCarousels() {
+
         List<Carousel> carousels = carouselService.readAllCarousel();
-        List<CarouselDto.ResponseDto> response = carousels
-                .stream()
-                .map(carousel -> carouselMapper.entityToResponseDto(carousel))
-                .collect(Collectors.toList());
+        List<CarouselDto.ResponseDto> response = carouselMapper.entityToResponseDto(carousels);
         CarouselDto.ListResponseDto listResponseDto = carouselMapper.responseToListDto(response);
-        return new ResponseEntity(listResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(listResponseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("del/{id}")
@@ -41,7 +37,7 @@ public class CarouselController {
         Carousel carousel = carouselService.readOne(id);
         s3ServiceImpl.delete(carousel.getFileKey(), "/carousel");
         carouselService.removeCarousel(id);
-        return new ResponseEntity("Successfully delete Carousel", HttpStatus.OK);
+        return new ResponseEntity<>("Successfully delete Carousel", HttpStatus.OK);
     }
 
   /*  <ByteArray 방식으로 전송>

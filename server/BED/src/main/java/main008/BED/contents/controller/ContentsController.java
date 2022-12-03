@@ -14,7 +14,6 @@ import main008.BED.contents.entity.EnumValue;
 import main008.BED.contents.mapper.ContentsMapper;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.converter.StringToCategoryEnum;
-import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.PageInfo;
@@ -22,17 +21,12 @@ import main008.BED.myClass.service.MyClassService;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
-import main008.BED.payment.service.PaymentService;
-import main008.BED.review.entity.Review;
 import main008.BED.review.mapper.ReviewMapper;
 import main008.BED.uploadClass.entity.UploadClass;
 import main008.BED.uploadClass.service.UploadClassService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.mapper.UsersMapper;
 import main008.BED.users.service.UsersService;
-import main008.BED.wish.dto.WishDto;
-import main008.BED.wish.entity.Wish;
-import main008.BED.wish.mapper.WishMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +34,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
@@ -54,20 +47,17 @@ import java.util.stream.Collectors;
 public class ContentsController {
 
     private final ContentsService contentsService;
-    private final UsersService usersService;
-    private final ChapterService chapterService;
-    private final BookmarkService bookmarkService;
-    private final UploadClassService uploadClassService;
-    private final S3Service s3Service;
-    private final PaymentService paymentService;
-    private final MyClassService myClassService;
     private final ContentsMapper contentsMapper;
+    private final UsersService usersService;
     private final UsersMapper usersMapper;
-    private final PaymentMapper paymentMapper;
-    private final BookmarkMapper bookmarkMapper;
+    private final S3Service s3Service;
     private final DocsMapper docsMapper;
+    private final BookmarkService bookmarkService;
+    private final BookmarkMapper bookmarkMapper;
+    private final ChapterService chapterService;
+    private final PaymentMapper paymentMapper;
     private final ReviewMapper reviewMapper;
-    private final WishMapper wishMapper;
+    private final UploadClassService uploadClassService;
     private final StringToCategoryEnum stringToCategoryEnum;
 
 
@@ -88,14 +78,12 @@ public class ContentsController {
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 
-        PaymentDto.Post paymentPost = new PaymentDto.Post(Integer.parseInt(price));
-
+        PaymentDto.Post paymentPost = paymentMapper.reqToPost(Integer.parseInt(price));
         Payment payment = paymentMapper.postToEntity(paymentPost);
 
         Contents.Categories category = stringToCategoryEnum.convert(categories);
 
-        ContentsDto.Post post = new ContentsDto.Post(title, category, details, tutorDetail, thumbnailUrl, fileKey);
-
+        ContentsDto.Post post = contentsMapper.reqToContentsPost(title, category, details, tutorDetail, thumbnailUrl, fileKey);
         Contents contents = contentsService.createContents(contentsMapper.postToContents(post), user.getUsersId(), payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
@@ -122,48 +110,18 @@ public class ContentsController {
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
                                      Principal principal) {
 
-        boolean wished = false;
-        String role = "";
+
         Contents contents = contentsService.readContent(contentsId);
-        ChapterDto.CurriculumInContent curriculumInContent
-                = chapterService.readCurriculumInContent(contentsId);
-        if (principal == null) {
-            role = "Unpaid_customer";
-        } else {
-            Users user = usersService.findVerifiedUserByEmail(principal.getName());
-            wished = myClassService.isWished(user.getUsersId(), contentsId);
-            boolean bePaid = paymentService.verifyPaidByUser(contentsId, user.getUsersId());
-            boolean isTutor = contents.getUsers().getUsersId().equals(user.getUsersId());
 
-            if (isTutor) {
-                role = "creator";
-            } else if (bePaid) {
-                role = "Paid_customer";
-            } else {
-                role = "Unpaid_customer";
-            }
-        }
+        ChapterDto.CurriculumInContent curriculumInContent = chapterService.readCurriculumInContent(contentsId);
 
-        ContentsDto.ResponseInContent responseInContent
-                = new ContentsDto.ResponseInContent(contentsId,
-                contents.getTitle(),
-                contents.getThumbnail(),
-                contents.getLikesCount(),
-                contents.getCategories(),
-                contentsService.calculateAvgStar(contentsId),
-                contents.getPayment().getPrice(),
-                role,
-                wished,
-                contents.getUsers().getUserName(),
-                contents.getDetails(),
-                contents.getTutorDetail()
-                );
+        HashMap<String, String> roleAndWish = contentsService.userRoleDivision(contents, principal);
 
-        ContentsMultiResponseDto<ContentsDto.ResponseInContent, List<ChapterDto.ResponseDto>> response
-                = new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo());
+        ContentsDto.ResponseInContent responseInContent =
+                contentsMapper.contentToResponseInContent(contents, roleAndWish, contentsService);
 
-
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(
+                new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo()), HttpStatus.OK);
     }
 
     /**
@@ -178,43 +136,30 @@ public class ContentsController {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal); // User 본인의 메모만 전송
+
+        ContentsDto.ResponseForStream responseForStream =
+                contentsMapper.contentsResponseForStream(
+                        contents, uploadClass,
+                        usersMapper, docsMapper,
+                        reviewMapper, bookmarkMapper,
+                        bookmarkList, curriculumInStream.getCurriculumInfo());
 
 
-        Users tutor = contents.getUsers();
-        String title = contents.getTitle();
-        Docs docs = uploadClass.getDocs();
-        String video = uploadClass.getVideo();
-        List<Review> reviewList = uploadClass.getReviewList(); // 해당 강의 모든 리뷰 전송
-        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
-
-
-        ContentsDto.ResponseForStream responseForStream
-                = new ContentsDto.ResponseForStream(
-                usersMapper.usersToUserResponseDto(tutor),
-                title,
-                video,
-                docsMapper.entityToResponseDto(docs),
-                reviewMapper.listEntityToListResponseDto(reviewList),
-                bookmarkMapper.listEntityToListResponseDto(bookmarkList),
-                curriculumInStream.getCurriculumInfo());
-
-        return new ResponseEntity(responseForStream, HttpStatus.OK);
+        return new ResponseEntity<>(responseForStream, HttpStatus.OK);
     }
 
     /**
      * 카테고리 조회
      */
     @GetMapping("/search") // API에 대문자는 들어가면 안됨,,,, RESTful API
-    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories, // 쿼리 스트링은 대문자 가능..?
-                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
-                                        @RequestParam(name = "page", required = false, defaultValue = "1") int page,
-                                        @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
+    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories,
+                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort) {
 
-        Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
+        List<Contents> contents = contentsService.findContentsByCategory(categories, sort);
 
         List<ContentsDto.ResponseForCategories> categories1 =
-                contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
+                contentsMapper.contentsToCategoriesResponses(contents, usersMapper);
 
         return new ResponseEntity<>(contentsMapper.toCategoryList(categories1), HttpStatus.OK);
     }
@@ -322,11 +267,12 @@ public class ContentsController {
 
         Payment payment = paymentMapper.patchToEntity(paymentPatch);
 
-        ContentsDto.Patch patch = new ContentsDto.Patch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
+        ContentsDto.Patch patch =
+                contentsMapper.reqToContentsPatch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
 
         contentsService.updateContents(contentsId, principal, contentsMapper.patchToContents(patch), payment);
 
-        return new ResponseEntity("The Content is updated.", HttpStatus.OK);
+        return new ResponseEntity<>("The Content is updated.", HttpStatus.OK);
     }
 
     /**

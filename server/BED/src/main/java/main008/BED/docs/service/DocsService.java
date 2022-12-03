@@ -19,7 +19,6 @@ public class DocsService {
 
     private final DocsRepository docsRepository;
 
-
     /**
      * Read: Docs 조회
      */
@@ -31,14 +30,12 @@ public class DocsService {
         return docsRepository.findById(id).get();
     }
 
-
     /**
      * Read All: Docs 이름 목록 조회
      */
     public List<Docs> readAllDocs() {
         return docsRepository.findAll();
     }
-
 
     /**
      * Create: Docs 저장

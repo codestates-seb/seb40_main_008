@@ -26,11 +26,7 @@ public class DocsController {
     private final DocsService docsService;
     private final DocsMapper docsMapper;
 
-
-
     // TODO: 유저 권한 로직 - 회원 가입한 유저만 API 사용 가능
-
-
 
     /**
      * Create
@@ -43,7 +39,7 @@ public class DocsController {
         DocsDto.Post post = new DocsDto.Post(file, details);
         Docs docs = docsMapper.postDtoToEntity(post);
         docsService.saveDocs(docs);
-        return new ResponseEntity(new DocsDto.SingleResponseDto("The Docs is saved"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new DocsDto.SingleResponseDto("The Docs is saved"), HttpStatus.CREATED);
     }
 
     /**

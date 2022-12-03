@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +27,6 @@ public class S3ServiceImpl implements S3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
     private final AmazonS3Client amazonS3Client;
-
 
     @Override
     public HashMap uploadToS3(MultipartFile file, String folderSrc) throws UnsupportedEncodingException {

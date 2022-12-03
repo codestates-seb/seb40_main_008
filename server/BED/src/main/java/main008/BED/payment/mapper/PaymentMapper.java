@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PaymentMapper {
 
+    PaymentDto.Post reqToPost(Integer price);
+
     Payment postToEntity(PaymentDto.Post post);
 
     Payment patchToEntity(PaymentDto.Patch patch);

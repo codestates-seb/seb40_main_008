@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import main008.BED.bookmark.dto.BookmarkDto;
 import main008.BED.bookmark.mapper.BookmarkMapper;
 import main008.BED.bookmark.service.BookmarkService;
-import main008.BED.users.entity.Users;
-import main008.BED.users.service.UsersService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +18,6 @@ import java.security.Principal;
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
-    private final UsersService usersService;
     private final BookmarkMapper bookmarkMapper;
 
 
@@ -32,8 +29,7 @@ public class BookmarkController {
                                        @PathVariable("uploadclass-id") @Positive Long uploadClassId,
                                        @RequestBody @Valid BookmarkDto.Post post) {
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
-        bookmarkService.saveBookmark(bookmarkMapper.postDtoToEntity(post), user.getUsersId(), uploadClassId);
+        bookmarkService.saveBookmark(bookmarkMapper.postDtoToEntity(post), principal, uploadClassId);
 
         return new ResponseEntity("The Bookmark is saved.", HttpStatus.OK);
     }
@@ -47,14 +43,13 @@ public class BookmarkController {
                                         @PathVariable("bookmark-id") @Positive Long bookmarkId,
                                         @RequestBody @Valid BookmarkDto.Patch patch) {
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
         bookmarkService.updateBookmark(
                 bookmarkMapper.patchDtoToEntity(patch),
-                user.getUsersId(),
+                principal,
                 uploadClassId,
                 bookmarkId);
 
-        return new ResponseEntity("The Bookmark is updated.", HttpStatus.OK);
+        return new ResponseEntity<>("The Bookmark is updated.", HttpStatus.OK);
     }
 
 
@@ -66,10 +61,8 @@ public class BookmarkController {
                                          @PathVariable("uploadclass-id") @Positive Long uploadClassId,
                                          @PathVariable("bookmark-id") @Positive Long bookmarkId) {
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
+        bookmarkService.removeBookmark(principal, uploadClassId, bookmarkId);
 
-        bookmarkService.removeBookmark(user.getUsersId(), uploadClassId, bookmarkId);
-
-        return new ResponseEntity("The Memo is removed.", HttpStatus.OK);
+        return new ResponseEntity<>("The Memo is removed.", HttpStatus.OK);
     }
 }

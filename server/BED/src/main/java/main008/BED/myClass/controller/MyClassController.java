@@ -30,9 +30,7 @@ public class MyClassController {
 
         MyClass myClass = myClassService.getWishClass(users.getUsersId());
 
-        MyClassDto.WishClassResponse response = myClassMapper.myClassToWishResponse(myClass);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(myClassMapper.myClassToWishResponse(myClass), HttpStatus.OK);
     }
 
     // 수강중인 클래스
@@ -43,8 +41,6 @@ public class MyClassController {
 
         MyClass myClass = myClassService.getBuyClass(users.getUsersId());
 
-        MyClassDto.TakingClassResponse response = myClassMapper.myClassToTakingResponse(myClass);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(myClassMapper.myClassToTakingResponse(myClass), HttpStatus.OK);
     }
 }

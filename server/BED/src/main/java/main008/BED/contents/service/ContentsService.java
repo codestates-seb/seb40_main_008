@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -197,20 +198,17 @@ public class ContentsService {
     /**
      * find Categories
      */
-    public Page<Contents> findContentsByCategory(int page, int size,
-                                                 Contents.Categories categories,
+    public List<Contents> findContentsByCategory(Contents.Categories categories,
                                                  String sort) {
 
         if ("newest".equals(sort)) {
-            sort = "contentsId";
+            return contentsRepository.categoryNewestSort(String.valueOf(categories));
         } else if ("popular".equals(sort)){
-            sort = "likesCount";
+            return contentsRepository.categoryPopularSort(String.valueOf(categories));
         }
 
-        return contentsRepository.findByCategories(categories,
-                PageRequest.of(page - 1, size, Sort.by(sort).descending()));
-        }
-
+        throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
+    }
         
     /**
      * Search: 강의명 검색 - 인기순
@@ -219,7 +217,7 @@ public class ContentsService {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("likesCount").descending());
 
-        List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByLikesCountDesc(keyword);
+        List<Contents> contentsList = contentsRepository.searchTitleSortLikesCount(keyword);
 
         ArrayList<Contents> discloseList = getDiscloseContents(contentsList);
 
@@ -271,6 +269,7 @@ public class ContentsService {
     }
 
     private static ArrayList<Contents> getDiscloseContents(List<Contents> contentsList) {
+
         ArrayList<Contents> discloseList = new ArrayList<>();
 
         for (Contents content : contentsList) {
@@ -286,6 +285,7 @@ public class ContentsService {
      * UPDATE: Contents 업데이트
      */
     public void updateContents(Long contentsId, Principal principal, Contents newContents, Payment newPayment) {
+
         Contents oldContents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
@@ -300,14 +300,46 @@ public class ContentsService {
         oldContents.setTitle(newContents.getTitle());
         oldContents.setThumbnail(newContents.getThumbnail());
         oldContents.setTutorDetail(newContents.getTutorDetail());
+
         Payment oldPayment = oldContents.getPayment();
         oldPayment.setPrice(newPayment.getPrice());
 
     }
 
+
     public List<Contents> readContentsIdList() {
         List<Contents> all = contentsRepository.findAll();
         return all;
+    }
+
+    /**
+     * user role 구분
+     */
+    public HashMap<String, String> userRoleDivision(Contents contents, Principal principal) {
+
+        boolean wished = false;
+        String role = "";
+
+        if (principal == null) {
+            role = "Unpaid_customer";
+        } else {
+            Users user = usersService.findVerifiedUserByEmail(principal.getName());
+            wished = myClassService.isWished(user.getUsersId(), contents.getContentsId());
+
+            if (contents.getUsers().getUsersId().equals(user.getUsersId())) {
+                role = "creator";
+            } else if (paymentService.verifyPaidByUser(contents.getContentsId(), user.getUsersId())) {
+                role = "Paid_customer";
+            } else {
+                role = "Unpaid_customer";
+            }
+        }
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("wished", String.valueOf(wished));
+        hashMap.put("role", role);
+
+        return hashMap;
     }
 
 }
