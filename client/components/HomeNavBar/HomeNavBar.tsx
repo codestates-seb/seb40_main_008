@@ -53,6 +53,7 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
                   src={myprofileImg}
                   width={35}
                   height={35}
+                  style={{ borderRadius: "50%" }}
                 />
               </Link>
             ) : (
