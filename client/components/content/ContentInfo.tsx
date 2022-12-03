@@ -6,6 +6,7 @@ import { ContentCardWishBtn } from '../Buttons/ContentCardWishBtn';
 import { ContentCardFavoriteBtn } from '../Buttons/ContentCardFavoriteBtn';
 import Link from 'next/link';
 import PurchaseButton from './PurchaseButton';
+import StaticStars from './StaticStars';
 
 interface ContentInfoProps {
 	contentInfo: IContent;
@@ -74,7 +75,8 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
 					</div>
 					<h2>{contentInfo?.price} ₩</h2>
 				</div>
-				<h3> 별점{contentInfo?.grade}</h3>
+				<StaticStars grade={contentInfo?.grade || 0} />
+
 				<div className={styles.btn}>{getRoleButton(contentInfo?.role)}</div>
 			</div>
 			<hr className={styles.line}></hr>

@@ -11,7 +11,7 @@ const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 	try {
 		const response = await fetch('https://pioneroroom.com/home', {
 			next: {
-				revalidate: 60,
+				revalidate: 300,
 			},
 		});
 		const { contentsList } = await response.json();
@@ -56,9 +56,6 @@ const page = async () => {
 			</HomeCarouselSection>
 			<HomeClassesSection contentsList={contentsList} />
 			<TabNavigator activeLink={'home'} />
-			<div>
-				<h2>hei</h2>
-			</div>
 		</>
 	);
 };
