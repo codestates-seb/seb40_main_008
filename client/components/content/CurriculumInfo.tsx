@@ -22,9 +22,7 @@ const CurriculumInfo = ({
   const router = useRouter();
   return (
     <>
-      {curriculumInfo.length === 0 ?
-        <div className={styles.nocurriculumWrapper}>업로드된 커리큘럼이 없습니다.</div>
-        :
+      {curriculumInfo &&
         curriculumInfo.map((e, index) => (
           <div key={index} className={styles.Wrapper}>
             <div>
