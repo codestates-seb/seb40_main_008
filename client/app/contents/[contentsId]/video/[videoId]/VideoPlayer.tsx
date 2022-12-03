@@ -11,7 +11,6 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
-	console.log('🚀 ~ file: VideoPlayer.tsx:13 ~ VideoPlayer ~ url', url);
 	const hasWindow = useHasWindow();
 
 	if (!hasWindow) {

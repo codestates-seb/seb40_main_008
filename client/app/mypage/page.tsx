@@ -1,21 +1,21 @@
-import React from "react";
-import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
-import styles from "./Mypage.module.css";
-import Link from "next/link";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import BaseNavbar from '../../components/BaseNavBar/BaseNavbar';
+import styles from './Mypage.module.css';
+import Link from 'next/link';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faCoins,
 	faPenToSquare,
 	faPencil,
-} from "@fortawesome/free-solid-svg-icons";
-import OrangeButton from "../../components/Buttons/orangeButton";
-import { signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import getUserInfo from "../../utils/helper/backendUserInfo";
-import { headers } from "next/headers";
-import verifyLogin from "../../utils/VerifyLogin";
-import { SignOut } from "../../components/Buttons/SignOut";
+} from '@fortawesome/free-solid-svg-icons';
+import OrangeButton from '../../components/Buttons/orangeButton';
+import { signOut, useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import getUserInfo from '../../utils/helper/backendUserInfo';
+import { headers } from 'next/headers';
+import verifyLogin from '../../utils/VerifyLogin';
+import { SignOut } from '../../components/Buttons/SignOut';
 
 const MyPage = async () => {
 	// const session = useSession();
@@ -23,7 +23,7 @@ const MyPage = async () => {
 	// console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo);
 
 	const session = {
-		status: "authenticated",
+		status: 'authenticated',
 	};
 
 	// if (session.status === 'authenticated')
@@ -80,7 +80,7 @@ const MyPage = async () => {
 			</>
 		);
 	else {
-		redirect("/");
+		redirect('/');
 	}
 };
 

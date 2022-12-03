@@ -12,14 +12,11 @@ const SearchBar = () => {
 	const router = useRouter();
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchvalue(e.target.value);
-		console.log(searchvalue);
 	};
 
 	// 검색 버튼 클릭 시, 내용 담아서 GET 요청 보내기
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// console.log(searchvalue);
-		// alert(JSON.stringify(searchvalue));
 		searchApi.getSearch(searchvalue);
 		router.push(`/categories/${searchvalue}`);
 	};
@@ -39,7 +36,7 @@ const SearchBar = () => {
 							<FontAwesomeIcon
 								width={24}
 								icon={faMagnifyingGlass}
-							// className={styles.magnifyingglass}
+								// className={styles.magnifyingglass}
 							/>
 						</button>
 					</form>

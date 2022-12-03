@@ -15,13 +15,8 @@ interface HomeNavBarProps {
 }
 
 const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
-	// const session = useSession();
 	const hasWindow = useHasWindow();
-	const session = {
-		status: 'authenticated',
-	};
 	const { show } = useScrollBar();
-	// console.log(window.scrollY);
 	if (!hasWindow) {
 		return null;
 	}
@@ -49,7 +44,11 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 				<nav className={styles.firstNav}>
 					<div className={styles.logowrapper}>
 						<Link href={'/categories'}>
-							<FontAwesomeIcon icon={faBars} width={24} className={styles.font} />
+							<FontAwesomeIcon
+								icon={faBars}
+								width={24}
+								className={styles.font}
+							/>
 						</Link>
 
 						<button className={styles.logo} onClick={scrollTopBtn}>
@@ -78,7 +77,11 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 			) : (
 				<nav className={`${show ? styles.nav : styles.change_nav} `}>
 					<div className="logo">
-						<FontAwesomeIcon icon={faBars} width={24} className={styles.font} />
+						<FontAwesomeIcon
+							icon={faBars}
+							width={24}
+							className={styles.font}
+						/>
 						<button className={styles.logo} onClick={scrollTopBtn}>
 							CLASS4989
 						</button>

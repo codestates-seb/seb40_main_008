@@ -1,10 +1,12 @@
-import styles from "./ContentInfo.module.css";
-import OrangeButton from "../Buttons/orangeButton";
-import { IContent } from "../../types/contents";
-import Image from "next/image";
-import { ContentCardWishBtn } from "../Buttons/ContentCardWishBtn";
-import { ContentCardFavoriteBtn } from "../Buttons/ContentCardFavoriteBtn";
-import Link from "next/link";
+import styles from './ContentInfo.module.css';
+import OrangeButton from '../Buttons/orangeButton';
+import { IContent } from '../../types/contents';
+import Image from 'next/image';
+import { ContentCardWishBtn } from '../Buttons/ContentCardWishBtn';
+import { ContentCardFavoriteBtn } from '../Buttons/ContentCardFavoriteBtn';
+import Link from 'next/link';
+import PurchaseButton from './PurchaseButton';
+import StaticStars from './StaticStars';
 
 interface ContentInfoProps {
   contentInfo: IContent;
@@ -14,31 +16,36 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
   const id = contentInfo?.contentsId;
 
   const getRoleButton = (role: string) => {
-    if (role === "creator") {
+    if (role === 'creator') {
       return (
         <Link
           href={{
-            pathname: "/upload/chapter",
+            pathname: '/upload/chapter',
             query: {
               contentId: id,
             },
           }}
         >
-          <OrangeButton name={"챕터올리기"} />
+          <OrangeButton name={'챕터올리기'} />
         </Link>
       );
-    } else if (role === "Unpaid_customer") {
-      return <OrangeButton name={"강의 구매하기"} />;
-    } else if (role === "Paid_customer") {
-      return <OrangeButton name={"재생하기"} />;
+    } else if (role === 'Unpaid_customer') {
+      return (
+        <PurchaseButton
+          contentId={contentInfo.contentsId}
+          contentInfo={contentInfo}
+        />
+      );
+    } else if (role === 'Paid_customer') {
+      return <OrangeButton name={'재생하기'} />;
     }
     return <div>cannot find</div>;
   };
 
   const getIconButton = (role: string) => {
-    if (role === "Paid_customer") {
+    if (role === 'Paid_customer') {
       return <ContentCardFavoriteBtn contentId={contentInfo?.contentsId} />;
-    } else if (role === "Unpaid_customer") {
+    } else if (role === 'Unpaid_customer') {
       return <ContentCardWishBtn contentId={contentInfo?.contentsId} />;
     }
   };
@@ -69,7 +76,8 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
           </div>
           <h2>{contentInfo?.price} ₩</h2>
         </div>
-        <h3> 별점{contentInfo?.grade}</h3>
+        <StaticStars grade={contentInfo?.grade || 0} />
+
         <div className={styles.btn}>{getRoleButton(contentInfo?.role)}</div>
       </div>
       <hr className={styles.line}></hr>

@@ -1,11 +1,11 @@
-interface UserInfo {
-  userId: number;
-  userName: string;
-  profileImage: string;
-  email: string;
-  totalCoin: number;
+export interface UserInfoWithCoin {
+	userId: number;
+	userName: string;
+	profileImage: string;
+	email: string;
+	totalCoin: number;
 }
 
-type IUserInfo = UserInfo | null;
+type IUserInfo = UserInfoWithCoin | null;
 
 export default IUserInfo;
