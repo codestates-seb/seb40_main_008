@@ -79,4 +79,8 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
             , nativeQuery = true)
     void likesCountForContentsDown(Long contents_id);
 
+    @Query(value = "SELECT * FROM contents c " +
+            "ORDER BY likes_count DESC, contents_id DESC", nativeQuery = true)
+    List<Contents> findList();
+
 }

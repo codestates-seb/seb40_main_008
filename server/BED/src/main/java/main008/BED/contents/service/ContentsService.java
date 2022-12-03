@@ -113,13 +113,9 @@ public class ContentsService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Contents> getContentsPage(int page, int size) {
+    public List<Contents> getContents() {
 
-        Pageable pageable =
-                PageRequest.of(page - 1, size,
-                        Sort.by("likesCount").descending());
-
-        return contentsRepository.findAll(pageable);
+        return contentsRepository.findList();
     }
 
     /**
