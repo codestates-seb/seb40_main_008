@@ -27,7 +27,7 @@ public class CarouselController {
 
         List<Carousel> carousels = carouselService.readAllCarousel();
         List<CarouselDto.ResponseDto> response = carouselMapper.entityToResponseDto(carousels);
-        CarouselDto.ListResponseDto listResponseDto = carouselMapper.responseToListDto(response); // mapper가 필요?
+        CarouselDto.ListResponseDto listResponseDto = carouselMapper.responseToListDto(response);
         return new ResponseEntity<>(listResponseDto, HttpStatus.OK);
     }
 
