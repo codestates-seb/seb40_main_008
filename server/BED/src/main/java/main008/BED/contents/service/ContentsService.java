@@ -342,4 +342,13 @@ public class ContentsService {
         return hashMap;
     }
 
+    public void authorizationForPay(Contents contents, Principal principal) {
+
+        HashMap<String, String> roleDivision = this.userRoleDivision(contents, principal);
+        String role = roleDivision.get("role");
+        if (role == "Unpaid_customer") {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_GET);
+        }
+    }
+
 }

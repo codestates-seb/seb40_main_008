@@ -133,6 +133,9 @@ public class ContentsController {
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
 
         Contents contents = contentsService.readContent(contentsId);
+
+        contentsService.authorizationForPay(contents, principal); // 구매 여부 판단
+
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
 
