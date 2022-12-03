@@ -51,7 +51,7 @@ const MyPage = async () => {
 								width={24}
 								className={styles.coinfont}
 							/>
-							<h3 className={styles.mycoin}>{userInfo.totalCoin}</h3>
+							<h3 className={styles.mycoin}>코인갯수</h3>
 						</div>
 						<hr className={styles.line}></hr>
 					</div>
