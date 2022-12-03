@@ -56,6 +56,7 @@ const CurriculumInfo = ({
                               query: {
                                 slug: "edit",
                                 chapterId: e.chapterId,
+                                contentId: contentsId,
                                 thumbnail: e.thumbnail,
                                 title: e.title,
                                 chapterOrder: e.chapterOrder,
