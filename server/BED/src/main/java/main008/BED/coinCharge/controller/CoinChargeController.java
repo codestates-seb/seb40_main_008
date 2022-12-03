@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import main008.BED.coinCharge.dto.CoinChargeDetailDto;
 import main008.BED.coinCharge.dto.CoinChargeDetailResponseDto;
 import main008.BED.coinCharge.dto.CoinChargeDto;
+import main008.BED.coinCharge.entity.CoinCharge;
 import main008.BED.coinCharge.mapper.CoinChargeDetailMapper;
 import main008.BED.coinCharge.mapper.CoinChargeMapper;
 import main008.BED.coinCharge.service.CoinChargeService;
@@ -44,10 +45,8 @@ public class CoinChargeController {
      * @return
      */
     @PostMapping("/auth/coincharge/ready")
-    public ResponseEntity readyToCoinCharge(@RequestBody String chargeAmount,
+    public ResponseEntity readyToCoinCharge(@RequestBody CoinChargeDto.Post post,
                                             Principal principal) {
-
-        CoinChargeDto.Post post = new CoinChargeDto.Post(stringToCoinEnum.convert(chargeAmount));
 
         CoinChargeDetailDto.KakaoReadyResponse readyToPay =
                 coinChargeService.kakaoPayReady(principal, coinChargeMapper.postToEntity(post));
