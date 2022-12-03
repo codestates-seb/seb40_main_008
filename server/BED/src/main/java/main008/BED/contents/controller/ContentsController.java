@@ -83,7 +83,8 @@ public class ContentsController {
         PaymentDto.Post paymentPost = paymentMapper.reqToPost(Integer.parseInt(price));
         Payment payment = paymentMapper.postToEntity(paymentPost);
 
-        Contents.Categories category = stringToCategoryEnum.convert(categories);
+//        Contents.Categories category = stringToCategoryEnum.convert(categories);
+        Contents.Categories category = contentsService.engOfKor(categories);
 
         ContentsDto.Post post = contentsMapper.reqToContentsPost(title, category, details, tutorDetail, thumbnailUrl, fileKey);
         Contents contents = contentsService.createContents(contentsMapper.postToContents(post), user.getUsersId(), payment);
@@ -266,7 +267,8 @@ public class ContentsController {
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 
-        Contents.Categories category = stringToCategoryEnum.convert(categories);
+//        Contents.Categories category = stringToCategoryEnum.convert(categories);
+        Contents.Categories category = contentsService.engOfKor(categories);
 
         PaymentDto.Patch paymentPatch = new PaymentDto.Patch(Integer.parseInt(price));
 
