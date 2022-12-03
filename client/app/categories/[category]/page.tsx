@@ -65,8 +65,12 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 			<div className={styles.filterWrapper}>
 				<SearchResultFilter category={category} />
 			</div>
-			<div>
-				<HomeClassesSection contentsList={contentsList} />
+			<div className={styles.categorydetailWrapper}>
+				{contentsList.length === 0 ?
+					<div>카테고리에 해당하는 강좌가 없습니다.</div>
+					:
+					<HomeClassesSection contentsList={contentsList} />
+				}
 			</div>
 		</>
 	);
