@@ -18,7 +18,7 @@ public class MainPageService {
     public MainPage getHome() {
 
         MainPage mainPage = new MainPage();
-        mainPage.setContentsList(contentsService.getContentsPage(1, 10).getContent());
+        mainPage.setContentsList(contentsService.getContents());
         return mainPageRepository.save(mainPage);
     }
 }
