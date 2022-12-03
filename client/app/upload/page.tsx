@@ -172,7 +172,7 @@ const UploadPage = () => {
         src={imageFile.thumbnail ?? ""}
         alt={imageFile.type ?? ""}
         width={300}
-        height={220}
+        height={200}
         onClick={handleClickFileInput}
         style={{ objectFit: "contain", borderRadius: "4px" }}
       />
@@ -244,7 +244,7 @@ const UploadPage = () => {
               onChange={handleChange}
               className={styles.classPrice}
             />
-            {/* {values.price % 1000 === 0 ? null : (
+            {values.price % 1000 === 0 ? null : (
               <div className={styles.alertMessage}>
                 1,000원 단위로 입력 해주세요.
               </div>
@@ -253,7 +253,7 @@ const UploadPage = () => {
               <div className={styles.alertMessage}>
                 50,000원 이하로 입력 해주세요.
               </div>
-            )} */}
+            )}
 
             <p className={styles.title}>강의 소개</p>
             <textarea
@@ -291,7 +291,6 @@ const UploadPage = () => {
             </div>
 
             <div className={styles.uploadimg}>{showImage}</div>
-            {/* <OrangeButton type={"submit"} name={"강좌 개설하기"} /> */}
 
             {query == "edit" ? (
               <button type="submit" className={styles.openclassbtn}>
