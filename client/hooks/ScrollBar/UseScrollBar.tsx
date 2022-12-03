@@ -18,7 +18,7 @@ export const useScrollBar = () => {
 			setLastScrollY(window.scrollY);
 		}
 	};
-	const trottleNavbarControl = useTrottle(controlNavbar, 200);
+	const trottleNavbarControl = useTrottle(controlNavbar, 100);
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {

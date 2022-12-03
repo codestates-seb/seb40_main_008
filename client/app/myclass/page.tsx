@@ -68,12 +68,12 @@ const MyclassPage = async () => {
 
 	return (
 		<>
-			<h1 className={styles.title}>내 클래스</h1>
-			<MyclassTab takingClasses={takingClasses} wishClasses={wishClasses} />
-
+			<div className={styles.myclassWrapper}>
+				<h1 className={styles.title}>내 클래스</h1>
+				<MyclassTab takingClasses={takingClasses} wishClasses={wishClasses} />
+			</div>
 			<TabNavigator activeLink={'myclass'} />
 		</>
-
 	);
 };
 
