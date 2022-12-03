@@ -60,7 +60,7 @@ const MyPage = async () => {
 						</div>
 						<div className={styles.CourseWrapper}>
 							<FontAwesomeIcon icon={faPencil} width={24} className={styles.fontimg} />
-							<Link href={`/myupload`}>
+							<Link href={`/mypage/uploadclass`}>
 								<h2 className={styles.font}>내가 올린 클래스</h2>
 							</Link>
 						</div>
