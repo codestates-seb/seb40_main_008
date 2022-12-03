@@ -36,13 +36,6 @@ const VideoIdPage = async ({
 	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(contentsId, videoId);
 
-	if (!userInfo) {
-		return (
-			<div>
-				<p>invalid token</p>
-			</div>
-		);
-	}
 	return (
 		<VideoPageSection
 			data={data}

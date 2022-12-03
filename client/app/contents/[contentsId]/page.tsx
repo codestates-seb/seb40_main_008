@@ -34,10 +34,6 @@ const getCurriculum = async (
 
 const ContentsIdPage = async ({ params }: any) => {
 	const contentInfo = await getContentInfo(params.contentsId);
-	console.log(
-		'🚀 ~ file: page.tsx:37 ~ ContentsIdPage ~ contentInfo',
-		contentInfo
-	);
 	const curriculumInfo = await getCurriculum(params.contentsId);
 	return (
 		<>
@@ -51,15 +47,19 @@ const ContentsIdPage = async ({ params }: any) => {
 	);
 };
 
+interface ContentId {
+	contentsId: number;
+}
+
 /*
 export async function generateStaticParams() {
 	const res = await fetch('https://pioneroroom.com/contents');
-	const posts:ICategorySearchResult[] = res.json();
-	return posts.map((post) => ({
-	  contentsId: post.contentId
+	const posts: ContentId[] = await res.json();
+	const arr = posts.map((obj) => ({
+		contentsId: String(obj.contentsId),
 	}));
- }
- 
+	return arr;
+}
 */
 
 export default ContentsIdPage;
