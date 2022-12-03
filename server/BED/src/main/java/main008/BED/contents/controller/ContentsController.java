@@ -77,14 +77,12 @@ public class ContentsController {
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 
-        PaymentDto.Post paymentPost = new PaymentDto.Post(Integer.parseInt(price));
-
+        PaymentDto.Post paymentPost = paymentMapper.reqToPost(Integer.parseInt(price));
         Payment payment = paymentMapper.postToEntity(paymentPost);
 
         Contents.Categories category = stringToCategoryEnum.convert(categories);
 
-        ContentsDto.Post post = new ContentsDto.Post(title, category, details, tutorDetail, thumbnailUrl, fileKey);
-
+        ContentsDto.Post post = contentsMapper.reqToContentsPost(title, category, details, tutorDetail, thumbnailUrl, fileKey);
         Contents contents = contentsService.createContents(contentsMapper.postToContents(post), user.getUsersId(), payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
@@ -138,7 +136,7 @@ public class ContentsController {
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
-        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal); // User 본인의 메모만 전송
 
         ContentsDto.ResponseForStream responseForStream =
                 contentsMapper.contentsResponseForStream(

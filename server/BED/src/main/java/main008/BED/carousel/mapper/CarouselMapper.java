@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CarouselMapper {
 
-    CarouselDto.ResponseDto entityToResponseDto(Carousel carousel);
+    List<CarouselDto.ResponseDto> entityToResponseDto(List<Carousel> carousel);
 
     Carousel postDtoToEntity(CarouselDto.Post post);
 

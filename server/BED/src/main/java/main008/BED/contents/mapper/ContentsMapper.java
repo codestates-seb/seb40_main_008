@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface ContentsMapper {
 
+    ContentsDto.Post reqToContentsPost(String title, Contents.Categories categories,
+                                       String details, String tutorDetail, String thumbnail, String fileKey);
+
     Contents postToContents(ContentsDto.Post post);
 
     Contents patchToContents(ContentsDto.Patch patch);
