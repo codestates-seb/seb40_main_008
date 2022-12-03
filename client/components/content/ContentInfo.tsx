@@ -50,6 +50,7 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
           src={contentInfo?.thumbnail}
           alt={contentInfo?.title}
           fill={true}
+          style={{ objectFit: 'cover' }}
         />
       </div>
       <div className={styles.InfoWrapper}>
