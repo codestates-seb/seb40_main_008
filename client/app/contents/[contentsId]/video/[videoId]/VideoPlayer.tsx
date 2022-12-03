@@ -3,8 +3,6 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 // import { OnProgressProps } from 'react-player/base';
 import { useHasWindow } from '../../../../../utils/hooks/useHasWindow';
-import styles from './VideoPage.module.css';
-import { Player, ControlBar, PlayToggle } from 'video-react';
 
 interface ProgressEvent {
 	played: number;

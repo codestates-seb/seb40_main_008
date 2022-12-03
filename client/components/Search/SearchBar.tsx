@@ -15,9 +15,8 @@ const SearchBar = () => {
 	};
 
 	// 검색 버튼 클릭 시, 내용 담아서 GET 요청 보내기
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
 		e.preventDefault();
-		searchApi.getSearch(searchvalue);
 		router.push(`/categories/${searchvalue}`);
 	};
 
@@ -25,21 +24,21 @@ const SearchBar = () => {
 		<>
 			<div className={styles.searchWrapper}>
 				<div className={styles.searchboxWrapper}>
-					<form onSubmit={handleSubmit}>
+					<div>
 						<input
 							value={searchvalue}
 							onChange={handleChange}
 							className={styles.searchbox}
 							placeholder="관심 클래스 찾기"
 						/>
-						<button className={styles.submitbtn} type="submit">
+						<button className={styles.submitbtn} onClick={handleSubmit}>
 							<FontAwesomeIcon
 								width={24}
 								icon={faMagnifyingGlass}
-								// className={styles.magnifyingglass}
+							// className={styles.magnifyingglass}
 							/>
 						</button>
-					</form>
+					</div>
 				</div>
 			</div>
 		</>

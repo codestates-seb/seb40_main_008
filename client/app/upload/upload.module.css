@@ -10,17 +10,21 @@
 }
 .classtitle {
   margin: 0;
+
   margin-bottom: 8px;
 }
 .title {
   margin: 0;
+
   margin-top: 12px;
   margin-bottom: 8px;
 }
 .classnameinput {
   height: 35px;
   width: 300px;
+  background-color: white;
   border-radius: 10px;
+  padding-left: 10px;
 }
 .select {
   /* 생략 */
@@ -42,7 +46,9 @@
   height: 100px;
   width: 300px;
   padding: 5px;
+  background-color: white;
   border-radius: 10px;
+  padding-left: 10px;
 }
 
 .filebox {
@@ -110,7 +116,9 @@
 .classPrice {
   height: 35px;
   width: 300px;
+  background-color: white;
   border-radius: 10px;
+  padding-left: 10px;
 }
 
 .alertMessage {

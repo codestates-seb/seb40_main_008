@@ -32,8 +32,8 @@ const getSearchContents = async (searchVal: string, sortingMethod: string) => {
 	try {
 		const response = await fetch(
 			sortCondition
-				? `http://pioneroroom/search/title/lateast?keyword=${searchVal}`
-				: `http://pioneroroom/search/title?keyword=${searchVal}`
+				? `http://pioneroroom.com/search/title?keyword=${searchVal}`
+				: `http://pioneroroom.com/search/title/lateast?keyword=${searchVal}`
 		);
 		const { contentsList } = await response.json();
 		return contentsList;

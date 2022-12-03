@@ -5,7 +5,7 @@ import SignInButton from "../../components/Buttons/SignInButton";
 import BaseNavbar from "../../components/BaseNavBar/BaseNavbar";
 import Image from "next/image";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import {
   initialClass,
@@ -18,15 +18,39 @@ const formData = new FormData();
 const UploadPage = () => {
   const token = getCookie("accessToken");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("slug");
+  const thumbnail = searchParams.get("thumbnail");
+  const contentsId = searchParams.get("contentsId");
+  const Categories = searchParams.get("Categories");
+  const title = searchParams.get("title");
+  const details = searchParams.get("details");
+  const tutorDetail = searchParams.get("tutorDetail");
+  const price = searchParams.get("price");
 
   const session = {
     status: "authenticated",
   };
 
+  const queryContents = {
+    thumbnail: thumbnail,
+    categories: Categories,
+    title: title,
+    details: details,
+    tutorDetail: tutorDetail,
+    price: price,
+  };
+
+  const img = {
+    file: thumbnail,
+    thumbnail: thumbnail,
+    type: null,
+  };
+
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const [values, setValues] = useState<UploadClassType>(initialClass);
-  const [imageFile, setImageFile] = useState<UploadImage | null>(null);
+  const [values, setValues] = useState<UploadClassType>(queryContents);
+  const [imageFile, setImageFile] = useState<UploadImage | null>(img);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -54,9 +78,6 @@ const UploadPage = () => {
     formData: FormData
   ) => {
     e.preventDefault();
-    console.log("formData: ", formData);
-    console.log("formData.get(`thumbnail`): ", formData.get("thumbnail"));
-    console.log("토근", token);
 
     formData.append("categories", values.categories);
     formData.append("details", values.details);
@@ -64,29 +85,54 @@ const UploadPage = () => {
     formData.append("tutorDetail", values.tutorDetail);
     formData.append("title", values.title);
 
-    fetch("https://pioneroroom.com/auth/uploadcontents", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    }).then((res) => {
-      if (res.ok) {
-        formData.delete("categories");
-        formData.delete("details");
-        formData.delete("price");
-        formData.delete("tutorDetail");
-        formData.delete("title");
-        formData.delete("thumbnail");
-        console.log(res);
-        router.push(`/mypage/uploadclass`);
-      }
-    });
+    if (query !== "edit") {
+      fetch("https://pioneroroom.com/auth/uploadcontents", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }).then((res) => {
+        if (res.ok) {
+          formData.delete("categories");
+          formData.delete("details");
+          formData.delete("price");
+          formData.delete("tutorDetail");
+          formData.delete("title");
+          formData.delete("thumbnail");
+          console.log(res);
+          router.push(`/mypage/uploadclass`);
+        }
+      });
+    } else {
+      fetch(`https://pioneroroom.com/auth/contents/${contentsId}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }).then((res) => {
+        if (res.ok) {
+          formData.delete("categories");
+          formData.delete("details");
+          formData.delete("price");
+          formData.delete("tutorDetail");
+          formData.delete("title");
+          formData.delete("thumbnail");
+          router.push(`/mypage/uploadclass`);
+        }
+      });
+    }
   };
 
+  // useEffect(() => {
+  //   console.log("formData: ", formData.get("thumbnail"));
+  // }, [imageFile]);
+
   useEffect(() => {
-    console.log("formData: ", formData.get("thumbnail"));
-  }, [imageFile]);
+    console.log("밸루", values);
+    console.log("id", contentsId);
+  }, []);
 
   const handleClickFileInput = () => {
     fileInput.current?.click();
@@ -126,7 +172,7 @@ const UploadPage = () => {
         src={imageFile.thumbnail ?? ""}
         alt={imageFile.type ?? ""}
         width={300}
-        height={220}
+        height={200}
         onClick={handleClickFileInput}
         style={{ objectFit: "contain", borderRadius: "4px" }}
       />
@@ -155,12 +201,14 @@ const UploadPage = () => {
             <input
               type="text"
               name="title"
+              value={values.title}
               onChange={handleChange}
               className={styles.classnameinput}
             ></input>
             <p className={styles.title}>카테고리</p>
             <select
-              id="category"
+              id="categories"
+              value={values.categories}
               name="categories"
               onChange={handleOptionChange}
               className={styles.select}
@@ -170,9 +218,9 @@ const UploadPage = () => {
                 label="----------------개발전용----------------"
                 className={styles.label}
               >
-                <option value="drawing">디지털드로잉</option>
-                <option value="success_mind">성공 마인드</option>
-                <option value="baking">베이킹</option>
+                <option value="드로잉">드로잉</option>
+                <option value="성공 마인드">성공 마인드</option>
+                <option value="베이킹">베이킹</option>
               </optgroup>
               <optgroup
                 label="-------------선택하지 마세요------------"
@@ -192,10 +240,11 @@ const UploadPage = () => {
             <input
               type="number"
               name="price"
+              value={values.price}
               onChange={handleChange}
               className={styles.classPrice}
             />
-            {/* {values.price % 1000 === 0 ? null : (
+            {values.price % 1000 === 0 ? null : (
               <div className={styles.alertMessage}>
                 1,000원 단위로 입력 해주세요.
               </div>
@@ -204,18 +253,20 @@ const UploadPage = () => {
               <div className={styles.alertMessage}>
                 50,000원 이하로 입력 해주세요.
               </div>
-            )} */}
+            )}
 
             <p className={styles.title}>강의 소개</p>
             <textarea
               name="details"
               onChange={handleTextChange}
+              value={values.details}
               className={styles.introduceClass}
             ></textarea>
             <p className={styles.title}>강사 소개</p>
             <textarea
               name="tutorDetail"
               onChange={handleTextChange}
+              value={values.tutorDetail}
               className={styles.introduceInstructor}
             ></textarea>
 
@@ -223,7 +274,7 @@ const UploadPage = () => {
               <p className={styles.title}>클래스 썸네일</p>
               <input
                 type="file"
-                accept="image/png"
+                accept="image/png, image/jpg, image/jpeg"
                 name="thumbnail"
                 ref={fileInput}
                 id="ex_file"
@@ -240,11 +291,16 @@ const UploadPage = () => {
             </div>
 
             <div className={styles.uploadimg}>{showImage}</div>
-            {/* <OrangeButton type={"submit"} name={"강좌 개설하기"} /> */}
 
-            <button type="submit" className={styles.openclassbtn}>
-              강좌 개설하기
-            </button>
+            {query == "edit" ? (
+              <button type="submit" className={styles.openclassbtn}>
+                수정하기
+              </button>
+            ) : (
+              <button type="submit" className={styles.openclassbtn}>
+                강좌 개설하기
+              </button>
+            )}
           </form>
         </section>
       </>

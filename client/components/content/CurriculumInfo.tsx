@@ -22,20 +22,31 @@ const CurriculumInfo = ({
   const router = useRouter();
   return (
     <>
-      {curriculumInfo.length === 0 ?
-        <div className={styles.nocurriculumWrapper}>업로드된 커리큘럼이 없습니다.</div>
-        :
+      {curriculumInfo.length === 0 ? (
+        <div className={styles.nocurriculumWrapper}>
+          업로드된 커리큘럼이 없습니다.
+        </div>
+      ) : (
         curriculumInfo.map((e, index) => (
           <div key={index} className={styles.Wrapper}>
             <div>
               <div className={styles.thumbnail}>
-                <Image src={e.thumbnail} alt={e.title} fill={true} style={{ objectFit: 'cover' }} />
+                <Image
+                  src={e.thumbnail}
+                  alt={e.title}
+                  fill={true}
+                  style={{ objectFit: "cover" }}
+                />
               </div>
               <div className={styles.chapterWrapper}>
                 <div className={styles.chapterTitle}>
-                  <p style={{ fontSize: '15px', fontWeight: 'bold' }}>{e.chapterOrder}</p>
+                  <p style={{ fontSize: "15px", fontWeight: "bold" }}>
+                    {e.chapterOrder}
+                  </p>
                   <div className={styles.chapter}>
-                    <p style={{ fontSize: '22px', fontWeight: 'bold' }}>{e.title}</p>
+                    <p style={{ fontSize: "22px", fontWeight: "bold" }}>
+                      {e.title}
+                    </p>
                     <div>
                       {role == "creator" ? (
                         <>
@@ -45,6 +56,7 @@ const CurriculumInfo = ({
                               query: {
                                 slug: "edit",
                                 chapterId: e.chapterId,
+                                contentId: contentsId,
                                 thumbnail: e.thumbnail,
                                 title: e.title,
                                 chapterOrder: e.chapterOrder,
@@ -80,14 +92,14 @@ const CurriculumInfo = ({
                         <div>
                           {role == "creator" ? (
                             <>
-                              <Link
+                              {/* <Link
                                 href={{
                                   pathname: "/upload/class",
                                   query: { slug: "edit" },
                                 }}
                               >
                                 <button className={styles.btn}>수정</button>
-                              </Link>
+                              </Link> */}
 
                               <Curriculumdelete
                                 url={`https://pioneroroom.com/auth/chapter/lecture/`}
@@ -129,7 +141,8 @@ const CurriculumInfo = ({
               </div>
             </div>
           </div>
-        ))}
+        ))
+      )}
     </>
   );
 };
