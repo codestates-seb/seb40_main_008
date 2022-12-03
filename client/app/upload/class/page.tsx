@@ -150,12 +150,12 @@ const UploadClassPage = () => {
               id="file2"
             ></input>
           </div>
-          {query == "edit" ? (
-            <OrangeButton type={"submit"} name={"수정하기"} />
-          ) : (
-            <OrangeButton type={"submit"} name={"올리기"} />
-          )}
         </form>
+        {query == "edit" ? (
+          <OrangeButton type={"submit"} name={"수정하기"} />
+        ) : (
+          <OrangeButton type={"submit"} name={"올리기"} />
+        )}
       </section>
     </>
   );
