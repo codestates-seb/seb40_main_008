@@ -328,7 +328,7 @@ public class ContentsService {
 
             if (contents.getUsers().getUsersId().equals(user.getUsersId())) {
                 role = "creator";
-            } else if (paymentService.verifyPaidByUser(contents.getContentsId(), user.getUsersId())) {
+            } else if (paymentService.verifyPaidByUser(contents.getPayment().getPaymentId(), user.getUsersId())) {
                 role = "Paid_customer";
             } else {
                 role = "Unpaid_customer";
