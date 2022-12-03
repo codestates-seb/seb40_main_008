@@ -22,6 +22,7 @@ public enum ExceptionCode {
     UNAUTHORIZED_DELETE(404, "콘텐츠 삭제는 해당 콘텐츠의 크리에이터만 가능합니다"),
     UNAUTHORIZED_PATCH(404, "콘텐츠 수정은 해당 콘텐츠의 크리에이터만 가능합니다"),
     UNAUTHORIZED_GET(404, "해당 강의는 구매한 사람만 접근 가능합니다."),
+    WRONG_INPUT(400, "잘못된 카테고리 입니다."),
 
     /*Chapter*/
     CHAPTER_NOT_FOUND(404, "Chapter Not Found"),
