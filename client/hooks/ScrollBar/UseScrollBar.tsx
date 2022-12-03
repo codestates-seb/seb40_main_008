@@ -18,15 +18,14 @@ export const useScrollBar = () => {
       setLastScrollY(window.scrollY);
     }
   };
-  const trottleNavbarControl = useTrottle(controlNavbar, 100);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.addEventListener("scroll", trottleNavbarControl);
+      window.addEventListener("scroll", controlNavbar);
 
       // cleanup function
       return () => {
-        window.removeEventListener("scroll", trottleNavbarControl);
+        window.removeEventListener("scroll", controlNavbar);
       };
     }
   }, []);
