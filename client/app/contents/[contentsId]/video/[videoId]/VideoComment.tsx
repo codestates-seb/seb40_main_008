@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { getCookie, getCookies } from 'cookies-next';
 import ReactStars from 'react-rating-stars-component';
+import { useRouter } from 'next/navigation';
 interface Props {
 	uploadClassId: string;
 }
@@ -11,7 +12,7 @@ interface Props {
 const VideoComment = ({ uploadClassId }: Props) => {
 	const [comments, setComments] = useState('');
 	const [rating, setRating] = useState(0);
-
+	const router = useRouter();
 	const handleSubmit = () => {
 		const token = getCookie('accessToken');
 		fetch(`https://pioneroroom.com/auth/uploadclass/${uploadClassId}`, {
@@ -24,6 +25,11 @@ const VideoComment = ({ uploadClassId }: Props) => {
 				comments,
 				starRate: rating,
 			}),
+		}).then((res) => {
+			router.refresh();
+			setComments('');
+			if (res.status === 403)
+				alert('자기 자신의 강의에는 댓글을 못단다구요~');
 		});
 	};
 

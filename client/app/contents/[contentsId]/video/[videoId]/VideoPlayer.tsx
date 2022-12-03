@@ -1,10 +1,16 @@
 'use client';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { OnProgressProps } from 'react-player/base';
+// import { OnProgressProps } from 'react-player/base';
 import { useHasWindow } from '../../../../../utils/hooks/useHasWindow';
-import styles from './VideoPage.module.css';
-import { Player } from 'video-react';
+
+interface ProgressEvent {
+	played: number;
+	playedSeconds: number;
+	loaded: number;
+	loadedSeconds: number;
+}
+
 interface VideoPlayerProps {
 	url: string;
 	videoRef: any;
@@ -26,7 +32,7 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 		);
 	}
 
-	const handleProgress = (e: OnProgressProps) => {
+	const handleProgress = (e: ProgressEvent) => {
 		const { playedSeconds } = e;
 		const minutes = Math.floor(playedSeconds / 60);
 		const seconds = Math.floor(playedSeconds % 60);
@@ -35,20 +41,16 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 		setTime(`${minutesString}:${secondsString}`);
 	};
 
-	return <Player src={url} ref={videoRef} />;
-
 	return (
 		<ReactPlayer
 			ref={videoRef}
 			url={url}
 			muted={true}
+			onProgress={handleProgress}
 			controls={true}
 			playing={true}
-			className={styles.videoPlayer}
 			width="100%"
 			height="360px"
-			progressInterval={1000}
-			onProgress={handleProgress}
 		/>
 	);
 };

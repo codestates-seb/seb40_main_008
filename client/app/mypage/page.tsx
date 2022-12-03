@@ -9,77 +9,83 @@ import {
 	faPenToSquare,
 	faPencil,
 } from '@fortawesome/free-solid-svg-icons';
-import OrangeButton from '../../components/Buttons/orangeButton';
-import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import getUserInfo from '../../utils/helper/backendUserInfo';
-import { headers } from 'next/headers';
 import verifyLogin from '../../utils/VerifyLogin';
 import { SignOut } from '../../components/Buttons/SignOut';
+import AlertCheck from './AlertCheck';
 
-const MyPage = async () => {
-	// const session = useSession();
+const MyPage = async ({ searchParams: { status } }: any) => {
 	const userInfo = await verifyLogin();
-	// console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo);
 
-	const session = {
-		status: 'authenticated',
-	};
+	if (!userInfo) redirect('/');
 
-	// if (session.status === 'authenticated')
-	if (userInfo)
-		return (
-			<>
-				<BaseNavbar />
-				<div className={styles.mypageWrapper}>
-					<div className={styles.myinfo}>
-						<Image
-							style={{ borderRadius: '50%' }}
-							className={styles.myimg}
-							alt="myimg"
-							src={userInfo.profileImage}
-							width={70}
-							height={70}
+	return (
+		<>
+			<AlertCheck status={status} />
+			<BaseNavbar />
+			<div className={styles.mypageWrapper}>
+				<div className={styles.myinfo}>
+					<Image
+						style={{ borderRadius: '50%' }}
+						className={styles.myimg}
+						alt="myimg"
+						src={userInfo.profileImage}
+						width={70}
+						height={70}
+					/>
+					{userInfo.userName}
+					<h3 className={styles.id}>{userInfo.email}</h3>
+
+					<div className={styles.Wrapper}>
+						<FontAwesomeIcon
+							icon={faCoins}
+							width={24}
+							className={styles.coinfont}
 						/>
-						{userInfo.userName}
-						<h3 className={styles.id}>{userInfo.email}</h3>
+						<h3 className={styles.mycoin}>
+							보유 코인: {userInfo.totalCoin}
+						</h3>
+					</div>
+					<hr className={styles.line}></hr>
+				</div>
 
-						<div className={styles.Wrapper}>
-							<FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
-							<h3 className={styles.mycoin}>보유 코인: {userInfo.totalCoin}</h3>
-						</div>
-						<hr className={styles.line}></hr>
+				<div className={styles.mycorner}>
+					<div className={styles.CourseWrapper}>
+						<FontAwesomeIcon
+							icon={faCoins}
+							width={24}
+							className={styles.fontimg}
+						/>
+						<Link href={`/charge`}>
+							<h2 className={styles.font}>코인 충전하기</h2>
+						</Link>
+					</div>
+					<div className={styles.CourseWrapper}>
+						<FontAwesomeIcon
+							icon={faPencil}
+							width={24}
+							className={styles.fontimg}
+						/>
+						<Link href={`/mypage/uploadclass`}>
+							<h2 className={styles.font}>내가 올린 클래스</h2>
+						</Link>
 					</div>
 
-					<div className={styles.mycorner}>
-						<div className={styles.CourseWrapper}>
-							<FontAwesomeIcon icon={faCoins} width={24} className={styles.fontimg} />
-							<Link href={`/charge`}>
-								<h2 className={styles.font}>코인 충전하기</h2>
-							</Link>
-						</div>
-						<div className={styles.CourseWrapper}>
-							<FontAwesomeIcon icon={faPencil} width={24} className={styles.fontimg} />
-							<Link href={`/mypage/uploadclass`}>
-								<h2 className={styles.font}>내가 올린 클래스</h2>
-							</Link>
-						</div>
-
-						<div className={styles.CourseWrapper}>
-							<FontAwesomeIcon icon={faPenToSquare} width={24} className={styles.fontimg} />
-							<Link href={`/upload`}>
-								<h2 className={styles.font}>강좌 개설하기</h2>
-							</Link>
-						</div>
+					<div className={styles.CourseWrapper}>
+						<FontAwesomeIcon
+							icon={faPenToSquare}
+							width={24}
+							className={styles.fontimg}
+						/>
+						<Link href={`/upload`}>
+							<h2 className={styles.font}>강좌 개설하기</h2>
+						</Link>
 					</div>
-				</div >
-				<SignOut />
-
-			</>
-		);
-	else {
-		redirect('/');
-	}
+				</div>
+			</div>
+			<SignOut />
+		</>
+	);
 };
 
 export default MyPage;
