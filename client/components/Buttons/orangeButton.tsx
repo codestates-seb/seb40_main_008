@@ -18,6 +18,7 @@ const OrangeButton = ({
 				<button
 					type={type}
 					onClick={handleClick}
+					onTouchStart={handleClick}
 					className={styles.btn}
 				>
 					{name}
