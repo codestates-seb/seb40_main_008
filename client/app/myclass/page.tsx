@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './myclass.module.css';
 import TabNavigator from '../../components/TabNavigator/TabNavigator';
-import { ICategorySearchResult } from '../../types/homeScreen/mainVideoContents';
 import MyclassTab from '../../components/Tab/MyclassTab';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import verifyLogin from '../../utils/VerifyLogin';
+import { ICategorySearchResult } from '../../types/category_search/categorySearchType';
 
 const getTakingClasses = async (): Promise<Array<ICategorySearchResult>> => {
 
