@@ -44,6 +44,7 @@ const CurriculumInfo = ({
                               chapterId: e.chapterId,
                               thumbnail: e.thumbnail,
                               title: e.title,
+                              contentId: contentsId,
                               chapterOrder: e.chapterOrder,
                             },
                           }}
