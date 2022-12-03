@@ -140,4 +140,22 @@ public interface ContentsMapper {
         );
     }
 
+    default List<ContentsDto.MUCResponse> contentsToMUCResponse(List<Contents> contents, UsersMapper usersMapper) {
+
+        return contents.stream()
+                .map(content -> ContentsDto.MUCResponse.builder()
+                        .contentsId(content.getContentsId())
+                        .title(content.getTitle())
+                        .categories(content.getCategories())
+                        .likesCount(content.getLikesCount())
+                        .thumbnail(content.getThumbnail())
+                        .users(usersMapper.usersToResponse(content.getUsers()))
+                        .price(content.getPayment().getPrice())
+                        .details(content.getDetails())
+                        .tutorDetail(content.getTutorDetail())
+                        .build()
+                ).collect(Collectors.toList());
+
+    }
+
 }

@@ -130,4 +130,20 @@ public class ContentsDto {
 
         private List<ResponseForCategories> contentsList;
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class MUCResponse {
+
+        private Long contentsId;
+        private String title;
+        private String thumbnail;
+        private int likesCount;
+        private Contents.Categories categories;
+        private UsersDto.UserResponseToHome users;
+        private Integer price;
+        private String details;
+        private String tutorDetail;
+    }
 }

@@ -12,6 +12,6 @@ public class MyUploadClassDto {
     @AllArgsConstructor
     public static class Response {
 
-        private List<ContentsDto.Response> contentsList;
+        private List<ContentsDto.MUCResponse> contentsList;
     }
 }
