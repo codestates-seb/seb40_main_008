@@ -11,10 +11,8 @@ const getCategoryContents = async (
 	sortingMethod: string
 ): Promise<Array<ICategorySearchResult>> => {
 	try {
-		// https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
-		// request url : https://pioneroroom.com/search?categories=${category}&sort=${sortingMethod}
 		const response = await fetch(
-			`https://run.mocky.io/v3/072e5b64-e3fb-4b38-category-313b8b680818`,
+			`https://pioneroroom.com/search?categories=${category}&sort=${sortingMethod}`,
 			{
 				next: {
 					revalidate: 60,
@@ -32,8 +30,6 @@ const getCategoryContents = async (
 const getSearchContents = async (searchVal: string, sortingMethod: string) => {
 	const sortCondition = sortingMethod === '' || sortingMethod === 'newest';
 	try {
-		// https://run.mocky.io/v3/072e5b64-e3fb-4b38-aa50-313b8b680818
-		// request url : https://pioneroroom.com/search?categories=${category}&sort=${sortingMethod}
 		const response = await fetch(
 			sortCondition
 				? `http://pioneroroom/search/title/lateast?keyword=${searchVal}`

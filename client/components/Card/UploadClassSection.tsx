@@ -14,7 +14,10 @@ interface HomeContentProps {
 const UploadClassSection = ({ contentsList }: HomeContentProps) => {
   return (
     <div className={styles.myuploadclassWrapper}>
-      {contentsList &&
+
+      {contentsList.length === 0 ?
+        <div className={styles.noclassWrapper}>내가올린 클래스가 없습니다.</div>
+        :
         contentsList.map((e, index) => (
           <div key={index}>
             <Link href={`/contents/${e.contentsId}`}>
@@ -50,7 +53,8 @@ const UploadClassSection = ({ contentsList }: HomeContentProps) => {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      }
     </div>
   );
 };

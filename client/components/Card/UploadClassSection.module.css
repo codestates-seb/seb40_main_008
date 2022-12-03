@@ -58,3 +58,13 @@
     align-items: center;
     color: #666666;
 }
+
+.noclassWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #666666;
+    font-size: 20px;
+    font-weight: bold;
+}
