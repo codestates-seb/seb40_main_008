@@ -3,7 +3,6 @@ package main008.BED.uploadClass.controller;
 import lombok.RequiredArgsConstructor;
 import main008.BED.S3.S3ServiceImpl;
 import main008.BED.chapter.entity.Chapter;
-import main008.BED.chapter.repository.ChapterRepository;
 import main008.BED.docs.dto.DocsDto;
 import main008.BED.docs.entity.Docs;
 import main008.BED.docs.mapper.DocsMapper;
@@ -17,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.Positive;
 import java.io.IOException;
@@ -32,9 +30,7 @@ public class UploadClassController {
     private final UploadClassMapper uploadClassMapper;
     private final DocsService docsService;
     private final DocsMapper docsMapper;
-
     private final S3ServiceImpl s3Service;
-
 
     /**
      * Post - 영상 & 강의 자료 올리기
@@ -50,7 +46,6 @@ public class UploadClassController {
         DocsDto.Post docsPost = new DocsDto.Post(docsFile, details);
         Docs docs = docsService.saveDocs(docsMapper.postDtoToEntity(docsPost));
 
-
         HashMap map = s3Service.uploadToS3(videoFile, "/UploadClass/video");
         String videoUrl = map.get("url").toString();
         String fileKey = map.get("fileKey").toString();
@@ -58,7 +53,7 @@ public class UploadClassController {
 
         UploadClassDto.Post post = new UploadClassDto.Post(videoUrl, title, videoName, fileKey, docs);
         uploadClassService.saveLecture(uploadClassMapper.postDtoToEntity(post), chapterId);
-        return new ResponseEntity(new UploadClassDto.SingleResponseDto("Uploading Lecture is completed."),
+        return new ResponseEntity<>(new UploadClassDto.SingleResponseDto("Uploading Lecture is completed."),
                 HttpStatus.CREATED);
     }
 
@@ -94,7 +89,7 @@ public class UploadClassController {
         UploadClass newUploadClass = uploadClassMapper.patchDtoToEntity(patchUploadClass);
         uploadClassService.updateLecture(oldUploadClassId, newUploadClass);
 
-        return new ResponseEntity("The Lecture is updated.", HttpStatus.OK);
+        return new ResponseEntity<>("The Lecture is updated.", HttpStatus.OK);
     }
 
     /**
@@ -105,6 +100,6 @@ public class UploadClassController {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         uploadClassService.removeClassById(uploadClassId);
         s3Service.delete(uploadClass.getFileKey(), "/UploadClass/video");
-        return new ResponseEntity("The Lecture is removed.", HttpStatus.OK);
+        return new ResponseEntity<>("The Lecture is removed.", HttpStatus.OK);
     }
 }

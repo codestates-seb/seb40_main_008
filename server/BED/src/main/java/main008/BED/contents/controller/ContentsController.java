@@ -77,14 +77,12 @@ public class ContentsController {
         String fileKey = map.get("fileKey").toString();
         String thumbnailUrl = map.get("url").toString();
 
-        PaymentDto.Post paymentPost = new PaymentDto.Post(Integer.parseInt(price));
-
+        PaymentDto.Post paymentPost = paymentMapper.reqToPost(Integer.parseInt(price));
         Payment payment = paymentMapper.postToEntity(paymentPost);
 
         Contents.Categories category = stringToCategoryEnum.convert(categories);
 
-        ContentsDto.Post post = new ContentsDto.Post(title, category, details, tutorDetail, thumbnailUrl, fileKey);
-
+        ContentsDto.Post post = contentsMapper.reqToContentsPost(title, category, details, tutorDetail, thumbnailUrl, fileKey);
         Contents contents = contentsService.createContents(contentsMapper.postToContents(post), user.getUsersId(), payment);
 
         return new ResponseEntity<>(contentsMapper.contentsToResponse(contents), HttpStatus.CREATED);
@@ -136,9 +134,7 @@ public class ContentsController {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
-
-        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(user.getUsersId()); // User 본인의 메모만 전송
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal); // User 본인의 메모만 전송
 
         ContentsDto.ResponseForStream responseForStream =
                 contentsMapper.contentsResponseForStream(
@@ -147,7 +143,6 @@ public class ContentsController {
                         reviewMapper, bookmarkMapper,
                         bookmarkList, curriculumInStream.getCurriculumInfo());
 
-
         return new ResponseEntity<>(responseForStream, HttpStatus.OK);
     }
 
@@ -155,15 +150,13 @@ public class ContentsController {
      * 카테고리 조회
      */
     @GetMapping("/search") // API에 대문자는 들어가면 안됨,,,, RESTful API
-    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories, // 쿼리 스트링은 대문자 가능..?
-                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort,
-                                        @RequestParam(name = "page", required = false, defaultValue = "1") int page,
-                                        @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
+    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories,
+                                        @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort) {
 
-        Page<Contents> contents = contentsService.findContentsByCategory(page, size, categories, sort);
+        List<Contents> contents = contentsService.findContentsByCategory(categories, sort);
 
         List<ContentsDto.ResponseForCategories> categories1 =
-                contentsMapper.contentsToCategoriesResponses(contents.getContent(), usersMapper);
+                contentsMapper.contentsToCategoriesResponses(contents, usersMapper);
 
         return new ResponseEntity<>(contentsMapper.toCategoryList(categories1), HttpStatus.OK);
     }
@@ -268,13 +261,13 @@ public class ContentsController {
         Contents.Categories category = stringToCategoryEnum.convert(categories);
 
         PaymentDto.Patch paymentPatch = new PaymentDto.Patch(Integer.parseInt(price));
-
         Payment payment = paymentMapper.patchToEntity(paymentPatch);
 
-        ContentsDto.Patch patch = new ContentsDto.Patch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
+        ContentsDto.Patch patch =
+                contentsMapper.reqToContentsPatch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
 
         contentsService.updateContents(contentsId, principal, contentsMapper.patchToContents(patch), payment);
 
-        return new ResponseEntity("The Content is updated.", HttpStatus.OK);
+        return new ResponseEntity<>("The Content is updated.", HttpStatus.OK);
     }
 }

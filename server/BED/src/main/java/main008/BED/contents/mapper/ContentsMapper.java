@@ -22,6 +22,12 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface ContentsMapper {
 
+    ContentsDto.Post reqToContentsPost(String title, Contents.Categories categories,
+                                       String details, String tutorDetail, String thumbnail, String fileKey);
+
+    ContentsDto.Patch reqToContentsPatch(String title, Contents.Categories categories,
+                                       String details, String tutorDetail, String thumbnail, String fileKey);
+
     Contents postToContents(ContentsDto.Post post);
 
     Contents patchToContents(ContentsDto.Patch patch);
@@ -132,6 +138,24 @@ public interface ContentsMapper {
                 bookmarkMapper.listEntityToListResponseDto(bookmarkList),
                 curriculumInfo
         );
+    }
+
+    default List<ContentsDto.MUCResponse> contentsToMUCResponse(List<Contents> contents, UsersMapper usersMapper) {
+
+        return contents.stream()
+                .map(content -> ContentsDto.MUCResponse.builder()
+                        .contentsId(content.getContentsId())
+                        .title(content.getTitle())
+                        .categories(content.getCategories())
+                        .likesCount(content.getLikesCount())
+                        .thumbnail(content.getThumbnail())
+                        .users(usersMapper.usersToResponse(content.getUsers()))
+                        .price(content.getPayment().getPrice())
+                        .details(content.getDetails())
+                        .tutorDetail(content.getTutorDetail())
+                        .build()
+                ).collect(Collectors.toList());
+
     }
 
 }

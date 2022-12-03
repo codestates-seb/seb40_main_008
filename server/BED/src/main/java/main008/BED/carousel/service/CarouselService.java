@@ -36,8 +36,6 @@ public class CarouselService {
     }
 
 
-
-
 /*   <ByteArray 방식으로 전송>
     public List<byte[]> readCarousel() throws IOException {
 

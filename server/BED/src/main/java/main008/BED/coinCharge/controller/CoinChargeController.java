@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import main008.BED.coinCharge.dto.CoinChargeDetailDto;
 import main008.BED.coinCharge.dto.CoinChargeDetailResponseDto;
 import main008.BED.coinCharge.dto.CoinChargeDto;
+import main008.BED.coinCharge.entity.CoinCharge;
 import main008.BED.coinCharge.mapper.CoinChargeDetailMapper;
 import main008.BED.coinCharge.mapper.CoinChargeMapper;
 import main008.BED.coinCharge.service.CoinChargeService;
+import main008.BED.converter.StringToCoinEnum;
 import main008.BED.dto.SingleResponseDto;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
@@ -35,10 +37,11 @@ public class CoinChargeController {
     private final CoinChargeMapper coinChargeMapper;
     private final UserPageService userPageService;
     private final UsersService usersService;
+    private final StringToCoinEnum stringToCoinEnum;
 
     /**
      * 코인 충전
-     * @param post
+     * @param
      * @return
      */
     @PostMapping("/auth/coincharge/ready")
@@ -94,10 +97,13 @@ public class CoinChargeController {
 
         UserPage userPage = userPageService.findUserPage(users.getUsersId());
 
-        List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto = coinChargeDetailMapper.entityToResponses(
-                coinChargeService.getCoinChargeDetail(users.getUsersId()));
+        List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto =
+                coinChargeDetailMapper.entityToResponses(
+                        coinChargeService.getCoinChargeDetail(users.getUsersId()));
 
-        return new ResponseEntity<>(coinChargeMapper.entityToResponse(userPage, coinChargeDetailResponseDto), HttpStatus.OK);
+        return new ResponseEntity<>(
+                coinChargeMapper.entityToResponse(userPage, coinChargeDetailResponseDto)
+                , HttpStatus.OK);
     }
 
     /**

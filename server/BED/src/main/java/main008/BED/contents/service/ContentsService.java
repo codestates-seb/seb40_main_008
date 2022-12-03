@@ -197,20 +197,17 @@ public class ContentsService {
     /**
      * find Categories
      */
-    public Page<Contents> findContentsByCategory(int page, int size,
-                                                 Contents.Categories categories,
+    public List<Contents> findContentsByCategory(Contents.Categories categories,
                                                  String sort) {
 
         if ("newest".equals(sort)) {
-            sort = "contentsId";
+            return contentsRepository.categoryNewestSort(String.valueOf(categories));
         } else if ("popular".equals(sort)){
-            sort = "likesCount";
+            return contentsRepository.categoryPopularSort(String.valueOf(categories));
         }
 
-        return contentsRepository.findByCategories(categories,
-                PageRequest.of(page - 1, size, Sort.by(sort).descending()));
-        }
-
+        throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
+    }
         
     /**
      * Search: 강의명 검색 - 인기순
@@ -219,7 +216,7 @@ public class ContentsService {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("likesCount").descending());
 
-        List<Contents> contentsList = contentsRepository.findContentsByTitleContainingOrderByLikesCountDesc(keyword);
+        List<Contents> contentsList = contentsRepository.searchTitleSortLikesCount(keyword);
 
         ArrayList<Contents> discloseList = getDiscloseContents(contentsList);
 

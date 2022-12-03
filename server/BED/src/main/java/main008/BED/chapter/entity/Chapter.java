@@ -56,6 +56,4 @@ public class Chapter {
         }
     }
 
-
-
 }

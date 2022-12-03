@@ -32,10 +32,6 @@ public class ChapterService {
      */
     public Chapter saveChapter(Chapter chapter, Long contentsId) {
 
-        if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
-        }
-
         Contents byContentsId = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
@@ -57,9 +53,7 @@ public class ChapterService {
      */
     public Chapter readOne(Long chapterId) {
 
-        if (!chapterRepository.existsByChapterId(chapterId)) {
-            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
-        }
+        existChapter(chapterId);
 
         return chapterRepository.findById(chapterId).get();
     }
@@ -69,9 +63,7 @@ public class ChapterService {
      */
     public void updateChapter(Long chapterId, Chapter newChapter) {
 
-        if (!chapterRepository.existsByChapterId(chapterId)) {
-            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
-        }
+        existChapter(chapterId);
 
         Chapter oldChapter = chapterRepository.findByChapterId(chapterId);
         oldChapter.setTitle(newChapter.getTitle());
@@ -103,10 +95,6 @@ public class ChapterService {
      */
     public ChapterDto.CurriculumInContent readCurriculumInContent(Long contentsId) {
 
-        if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
-        }
-
         Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
@@ -126,10 +114,6 @@ public class ChapterService {
      */
     public ChapterDto.CurriculumInStream readCurriculumInStream(Long contentsId) {
 
-        if (!contentsRepository.existsByContentsId(contentsId)) {
-            throw new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND);
-        }
-
         Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
@@ -142,6 +126,13 @@ public class ChapterService {
         ChapterDto.CurriculumInStream curriculumInStream = new ChapterDto.CurriculumInStream(responseList);
 
         return curriculumInStream;
+    }
+
+    private void existChapter(Long chapterId) {
+
+        if (!chapterRepository.existsByChapterId(chapterId)) {
+            throw new BusinessLogicException(ExceptionCode.CHAPTER_NOT_FOUND);
+        }
     }
 }
 
