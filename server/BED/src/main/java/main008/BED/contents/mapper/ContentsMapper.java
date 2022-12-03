@@ -3,6 +3,7 @@ package main008.BED.contents.mapper;
 import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.bookmark.mapper.BookmarkMapper;
 import main008.BED.chapter.dto.ChapterDto;
+import main008.BED.chapter.mapper.ChapterMapper;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
 import main008.BED.contents.service.ContentsService;
@@ -97,12 +98,16 @@ public interface ContentsMapper {
                 .collect(Collectors.toList());
     }
 
-    default List<ContentsDto.ContentsId> contentsToId(List<Contents> list) {
+    default List<ContentsDto.ContentsId> contentsToId(List<Contents> list, ChapterMapper chapterMapper) {
 
         List<ContentsDto.ContentsId> collect = list.stream()
                 .map(contents -> new ContentsDto.ContentsId()
                         .builder()
                         .contentsId(contents.getContentsId())
+                        .chapterList(contents.getChapterList()
+                                .stream()
+                                .map(chapter -> chapterMapper.entityListToResponseListDto(chapter))
+                                .collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
 

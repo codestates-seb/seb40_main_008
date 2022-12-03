@@ -138,6 +138,8 @@ public class ContentsDto {
     public static class ContentsId {
 
         private Long contentsId;
+        private List<ChapterDto.ResponseListDto> chapterList;
+
     }
 
     @Getter

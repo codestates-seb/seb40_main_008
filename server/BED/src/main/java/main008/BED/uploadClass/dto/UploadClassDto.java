@@ -54,6 +54,13 @@ public class UploadClassDto {
         private String title;
     }
 
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResponseListDtoInChapter {
+
+        private Long uploadClassId;
+    }
 
 
 }
