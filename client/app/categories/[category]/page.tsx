@@ -55,7 +55,7 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 		if (category.includes('-')) {
 			contentsList = await getCategoryContents(categoryName, sortingMethod);
 		} else {
-			contentsList = await getCategoryContents(category, 'likesCount');
+			contentsList = await getCategoryContents(category, 'popular');
 		}
 	}
 
