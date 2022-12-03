@@ -25,6 +25,7 @@ const Curriculumdelete = (props: { url: string; Id: number }) => {
           border: "0",
           outline: "0",
           color: "white",
+          fontSize: "16px",
           background: "transparent",
           marginLeft: "5px",
         }}

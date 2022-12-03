@@ -23,6 +23,7 @@ const UploadChapterPage = () => {
 
   const router = useRouter();
   console.log("썸네일", thumbnail);
+
   const queryChapter = {
     thumbnail: thumbnail,
     chapterOrder: chapterOrder,
@@ -57,12 +58,10 @@ const UploadChapterPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(JSON.stringify(values, null, 2));
+    //alert(JSON.stringify(values, null, 2));
 
     formData.append("chapterOrder", values.chapterOrder);
     formData.append("title", values.title);
-
-    console.log("sdadasdasdsadsadads", contentId);
 
     if (query !== "edit") {
       fetch(`https://pioneroroom.com/auth/contents/chapter/${contentId}`, {
@@ -113,6 +112,10 @@ const UploadChapterPage = () => {
     formData.delete("thumbnail");
     setFileInfoData(fileInfo);
   };
+
+  useEffect(() => {
+    console.log("밸루", values);
+  }, []);
 
   // how to make File from url
 
