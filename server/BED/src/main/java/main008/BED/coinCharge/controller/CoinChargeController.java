@@ -16,12 +16,14 @@ import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.service.UserPageService;
 import main008.BED.users.entity.Users;
 import main008.BED.users.service.UsersService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 
@@ -62,9 +64,12 @@ public class CoinChargeController {
     @GetMapping("/coincharge/success")
     public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken) {
 
-        CoinChargeDetailDto.KakaoApproveResponse approveResponse = coinChargeService.ApproveResponse(pgToken);
+        coinChargeService.ApproveResponse(pgToken);
 
-        return new ResponseEntity<>(new SingleResponseDto<>(approveResponse), HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("https://class4989.one/mypage"));
+
+        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
     /**

@@ -14,7 +14,8 @@ public interface CoinChargeDetailRepository extends JpaRepository<CoinChargeDeta
 
     @Query(value =
             "SELECT * FROM coin_charge_detail c " +
-            "WHERE c.coin_charge_id = :coin_charge_id"
+            "WHERE c.coin_charge_id = :coin_charge_id " +
+            "AND c.approved_at IS NOT NULL"
             , nativeQuery = true)
     Optional<List<CoinChargeDetail>> findByCoinCharge(Long coin_charge_id);
 
