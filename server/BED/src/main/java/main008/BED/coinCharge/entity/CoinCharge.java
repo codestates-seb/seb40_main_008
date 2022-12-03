@@ -33,8 +33,7 @@ public class CoinCharge {
         FIVE(5000),
         TEN(10000),
         TWENTY(20000),
-        FIFTY(50000),
-        TEMP(1000000);
+        FIFTY(50000);
 
         @Getter
         private final int amount;
