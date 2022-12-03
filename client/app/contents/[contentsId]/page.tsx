@@ -34,6 +34,10 @@ const getCurriculum = async (
 
 const ContentsIdPage = async ({ params }: any) => {
 	const contentInfo = await getContentInfo(params.contentsId);
+	console.log(
+		'🚀 ~ file: page.tsx:37 ~ ContentsIdPage ~ contentInfo',
+		contentInfo
+	);
 	const curriculumInfo = await getCurriculum(params.contentsId);
 	return (
 		<>
