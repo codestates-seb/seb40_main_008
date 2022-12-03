@@ -33,17 +33,15 @@ const MyPage = async () => {
 				<BaseNavbar />
 				<div className={styles.mypageWrapper}>
 					<div className={styles.myinfo}>
-						<Link href={"/editmypage"}>
-							<Image
-								style={{ borderRadius: '50%' }}
-								className={styles.myimg}
-								alt="myimg"
-								src={userInfo.profileImage}
-								width={70}
-								height={70}
-							/>
-							{userInfo.userName} &#62;
-						</Link>
+						<Image
+							style={{ borderRadius: '50%' }}
+							className={styles.myimg}
+							alt="myimg"
+							src={userInfo.profileImage}
+							width={70}
+							height={70}
+						/>
+						{userInfo.userName}
 						<h3 className={styles.id}>{userInfo.email}</h3>
 
 						<div className={styles.Wrapper}>
