@@ -26,7 +26,7 @@ const MyclassTab = ({ takingClasses, wishClasses }: MyclassTabProps) => {
                 </>,
                 <>
                     {
-                        takingClasses.length === 0 ?
+                        wishClasses.length === 0 ?
                             (<div className={styles.tabpannel}>찜한 클래스가 없습니다.</div>)
                             :
                             <HomeClassesSection contentsList={wishClasses} />
