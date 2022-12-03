@@ -33,9 +33,11 @@
 		"react-router-dom": "^6.4.3",
 		"react-tabs": "^5.1.0",
 		"sharp": "^0.31.2",
-		"typescript": "4.8.4"
+		"typescript": "4.8.4",
+		"video-react": "^0.16.0"
 	},
 	"devDependencies": {
+		"@types/video-react": "^0.15.1",
 		"eslint-config-next": "^13.0.2"
 	}
 }
