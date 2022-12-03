@@ -3,6 +3,7 @@ import BaseNavbar from '../../../../../components/BaseNavBar/BaseNavbar';
 import OrangeButton from '../../../../../components/Buttons/orangeButton';
 import PageHeader from '../../../../../components/Text/PageHeader';
 import verifyLogin from '../../../../../utils/VerifyLogin';
+import PurchaseConfirmButton from './PurchaseConfirmButton';
 import UpperTextContainer from './UpperTextContainer';
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
 const PurchaseStringPage = async ({ searchParams }: Props) => {
 	const { contentId, price, title, thumbnail, tutorName } = searchParams;
 	const userInfo = await verifyLogin();
+	const remainingAmount = getRemainingCoin(userInfo?.totalCoin, price);
 	return (
 		<>
 			<BaseNavbar />
@@ -96,7 +98,7 @@ const PurchaseStringPage = async ({ searchParams }: Props) => {
 						}}
 					>
 						<h2>구매 후 잔액</h2>
-						<h2>{getRemainingCoin(userInfo?.totalCoin, price)}</h2>
+						<h2>{remainingAmount}</h2>
 					</div>
 				</div>
 				<div
@@ -123,6 +125,10 @@ const PurchaseStringPage = async ({ searchParams }: Props) => {
 							잔액이 마이너스일 경우, 충전하기
 						</p>
 					</div>
+					<PurchaseConfirmButton
+						contentId={contentId}
+						remainingAmount={remainingAmount}
+					/>
 				</div>
 			</div>
 		</>

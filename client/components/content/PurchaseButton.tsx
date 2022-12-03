@@ -8,11 +8,11 @@ import { IContent } from '../../types/contents';
 
 interface Props {
 	contentInfo: IContent;
+	contentId: number;
 }
 
-const PurchaseButton = ({ contentInfo }: Props) => {
+const PurchaseButton = ({ contentInfo, contentId }: Props) => {
 	const router = useRouter();
-	const contentId = getLastDynamicRouteId();
 	const queryString = `?contentId=${contentId}&price=${contentInfo?.price}&title=${contentInfo?.title}&thumbnail=${contentInfo?.thumbnail}&tutorName=${contentInfo?.tutorName}`;
 
 	const handleToPurchase = async () => {
