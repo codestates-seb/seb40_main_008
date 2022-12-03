@@ -1,11 +1,12 @@
 .Wrapper {
+  margin: 60px auto 20px auto;
   padding: 20px;
 }
 .thumbnail {
   position: relative;
   width: 100%;
   height: 230px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   margin-bottom: 40px;
 }
 

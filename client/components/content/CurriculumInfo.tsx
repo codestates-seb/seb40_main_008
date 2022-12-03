@@ -26,13 +26,13 @@ const CurriculumInfo = ({
         curriculumInfo.map((e, index) => (
           <div key={index} className={styles.Wrapper}>
             <div className={styles.thumbnail}>
-              <Image src={e.thumbnail} alt={e.title} fill={true} />
+              <Image src={e.thumbnail} alt={e.title} fill={true} style={{ objectFit: 'cover' }} />
             </div>
             <div className={styles.chapterWrapper}>
               <div className={styles.chapterTitle}>
-                <h4>{e.chapterOrder}</h4>
+                <p style={{ fontSize: '15px', fontWeight: 'bold' }}>{e.chapterOrder}</p>
                 <div className={styles.chapter}>
-                  <h3>{e.title}</h3>
+                  <p style={{ fontSize: '22px', fontWeight: 'bold' }}>{e.title}</p>
                   <span>
                     {role == "creator" ? (
                       <>

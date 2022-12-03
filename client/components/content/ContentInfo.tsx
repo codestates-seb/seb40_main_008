@@ -62,19 +62,15 @@ const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
       </div>
       <div className={styles.InfoWrapper}>
         <div className={styles.Info}>
-          <div>
-            <h4>
-              {contentInfo?.categories} &nbsp; {contentInfo?.tutorName}
-            </h4>
-          </div>
+          {contentInfo?.categories} &nbsp; {contentInfo?.tutorName}
           {getIconButton(contentInfo?.role)}
         </div>
 
         <div className={styles.classWrapper}>
           <div className={styles.classtitle}>
-            <h2>{contentInfo?.title}</h2>
+            {contentInfo?.title}
           </div>
-          <h2>{contentInfo?.price} ₩</h2>
+          <span style={{ fontSize: "20px" }}>₩ {contentInfo?.price}</span>
         </div>
         <StaticStars grade={contentInfo?.grade || 0} />
 

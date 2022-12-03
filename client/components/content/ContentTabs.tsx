@@ -26,7 +26,7 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
                   padding: "20px",
                   height: "100%",
                   border: "1px solid white",
-                  margin: "20px auto",
+                  margin: "60px auto 20px auto",
                 }}
               >
                 {contentInfo?.details}
@@ -43,7 +43,7 @@ const ContentTabs = ({ contentInfo, curriculumInfo }: ContentTabsProps) => {
                   padding: "20px",
                   height: "100%",
                   border: "1px solid white",
-                  margin: "20px auto",
+                  margin: "60px auto 20px auto",
                 }}
               >
                 {contentInfo?.tutorDetail}

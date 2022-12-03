@@ -14,7 +14,6 @@ const StaticStars = ({ grade }: Props) => {
 					display: 'flex',
 					flexDirection: 'column',
 					width: '100%',
-					border: '1px solid white',
 				}}
 			>
 				<div
@@ -29,7 +28,7 @@ const StaticStars = ({ grade }: Props) => {
 						// count={grade || 0}
 						count={5}
 						value={grade || 0}
-						size={24}
+						size={18}
 						onChange={(e: number) => alert(e)}
 						isHalf={false}
 						activeColor="white"
@@ -38,6 +37,7 @@ const StaticStars = ({ grade }: Props) => {
 					/>
 					<p
 						style={{
+							fontSize: '12px',
 							marginLeft: '10px',
 						}}
 					>
