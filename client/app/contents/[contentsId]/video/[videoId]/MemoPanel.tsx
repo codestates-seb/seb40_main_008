@@ -2,6 +2,7 @@
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { BookmarkInfo } from '../../../../../types/videoPage/video';
@@ -15,7 +16,7 @@ interface Props {
 
 const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
 	const [memo, setMemo] = useState('');
-
+	const router = useRouter();
 	const handleSubmit = (time: string) => {
 		const token = getCookie('accessToken');
 		fetch(`https://pioneroroom.com/auth/bookmark/${uploadClassId}`, {
@@ -28,6 +29,9 @@ const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
 				memo: memo,
 				timeLine: time,
 			}),
+		}).then(() => {
+			router.refresh();
+			setMemo('');
 		});
 	};
 

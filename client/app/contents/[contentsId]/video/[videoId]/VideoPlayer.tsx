@@ -36,7 +36,6 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 
 	const handleProgress = (e: ProgressEvent) => {
 		const { playedSeconds } = e;
-		console.log('🚀 ~ file: VideoPlayer.tsx:40 ~ handleProgress ~ e', e);
 		const minutes = Math.floor(playedSeconds / 60);
 		const seconds = Math.floor(playedSeconds % 60);
 		const secondsString = seconds < 10 ? `0${seconds}` : seconds;
