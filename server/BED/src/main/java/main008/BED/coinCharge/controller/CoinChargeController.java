@@ -10,8 +10,6 @@ import main008.BED.coinCharge.mapper.CoinChargeMapper;
 import main008.BED.coinCharge.service.CoinChargeService;
 import main008.BED.converter.StringToCoinEnum;
 import main008.BED.dto.SingleResponseDto;
-import main008.BED.exception.BusinessLogicException;
-import main008.BED.exception.ExceptionCode;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.service.UserPageService;
 import main008.BED.users.entity.Users;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.List;
 
@@ -62,36 +61,45 @@ public class CoinChargeController {
      * 결제성공
      */
     @GetMapping("/coincharge/success")
-    public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken) {
+    public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken) throws URISyntaxException {
 
         coinChargeService.ApproveResponse(pgToken);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("https://class4989.one/mypage"));
+        URI redirectUri = new URI("https://class4989.one/mypage?status=success");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(redirectUri);
 
-        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
     }
 
     /**
      * 결제 진행 중 취소
      */
     @GetMapping("/coincharge/cancel")
-    public void cancel() {
+    public ResponseEntity cancel() throws URISyntaxException {
 
         coinChargeService.deleteDetail();
 
-        throw new BusinessLogicException(ExceptionCode.PAY_CANCEL);
+        URI redirectUri = new URI("https://class4989.one/mypage?status=cancel");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(redirectUri);
+
+        return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
     }
 
     /**
      * 결제 실패
      */
     @GetMapping("/coincharge/fail")
-    public void fail() {
+    public ResponseEntity fail() throws URISyntaxException {
 
         coinChargeService.deleteDetail();
 
-        throw new BusinessLogicException(ExceptionCode.PAY_FAILED);
+        URI redirectUri = new URI("https://class4989.one/mypage?status=failure");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(redirectUri);
+
+        return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
     }
 
     /**
