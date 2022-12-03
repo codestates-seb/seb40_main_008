@@ -35,6 +35,7 @@ const VideoIdPage = async ({
 }: VideoIdPageProps) => {
 	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(contentsId, videoId);
+	console.log('🚀 ~ file: page.tsx:38 ~ data', data);
 
 	return (
 		<VideoPageSection

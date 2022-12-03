@@ -12,6 +12,7 @@ const VideoPageCurriculumPanel = ({
 	curriculumInfo,
 	contentsId,
 }: CurriculumProps) => {
+	if (!curriculumInfo) return null;
 	return (
 		<section className={styles.container}>
 			{curriculumInfo.map((el, idx) => {

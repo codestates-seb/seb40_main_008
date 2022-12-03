@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 import { OnProgressProps } from 'react-player/base';
 import { useHasWindow } from '../../../../../utils/hooks/useHasWindow';
 import styles from './VideoPage.module.css';
-import { Player, ControlBar } from 'video-react';
+import { Player, ControlBar, PlayToggle } from 'video-react';
 import './video.css';
 interface VideoPlayerProps {
 	url: string;
@@ -13,6 +13,7 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
+	console.log('🚀 ~ file: VideoPlayer.tsx:16 ~ VideoPlayer ~ url', url);
 	const hasWindow = useHasWindow();
 
 	if (!hasWindow) {
@@ -36,44 +37,47 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 		setTime(`${minutesString}:${secondsString}`);
 	};
 
+	// return (
+	// 	<Player
+	// 		ref={videoRef}
+	// 		fluid={false}
+	// 		autoPlay
+	// 		muted={false}
+	// 		preload="auto"
+	// 		src={url}
+	// 		height={'100%'}
+	// 		width={'100%'}
+	// 	>
+	// 		<ControlBar
+	// 			autoHide={false}
+	// 			// disableDefaultControls={true}
+	// 			className="my-class"
+	// 		>
+	// 			<PlayToggle />
+	// 		</ControlBar>
+	// 	</Player>
+	// );
+
 	return (
 		<div
 			style={{
 				border: '1px solid white',
-				width: '100%',
-				height: '360px',
 			}}
 		>
-			<Player
-				playsInline={true}
+			<ReactPlayer
 				ref={videoRef}
-				fluid={false}
-				height={'100%'}
-				autoPlay={true}
-				muted={false}
-				preload="auto"
-				src={url}
-				width={'100%'}
-			>
-				<ControlBar autoHide={false} />
-			</Player>
+				url={url}
+				muted={true}
+				controls={true}
+				playing={true}
+				className={styles.videoPlayer}
+				width="100%"
+				height="360px"
+				progressInterval={1000}
+				onProgress={handleProgress}
+			/>
 		</div>
 	);
-
-	// return (
-	// 	<ReactPlayer
-	// 		ref={videoRef}
-	// 		url={url}
-	// 		muted={true}
-	// 		controls={true}
-	// 		playing={true}
-	// 		className={styles.videoPlayer}
-	// 		width="100%"
-	// 		height="360px"
-	// 		progressInterval={1000}
-	// 		onProgress={handleProgress}
-	// 	/>
-	// );
 };
 
 export default VideoPlayer;
