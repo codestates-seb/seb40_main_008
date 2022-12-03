@@ -20,7 +20,7 @@ import { SignOut } from '../../components/Buttons/SignOut';
 const MyPage = async () => {
 	// const session = useSession();
 	const userInfo = await verifyLogin();
-	console.log('🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo', userInfo);
+	// console.log("🚀 ~ file: page.tsx:22 ~ MyPage ~ userInfo", userInfo);
 
 	const session = {
 		status: 'authenticated',
@@ -33,63 +33,48 @@ const MyPage = async () => {
 				<BaseNavbar />
 				<div className={styles.mypageWrapper}>
 					<div className={styles.myinfo}>
-						<Link href={'/editmypage'}>
-							<Image
-								className={styles.myimg}
-								alt="myimg"
-								src="/img/myimg.png"
-								width={70}
-								height={70}
-							/>
-							{userInfo.userName} &#62;
-						</Link>
+						<Image
+							style={{ borderRadius: '50%' }}
+							className={styles.myimg}
+							alt="myimg"
+							src={userInfo.profileImage}
+							width={70}
+							height={70}
+						/>
+						{userInfo.userName}
 						<h3 className={styles.id}>{userInfo.email}</h3>
 
 						<div className={styles.Wrapper}>
-							<FontAwesomeIcon
-								icon={faCoins}
-								width={24}
-								className={styles.coinfont}
-							/>
-							<h3 className={styles.mycoin}>코인갯수</h3>
+							<FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
+							<h3 className={styles.mycoin}>보유 코인: {userInfo.totalCoin}</h3>
 						</div>
 						<hr className={styles.line}></hr>
 					</div>
+
 					<div className={styles.mycorner}>
 						<div className={styles.CourseWrapper}>
-							<FontAwesomeIcon
-								icon={faCoins}
-								width={24}
-								className={styles.fontimg}
-							/>
+							<FontAwesomeIcon icon={faCoins} width={24} className={styles.fontimg} />
 							<Link href={`/charge`}>
 								<h2 className={styles.font}>코인 충전하기</h2>
 							</Link>
 						</div>
 						<div className={styles.CourseWrapper}>
-							<FontAwesomeIcon
-								icon={faPencil}
-								width={24}
-								className={styles.fontimg}
-							/>
-							<Link href={`/mypage/uploadclass`}>
+							<FontAwesomeIcon icon={faPencil} width={24} className={styles.fontimg} />
+							<Link href={`/myupload`}>
 								<h2 className={styles.font}>내가 올린 클래스</h2>
 							</Link>
 						</div>
 
 						<div className={styles.CourseWrapper}>
-							<FontAwesomeIcon
-								icon={faPenToSquare}
-								width={24}
-								className={styles.fontimg}
-							/>
+							<FontAwesomeIcon icon={faPenToSquare} width={24} className={styles.fontimg} />
 							<Link href={`/upload`}>
 								<h2 className={styles.font}>강좌 개설하기</h2>
 							</Link>
 						</div>
 					</div>
-				</div>
+				</div >
 				<SignOut />
+
 			</>
 		);
 	else {

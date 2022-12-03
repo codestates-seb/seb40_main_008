@@ -40,9 +40,8 @@ const CarouselImageWithText = ({
 					style={{
 						height: '100px',
 						width: '260px',
-						// border: "1px solid red",
 						position: 'absolute',
-						padding: '0 20px',
+						padding: '30px 20px 0px 20px',
 						fontWeight: 'bold',
 						bottom: 70,
 					}}

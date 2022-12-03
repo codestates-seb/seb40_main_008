@@ -24,9 +24,7 @@ const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 
 const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 	try {
-		const response = await fetch(
-			'https://run.mocky.io/v3/8b2e18b5-ed87-4550-8985-191aff20c160'
-		);
+		const response = await fetch('https://run.mocky.io/v3/bdbb90d7-4820-40fe-bc66-0403c76fb6f1');
 		const { carouselInfo } = await response.json();
 		return carouselInfo;
 	} catch (error) {

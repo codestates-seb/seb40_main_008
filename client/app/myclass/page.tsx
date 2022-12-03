@@ -14,7 +14,7 @@ const getTakingClasses = async (): Promise<Array<ICategorySearchResult>> => {
 		if (!token) {
 			throw new Error('token is not defined');
 		}
-		const response = await fetch(`https://run.mocky.io/v3/a63e1d37-5ef1-4f49-ba19-d8e65cd8d7c7`, {
+		const response = await fetch(`https://pioneroroom.com/auth/myclass/takingclass`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const getWishClasses = async (): Promise<Array<ICategorySearchResult>> => {
 		if (!token) {
 			throw new Error('error');
 		}
-		const response = await fetch(`https://run.mocky.io/v3/58bcfdf3-cafe-42d2-a460-0725cee3d02f`, {
+		const response = await fetch(`https://pioneroroom.com/auth/myclass/wishclass`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

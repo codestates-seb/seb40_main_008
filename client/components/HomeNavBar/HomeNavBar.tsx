@@ -16,6 +16,7 @@ interface HomeNavBarProps {
 
 const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
   const { show } = useScrollBar();
+  const myprofileImg = userInfo?.profileImage || '/img/myimg.png';
 
   const scrollTopBtn = () => {
     if (typeof window !== "undefined") {
@@ -49,9 +50,10 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
                 <Image
                   className="myimg"
                   alt="myimg"
-                  src="/img/myimg.png"
+                  src={myprofileImg}
                   width={35}
                   height={35}
+                  style={{ borderRadius: "50%" }}
                 />
               </Link>
             ) : (
@@ -75,7 +77,7 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
                 <Image
                   className="myimg"
                   alt="myimg"
-                  src="/img/myimg.png"
+                  src={myprofileImg}
                   width={35}
                   height={35}
                 />
@@ -91,5 +93,4 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
     </>
   );
 };
-
 export default HomeNavBar;

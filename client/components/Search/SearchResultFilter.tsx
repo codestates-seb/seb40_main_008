@@ -29,7 +29,7 @@ const SearchResultFilter = (params: any) => {
                 className={styles.selectzone}
                 onChange={(e) => handleSortChange(e, category, router)}
             >
-                <option value="likesCount" className={styles.options}>
+                <option value="popular" className={styles.options}>
                     인기순
                 </option>
                 <option value="newest" className={styles.options}>
