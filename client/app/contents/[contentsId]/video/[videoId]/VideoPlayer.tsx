@@ -1,11 +1,18 @@
 'use client';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { OnProgressProps } from 'react-player/base';
+// import { OnProgressProps } from 'react-player/base';
 import { useHasWindow } from '../../../../../utils/hooks/useHasWindow';
 import styles from './VideoPage.module.css';
 import { Player, ControlBar, PlayToggle } from 'video-react';
-import './video.css';
+
+interface ProgressEvent {
+	played: number;
+	playedSeconds: number;
+	loaded: number;
+	loadedSeconds: number;
+}
+
 interface VideoPlayerProps {
 	url: string;
 	videoRef: any;
@@ -13,7 +20,6 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
-	console.log('🚀 ~ file: VideoPlayer.tsx:16 ~ VideoPlayer ~ url', url);
 	const hasWindow = useHasWindow();
 
 	if (!hasWindow) {
@@ -28,8 +34,9 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 		);
 	}
 
-	const handleProgress = (e: OnProgressProps) => {
+	const handleProgress = (e: ProgressEvent) => {
 		const { playedSeconds } = e;
+		console.log('🚀 ~ file: VideoPlayer.tsx:40 ~ handleProgress ~ e', e);
 		const minutes = Math.floor(playedSeconds / 60);
 		const seconds = Math.floor(playedSeconds % 60);
 		const secondsString = seconds < 10 ? `0${seconds}` : seconds;
@@ -37,46 +44,17 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 		setTime(`${minutesString}:${secondsString}`);
 	};
 
-	// return (
-	// 	<Player
-	// 		ref={videoRef}
-	// 		fluid={false}
-	// 		autoPlay
-	// 		muted={false}
-	// 		preload="auto"
-	// 		src={url}
-	// 		height={'100%'}
-	// 		width={'100%'}
-	// 	>
-	// 		<ControlBar
-	// 			autoHide={false}
-	// 			// disableDefaultControls={true}
-	// 			className="my-class"
-	// 		>
-	// 			<PlayToggle />
-	// 		</ControlBar>
-	// 	</Player>
-	// );
-
 	return (
-		<div
-			style={{
-				border: '1px solid white',
-			}}
-		>
-			<ReactPlayer
-				ref={videoRef}
-				url={url}
-				muted={true}
-				controls={true}
-				playing={true}
-				className={styles.videoPlayer}
-				width="100%"
-				height="360px"
-				progressInterval={1000}
-				onProgress={handleProgress}
-			/>
-		</div>
+		<ReactPlayer
+			ref={videoRef}
+			url={url}
+			muted={true}
+			onProgress={handleProgress}
+			controls={true}
+			playing={true}
+			width="100%"
+			height="360px"
+		/>
 	);
 };
 
