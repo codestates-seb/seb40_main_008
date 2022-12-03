@@ -4,14 +4,16 @@ import styles from "./ChargeCoin.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import OrangeButton from "../../components/Buttons/orangeButton";
+import verifyLogin from "../../utils/VerifyLogin";
 
-const ChargeCoin = () => {
+const ChargeCoin = async () => {
+  const userInfo = await verifyLogin();
   return (
     <>
       <BaseNavbar />
       <div className={styles.TitleWrapper}>
         <div style={{ marginBottom: "20px", fontSize: "26px", fontWeight: "bold" }}>코인 충전</div>
-        <div style={{ fontSize: "18px", fontWeight: "bold" }}>보유 코인 원</div>
+        <div style={{ fontSize: "18px" }}>보유 코인 <span style={{ fontSize: "18px", marginLeft: "20px" }}>{userInfo?.totalCoin}원</span></div>
       </div>
 
       <div className={styles.ChargeWrapper}>
