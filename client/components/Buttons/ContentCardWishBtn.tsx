@@ -14,7 +14,7 @@ export const ContentCardWishBtn = (props: ContentCardWishProps) => {
   const [wish, setWish] = useState(false);
 
   const handleWishCheck = () => {
-    setWish((prev) => !prev);
+    setWish(!wish);
   };
 
   useEffect(() => {
@@ -30,14 +30,13 @@ export const ContentCardWishBtn = (props: ContentCardWishProps) => {
       .then((data) => {
         console.log("성공", data);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }, [wish]);
 
   return (
     <>
       <button onClick={handleWishCheck} className={styles.zzimbtn}>
         <FontAwesomeIcon
-          color="red"
           width={24}
           icon={faCartShopping}
           className={`${wish ? styles.icon : styles.clickicon}`}

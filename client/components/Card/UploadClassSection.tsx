@@ -17,10 +17,9 @@ interface HomeContentProps {
 const UploadClassSection = ({ contentsList }: HomeContentProps) => {
   return (
     <div className={styles.myuploadclassWrapper}>
-
-      {contentsList.length === 0 ?
+      {contentsList.length === 0 ? (
         <div className={styles.noclassWrapper}>내가올린 클래스가 없습니다.</div>
-        :
+      ) : (
         contentsList.map((e, index) => (
           <div key={index}>
             <Link href={`/contents/${e.contentsId}`}>
@@ -41,9 +40,11 @@ const UploadClassSection = ({ contentsList }: HomeContentProps) => {
             </Link>
 
             <div className={styles.classinfoWrapper_line1}>
-              <div className={styles.classtitle}>
-                {titleLengthFormatter(e.title)}
-              </div>
+              <Link href={`/contents/${e.contentsId}`}>
+                <div className={styles.classtitle}>
+                  {titleLengthFormatter(e.title)}
+                </div>
+              </Link>
               <div className={styles.classinfoWrapper_line2}>
                 <span className={styles.category_tutor}>
                   {e.categories} / {e.users.userName}
@@ -51,20 +52,23 @@ const UploadClassSection = ({ contentsList }: HomeContentProps) => {
               </div>
               <div className={styles.classinfoWrapper_line3}>
                 <span className={styles.btnWrapper}>
-                  {/* <Link href={{
-                        pathname: "/upload",
-                        query:{
-                          slug:"edit",
-                          title: e.title,
-                          Categories: e.categories,
-                          details: 
-                          tutorDetail:
-                          thumbnail:
-                          price:
-
-                        }
-                  }}> */}
-                  <button className={styles.btn}>수정</button>
+                  <Link
+                    href={{
+                      pathname: "/upload",
+                      query: {
+                        slug: "edit",
+                        title: e.title,
+                        contentsId: e.contentsId,
+                        Categories: e.categories,
+                        details: e.details,
+                        tutorDetail: e.tutorDetail,
+                        thumbnail: e.thumbnail,
+                        price: e.price,
+                      },
+                    }}
+                  >
+                    수정
+                  </Link>
                   {/* </Link> */}
                   <Curriculumdelete
                     url={`https://pioneroroom.com/auth/contents/`}
@@ -75,7 +79,7 @@ const UploadClassSection = ({ contentsList }: HomeContentProps) => {
             </div>
           </div>
         ))
-      }
+      )}
     </div>
   );
 };

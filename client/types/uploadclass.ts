@@ -1,12 +1,12 @@
 import { type } from "os";
 
 export interface UploadClassType {
-  title: string;
-  categories: string;
-  details: string;
-  tutorDetail: string;
+  title: any;
+  categories: any;
+  details: any;
+  tutorDetail: any;
   thumbnail: any;
-  price: string;
+  price: any;
 }
 
 export const initialClass = {
