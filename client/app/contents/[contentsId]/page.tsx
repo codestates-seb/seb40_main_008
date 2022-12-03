@@ -65,7 +65,7 @@ export async function generateStaticParams() {
 
 export default ContentsIdPage;
 function getUploadClassId(curriculumInfo: ICurriculumContent[]) {
-  return curriculumInfo[0]
+  return curriculumInfo[0]?.uploadClassList[0]
     ? curriculumInfo[0].uploadClassList[0].uploadClassId
     : null;
 }

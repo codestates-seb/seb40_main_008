@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 import { OnProgressProps } from 'react-player/base';
 import { useHasWindow } from '../../../../../utils/hooks/useHasWindow';
 import styles from './VideoPage.module.css';
+import { Player } from 'video-react';
 interface VideoPlayerProps {
 	url: string;
 	videoRef: any;
@@ -33,6 +34,8 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 		const minutesString = minutes < 10 ? `0${minutes}` : minutes;
 		setTime(`${minutesString}:${secondsString}`);
 	};
+
+	return <Player src={url} ref={videoRef} />;
 
 	return (
 		<ReactPlayer
