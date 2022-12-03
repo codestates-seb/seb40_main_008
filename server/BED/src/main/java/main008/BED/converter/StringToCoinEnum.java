@@ -9,6 +9,6 @@ public class StringToCoinEnum implements Converter<String, CoinCharge.ChargeAmou
 
     @Override
     public CoinCharge.ChargeAmount convert(String source) {
-        return CoinCharge.ChargeAmount.valueOf(source.toUpperCase());
+        return CoinCharge.ChargeAmount.valueOf(source);
     }
 }
