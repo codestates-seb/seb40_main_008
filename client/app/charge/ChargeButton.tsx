@@ -1,6 +1,5 @@
 'use client';
 import { getCookie } from 'cookies-next';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import styles from './ChargeCoin.module.css';
 interface Props {
@@ -8,7 +7,6 @@ interface Props {
 }
 
 const ChargeButton = ({ amount }: Props) => {
-	const router = useRouter();
 	const handleCharge = async () => {
 		let formData = new FormData();
 		formData.append('chargeAmount', amount);

@@ -1,10 +1,12 @@
+const { truncate } = require('fs');
+
 /** @type {import('next').NextConfig} */
 const withPwa = require('next-pwa')({
 	dest: 'public',
 });
 
 const settings = {
-	reactStrictMode: true,
+	reactStrictMode: truncate,
 	swcMinify: true,
 	experimental: { appDir: true },
 	// fontLoaders is not a proper key
