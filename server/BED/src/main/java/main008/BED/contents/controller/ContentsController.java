@@ -134,8 +134,6 @@ public class ContentsController {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
 
-        Users user = usersService.findVerifiedUserByEmail(principal.getName());
-
         List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal); // User 본인의 메모만 전송
 
         ContentsDto.ResponseForStream responseForStream =
@@ -145,7 +143,6 @@ public class ContentsController {
                         reviewMapper, bookmarkMapper,
                         bookmarkList, curriculumInStream.getCurriculumInfo());
 
-
         return new ResponseEntity<>(responseForStream, HttpStatus.OK);
     }
 
@@ -153,7 +150,7 @@ public class ContentsController {
      * 카테고리 조회
      */
     @GetMapping("/search") // API에 대문자는 들어가면 안됨,,,, RESTful API
-    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories, // 쿼리 스트링은 대문자 가능..?
+    public ResponseEntity getCategories(@RequestParam("categories") Contents.Categories categories,
                                         @RequestParam(name = "sort", required = false, defaultValue = "popular") String sort) {
 
         List<Contents> contents = contentsService.findContentsByCategory(categories, sort);
@@ -264,13 +261,13 @@ public class ContentsController {
         Contents.Categories category = stringToCategoryEnum.convert(categories);
 
         PaymentDto.Patch paymentPatch = new PaymentDto.Patch(Integer.parseInt(price));
-
         Payment payment = paymentMapper.patchToEntity(paymentPatch);
 
-        ContentsDto.Patch patch = new ContentsDto.Patch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
+        ContentsDto.Patch patch =
+                contentsMapper.reqToContentsPatch(title, category, details, tutorDetail, thumbnailUrl, fileKey);
 
         contentsService.updateContents(contentsId, principal, contentsMapper.patchToContents(patch), payment);
 
-        return new ResponseEntity("The Content is updated.", HttpStatus.OK);
+        return new ResponseEntity<>("The Content is updated.", HttpStatus.OK);
     }
 }

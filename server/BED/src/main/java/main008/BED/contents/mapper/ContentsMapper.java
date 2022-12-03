@@ -25,6 +25,9 @@ public interface ContentsMapper {
     ContentsDto.Post reqToContentsPost(String title, Contents.Categories categories,
                                        String details, String tutorDetail, String thumbnail, String fileKey);
 
+    ContentsDto.Patch reqToContentsPatch(String title, Contents.Categories categories,
+                                       String details, String tutorDetail, String thumbnail, String fileKey);
+
     Contents postToContents(ContentsDto.Post post);
 
     Contents patchToContents(ContentsDto.Patch patch);

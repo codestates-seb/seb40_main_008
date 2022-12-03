@@ -94,10 +94,13 @@ public class CoinChargeController {
 
         UserPage userPage = userPageService.findUserPage(users.getUsersId());
 
-        List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto = coinChargeDetailMapper.entityToResponses(
-                coinChargeService.getCoinChargeDetail(users.getUsersId()));
+        List<CoinChargeDetailResponseDto> coinChargeDetailResponseDto =
+                coinChargeDetailMapper.entityToResponses(
+                        coinChargeService.getCoinChargeDetail(users.getUsersId()));
 
-        return new ResponseEntity<>(coinChargeMapper.entityToResponse(userPage, coinChargeDetailResponseDto), HttpStatus.OK);
+        return new ResponseEntity<>(
+                coinChargeMapper.entityToResponse(userPage, coinChargeDetailResponseDto)
+                , HttpStatus.OK);
     }
 
     /**
