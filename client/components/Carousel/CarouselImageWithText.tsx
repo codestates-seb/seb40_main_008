@@ -20,7 +20,6 @@ const CarouselImageWithText = ({
 			<Link href={`/${link}`}>
 				<div className={styles.radialContainer}></div>
 				<div
-					className="img-ctn"
 					style={{
 						width: '100%',
 						height: '450px',
@@ -30,12 +29,11 @@ const CarouselImageWithText = ({
 						src={src}
 						alt={title + subtitle}
 						//fill = true 를 쓰려면 상위 div가 relative
-						// width={412}
-						// height={462}
 						fill={true}
 						style={{
 							objectFit: 'cover',
 						}}
+						priority={true}
 					/>
 				</div>
 				<div
