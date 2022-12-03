@@ -35,6 +35,41 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 	};
 
 	return (
+		<nav className={styles.firstNav}>
+			<div className={styles.logowrapper}>
+				<Link href={'/categories'}>
+					<FontAwesomeIcon
+						icon={faBars}
+						width={24}
+						className={styles.font}
+					/>
+				</Link>
+
+				<button className={styles.logo} onClick={scrollTopBtn}>
+					CLASS4989
+				</button>
+			</div>
+			<div>
+				{userInfo ? (
+					<Link href={'/mypage'}>
+						<Image
+							className="myimg"
+							alt="myimg"
+							src="/img/myimg.png"
+							width={35}
+							height={35}
+						/>
+					</Link>
+				) : (
+					<Link className={styles.login} href={'/login'}>
+						Login
+					</Link>
+				)}
+			</div>
+		</nav>
+	);
+
+	return (
 		<>
 			{window && window.scrollY < 60 ? (
 				<nav className={styles.firstNav}>

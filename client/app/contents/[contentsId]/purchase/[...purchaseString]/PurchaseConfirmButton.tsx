@@ -23,11 +23,19 @@ const PurchaseConfirmButton = ({ contentId, remainingAmount }: Props) => {
 					},
 				}
 			);
-			const data = await res.json();
-			if (data.status === 200) {
+			console.log(
+				'🚀 ~ file: PurchaseConfirmButton.tsx:26 ~ handlePurchase ~ res',
+				res
+			);
+			if (res.ok) {
 				alert('결제가 완료되었습니다.');
 				router.push(`/contents/${contentId}`);
 			}
+			const data = await res.json();
+			console.log(
+				'🚀 ~ file: PurchaseConfirmButton.tsx:27 ~ handlePurchase ~ data',
+				data
+			);
 			if (data.status >= 400 && data.status < 500) {
 				alert('결제에 실패하였습니다.');
 				router.push(`/contents/${contentId}`);
