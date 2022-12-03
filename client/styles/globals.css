@@ -19,7 +19,7 @@ body {
 	max-width: var(--max-width);
 	min-width: 300px;
 	min-height: 100vh;
-	margin-bottom: 50px;
+  padding-bottom: 50px;
 	margin: 0 auto;
 }
 h1,
