@@ -6,8 +6,6 @@ import main008.BED.chapter.dto.ChapterDto;
 import main008.BED.chapter.entity.Chapter;
 import main008.BED.chapter.mapper.ChapterMapper;
 import main008.BED.chapter.service.ChapterService;
-import main008.BED.contents.service.ContentsService;
-import main008.BED.uploadClass.service.UploadClassService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

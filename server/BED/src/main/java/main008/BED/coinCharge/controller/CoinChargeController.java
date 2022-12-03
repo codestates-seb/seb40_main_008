@@ -7,6 +7,7 @@ import main008.BED.coinCharge.dto.CoinChargeDto;
 import main008.BED.coinCharge.mapper.CoinChargeDetailMapper;
 import main008.BED.coinCharge.mapper.CoinChargeMapper;
 import main008.BED.coinCharge.service.CoinChargeService;
+import main008.BED.converter.StringToCoinEnum;
 import main008.BED.dto.SingleResponseDto;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
@@ -35,15 +36,18 @@ public class CoinChargeController {
     private final CoinChargeMapper coinChargeMapper;
     private final UserPageService userPageService;
     private final UsersService usersService;
+    private final StringToCoinEnum stringToCoinEnum;
 
     /**
      * 코인 충전
-     * @param post
+     * @param
      * @return
      */
     @PostMapping("/auth/coincharge/ready")
-    public ResponseEntity readyToCoinCharge(@RequestBody CoinChargeDto.Post post,
+    public ResponseEntity readyToCoinCharge(@RequestBody String chargeAmount,
                                             Principal principal) {
+
+        CoinChargeDto.Post post = new CoinChargeDto.Post(stringToCoinEnum.convert(chargeAmount));
 
         CoinChargeDetailDto.KakaoReadyResponse readyToPay =
                 coinChargeService.kakaoPayReady(principal, coinChargeMapper.postToEntity(post));
