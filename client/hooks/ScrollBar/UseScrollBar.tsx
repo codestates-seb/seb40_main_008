@@ -28,7 +28,7 @@ export const useScrollBar = () => {
         window.removeEventListener("scroll", controlNavbar);
       };
     }
-  }, []);
+  }, [lastScrollY]);
 
   return { show };
 };
