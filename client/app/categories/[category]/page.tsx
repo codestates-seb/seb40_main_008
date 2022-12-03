@@ -67,7 +67,7 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 			</div>
 			<div className={styles.categorydetailWrapper}>
 				{contentsList.length === 0 ?
-					<div>해당하는 강좌가 없습니다.</div>
+					<div className={styles.noclassWrapper}>해당하는 강좌가 없습니다.</div>
 					:
 					<HomeClassesSection contentsList={contentsList} />
 				}
