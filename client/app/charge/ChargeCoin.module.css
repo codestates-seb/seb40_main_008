@@ -1,32 +1,24 @@
 .TitleWrapper {
-  margin-top: 50px;
+  margin-top: 81px;
   margin-bottom: 30px;
   position: relative;
   align-items: center;
   text-align: center;
 }
 
-.line {
-  height: 0.1px;
-  width: 90%;
-  margin-top: 20px;
-  background-color: gray;
-  margin: 0 auto;
-}
-
 .ChargeWrapper {
   display: flex;
   position: relative;
-  margin-top: 20px;
+  margin-top: 90px;
   align-items: center;
   text-align: center;
   flex-direction: column;
-  margin-bottom: 35px;
+  margin-bottom: 200px;
 }
 .charge {
   display: flex;
   width: 100%;
-  padding: 30px 50px;
+  padding: 35px 80px;
   justify-content: space-between;
   align-items: center;
 }
@@ -36,18 +28,24 @@
   align-items: center;
 }
 
+.price {
+  font-size: 20px;
+}
+
 .coinfont {
   margin-right: 10px;
 }
 
 .chargeBtn {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   margin-left: 50px;
   border-radius: 5px;
   outline: 0;
   border: 0;
-  padding-top: 7px;
   color: white;
   background: transparent;
-  font-size: 22px;
+  font-size: 16px;
+  font-weight: bold;
 }

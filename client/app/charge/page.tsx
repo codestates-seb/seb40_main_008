@@ -10,41 +10,40 @@ const ChargeCoin = () => {
     <>
       <BaseNavbar />
       <div className={styles.TitleWrapper}>
-        <h1 style={{ padding: "10px" }}>코인 충전</h1>
-        <h2>보유 코인 원</h2>
+        <div style={{ marginBottom: "20px", fontSize: "26px", fontWeight: "bold" }}>코인 충전</div>
+        <div style={{ fontSize: "18px", fontWeight: "bold" }}>보유 코인 원</div>
       </div>
-      <div className={styles.line}></div>
 
       <div className={styles.ChargeWrapper}>
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
             <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
-            <h2>5000원</h2>
+            <div className={styles.price}>5,000원</div>
           </div>
-          <button className={styles.chargeBtn}> $ 충전하기 </button>
+          <button className={styles.chargeBtn}> 충전하기 </button>
         </div>
 
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
             <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
-            <h2>10000원</h2>
+            <div className={styles.price}>10,000원</div>
           </div>
-          <button className={styles.chargeBtn}> $ 충전하기 </button>
+          <button className={styles.chargeBtn}> 충전하기 </button>
         </div>
 
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
             <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
-            <h2>20000원</h2>
+            <div className={styles.price}>20,000원</div>
           </div>
-          <button className={styles.chargeBtn}> $ 충전하기 </button>
+          <button className={styles.chargeBtn}> 충전하기 </button>
         </div>
         <div className={styles.charge}>
           <div className={styles.coinwrap}>
             <FontAwesomeIcon icon={faCoins} width={24} className={styles.coinfont} />
-            <h2>50000원</h2>
+            <div className={styles.price}>50,000원</div>
           </div>
-          <button className={styles.chargeBtn}> $ 충전하기 </button>
+          <button className={styles.chargeBtn}> 충전하기 </button>
         </div>
       </div>
 
