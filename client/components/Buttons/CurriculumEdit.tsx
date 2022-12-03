@@ -22,8 +22,6 @@ const CurriculumEdit = (props: {
 		refresh: () => void
 	) => {
 		try {
-			console.log('🚀 ~ file: CurriculumEdit.tsx:38 ~ Id', Id);
-
 			const status = await fetchEditChapter(
 				url,
 				thumbnail,

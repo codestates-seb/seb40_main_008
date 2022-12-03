@@ -1,3 +1,7 @@
+.mypageWrapper {
+  margin-bottom: 150px;
+}
+
 .myinfo {
   margin-top: 60px;
   position: relative;
@@ -8,6 +12,7 @@
 .myimg {
   display: block;
   margin: 0 auto;
+  margin-bottom: 10px;
 }
 .id {
   color: gray;
@@ -41,6 +46,7 @@
 }
 
 .font {
+  font-size: 18px;
   margin-left: 10px;
 }
 

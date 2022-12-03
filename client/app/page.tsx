@@ -4,17 +4,14 @@ import { CarouselInfo } from '../types/homeScreen/carousel';
 import { ICategorySearchResult } from '../types/category_search/categorySearchType';
 import HomeCarouselSection from './HomeCarouselSection';
 import HomeClassesSection from '../components/Card/HomeClassesSection';
-import styles from './styles/page.module.css';
 import CarouselImageWithText from '../components/Carousel/CarouselImageWithText';
-import { cookies, headers } from 'next/headers';
-import getUserInfo from '../utils/helper/backendUserInfo';
 import verifyLogin from '../utils/VerifyLogin';
 
 const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 	try {
 		const response = await fetch('https://pioneroroom.com/home', {
 			next: {
-				revalidate: 60,
+				revalidate: 300,
 			},
 		});
 		const { contentsList } = await response.json();
@@ -27,7 +24,9 @@ const getClassesContents = async (): Promise<Array<ICategorySearchResult>> => {
 
 const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 	try {
-		const response = await fetch('https://pioneroroom.com/carousel');
+		const response = await fetch(
+			'https://run.mocky.io/v3/8b2e18b5-ed87-4550-8985-191aff20c160'
+		);
 		const { carouselInfo } = await response.json();
 		return carouselInfo;
 	} catch (error) {
@@ -37,9 +36,7 @@ const getCarouselInfo = async (): Promise<Array<CarouselInfo>> => {
 };
 
 const page = async () => {
-	// console.log('cookies().get(accessToken).value', cookies().get('accessToken')?.value)
 	const userInfo = await verifyLogin();
-	// console.log('🚀 ~ file: page.tsx ~ line 44 ~ page ~ userInfo', userInfo);
 	const contentsList = await getClassesContents();
 	const carouselList = await getCarouselInfo();
 
@@ -57,7 +54,6 @@ const page = async () => {
 					/>
 				))}
 			</HomeCarouselSection>
-			<div>{JSON.stringify(userInfo)}</div>
 			<HomeClassesSection contentsList={contentsList} />
 			<TabNavigator activeLink={'home'} />
 		</>

@@ -48,6 +48,7 @@ const VideoComment = ({ uploadClassId }: Props) => {
 			>
 				<ReactStars
 					count={5}
+					value={rating}
 					onChange={(e: number) => setRating(e)}
 					size={24}
 					isHalf={false}

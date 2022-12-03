@@ -8,6 +8,7 @@ import React, {
 	useCallback,
 } from 'react';
 import styles from './styles/HomeCarouselSection.module.css';
+
 interface HomeCarouselSectionProps {
 	children: any;
 }
@@ -15,7 +16,7 @@ interface HomeCarouselSectionProps {
 const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
 	const containerRef = useRef<HTMLUListElement>(null);
 	const intervalRef = useRef<any>(null);
-	const [current, setCurrent] = useState(1);
+	const [current, setCurrent] = useState(0);
 	const [translateX, setTranslateX] = useState(0);
 
 	const actionHandler = useCallback(
@@ -126,7 +127,7 @@ const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
 		if (containerRef.current) {
 			setTranslateX(containerRef.current.clientWidth * current);
 		}
-	}, []);
+	}, [current]);
 
 	return (
 		<section className={styles.carouselSection}>
@@ -152,12 +153,7 @@ const HomeCarouselSection = ({ children }: HomeCarouselSectionProps) => {
 					alignItems: 'center',
 					display: 'flex',
 				}}
-			>
-				0{current} | 0{children.length}
-				<div className={styles.progress}>
-					<div className={styles.color}></div>
-				</div>
-			</div>
+			></div>
 		</section>
 	);
 };

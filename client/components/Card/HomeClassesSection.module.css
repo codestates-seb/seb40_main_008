@@ -1,9 +1,11 @@
 .gridContainer {
   display: grid;
   /* grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); */
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(min(100%/2, max(140px, 100%/4)), 1fr)
+  grid-template-columns: 
+  repeat(
+    2, 50%
+    /* auto-fill,
+    minmax(min(100%/2, max(140px, 100%/4)), 1fr) */
   );
   /* create grid-template-columns minimum 2columns, maximum 3 columns */
 
