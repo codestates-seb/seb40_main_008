@@ -5,6 +5,7 @@ import ContentTabs from '../../../components/content/ContentTabs';
 import { IContent, ICurriculumContent } from '../../../types/contents';
 import { cookies } from 'next/headers';
 import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
+import { ILoopIDList } from '../../../types/detailedContentIdListType';
 
 const getContentInfo = async (contentsId: string): Promise<IContent> => {
 	const token = cookies().get('accessToken')?.value;
@@ -52,16 +53,16 @@ interface ContentId {
 	contentsId: number;
 }
 
-/*
 export async function generateStaticParams() {
 	const res = await fetch('https://pioneroroom.com/contents');
-	const posts: ContentId[] = await res.json();
-	const arr = posts.map((obj) => ({
-		contentsId: String(obj.contentsId),
-	}));
+	const posts: ILoopIDList[] = await res.json();
+	const arr = posts.map((post) => {
+		return {
+			contentsId: String(post.contentsId),
+		};
+	});
 	return arr;
 }
-*/
 
 export default ContentsIdPage;
 function getUploadClassId(curriculumInfo: ICurriculumContent[]) {

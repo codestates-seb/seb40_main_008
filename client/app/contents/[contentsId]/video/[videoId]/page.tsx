@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import React from 'react';
+import { ILoopIDList } from '../../../../../types/detailedContentIdListType';
 import verifyLogin from '../../../../../utils/VerifyLogin';
 import VideoPageSection from './VideoPageSection';
 
@@ -47,3 +48,26 @@ const VideoIdPage = async ({
 };
 
 export default VideoIdPage;
+
+export async function generateStaticParams(posts: ILoopIDList[]) {
+	const paramList: VideoIdPageProps['params'][] = [];
+	for (const post of posts) {
+		const paramArr: any = [];
+		if (!post.chapterList.length) continue;
+		for (const chapter of post.chapterList) {
+			if (!chapter.uploadClassList.length) continue;
+			for (const videoId of chapter.uploadClassList) {
+				paramArr.push({
+					videoId: String(videoId),
+					contentsId: String(post.contentsId),
+				});
+			}
+		}
+		paramList.push(...paramArr);
+	}
+	console.log(
+		'🚀 ~ file: page.tsx:67 ~ generateStaticParams ~ paramList',
+		paramList
+	);
+	return paramList;
+}
