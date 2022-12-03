@@ -45,11 +45,13 @@ public class CoinChargeController {
      * @return
      */
     @PostMapping("/auth/coincharge/ready")
-    public ResponseEntity readyToCoinCharge(@RequestBody CoinChargeDto.Post post,
+    public ResponseEntity readyToCoinCharge(@RequestParam("chargeAmount") String chargeAmount,
                                             Principal principal) {
 
+        CoinCharge.ChargeAmount chargeAmount1 = stringToCoinEnum.convert(chargeAmount);
+
         CoinChargeDetailDto.KakaoReadyResponse readyToPay =
-                coinChargeService.kakaoPayReady(principal, coinChargeMapper.postToEntity(post));
+                coinChargeService.kakaoPayReady(principal, coinChargeMapper.postToEntity(new CoinChargeDto.Post(chargeAmount1)));
 
         return new ResponseEntity<>(new SingleResponseDto<>(readyToPay), HttpStatus.OK);
     }
