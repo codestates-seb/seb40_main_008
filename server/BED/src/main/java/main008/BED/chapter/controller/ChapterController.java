@@ -46,45 +46,6 @@ public class ChapterController {
 
 
 
-//    /**
-//     * GET: 콘텐츠 상세화면의 커리큘럼
-//     */
-//    @GetMapping("/curriculum/{contents-id}")
-//    public ResponseEntity getCurriculumInContent(@PathVariable("contents-id") @Positive Long contentsId) {
-//        List<Chapter> chapters = contentsService.readChapterList(contentsId);
-//        List<ChapterDto.ResponseDto> responseList = chapters.stream()
-//                .map(chapter -> chapterMapper.entityToResponseDto(chapter))
-//                .collect(Collectors.toList());
-//        ChapterDto.CurriculumInContent curriculumInContent = new ChapterDto.CurriculumInContent(responseList);
-//        return new ResponseEntity(curriculumInContent, HttpStatus.OK);
-//    }
-//
-//    /**
-//     * GET: 동영상 재생화면의 커리큘럼
-//     */
-//    @GetMapping("/streaming/curriculum/{contents-id}")
-//    public ResponseEntity getCurriculumInStream(@PathVariable("contents-id") @Positive Long contentsId) {
-//        List<Chapter> chapters = contentsService.readChapterList(contentsId);
-//        List<ChapterDto.ResponseDtoWithoutThumbnail> responseDtoWithoutThumbnails = chapters.stream()
-//                .map(chapter -> chapterMapper.entityToResponseDtoWithoutThumbnail(chapter))
-//                .collect(Collectors.toList());
-//        ChapterDto.CurriculumInStream curriculumInStream = new ChapterDto.CurriculumInStream(responseDtoWithoutThumbnails);
-//        return new ResponseEntity(curriculumInStream, HttpStatus.OK);
-//    }
-//
-//    /**
-//     * GET: 하나의 Chapter 목록 리스트 (TEST 용)
-//     */
-//    @GetMapping("/chapter/{chapter-id}")
-//    public ResponseEntity getChapter(@PathVariable("chapter-id") @Positive Long chapterId) {
-//
-//        Chapter chapter = chapterService.readOne(chapterId);
-//        List<UploadClass> uploadClassList = uploadClassService.readAll();
-//        chapter.setUploadClassList(uploadClassList);
-//        ChapterDto.ResponseDto responseDto = chapterMapper.entityToResponseDto(chapter);
-//        return new ResponseEntity(responseDto, HttpStatus.OK);
-//    }
-
     /**
      * Patch: 챕터 수정
      */

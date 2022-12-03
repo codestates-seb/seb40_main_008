@@ -134,6 +134,15 @@ public class ContentsDto {
     @Getter
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ContentsId {
+
+        private Long contentsId;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
     public static class MUCResponse {
 
         private Long contentsId;

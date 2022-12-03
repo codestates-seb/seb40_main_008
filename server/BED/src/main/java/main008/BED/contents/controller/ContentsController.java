@@ -17,6 +17,7 @@ import main008.BED.converter.StringToCategoryEnum;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.PageInfo;
+import main008.BED.myClass.service.MyClassService;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
@@ -109,6 +110,7 @@ public class ContentsController {
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
                                      Principal principal) {
 
+
         Contents contents = contentsService.readContent(contentsId);
 
         ChapterDto.CurriculumInContent curriculumInContent = chapterService.readCurriculumInContent(contentsId);
@@ -131,6 +133,9 @@ public class ContentsController {
                                     @PathVariable("uploadClass-id") @Positive Long uploadClassId) {
 
         Contents contents = contentsService.readContent(contentsId);
+
+        contentsService.authorizationForPay(contents, principal); // 구매 여부 판단
+
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
 
@@ -142,6 +147,7 @@ public class ContentsController {
                         usersMapper, docsMapper,
                         reviewMapper, bookmarkMapper,
                         bookmarkList, curriculumInStream.getCurriculumInfo());
+
 
         return new ResponseEntity<>(responseForStream, HttpStatus.OK);
     }
@@ -261,6 +267,7 @@ public class ContentsController {
         Contents.Categories category = stringToCategoryEnum.convert(categories);
 
         PaymentDto.Patch paymentPatch = new PaymentDto.Patch(Integer.parseInt(price));
+
         Payment payment = paymentMapper.patchToEntity(paymentPatch);
 
         ContentsDto.Patch patch =
@@ -270,4 +277,15 @@ public class ContentsController {
 
         return new ResponseEntity<>("The Content is updated.", HttpStatus.OK);
     }
+
+    /**
+     * GET: 모든 컨텐츠 아이디 리스트 조회
+     */
+    @GetMapping("/contents")
+    public ResponseEntity getContentsIdList() {
+        List<Contents> contents = contentsService.readContentsIdList();
+        List<ContentsDto.ContentsId> contentsIds = contentsMapper.contentsToId(contents);
+        return new ResponseEntity(contentsIds, HttpStatus.OK);
+    }
+
 }
