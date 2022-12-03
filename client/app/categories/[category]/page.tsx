@@ -66,14 +66,22 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 				<SearchResultFilter category={category} />
 			</div>
 			<div className={styles.categorydetailWrapper}>
-				{contentsList.length === 0 ?
+				{contentsList.length === 0 ? (
 					<div>해당하는 강좌가 없습니다.</div>
-					:
+				) : (
 					<HomeClassesSection contentsList={contentsList} />
-				}
+				)}
 			</div>
 		</>
 	);
 };
 
 export default DetailCategoryPage;
+
+export async function generateStaticParams() {
+	return fixedCategoriesEng.map((e) => {
+		return {
+			category: e,
+		};
+	});
+}

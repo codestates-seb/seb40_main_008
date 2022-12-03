@@ -31,9 +31,8 @@ const getVideoPageContent = async (contentsId: string, videoId: string) => {
 	}
 };
 
-const VideoIdPage = async ({
-	params: { videoId, contentsId },
-}: VideoIdPageProps) => {
+const VideoIdPage = async ({ params }: VideoIdPageProps) => {
+	const { videoId, contentsId } = params;
 	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(contentsId, videoId);
 	console.log('🚀 ~ file: page.tsx:38 ~ data', data);
@@ -49,8 +48,10 @@ const VideoIdPage = async ({
 
 export default VideoIdPage;
 
-export async function generateStaticParams(posts: ILoopIDList[]) {
+export async function generateStaticParams() {
 	const paramList: VideoIdPageProps['params'][] = [];
+	const res = await fetch('https://pioneroroom.com/contents');
+	const posts: ILoopIDList[] = await res.json();
 	for (const post of posts) {
 		const paramArr: any = [];
 		if (!post.chapterList.length) continue;
