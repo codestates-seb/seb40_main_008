@@ -1,51 +1,58 @@
-import styles from './ContentInfo.module.css';
-import OrangeButton from '../Buttons/orangeButton';
-import { IContent } from '../../types/contents';
-import Image from 'next/image';
-import { ContentCardWishBtn } from '../Buttons/ContentCardWishBtn';
-import { ContentCardFavoriteBtn } from '../Buttons/ContentCardFavoriteBtn';
-import Link from 'next/link';
-import PurchaseButton from './PurchaseButton';
-import StaticStars from './StaticStars';
+import styles from "./ContentInfo.module.css";
+import OrangeButton from "../Buttons/orangeButton";
+import { IContent, ICurriculumContent } from "../../types/contents";
+import Image from "next/image";
+import { ContentCardWishBtn } from "../Buttons/ContentCardWishBtn";
+import { ContentCardFavoriteBtn } from "../Buttons/ContentCardFavoriteBtn";
+import Link from "next/link";
+import PurchaseButton from "./PurchaseButton";
+import StaticStars from "./StaticStars";
 
 interface ContentInfoProps {
   contentInfo: IContent;
+  uploadclassId: any;
 }
 
-const ContentInfo = ({ contentInfo }: ContentInfoProps) => {
+const ContentInfo = ({ contentInfo, uploadclassId }: ContentInfoProps) => {
   const id = contentInfo?.contentsId;
 
   const getRoleButton = (role: string) => {
-    if (role === 'creator') {
+    if (role === "creator") {
       return (
         <Link
           href={{
-            pathname: '/upload/chapter',
+            pathname: "/upload/chapter",
             query: {
               contentId: id,
             },
           }}
         >
-          <OrangeButton name={'챕터올리기'} />
+          <OrangeButton name={"챕터올리기"} />
         </Link>
       );
-    } else if (role === 'Unpaid_customer') {
+    } else if (role === "Unpaid_customer") {
       return (
         <PurchaseButton
           contentId={contentInfo.contentsId}
           contentInfo={contentInfo}
         />
       );
-    } else if (role === 'Paid_customer') {
-      return <OrangeButton name={'재생하기'} />;
+    } else if (role === "Paid_customer") {
+      return (
+        <Link
+          href={`/contents/${contentInfo.contentsId}/video/${uploadclassId}/`}
+        >
+          <OrangeButton name={"재생하기"} />
+        </Link>
+      );
     }
     return <div>cannot find</div>;
   };
 
   const getIconButton = (role: string) => {
-    if (role === 'Paid_customer') {
+    if (role === "Paid_customer") {
       return <ContentCardFavoriteBtn contentId={contentInfo?.contentsId} />;
-    } else if (role === 'Unpaid_customer') {
+    } else if (role === "Unpaid_customer") {
       return <ContentCardWishBtn contentId={contentInfo?.contentsId} />;
     }
   };

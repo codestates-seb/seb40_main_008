@@ -240,6 +240,7 @@ const UploadPage = () => {
             </div>
 
             <div className={styles.uploadimg}>{showImage}</div>
+            {/* <OrangeButton type={"submit"} name={"강좌 개설하기"} /> */}
 
             <button type="submit" className={styles.openclassbtn}>
               강좌 개설하기
