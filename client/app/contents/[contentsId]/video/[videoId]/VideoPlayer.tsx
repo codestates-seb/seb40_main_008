@@ -27,7 +27,6 @@ const VideoPlayer = ({ url, videoRef, setTime }: VideoPlayerProps) => {
 
 	const handleProgress = (e: OnProgressProps) => {
 		const { playedSeconds } = e;
-		// format playedSeconds to mm:ss format
 		const minutes = Math.floor(playedSeconds / 60);
 		const seconds = Math.floor(playedSeconds % 60);
 		const secondsString = seconds < 10 ? `0${seconds}` : seconds;

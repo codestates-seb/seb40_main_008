@@ -18,21 +18,21 @@ export const ContentCardFavoriteBtn = ({
 		setLike(!like);
 	};
 
-	useEffect(() => {
-		fetch(`https://pioneroroom.com/auth/${contentId}/likes`, {
-			method: 'patch',
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((res) => {
-				res.json();
-			})
-			.then((data) => {
-				console.log('성공', data);
-			})
-			.catch((error) => {});
-	}, [like]);
+	// useEffect(() => {
+	// 	fetch(`https://pioneroroom.com/auth/${contentId}/likes`, {
+	// 		method: 'patch',
+	// 		headers: {
+	// 			Authorization: `Bearer ${token}`,
+	// 		},
+	// 	})
+	// 		.then((res) => {
+	// 			res.json();
+	// 		})
+	// 		.then((data) => {
+	// 			console.log('성공', data);
+	// 		})
+	// 		.catch((error) => {});
+	// }, [like]);
 
 	return (
 		<>
