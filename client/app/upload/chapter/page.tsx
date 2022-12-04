@@ -95,7 +95,6 @@ const UploadChapterPage = () => {
 			});
 		}
 	};
-	router.prefetch(`/contents/${contentId}`);
 
 	useEffect(() => {
 		console.log('🚀 처음돌때', imageFile);
@@ -162,6 +161,9 @@ const UploadChapterPage = () => {
 				src={imageFile.thumbnail ?? '/'}
 				alt={'img'}
 				width={288}
+				sizes="(max-width: 768px) 100vw,
+				(max-width: 1200px) 50vw,
+				33vw"
 				height={240}
 				onClick={handleClickFileInput}
 				style={{ objectFit: 'contain', borderRadius: '4px' }}
@@ -171,7 +173,7 @@ const UploadChapterPage = () => {
 
 	return (
 		<>
-			<BaseNavbar />
+			<BaseNavbar name={'챕터 올리기'} page={'back'} />
 			<section className={styles.uploadpage}>
 				<form onSubmit={handleSubmit} className={styles.form}>
 					<p className={styles.title}>챕터순서</p>
@@ -179,6 +181,7 @@ const UploadChapterPage = () => {
 					<select
 						id="chapterOrder"
 						name="chapterOrder"
+						required
 						value={values.chapterOrder ?? ''}
 						onChange={handleOptionChange}
 						className={styles.select}
@@ -197,6 +200,7 @@ const UploadChapterPage = () => {
 					<input
 						type="text"
 						name="title"
+						required
 						value={values.title ?? ''}
 						onChange={handleChange}
 						className={styles.chapternameinput}
@@ -206,6 +210,7 @@ const UploadChapterPage = () => {
 						<p className={styles.title}>챕터 썸네일</p>
 						<input
 							type="file"
+							required
 							accept="image/png, image/jpg, image/jpeg"
 							name="thumbnail"
 							ref={fileInputRef}

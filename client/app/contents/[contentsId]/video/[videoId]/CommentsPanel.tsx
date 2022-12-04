@@ -29,6 +29,9 @@ const CommentsPanel = ({ reviews, uploadClassId }: Props) => {
 					<Image
 						src={review?.profileImage}
 						alt="Picture of the author"
+						sizes="(max-width: 768px) 100vw,
+						(max-width: 1200px) 50vw,
+						33vw"
 						width={42}
 						height={42}
 					/>

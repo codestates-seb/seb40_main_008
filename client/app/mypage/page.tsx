@@ -30,6 +30,9 @@ const MyPage = async ({ searchParams: { status } }: any) => {
 						className={styles.myimg}
 						alt="myimg"
 						src={userInfo.profileImage}
+						sizes="(max-width: 768px) 100vw,
+						(max-width: 1200px) 50vw,
+						33vw"
 						width={70}
 						height={70}
 					/>

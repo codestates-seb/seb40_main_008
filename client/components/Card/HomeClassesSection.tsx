@@ -21,7 +21,9 @@ const HomeClassesSection = ({ contentsList }: HomeContentProps) => {
 								placeholder="blur"
 								blurDataURL="../public/images/blur.png"
 								fill={true}
-								sizes="100%"
+								sizes="(max-width: 768px) 100vw,
+								(max-width: 1200px) 50vw,
+								33vw"
 								style={{ objectFit: 'cover', borderRadius: '4px' }}
 							/>
 						</div>
