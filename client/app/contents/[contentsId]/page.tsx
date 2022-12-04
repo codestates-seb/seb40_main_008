@@ -52,16 +52,16 @@ const ContentsIdPage = async ({ params }: any) => {
   );
 };
 
-// export async function generateStaticParams() {
-// 	const res = await fetch('https://pioneroroom.com/contents');
-// 	const posts: ILoopIDList[] = await res.json();
-// 	const arr = posts.map((post) => {
-// 		return {
-// 			contentsId: String(post.contentsId),
-// 		};
-// 	});
-// 	return arr;
-// }
+export async function generateStaticParams() {
+  const res = await fetch('https://pioneroroom.com/contents');
+  const posts: ILoopIDList[] = await res.json();
+  const arr = posts.map((post) => {
+    return {
+      contentsId: String(post.contentsId),
+    };
+  });
+  return arr;
+}
 
 export default ContentsIdPage;
 
