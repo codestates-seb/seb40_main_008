@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import React from "react";
 import BaseNavbar from "../../../../../components/BaseNavBar/BaseNavbar";
 import { ILoopIDList } from "../../../../../types/detailedContentIdListType";
@@ -36,7 +37,8 @@ const VideoIdPage = async ({ params }: VideoIdPageProps) => {
   const { videoId, contentsId } = params;
   const userInfo = await verifyLogin();
   const data = await getVideoPageContent(contentsId, videoId);
-  console.log("🚀 ~ file: page.tsx:38 ~ data", data);
+
+  if (!userInfo) redirect(`/contents/${contentsId}`);
 
   return (
     <>
@@ -70,9 +72,5 @@ export default VideoIdPage;
 // 		}
 // 		paramList.push(...paramArr);
 // 	}
-// 	console.log(
-// 		'🚀 ~ file: page.tsx:67 ~ generateStaticParams ~ paramList',
-// 		paramList
-// 	);
 // 	return paramList;
 // }

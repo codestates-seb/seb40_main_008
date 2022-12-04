@@ -24,6 +24,9 @@ const PurchaseButton = ({ contentInfo, contentId }: Props) => {
 		router.push(`/contents/${contentId}/purchase/purchase${queryString}`);
 	};
 
+	router.prefetch('/login');
+	router.prefetch(`/contents/${contentId}/purchase/purchase${queryString}`);
+
 	return (
 		<OrangeButton handleClick={handleToPurchase} name={'강의 구매하기'} />
 	);

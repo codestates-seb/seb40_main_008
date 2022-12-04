@@ -6,6 +6,6 @@ export interface UserInfoWithCoin {
 	totalCoin: number;
 }
 
-type IUserInfo = UserInfoWithCoin | null;
+type IUserInfo = UserInfoWithCoin | null | undefined;
 
 export default IUserInfo;
