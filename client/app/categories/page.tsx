@@ -13,16 +13,28 @@ const Categories = () => {
         <div className={styles.categorytop}>
           <span className={styles.categoryleft}>
             <span className={styles.link}>
-              <Link href={"/categories/DIGITAL_DRAWING"}>디지털 드로잉</Link>
+              <Link
+                style={{ color: "gray" }}
+                href={"/categories/DIGITAL_DRAWING"}
+              >
+                디지털 드로잉
+              </Link>
             </span>
             <span className={styles.link}>
               <Link href={"/categories/DRAWING"}>드로잉</Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/CRAFTS"}>공예</Link>
+              <Link style={{ color: "gray" }} href={"/categories/CRAFTS"}>
+                공예
+              </Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/COOKING_BEVERAGE"}>요리/음료</Link>
+              <Link
+                style={{ color: "gray" }}
+                href={"/categories/COOKING_BEVERAGE"}
+              >
+                요리/음료
+              </Link>
             </span>
             <span className={styles.link}>
               <Link href={"/categories/BAKING_DESSERT"}>베이킹/디저트</Link>
@@ -30,16 +42,24 @@ const Categories = () => {
           </span>
           <span className={styles.categoryright}>
             <span className={styles.link}>
-              <Link href={"/categories/MUSIC"}>음악</Link>
+              <Link style={{ color: "gray" }} href={"/categories/MUSIC"}>
+                음악
+              </Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/exercise"}>운동</Link>
+              <Link style={{ color: "gray" }} href={"/categories/exercise"}>
+                운동
+              </Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/LIFE_STYLE"}>라이프스타일</Link>
+              <Link style={{ color: "gray" }} href={"/categories/LIFE_STYLE"}>
+                라이프스타일
+              </Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/PHOTO_MEDIA"}>사진/영상</Link>
+              <Link style={{ color: "gray" }} href={"/categories/PHOTO_MEDIA"}>
+                사진/영상
+              </Link>
             </span>
           </span>
         </div>
@@ -49,10 +69,17 @@ const Categories = () => {
         <div className={styles.category}>
           <span className={styles.categoryleft}>
             <span className={styles.link}>
-              <Link href={"/categories/FINANCE"}>금융/재테크</Link>
+              <Link style={{ color: "gray" }} href={"/categories/FINANCE"}>
+                금융/재테크
+              </Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/FOUNDED_SIDELINE"}>창업/부업</Link>
+              <Link
+                style={{ color: "gray" }}
+                href={"/categories/FOUNDED_SIDELINE"}
+              >
+                창업/부업
+              </Link>
             </span>
           </span>
           <span className={styles.categoryright}>
@@ -64,7 +91,7 @@ const Categories = () => {
 
         <div className={styles.line}></div>
 
-        <div className={styles.category}>
+        <div style={{ color: "gray" }} className={styles.category}>
           <span className={styles.categoryleft}>
             <span className={styles.link}>
               <Link href={"/categories/PROGRAMMING"}>프로그래밍</Link>
@@ -97,7 +124,7 @@ const Categories = () => {
 
         <div className={styles.line}></div>
 
-        <div className={styles.category}>
+        <div style={{ color: "gray" }} className={styles.category}>
           <span className={styles.categoryleft}>
             <span className={styles.link}>
               <Link href={"/categories/ENGLISH"}>영어</Link>
@@ -115,7 +142,7 @@ const Categories = () => {
 
         <div className={styles.line}></div>
 
-        <div className={styles.category}>
+        <div style={{ color: "gray" }} className={styles.category}>
           <span className={styles.categoryleft}>
             <span className={styles.link}>
               <Link href={"/categories/CHILD_EDUCATION"}>아이 교육</Link>
