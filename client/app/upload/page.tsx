@@ -220,7 +220,7 @@ const UploadPage = () => {
               >
                 <option value="드로잉">드로잉</option>
                 <option value="성공 마인드">성공 마인드</option>
-                <option value="베이킹">베이킹</option>
+                <option value="베이킹/디저트">베이킹</option>
               </optgroup>
               <optgroup
                 label="-------------선택하지 마세요------------"
