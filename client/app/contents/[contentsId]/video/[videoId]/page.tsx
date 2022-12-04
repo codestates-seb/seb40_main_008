@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import React from 'react';
 import { ILoopIDList } from '../../../../../types/detailedContentIdListType';
 import verifyLogin from '../../../../../utils/VerifyLogin';
@@ -35,7 +36,8 @@ const VideoIdPage = async ({ params }: VideoIdPageProps) => {
 	const { videoId, contentsId } = params;
 	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(contentsId, videoId);
-	console.log('🚀 ~ file: page.tsx:38 ~ data', data);
+
+	if (!userInfo) redirect(`/contents/${contentsId}`);
 
 	return (
 		<VideoPageSection
@@ -48,27 +50,23 @@ const VideoIdPage = async ({ params }: VideoIdPageProps) => {
 
 export default VideoIdPage;
 
-export async function generateStaticParams() {
-	const paramList: VideoIdPageProps['params'][] = [];
-	const res = await fetch('https://pioneroroom.com/contents');
-	const posts: ILoopIDList[] = await res.json();
-	for (const post of posts) {
-		const paramArr: any = [];
-		if (!post.chapterList.length) continue;
-		for (const chapter of post.chapterList) {
-			if (!chapter.uploadClassList.length) continue;
-			for (const videoId of chapter.uploadClassList) {
-				paramArr.push({
-					videoId: String(videoId),
-					contentsId: String(post.contentsId),
-				});
-			}
-		}
-		paramList.push(...paramArr);
-	}
-	console.log(
-		'🚀 ~ file: page.tsx:67 ~ generateStaticParams ~ paramList',
-		paramList
-	);
-	return paramList;
-}
+// export async function generateStaticParams() {
+// 	const paramList: VideoIdPageProps['params'][] = [];
+// 	const res = await fetch('https://pioneroroom.com/contents');
+// 	const posts: ILoopIDList[] = await res.json();
+// 	for (const post of posts) {
+// 		const paramArr: any = [];
+// 		if (!post.chapterList.length) continue;
+// 		for (const chapter of post.chapterList) {
+// 			if (!chapter.uploadClassList.length) continue;
+// 			for (const videoId of chapter.uploadClassList) {
+// 				paramArr.push({
+// 					videoId: String(videoId),
+// 					contentsId: String(post.contentsId),
+// 				});
+// 			}
+// 		}
+// 		paramList.push(...paramArr);
+// 	}
+// 	return paramList;
+// }
