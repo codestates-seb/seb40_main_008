@@ -96,7 +96,7 @@ const UploadClassPage = () => {
 
   return (
     <>
-      <BaseNavbar />
+      <BaseNavbar name={"강의자료 올리기"} page={"back"} />
       <section className={styles.uploadpage}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <h1 className={styles.title}>강의</h1>

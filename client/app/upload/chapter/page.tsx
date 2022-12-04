@@ -170,7 +170,7 @@ const UploadChapterPage = () => {
 
   return (
     <>
-      <BaseNavbar />
+      <BaseNavbar name={"챕터 올리기"} page={"back"} />
       <section className={styles.uploadpage}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <p className={styles.title}>챕터순서</p>

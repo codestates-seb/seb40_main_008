@@ -23,14 +23,25 @@ const BaseNavbar = ({ name, page }: BaseNavbarProps) => {
     <>
       {window.scrollY < 45 ? (
         <nav className={styles.firstNav}>
-          {page === "video" ? (
-            <button onClick={() => router.back()} className={styles.leftbtn}>
-              <FontAwesomeIcon
-                icon={faAngleLeft}
-                width={24}
-                className={styles.font}
-              />
-            </button>
+          {page === "back" ? (
+            <>
+              <button onClick={() => router.back()} className={styles.leftbtn}>
+                <FontAwesomeIcon
+                  icon={faAngleLeft}
+                  width={24}
+                  className={styles.font}
+                />
+              </button>
+              <p
+                style={{
+                  marginTop: "12px",
+                  fontSize: "20px",
+                  marginLeft: "100px",
+                }}
+              >
+                {name}
+              </p>
+            </>
           ) : (
             <button onClick={() => router.push(`/`)} className={styles.leftbtn}>
               <FontAwesomeIcon
@@ -43,13 +54,34 @@ const BaseNavbar = ({ name, page }: BaseNavbarProps) => {
         </nav>
       ) : (
         <nav className={`${show ? styles.baseNav : styles.change_nav} `}>
-          <button onClick={() => router.push(`/`)} className={styles.leftbtn}>
-            <FontAwesomeIcon
-              icon={faHouse}
-              width={24}
-              className={styles.font}
-            />
-          </button>
+          {page === "back" ? (
+            <>
+              <button onClick={() => router.back()} className={styles.leftbtn}>
+                <FontAwesomeIcon
+                  icon={faAngleLeft}
+                  width={24}
+                  className={styles.font}
+                />
+              </button>
+              <p
+                style={{
+                  marginTop: "12px",
+                  fontSize: "20px",
+                  marginLeft: "100px",
+                }}
+              >
+                {name}
+              </p>
+            </>
+          ) : (
+            <button onClick={() => router.push(`/`)} className={styles.leftbtn}>
+              <FontAwesomeIcon
+                icon={faHouse}
+                width={24}
+                className={styles.font}
+              />
+            </button>
+          )}
         </nav>
       )}
     </>

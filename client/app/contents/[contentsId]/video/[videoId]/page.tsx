@@ -40,7 +40,7 @@ const VideoIdPage = async ({ params }: VideoIdPageProps) => {
 
   return (
     <>
-      <BaseNavbar page={"video"} />
+      <BaseNavbar page={"back"} />
       <VideoPageSection
         data={data}
         contentsId={contentsId}

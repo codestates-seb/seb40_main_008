@@ -31,7 +31,7 @@ const CategoryNavBar = ({ name }: CategoryProps) => {
               className={styles.font}
             />
           </button>
-          <h2>{name}</h2>
+          <p style={{ fontSize: "23px", marginTop: "3px" }}>{name}</p>
           <button className={styles.rightbtn}>
             <Link href={"/"}>
               <FontAwesomeIcon
