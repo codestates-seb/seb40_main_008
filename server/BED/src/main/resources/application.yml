@@ -87,8 +87,8 @@ mail:
 jwt:
   key:
     secret: ${JWT_SECRET_KEY}               # 민감한 정보는 시스템 환경 변수에서 로드한다.
-  access-token-expiration-minutes: 60
-  refresh-token-expiration-minutes: 180
+  access-token-expiration-minutes: 180
+  refresh-token-expiration-minutes: 420
 
 cloud:
   aws:
@@ -104,4 +104,3 @@ cloud:
 application:
   open-api:
     admin-key: ${ADMIN_KEY}
-

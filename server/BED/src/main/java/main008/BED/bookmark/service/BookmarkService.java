@@ -88,11 +88,11 @@ public class BookmarkService {
     /**
      * READ: 유저 아이디에 해당하는 북마크 내역 목록 조회 (Version 2: Query)
      */
-    public List<Bookmark> findBookmarkListByUsersId(Principal principal) {
+    public List<Bookmark> findBookmarkListByUsersId(Principal principal, Long uploadClassId) {
 
         Users user = usersService.findVerifiedUserByEmail(principal.getName());
 
-        return bookmarkRepository.findByUsersId(user.getUsersId());
+        return bookmarkRepository.findByUsersIdAndUploadClassId(user.getUsersId(), uploadClassId);
     }
 
     private void existBookmark(Long bookmarkId) {

@@ -142,7 +142,7 @@ public class ContentsController {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
 
-        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal); // User 본인의 메모만 전송
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal, uploadClassId); // User 본인의 메모만 전송
 
         ContentsDto.ResponseForStream responseForStream =
                 contentsMapper.contentsResponseForStream(
