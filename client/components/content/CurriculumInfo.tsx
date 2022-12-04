@@ -35,6 +35,9 @@ const CurriculumInfo = ({
 						<div>
 							<div className={styles.thumbnail}>
 								<Image
+									sizes="(max-width: 768px) 100vw,
+								(max-width: 1200px) 50vw,
+								33vw"
 									src={e.thumbnail}
 									alt={e.title}
 									fill={true}

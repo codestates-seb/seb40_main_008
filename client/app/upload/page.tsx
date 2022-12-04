@@ -164,6 +164,9 @@ const UploadPage = () => {
 				className={styles.thumbnail}
 				src={imageFile.thumbnail ?? ''}
 				alt={imageFile.type ?? ''}
+				sizes="(max-width: 768px) 100vw,
+				(max-width: 1200px) 50vw,
+				33vw"
 				width={300}
 				height={200}
 				onClick={handleClickFileInput}
