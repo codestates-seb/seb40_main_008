@@ -6,7 +6,7 @@ const withPwa = require('next-pwa')({
 });
 
 const settings = {
-	reactStrictMode: truncate,
+	reactStrictMode: true,
 	swcMinify: true,
 	experimental: { appDir: true },
 	// fontLoaders is not a proper key
