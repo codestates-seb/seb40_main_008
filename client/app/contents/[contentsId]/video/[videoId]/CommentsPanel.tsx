@@ -2,13 +2,13 @@ import Image from 'next/image';
 import React from 'react';
 import { ReviewInfo } from '../../../../../types/videoPage/video';
 import VideoComment from './VideoComment';
-import styles from './VideoPage.module.css';
 interface Props {
 	reviews: ReviewInfo[];
 	uploadClassId: string;
 }
 
 const CommentsPanel = ({ reviews, uploadClassId }: Props) => {
+
 	return (
 		<section
 			style={{
@@ -27,7 +27,7 @@ const CommentsPanel = ({ reviews, uploadClassId }: Props) => {
 					}}
 				>
 					<Image
-						src={'/img/myimg.png'}
+						src={review?.profileImage}
 						alt="Picture of the author"
 						width={42}
 						height={42}
@@ -56,7 +56,7 @@ const CommentsPanel = ({ reviews, uploadClassId }: Props) => {
 									marginRight: '8px',
 								}}
 							>
-								{'username'}
+								{review.userName}
 							</p>
 							<p>{formatTime(review.createdAt)}</p>
 						</div>
