@@ -13,7 +13,6 @@ interface Props {
 const VideoComment = ({ uploadClassId }: Props) => {
 
 	const userInfo = useVerifyLoginClient();
-	console.log("🚀 ~ file: VideoComment.tsx:16 ~ VideoComment ~ userInfo", userInfo)
 
 	const [comments, setComments] = useState('');
 	const [rating, setRating] = useState(0);
