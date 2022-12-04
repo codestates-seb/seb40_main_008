@@ -1,11 +1,14 @@
 package main008.BED.mainPage.service;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.contents.entity.Contents;
 import main008.BED.contents.service.ContentsService;
 import main008.BED.mainPage.entity.MainPage;
 import main008.BED.mainPage.repository.MainPageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +21,10 @@ public class MainPageService {
     public MainPage getHome() {
 
         MainPage mainPage = new MainPage();
-        mainPage.setContentsList(contentsService.getContents());
+
+        List<Contents> contentsList = contentsService.getContents();
+        mainPage.setContentsList(contentsService.getDiscloseContents(contentsList));
+
         return mainPageRepository.save(mainPage);
     }
 }
