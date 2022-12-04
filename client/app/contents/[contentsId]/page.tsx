@@ -53,18 +53,19 @@ interface ContentId {
 	contentsId: number;
 }
 
-export async function generateStaticParams() {
-	const res = await fetch('https://pioneroroom.com/contents');
-	const posts: ILoopIDList[] = await res.json();
-	const arr = posts.map((post) => {
-		return {
-			contentsId: String(post.contentsId),
-		};
-	});
-	return arr;
-}
+// export async function generateStaticParams() {
+// 	const res = await fetch('https://pioneroroom.com/contents');
+// 	const posts: ILoopIDList[] = await res.json();
+// 	const arr = posts.map((post) => {
+// 		return {
+// 			contentsId: String(post.contentsId),
+// 		};
+// 	});
+// 	return arr;
+// }
 
 export default ContentsIdPage;
+
 function getUploadClassId(curriculumInfo: ICurriculumContent[]) {
 	return curriculumInfo[0]?.uploadClassList[0]
 		? curriculumInfo[0].uploadClassList[0].uploadClassId
