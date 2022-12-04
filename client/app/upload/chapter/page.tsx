@@ -206,7 +206,7 @@ const UploadChapterPage = () => {
 						<p className={styles.title}>챕터 썸네일</p>
 						<input
 							type="file"
-							accept="image/png"
+							accept="image/png, image/jpg, image/jpeg"
 							name="thumbnail"
 							ref={fileInputRef}
 							id="ex_file"
