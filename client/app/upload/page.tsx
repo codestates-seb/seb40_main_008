@@ -7,11 +7,7 @@ import Image from 'next/image';
 import { getCookie } from 'cookies-next';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import {
-	initialClass,
-	UploadClassType,
-	UploadImage,
-} from '../../types/uploadclass';
+import { UploadClassType, UploadImage } from '../../types/uploadclass';
 
 const formData = new FormData();
 
@@ -73,8 +69,6 @@ const UploadPage = () => {
 		});
 	};
 
-	router.prefetch('/mypage/uploadclass');
-
 	const handleSubmit = (
 		e: React.FormEvent<HTMLFormElement>,
 		formData: FormData
@@ -127,6 +121,15 @@ const UploadPage = () => {
 		}
 	};
 
+	// useEffect(() => {
+	//   console.log("formData: ", formData.get("thumbnail"));
+	// }, [imageFile]);
+
+	useEffect(() => {
+		console.log('밸루', values);
+		console.log('id', contentsId);
+	}, []);
+
 	const handleClickFileInput = () => {
 		fileInput.current?.click();
 	};
@@ -175,6 +178,7 @@ const UploadPage = () => {
 		);
 	}, [imageFile]);
 
+	// if (session.status === "loading") return <p>loading</p>;
 	if (session.status === 'unauthenticated')
 		return (
 			<>
@@ -186,7 +190,7 @@ const UploadPage = () => {
 	if (session.status === 'authenticated')
 		return (
 			<>
-				<BaseNavbar />
+				<BaseNavbar name={'강좌 개설하기'} page={'back'} />
 				<section className={styles.uploadpage}>
 					<form
 						onSubmit={(e) => handleSubmit(e, formData)}
@@ -194,6 +198,7 @@ const UploadPage = () => {
 					>
 						<p className={styles.classtitle}>클래스명</p>
 						<input
+							required
 							type="text"
 							name="title"
 							value={values.title}
@@ -202,6 +207,7 @@ const UploadPage = () => {
 						></input>
 						<p className={styles.title}>카테고리</p>
 						<select
+							required
 							id="categories"
 							value={values.categories}
 							name="categories"
@@ -215,7 +221,7 @@ const UploadPage = () => {
 							>
 								<option value="드로잉">드로잉</option>
 								<option value="성공 마인드">성공 마인드</option>
-								<option value="베이킹">베이킹</option>
+								<option value="베이킹/디저트">베이킹</option>
 							</optgroup>
 							<optgroup
 								label="-------------선택하지 마세요------------"
@@ -233,6 +239,7 @@ const UploadPage = () => {
 
 						<p className={styles.title}>강의 가격</p>
 						<input
+							required
 							type="number"
 							name="price"
 							value={values.price}
@@ -252,6 +259,7 @@ const UploadPage = () => {
 
 						<p className={styles.title}>강의 소개</p>
 						<textarea
+							required
 							name="details"
 							onChange={handleTextChange}
 							value={values.details}
@@ -259,6 +267,7 @@ const UploadPage = () => {
 						></textarea>
 						<p className={styles.title}>강사 소개</p>
 						<textarea
+							required
 							name="tutorDetail"
 							onChange={handleTextChange}
 							value={values.tutorDetail}
@@ -268,6 +277,7 @@ const UploadPage = () => {
 						<div className={styles.filebox}>
 							<p className={styles.title}>클래스 썸네일</p>
 							<input
+								required
 								type="file"
 								accept="image/png, image/jpg, image/jpeg"
 								name="thumbnail"

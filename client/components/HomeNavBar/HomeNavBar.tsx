@@ -17,11 +17,14 @@ const HomeNavBar = ({ userInfo }: HomeNavBarProps) => {
 		<>
 			<nav className={`${styles.nav} `}>
 				<div className="logo">
-					<FontAwesomeIcon
-						icon={faBars}
-						width={24}
-						className={styles.font}
-					/>
+					<Link href={'/categories'}>
+						<FontAwesomeIcon
+							icon={faBars}
+							width={24}
+							className={styles.font}
+						/>
+					</Link>
+
 					<Link href={'/'} className={styles.logo}>
 						CLASS4989
 					</Link>

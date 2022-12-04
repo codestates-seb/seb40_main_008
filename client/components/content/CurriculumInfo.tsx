@@ -89,35 +89,33 @@ const CurriculumInfo = ({
 									</div>
 
 									{e.uploadClassList.map((e, index) => (
-										<>
-											<div key={index} className={styles.class}>
-												<div>
-													{userInfo ? (
-														<Link
-															href={{
-																pathname: `/contents/${contentsId}/video/${e.uploadClassId}`,
-															}}
-														>
-															<h4>{e.title}</h4>
-														</Link>
-													) : (
+										<div key={index} className={styles.class}>
+											<div>
+												{userInfo ? (
+													<Link
+														href={{
+															pathname: `/contents/${contentsId}/video/${e.uploadClassId}`,
+														}}
+													>
 														<h4>{e.title}</h4>
-													)}
-												</div>
-												<div>
-													{role == 'creator' ? (
-														<>
-															<Curriculumdelete
-																url={`https://pioneroroom.com/auth/chapter/lecture/`}
-																Id={e.uploadClassId}
-															/>
-														</>
-													) : (
-														''
-													)}
-												</div>
+													</Link>
+												) : (
+													<h4>{e.title}</h4>
+												)}
 											</div>
-										</>
+											<div>
+												{role == 'creator' ? (
+													<>
+														<Curriculumdelete
+															url={`https://pioneroroom.com/auth/chapter/lecture/`}
+															Id={e.uploadClassId}
+														/>
+													</>
+												) : (
+													''
+												)}
+											</div>
+										</div>
 									))}
 
 									<div className={styles.addbtnWrapper}>

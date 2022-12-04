@@ -22,6 +22,7 @@ const UploadChapterPage = () => {
 	const chapterId = searchParams.get('chapterId');
 
 	const router = useRouter();
+	console.log('썸네일', thumbnail);
 
 	const queryChapter = {
 		thumbnail: thumbnail,
@@ -94,7 +95,11 @@ const UploadChapterPage = () => {
 			});
 		}
 	};
-	router.prefetch(`/contents/${contentId}`);
+
+	useEffect(() => {
+		console.log('🚀 처음돌때', imageFile);
+		console.log('콘텐트아이디', contentId);
+	}, []);
 
 	const handleClickFileInput = () => {
 		fileInputRef.current?.click();
@@ -102,12 +107,23 @@ const UploadChapterPage = () => {
 
 	const uploadfile = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const fileList = e.target.files;
+		console.log('🚀 ~ file: page.tsx:89 ~ uploadfile ~ fileList', fileList);
 		const fileInfo = fileList?.[0];
 		formData.delete('thumbnail');
 		setFileInfoData(fileInfo);
 	};
 
+	useEffect(() => {
+		console.log('밸루', values);
+	}, []);
+
+	// how to make File from url
+
 	const setFileInfoData = (fileInfo: File | undefined) => {
+		console.log(
+			'🚀 ~ file: page.tsx:99 ~ setFileInfoData ~ fileInfo',
+			fileInfo
+		);
 		if (!fileInfo) return;
 
 		const url = URL.createObjectURL(fileInfo);
@@ -134,6 +150,10 @@ const UploadChapterPage = () => {
 			);
 		}
 		imageFile.thumbnail;
+		console.log(
+			'🚀 ~ file: page.tsx:158 ~ showImage ~ imageFile.thumbnail',
+			imageFile.thumbnail
+		);
 
 		return (
 			<Image
@@ -153,7 +173,7 @@ const UploadChapterPage = () => {
 
 	return (
 		<>
-			<BaseNavbar />
+			<BaseNavbar name={'챕터 올리기'} page={'back'} />
 			<section className={styles.uploadpage}>
 				<form onSubmit={handleSubmit} className={styles.form}>
 					<p className={styles.title}>챕터순서</p>
@@ -161,6 +181,7 @@ const UploadChapterPage = () => {
 					<select
 						id="chapterOrder"
 						name="chapterOrder"
+						required
 						value={values.chapterOrder ?? ''}
 						onChange={handleOptionChange}
 						className={styles.select}
@@ -179,6 +200,7 @@ const UploadChapterPage = () => {
 					<input
 						type="text"
 						name="title"
+						required
 						value={values.title ?? ''}
 						onChange={handleChange}
 						className={styles.chapternameinput}
@@ -188,6 +210,7 @@ const UploadChapterPage = () => {
 						<p className={styles.title}>챕터 썸네일</p>
 						<input
 							type="file"
+							required
 							accept="image/png"
 							name="thumbnail"
 							ref={fileInputRef}
