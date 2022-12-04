@@ -160,7 +160,7 @@ const UploadChapterPage = () => {
         className={styles.thumbnail}
         src={imageFile.thumbnail ?? "/"}
         alt={"img"}
-        width={288}
+        width={350}
         height={240}
         onClick={handleClickFileInput}
         style={{ objectFit: "contain", borderRadius: "4px" }}

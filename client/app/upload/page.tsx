@@ -187,7 +187,7 @@ const UploadPage = () => {
   if (session.status === "authenticated")
     return (
       <>
-        <BaseNavbar name={"강좌개설하기"} page={"back"} />
+        <BaseNavbar name={"강좌 개설하기"} page={"back"} />
         <section className={styles.uploadpage}>
           <form
             onSubmit={(e) => handleSubmit(e, formData)}
