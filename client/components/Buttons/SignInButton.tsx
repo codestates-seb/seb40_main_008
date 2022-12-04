@@ -28,7 +28,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 							alt="google logo"
 							width={25}
 						/>
-						<p className={styles.btn_p}>Sign with in Google</p>
+						<p className={styles.btn_p}>구글로 로그인</p>
 					</div>
 				</a>
 			</button>

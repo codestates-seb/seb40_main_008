@@ -10,7 +10,7 @@ const HandOutsPanel = ({ handOutInfo }: Props) => {
 		<section className={styles.container}>
 			<p>{handOutInfo.name}</p>
 			<p>{handOutInfo.details}</p>
-			<p>{handOutInfo.docsId}</p>
+			{/* <p>{handOutInfo.docsId}</p> */}
 		</section>
 	);
 };

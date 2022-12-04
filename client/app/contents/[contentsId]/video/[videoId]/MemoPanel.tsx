@@ -53,7 +53,6 @@ const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
 						flexDirection: 'row',
 						justifyContent: 'flex-start',
 						alignItems: 'flex-start',
-						border: '1px solid white',
 						marginBottom: '16px',
 					}}
 				>

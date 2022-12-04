@@ -211,7 +211,7 @@ const UploadChapterPage = () => {
 						<input
 							type="file"
 							required
-							accept="image/png"
+							accept="image/png, image/jpg, image/jpeg"
 							name="thumbnail"
 							ref={fileInputRef}
 							id="ex_file"

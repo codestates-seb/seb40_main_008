@@ -21,7 +21,7 @@ const MyPage = async ({ searchParams: { status } }: any) => {
 
 	return (
 		<>
-			<AlertCheck status={status} />
+			{/* <AlertCheck status={status} /> */}
 			<BaseNavbar />
 			<div className={styles.mypageWrapper}>
 				<div className={styles.myinfo}>

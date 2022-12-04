@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './CurriculumInfo.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { ICurriculumContent } from '../../types/contents';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -74,7 +74,11 @@ const CurriculumInfo = ({
 															},
 														}}
 													>
-														<p>수정</p>
+														<FontAwesomeIcon
+															icon={faPenToSquare}
+															className={styles.fontimg}
+															width={15}
+														/>
 													</Link>
 
 													<Curriculumdelete
