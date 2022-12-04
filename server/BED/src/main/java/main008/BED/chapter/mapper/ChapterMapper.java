@@ -14,4 +14,6 @@ public interface ChapterMapper {
 
     Chapter patchDtoToEntity(ChapterDto.Patch patch);
 
+    ChapterDto.ResponseListDto entityListToResponseListDto(Chapter chapter);
+
 }

@@ -70,5 +70,16 @@ public class ChapterDto {
         List<ChapterDto.ResponseDtoWithoutThumbnail> curriculumInfo;
     }
 
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResponseListDto {
+
+        private Long chapterId;
+        private List<Long> uploadClassList;
+    }
+
+
 
 }

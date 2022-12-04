@@ -13,6 +13,8 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
     @Query(value = "SELECT bookmark " +
             "FROM Bookmark  bookmark " +
-            "WHERE bookmark.users.usersId = :usersId")
-    List<Bookmark> findByUsersId(@Param("usersId") Long usersId);
+            "WHERE bookmark.users.usersId = :usersId " +
+            "AND bookmark.uploadClass.uploadClassId = :uploadClassId")
+    List<Bookmark> findByUsersIdAndUploadClassId(@Param("usersId") Long usersId,
+                                               @Param("uploadClassId") Long uploadClassId);
 }

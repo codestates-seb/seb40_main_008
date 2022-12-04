@@ -80,7 +80,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 List<String> authorities = authorityUtils.createRoles(email); // (4)
 
                 saveUser(email, picture, name);  // (5)
-                redirectGoogle(request, response, email, authorities);  // (6)
+                redirect(request, response, email, authorities);  // (6)
             }
         } catch (Exception e) {
             throw e;
@@ -111,13 +111,14 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
     }
 
-    private void redirectGoogle(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
+    private void redirectKakao(HttpServletRequest request, HttpServletResponse response, String username, List<String> authorities) throws IOException {
         String accessToken = delegateAccessToken(username, authorities);  // (6-1)
         String refreshToken = delegateRefreshToken(username);     // (6-2)
 
-        String uri = createGoogleURI(accessToken, refreshToken, request).toString();   // (6-3)
+        String uri = createKakaoURI(accessToken, refreshToken, request).toString();   // (6-3)
         getRedirectStrategy().sendRedirect(request, response, uri);   // (6-4)
     }
+
 
     private String delegateAccessToken(String username, List<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
@@ -169,24 +170,6 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-                .host("localhost")
-                .port(8081)
-                .path("/receive-token.html")
-                .queryParams(queryParams)
-                .build()
-                .toUri();
-    }
-
-    private URI createGoogleURI(String accessToken, String refreshToken, HttpServletRequest request) {
-
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("access_token", accessToken);
-        queryParams.add("refresh_token", refreshToken);
-
-
-        return UriComponentsBuilder
-                .newInstance()
                 .scheme("https")
                 .host("class4989.one")
 //                .port(8081)
@@ -196,4 +179,37 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
                 .toUri();
     }
 
+    private URI createKakaoURI(String accessToken, String refreshToken, HttpServletRequest request) {
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("access_token", accessToken);
+        queryParams.add("refresh_token", refreshToken);
+
+
+//        HttpServletRequestWrapper wrapperRequest = (HttpServletRequestWrapper) request;
+//        String path = wrapperRequest.getRequestURI();
+//        String URL = wrapperRequest.getRequestURL().toString();
+//
+//        String host = URL.replace(path, "");
+//
+//        String scheme = "";
+//        String domain = "";
+//        if (host.substring(4) == "s") {
+//            scheme = host.substring(0, 5);
+//            domain = host.substring(8);
+//        } else {
+//            scheme = host.substring(0, 4);
+//            domain = host.substring(7);
+//        }
+
+        return UriComponentsBuilder
+                .newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(3000)
+                .path("/api/token")
+                .queryParams(queryParams)
+                .build()
+                .toUri();
+    }
 }

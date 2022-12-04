@@ -86,5 +86,20 @@ public class ChapterMapperImpl implements ChapterMapper{
                 .build();
     }
 
+    @Override
+    public ChapterDto.ResponseListDto entityListToResponseListDto(Chapter chapter) {
+
+        List<UploadClass> uploadClassList = chapter.getUploadClassList();
+        List<Long> collect = uploadClassList.stream()
+                .map(uploadClass -> uploadClass.getUploadClassId())
+                .collect(Collectors.toList());
+
+        return new ChapterDto.ResponseListDto()
+                .builder()
+                .chapterId(chapter.getChapterId())
+                .uploadClassList(collect)
+                .build();
+    }
+
 
 }

@@ -6,6 +6,7 @@ import main008.BED.bookmark.entity.Bookmark;
 import main008.BED.bookmark.mapper.BookmarkMapper;
 import main008.BED.bookmark.service.BookmarkService;
 import main008.BED.chapter.dto.ChapterDto;
+import main008.BED.chapter.mapper.ChapterMapper;
 import main008.BED.chapter.service.ChapterService;
 import main008.BED.contents.dto.ContentsDto;
 import main008.BED.contents.entity.Contents;
@@ -55,6 +56,7 @@ public class ContentsController {
     private final BookmarkService bookmarkService;
     private final BookmarkMapper bookmarkMapper;
     private final ChapterService chapterService;
+    private final ChapterMapper chapterMapper;
     private final PaymentMapper paymentMapper;
     private final ReviewMapper reviewMapper;
     private final UploadClassService uploadClassService;
@@ -140,7 +142,7 @@ public class ContentsController {
         UploadClass uploadClass = uploadClassService.readClassById(uploadClassId);
         ChapterDto.CurriculumInStream curriculumInStream = chapterService.readCurriculumInStream(contentsId);
 
-        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal); // User 본인의 메모만 전송
+        List<Bookmark> bookmarkList = bookmarkService.findBookmarkListByUsersId(principal, uploadClassId); // User 본인의 메모만 전송
 
         ContentsDto.ResponseForStream responseForStream =
                 contentsMapper.contentsResponseForStream(
@@ -286,7 +288,7 @@ public class ContentsController {
     @GetMapping("/contents")
     public ResponseEntity getContentsIdList() {
         List<Contents> contents = contentsService.readContentsIdList();
-        List<ContentsDto.ContentsId> contentsIds = contentsMapper.contentsToId(contents);
+        List<ContentsDto.ContentsId> contentsIds = contentsMapper.contentsToId(contents, chapterMapper);
         return new ResponseEntity(contentsIds, HttpStatus.OK);
     }
 
