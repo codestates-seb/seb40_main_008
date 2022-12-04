@@ -7,11 +7,7 @@ import Image from "next/image";
 import { getCookie } from "cookies-next";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import {
-  initialClass,
-  UploadClassType,
-  UploadImage,
-} from "../../types/uploadclass";
+import { UploadClassType, UploadImage } from "../../types/uploadclass";
 
 const formData = new FormData();
 
@@ -199,6 +195,7 @@ const UploadPage = () => {
           >
             <p className={styles.classtitle}>클래스명</p>
             <input
+              required
               type="text"
               name="title"
               value={values.title}
@@ -207,6 +204,7 @@ const UploadPage = () => {
             ></input>
             <p className={styles.title}>카테고리</p>
             <select
+              required
               id="categories"
               value={values.categories}
               name="categories"
@@ -238,6 +236,7 @@ const UploadPage = () => {
 
             <p className={styles.title}>강의 가격</p>
             <input
+              required
               type="number"
               name="price"
               value={values.price}
@@ -257,6 +256,7 @@ const UploadPage = () => {
 
             <p className={styles.title}>강의 소개</p>
             <textarea
+              required
               name="details"
               onChange={handleTextChange}
               value={values.details}
@@ -264,6 +264,7 @@ const UploadPage = () => {
             ></textarea>
             <p className={styles.title}>강사 소개</p>
             <textarea
+              required
               name="tutorDetail"
               onChange={handleTextChange}
               value={values.tutorDetail}
@@ -273,6 +274,7 @@ const UploadPage = () => {
             <div className={styles.filebox}>
               <p className={styles.title}>클래스 썸네일</p>
               <input
+                required
                 type="file"
                 accept="image/png, image/jpg, image/jpeg"
                 name="thumbnail"

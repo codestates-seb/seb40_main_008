@@ -8,7 +8,7 @@ import Link from "next/link";
 const Categories = () => {
   return (
     <>
-      <BaseNavbar />
+      <BaseNavbar page={"back"} />
       <div className={styles.categoryWrapper}>
         <div className={styles.categorytop}>
           <span className={styles.categoryleft}>

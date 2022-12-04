@@ -178,6 +178,7 @@ const UploadChapterPage = () => {
           <select
             id="chapterOrder"
             name="chapterOrder"
+            required
             value={values.chapterOrder ?? ""}
             onChange={handleOptionChange}
             className={styles.select}
@@ -196,6 +197,7 @@ const UploadChapterPage = () => {
           <input
             type="text"
             name="title"
+            required
             value={values.title ?? ""}
             onChange={handleChange}
             className={styles.chapternameinput}
@@ -205,6 +207,7 @@ const UploadChapterPage = () => {
             <p className={styles.title}>챕터 썸네일</p>
             <input
               type="file"
+              required
               accept="image/png"
               name="thumbnail"
               ref={fileInputRef}
