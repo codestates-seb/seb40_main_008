@@ -1,5 +1,7 @@
 import { fetchDelete } from "../../api/fetchDelete";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Curriculumdelete = (props: { url: string; Id: number }) => {
   const router = useRouter();
@@ -33,7 +35,10 @@ const Curriculumdelete = (props: { url: string; Id: number }) => {
           handleChapterDeleteClick(props.url, props.Id, router.refresh)
         }
       >
-        삭제
+        <FontAwesomeIcon
+          icon={faTrash}
+          width={15}
+        />
       </button>
     </>
   );

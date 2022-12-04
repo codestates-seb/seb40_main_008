@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./CurriculumInfo.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { ICurriculumContent } from "../../types/contents";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,7 +49,7 @@ const CurriculumInfo = ({
                     </p>
                     <div>
                       {role == "creator" ? (
-                        <>
+                        <div style={{ display: "flex" }}>
                           <Link
                             href={{
                               pathname: "/upload/chapter",
@@ -63,14 +63,17 @@ const CurriculumInfo = ({
                               },
                             }}
                           >
-                            <button className={styles.btn}>수정</button>
+                            <FontAwesomeIcon
+                              icon={faPenToSquare}
+                              className={styles.fontimg}
+                              width={15}
+                            />
                           </Link>
-
                           <Curriculumdelete
                             url={`https://pioneroroom.com/auth/contents/chapter/`}
                             Id={e.chapterId}
                           />
-                        </>
+                        </div>
                       ) : (
                         ""
                       )}
