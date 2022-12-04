@@ -63,13 +63,28 @@ const UpperTextContainer = ({ thumbnail, tutorName, title }: Props) => {
 						alignItems: 'center',
 						flexDirection: 'column',
 						marginLeft: '20px',
+						height: '120px',
+						width: '500px',
 						// border: '1px solid red',
 					}}
 				>
-					<h2 style={{ color: 'black' }}>{title}</h2>
-					<h3 style={{ color: 'black', marginTop: '10px' }}>
-						{tutorName}
-					</h3>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'flex-start',
+							flexDirection: 'column',
+							width: '100%',
+							height: '100%',
+							// border: '1px solid blue',
+							paddingLeft: '100px',
+						}}
+					>
+						<h3 style={{ color: 'black' }}>{title}</h3>
+						<h3 style={{ color: 'black', marginTop: '10px' }}>
+							{tutorName}
+						</h3>
+					</div>
 				</div>
 			</div>
 		</div>
