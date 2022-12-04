@@ -127,15 +127,6 @@ const UploadPage = () => {
 		}
 	};
 
-	// useEffect(() => {
-	//   console.log("formData: ", formData.get("thumbnail"));
-	// }, [imageFile]);
-
-	useEffect(() => {
-		console.log('밸루', values);
-		console.log('id', contentsId);
-	}, []);
-
 	const handleClickFileInput = () => {
 		fileInput.current?.click();
 	};
@@ -181,7 +172,6 @@ const UploadPage = () => {
 		);
 	}, [imageFile]);
 
-	// if (session.status === "loading") return <p>loading</p>;
 	if (session.status === 'unauthenticated')
 		return (
 			<>

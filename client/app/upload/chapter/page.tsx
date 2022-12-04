@@ -22,7 +22,6 @@ const UploadChapterPage = () => {
 	const chapterId = searchParams.get('chapterId');
 
 	const router = useRouter();
-	console.log('썸네일', thumbnail);
 
 	const queryChapter = {
 		thumbnail: thumbnail,
@@ -97,34 +96,18 @@ const UploadChapterPage = () => {
 	};
 	router.prefetch(`/contents/${contentId}`);
 
-	useEffect(() => {
-		console.log('🚀 처음돌때', imageFile);
-		console.log('콘텐트아이디', contentId);
-	}, []);
-
 	const handleClickFileInput = () => {
 		fileInputRef.current?.click();
 	};
 
 	const uploadfile = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const fileList = e.target.files;
-		console.log('🚀 ~ file: page.tsx:89 ~ uploadfile ~ fileList', fileList);
 		const fileInfo = fileList?.[0];
 		formData.delete('thumbnail');
 		setFileInfoData(fileInfo);
 	};
 
-	useEffect(() => {
-		console.log('밸루', values);
-	}, []);
-
-	// how to make File from url
-
 	const setFileInfoData = (fileInfo: File | undefined) => {
-		console.log(
-			'🚀 ~ file: page.tsx:99 ~ setFileInfoData ~ fileInfo',
-			fileInfo
-		);
 		if (!fileInfo) return;
 
 		const url = URL.createObjectURL(fileInfo);
@@ -151,10 +134,6 @@ const UploadChapterPage = () => {
 			);
 		}
 		imageFile.thumbnail;
-		console.log(
-			'🚀 ~ file: page.tsx:158 ~ showImage ~ imageFile.thumbnail',
-			imageFile.thumbnail
-		);
 
 		return (
 			<Image
