@@ -49,10 +49,6 @@ const ContentsIdPage = async ({ params }: any) => {
 	);
 };
 
-interface ContentId {
-	contentsId: number;
-}
-
 // export async function generateStaticParams() {
 // 	const res = await fetch('https://pioneroroom.com/contents');
 // 	const posts: ILoopIDList[] = await res.json();
