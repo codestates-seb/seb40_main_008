@@ -5,15 +5,21 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { getCookie, getCookies } from 'cookies-next';
 import ReactStars from 'react-rating-stars-component';
 import { useRouter } from 'next/navigation';
+import { useVerifyLoginClient } from '../../../../../utils/hooks/useVerifyLoginClient';
 interface Props {
 	uploadClassId: string;
 }
 
 const VideoComment = ({ uploadClassId }: Props) => {
+
+	const userInfo = useVerifyLoginClient();
+	console.log("🚀 ~ file: VideoComment.tsx:16 ~ VideoComment ~ userInfo", userInfo)
+
 	const [comments, setComments] = useState('');
 	const [rating, setRating] = useState(0);
 	const router = useRouter();
 	const handleSubmit = () => {
+		if (!userInfo) return
 		const token = getCookie('accessToken');
 		fetch(`https://pioneroroom.com/auth/uploadclass/${uploadClassId}`, {
 			method: 'POST',
