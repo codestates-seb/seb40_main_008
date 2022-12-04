@@ -6,6 +6,7 @@ import { IContent, ICurriculumContent } from '../../../types/contents';
 import { cookies } from 'next/headers';
 import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
 import { ILoopIDList } from '../../../types/detailedContentIdListType';
+import verifyLogin from '../../../utils/VerifyLogin';
 
 const getContentInfo = async (contentsId: string): Promise<IContent> => {
 	const token = cookies().get('accessToken')?.value;
@@ -36,12 +37,14 @@ const getCurriculum = async (
 const ContentsIdPage = async ({ params }: any) => {
 	const contentInfo = await getContentInfo(params.contentsId);
 	const curriculumInfo = await getCurriculum(params.contentsId);
+	const userInfo = await verifyLogin();
 	const uploadclassId = getUploadClassId(curriculumInfo);
 	return (
 		<>
 			<BaseNavbar />
 			<ContentInfo uploadclassId={uploadclassId} contentInfo={contentInfo} />
 			<ContentTabs
+			userInfo={userInfo}
 				contentInfo={contentInfo}
 				curriculumInfo={curriculumInfo}
 			/>
