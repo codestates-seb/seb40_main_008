@@ -11,7 +11,10 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 public class CoinChargeDetailResponseDto {
 
-    private ZonedDateTime approvedAt;
     private int chargeAmount;
+    private Boolean paySuccess;
+    private ZonedDateTime approvedAt;
+    private int cancelAmount;
     private Boolean refund;
+    private String canceled_at;
 }

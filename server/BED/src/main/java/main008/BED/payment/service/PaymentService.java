@@ -1,6 +1,9 @@
 package main008.BED.payment.service;
 
 import lombok.RequiredArgsConstructor;
+import main008.BED.coinCharge.repository.CoinChargeDetailRepository;
+import main008.BED.coinCharge.repository.CoinChargeRepository;
+import main008.BED.coinCharge.service.CoinChargeService;
 import main008.BED.contents.entity.Contents;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
@@ -28,6 +31,7 @@ public class PaymentService {
     private final PaymentDetailRepository paymentDetailRepository;
     private final UsersRepository usersRepository;
     private final PaymentRepository paymentRepository;
+    private final CoinChargeService coinChargeService;
 
     /**
      * 컨텐츠 개설 시 가격 등록
@@ -61,6 +65,9 @@ public class PaymentService {
 
         payment.setPaymentDetails(paymentDetails);
         paymentRepository.save(payment);
+
+        coinChargeService.setBuyer(users, paymentDetail);
+        coinChargeService.setSeller(contents, paymentDetail);
     }
 
     @Transactional(readOnly = true)
