@@ -48,8 +48,7 @@ const VideoComment = ({ uploadClassId }: Props) => {
 				style={{
 					display: 'flex',
 					flexDirection: 'column',
-					width: '100%',
-					border: '1px solid white',
+					width: '100%'
 				}}
 			>
 				<ReactStars
@@ -63,7 +62,7 @@ const VideoComment = ({ uploadClassId }: Props) => {
 				<div>
 					<input
 						style={{
-							width: '80%',
+							width: '90%',
 							height: '30px',
 							border: '1px solid white',
 							borderRadius: '5px',
