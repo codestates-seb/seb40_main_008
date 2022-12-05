@@ -50,6 +50,7 @@
     border: 0;
     background-color: transparent;
     outline: 0;
+    cursor: pointer;
   }
 
   .rightbtn {
@@ -58,6 +59,7 @@
     border: 0;
     background-color: transparent;
     outline: 0;
+    cursor: pointer;
   }
 
   .font {
