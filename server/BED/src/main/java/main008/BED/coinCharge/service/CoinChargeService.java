@@ -7,8 +7,10 @@ import main008.BED.coinCharge.entity.CoinCharge;
 import main008.BED.coinCharge.entity.CoinChargeDetail;
 import main008.BED.coinCharge.repository.CoinChargeDetailRepository;
 import main008.BED.coinCharge.repository.CoinChargeRepository;
+import main008.BED.contents.entity.Contents;
 import main008.BED.exception.BusinessLogicException;
 import main008.BED.exception.ExceptionCode;
+import main008.BED.payment.entity.PaymentDetail;
 import main008.BED.userPage.entity.UserPage;
 import main008.BED.userPage.service.UserPageService;
 import main008.BED.users.entity.Users;
@@ -293,5 +295,47 @@ public class CoinChargeService {
         CoinChargeDetail coinChargeDetail = coinChargeDetailRepository.findByTid(kakaoReady.getTid()).orElseThrow();
 
         coinChargeDetailRepository.delete(coinChargeDetail);
+    }
+
+    public void setSeller(Contents contents, PaymentDetail paymentDetail) {
+
+        UserPage userPage = userPageService.findUserPage(contents.getUsers().getUsersId());
+        CoinCharge coinCharge = findCoinCharge(userPage.getUserPageId());
+
+        List<CoinChargeDetail> coinChargeDetails = coinCharge.getCoinChargeDetails();
+
+        CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
+        coinChargeDetail.setChargeAmount(paymentDetail.getPayment().getPrice());
+        coinChargeDetail.setApprovedAt(paymentDetail.getPayedAt());
+        coinChargeDetail.setPaySuccess(true);
+        coinChargeDetail.setRefund(null);
+        coinChargeDetail.setAid("1");
+        coinChargeDetail.setCoinCharge(coinCharge);
+        coinChargeDetailRepository.save(coinChargeDetail);
+
+        coinChargeDetails.add(coinChargeDetail);
+        coinCharge.setCoinChargeDetails(coinChargeDetails);
+        coinChargeRepository.save(coinCharge);
+    }
+
+    public void setBuyer(Users buyer, PaymentDetail paymentDetail) {
+
+        UserPage userPage = userPageService.findUserPage(buyer.getUsersId());
+        CoinCharge coinCharge = findCoinCharge(userPage.getUserPageId());
+
+        List<CoinChargeDetail> coinChargeDetails = coinCharge.getCoinChargeDetails();
+
+        CoinChargeDetail coinChargeDetail = new CoinChargeDetail();
+        coinChargeDetail.setCancelAmount(paymentDetail.getPayment().getPrice());
+        coinChargeDetail.setAid("1");
+        coinChargeDetail.setCanceled_at(String.valueOf(paymentDetail.getPayedAt()));
+        coinChargeDetail.setPaySuccess(null);
+        coinChargeDetail.setRefund(true);
+        coinChargeDetail.setCoinCharge(coinCharge);
+        coinChargeDetailRepository.save(coinChargeDetail);
+
+        coinChargeDetails.add(coinChargeDetail);
+        coinCharge.setCoinChargeDetails(coinChargeDetails);
+        coinChargeRepository.save(coinCharge);
     }
 }
