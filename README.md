@@ -2,8 +2,12 @@
 
 ## 📍배포주소
 https://www.class4989.one/
+
 ## 🔗 피그마 시안
 https://www.figma.com/file/c2WQ9ZPv7W3hozdQtuKZ8x/Untitled?node-id=0%3A1
+
+## 📝 서비스 소개
+https://www.notion.so/codestates/Class4989-71729d81d01b4ac8b7265e42529993e2
 
 ## 💡Rest Api
 https://documenter.getpostman.com/view/22568988/2s8YmSrfq3
@@ -46,29 +50,11 @@ https://documenter.getpostman.com/view/22568988/2s8YmSrfq3
 
 <br/>
 
-
-<br/>
-
 ## 🛠 기술 스택
 
 ### Front-End
 
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
-
-
-<img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=black"> <img src="https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=Axios&logoColor=white"> <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=Vercel&logoColor=white">
-
-
-### Back-End
-
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white"> <img src="https://img.shields.io/badge/Spring Data JPA-0ABF53?style=for-the-badge">
-
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/NGINX-181717?style=for-the-badge&logo=NGINX&logoColor=white"> <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=white"> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=AmazonEC2&logoColor=white"> <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=for-the-badge&logo=AmazonRDS&logoColor=white">
-
-
-### Common
-<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-
+<img src="https://user-images.githubusercontent.com/107908373/205854637-74db9554-d56c-4961-8997-96b97a3a5adf.png">
 
 <br/>
 
