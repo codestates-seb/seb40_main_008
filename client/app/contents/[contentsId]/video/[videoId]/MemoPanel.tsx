@@ -1,5 +1,5 @@
 'use client';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
@@ -59,13 +59,43 @@ const MemoPanel = ({ uploadClassId, memoInfo, time, playerRef }: Props) => {
 					<div
 						style={{
 							marginRight: '16px',
+							display: 'flex',
+							flexDirection: 'row',
+							alignItems: 'center',
+							justifyContent: 'center',
 						}}
 					>
-						<button onClick={() => handleSkipToTimeStamp(memo.timeLine)}>
+						<button
+							style={{
+								backgroundColor: 'transparent',
+								border: 'none',
+								outline: 'none',
+								cursor: 'pointer',
+								color: '#fff',
+								fontWeight: 'bold',
+							}}
+							onClick={() => handleSkipToTimeStamp(memo.timeLine)}
+						>
+							<FontAwesomeIcon
+								onClick={() => handleSubmit(time)}
+								size={'lg'}
+								icon={faPlay}
+								width={18}
+								style={{
+									marginRight: '4px',
+								}}
+							/>
 							{memo.timeLine}
 						</button>
+						<p
+							style={{
+								marginLeft: '12px',
+								wordBreak: 'break-all',
+							}}
+						>
+							{memo.memo}
+						</p>
 					</div>
-					<p>{memo.memo}</p>
 				</div>
 			))}
 			<input

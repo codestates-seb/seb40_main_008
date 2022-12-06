@@ -20,7 +20,7 @@
 .zzimbtn {
   display: flex;
   align-items: center;
-  color: white;
+  color: var(--faintwhite);;
   border: 0;
   outline: 0;
   font-size: 16px;

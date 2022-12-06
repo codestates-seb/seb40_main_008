@@ -29,5 +29,5 @@
 }
 
 .active {
-  color: white;
+  color: var(--faintwhite);;
 }

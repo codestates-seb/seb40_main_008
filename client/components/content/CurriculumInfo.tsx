@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from './CurriculumInfo.module.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faPencil,
+	faTrash,
+	faPenToSquare,
+} from '@fortawesome/free-solid-svg-icons';
 import { ICurriculumContent } from '../../types/contents';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -99,12 +103,15 @@ const CurriculumInfo = ({
 													<Link
 														href={{
 															pathname: `/contents/${contentsId}/video/${e.uploadClassId}`,
+															query: {
+																status: role,
+															},
 														}}
 													>
-														<h4>{e.title}</h4>
+														<h4 style={{ paddingLeft: "10px", marginTop: "10px", fontWeight: "lighter" }}>{e.title}</h4>
 													</Link>
 												) : (
-													<h4>{e.title}</h4>
+													<h4 style={{ paddingLeft: "10px", marginTop: "10px", fontWeight: "lighter" }}>{e.title}</h4>
 												)}
 											</div>
 											<div>

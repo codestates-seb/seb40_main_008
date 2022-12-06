@@ -210,6 +210,7 @@ const UploadPage = () => {
           >
             <p className={styles.classtitle}>클래스명</p>
             <input
+              required
               type="text"
               name="title"
               value={values.title}
@@ -218,6 +219,7 @@ const UploadPage = () => {
             ></input>
             <p className={styles.title}>카테고리</p>
             <select
+              required
               id="categories"
               value={values.categories}
               name="categories"

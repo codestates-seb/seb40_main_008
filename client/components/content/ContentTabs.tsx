@@ -29,6 +29,7 @@ const ContentTabs = ({
               <div
                 key={contentInfo?.contentsId}
                 style={{
+                  whiteSpace: "pre-line",
                   width: "90%",
                   padding: "20px",
                   height: "100%",
@@ -47,6 +48,7 @@ const ContentTabs = ({
               <div
                 key={contentInfo?.contentsId}
                 style={{
+                  whiteSpace: "pre-line",
                   width: "90%",
                   padding: "20px",
                   height: "100%",

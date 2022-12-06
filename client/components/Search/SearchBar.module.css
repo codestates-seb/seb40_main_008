@@ -18,7 +18,7 @@
     border: none;
     width: 340px;
     height: 40px;
-    color: white;
+    color: var(--faintwhite);;
     padding-left: 12px;
     font-size: 18px;
     background-color: rgba(255, 255, 255, 0);

@@ -57,7 +57,7 @@ const CoinHistorySection = ({ data }: CoinHistorySectionProps) => {
               width={24}
               className={styles.coinfont}
             />
-            {data.totalCoin}
+            {data.totalCoin}원
           </div>
         </div>
 
@@ -70,8 +70,8 @@ const CoinHistorySection = ({ data }: CoinHistorySectionProps) => {
         </div>
 
         {data.coinChargeDetails.length === 0 ? (
-          <div className={styles.noclassWrapper}>
-            내가올린 클래스가 없습니다.
+          <div className={styles.nocoinWrapper}>
+            코인 내역이 없습니다.
           </div>
         ) : (
           data.coinChargeDetails.map((e, idx) => (
