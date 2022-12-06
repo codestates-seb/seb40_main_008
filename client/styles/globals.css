@@ -19,7 +19,7 @@ body {
 	max-width: var(--max-width);
 	min-width: 300px;
 	min-height: 100vh;
-  padding-bottom: 50px;
+	padding-bottom: 50px;
 	margin: 0 auto;
 }
 h1,
@@ -45,5 +45,21 @@ a {
 	body {
 		color: #f3f3f3;
 		background: black;
+	}
+}
+
+.spinner {
+	animation: spin infinite 5s linear;
+
+	/*You can increase or decrease the timer (5s) to 
+	 increase or decrease the speed of the spinner*/
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
 	}
 }

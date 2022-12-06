@@ -59,9 +59,9 @@ const ContentInfo = ({ contentInfo, uploadclassId }: ContentInfoProps) => {
 
 	const getIconButton = (role: string) => {
 		if (role === 'Paid_customer') {
-			return <ContentCardFavoriteBtn contentId={contentInfo?.contentsId} />;
+			return <ContentCardFavoriteBtn contentInfo={contentInfo} />;
 		} else if (role === 'Unpaid_customer') {
-			return <ContentCardWishBtn contentId={contentInfo?.contentsId} />;
+			return <ContentCardWishBtn contentInfo={contentInfo} />;
 		}
 	};
 

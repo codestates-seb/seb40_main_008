@@ -4,42 +4,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import styles from '../content/ContentInfo.module.css';
 import { getCookie } from 'cookies-next';
+import { IContent } from '../../types/contents';
 interface ContentCardFavoriteProps {
-	contentId: number;
+	contentInfo: IContent;
 }
 
 export const ContentCardFavoriteBtn = ({
-	contentId,
+	contentInfo,
 }: ContentCardFavoriteProps) => {
-	const [like, setLike] = useState(false);
+	const [like, setLike] = useState(contentInfo.wished);
 	const token = getCookie('accessToken');
 
-	const handleLikeCheck = () => {
-		setLike(!like);
+	const postLike = async () => {
+		const res = await fetch(
+			`https://pioneroroom.com/auth/${contentInfo.contentsId}/likes`,
+			{
+				method: 'patch',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
+		console.log(
+			'🚀 ~ file: ContentCardFavoriteBtn.tsx:34 ~ postLike ~ res',
+			res
+		);
 	};
-
-	// useEffect(() => {
-	// 	fetch(`https://pioneroroom.com/auth/${contentId}/likes`, {
-	// 		method: 'patch',
-	// 		headers: {
-	// 			Authorization: `Bearer ${token}`,
-	// 		},
-	// 	})
-	// 		.then((res) => {
-	// 			res.json();
-	// 		})
-	// 		.then((data) => {
-	// 			console.log('성공', data);
-	// 		})
-	// 		.catch((error) => {});
-	// }, [like]);
 
 	return (
 		<>
-			<button onClick={handleLikeCheck} className={styles.zzimbtn}>
+			<button onClick={postLike} className={styles.zzimbtn}>
 				<FontAwesomeIcon
 					icon={faHeart}
 					width={24}
+					color={like ? 'red' : 'white'}
 					className={`${like ? styles.icon : styles.clickicon}`}
 				/>
 				좋아요

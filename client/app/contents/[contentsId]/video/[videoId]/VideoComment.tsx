@@ -11,14 +11,13 @@ interface Props {
 }
 
 const VideoComment = ({ uploadClassId }: Props) => {
-
 	const userInfo = useVerifyLoginClient();
 
 	const [comments, setComments] = useState('');
 	const [rating, setRating] = useState(0);
 	const router = useRouter();
 	const handleSubmit = () => {
-		if (!userInfo) return
+		if (!userInfo) return;
 		const token = getCookie('accessToken');
 		fetch(`https://pioneroroom.com/auth/uploadclass/${uploadClassId}`, {
 			method: 'POST',
@@ -54,7 +53,6 @@ const VideoComment = ({ uploadClassId }: Props) => {
 					display: 'flex',
 					flexDirection: 'column',
 					width: '100%',
-					border: '1px solid white',
 				}}
 			>
 				<ReactStars
