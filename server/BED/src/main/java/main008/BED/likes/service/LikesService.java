@@ -94,7 +94,7 @@ public class LikesService {
     /*좋아요 기능 조건문*/
     private void ifLikesHave(Users users, Likes likes, Contents contents, LikesDetail likesDetail) {
 
-        LikesDetail likesDetail1 = likesDetailRepository.findByUsersLikes(users.getUsersId(), likes.getLikesId());
+        LikesDetail likesDetail1 = likesDetailRepository.findByUsersLikes(users.getUsersId(), likes.getLikesId()).get();
 
         if (likesDetail1 != null) {
 
@@ -131,16 +131,14 @@ public class LikesService {
 
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
-        if (contents.getLikes().getLikesDetails().size() == 0) {
-            return false;
-        } else {
-            LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId());
+        if (contents.getLikes().getLikesDetails().size() == 0) {return false;}
+        else {
+            if (likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId()).isEmpty()) {return false;}
+            else {
+                LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId()).get();
 
-            if (likesDetail.getLiked() == null) {
-                return false;
+                return likesDetail.getLiked();
             }
-
-            return likesDetail.getLiked();
         }
     }
 }

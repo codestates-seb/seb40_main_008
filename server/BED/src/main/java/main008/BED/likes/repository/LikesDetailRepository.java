@@ -23,5 +23,5 @@ public interface LikesDetailRepository extends JpaRepository<LikesDetail, Long> 
             + "WHERE likes_Detail.users_id = :users_id "
             + "AND likes_Detail.likes_id = :likes_id"
             , nativeQuery = true)
-    LikesDetail findByUsersLikes(Long users_id, Long likes_id);
+    Optional<LikesDetail> findByUsersLikes(Long users_id, Long likes_id);
 }
