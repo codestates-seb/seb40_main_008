@@ -43,7 +43,7 @@
 .btn {
   border: 0;
   outline: 0;
-  color: white;
+  color: var(--faintwhite);
   background: transparent;
   margin-left: 5px;
 }
@@ -64,5 +64,5 @@
   outline: 0;
   color: white;
   background: transparent;
-  font-size: 17px;
+  font-size: 15px;
 }
