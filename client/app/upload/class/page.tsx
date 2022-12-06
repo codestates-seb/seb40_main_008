@@ -17,11 +17,8 @@ const UploadClassPage = () => {
   const chapterId = searchParams.get("chapterId");
   const contentsId = searchParams.get("contentsId");
   const router = useRouter();
-  console.log(query);
-
   const [file, setFile] = useState<any>();
   const [docfile, setDocFile] = useState<any>();
-
   const [values, setValues] = useState<UploadLectureType>(initialLecture);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,19 +57,19 @@ const UploadClassPage = () => {
       },
       body: formData,
     }).then((res) => {
+      formData.delete("title");
+      formData.delete("details");
+      formData.delete("videoFile");
+      formData.delete("docsFile");
       if (res.ok) {
-        formData.delete("title");
-        formData.delete("details");
-        formData.delete("videoFile");
-        formData.delete("docsFile");
         router.push(`/contents/${contentsId}`);
       }
     });
   };
 
   const uploadVideofile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formData.delete("videoFile");
     const fileList = e.target.files;
-
     if (fileList && fileList[0]) {
       setFile(fileList[0].name);
       formData.append("videoFile", fileList[0]);
@@ -80,14 +77,12 @@ const UploadClassPage = () => {
         ...values,
         videoFile: fileList[0],
       });
-
-      console.log("fileList[0]1", fileList[0].name);
     }
   };
 
   const uploadDocsfile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formData.delete("docsFile");
     const fileList = e.target.files;
-
     if (fileList && fileList[0]) {
       setDocFile(fileList[0].name);
       formData.append("docsFile", fileList[0]);
@@ -95,8 +90,6 @@ const UploadClassPage = () => {
         ...values,
         docsFile: fileList[0],
       });
-
-      console.log("fileList[0]2", fileList[0].name);
     }
   };
 

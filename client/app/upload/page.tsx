@@ -38,7 +38,7 @@ const UploadPage = () => {
   };
 
   const img = {
-    file: thumbnail,
+    file: null,
     thumbnail: thumbnail,
     type: null,
   };
@@ -86,6 +86,9 @@ const UploadPage = () => {
       alert("모든 값을 입력해주세요");
       return;
     }
+    if (formData.get("thumbnail") === null) {
+      alert("썸네일을 바꿔주세요");
+    }
 
     formData.append("categories", values.categories);
     formData.append("details", values.details);
@@ -101,14 +104,14 @@ const UploadPage = () => {
         },
         body: formData,
       }).then((res) => {
+        formData.delete("categories");
+        formData.delete("details");
+        formData.delete("price");
+        formData.delete("tutorDetail");
+        formData.delete("title");
+        formData.delete("thumbnail");
+        console.log(res);
         if (res.ok) {
-          formData.delete("categories");
-          formData.delete("details");
-          formData.delete("price");
-          formData.delete("tutorDetail");
-          formData.delete("title");
-          formData.delete("thumbnail");
-          console.log(res);
           router.push(`/mypage/uploadclass`);
         }
       });
@@ -120,13 +123,13 @@ const UploadPage = () => {
         },
         body: formData,
       }).then((res) => {
+        formData.delete("categories");
+        formData.delete("details");
+        formData.delete("price");
+        formData.delete("tutorDetail");
+        formData.delete("title");
+        formData.delete("thumbnail");
         if (res.ok) {
-          formData.delete("categories");
-          formData.delete("details");
-          formData.delete("price");
-          formData.delete("tutorDetail");
-          formData.delete("title");
-          formData.delete("thumbnail");
           router.push(`/mypage/uploadclass`);
         }
       });
@@ -138,8 +141,8 @@ const UploadPage = () => {
   };
 
   const uploadfile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formData.delete("thumbnail");
     const fileList = e.target.files;
-
     if (fileList && fileList[0]) {
       const url = URL.createObjectURL(fileList[0]);
 
@@ -166,8 +169,8 @@ const UploadPage = () => {
     return (
       <Image
         className={styles.thumbnail}
-        src={imageFile.thumbnail ?? ""}
-        alt={imageFile.type ?? ""}
+        src={imageFile.thumbnail ?? "/"}
+        alt={imageFile.type ?? "/"}
         sizes="(max-width: 768px) 100vw,
 				(max-width: 1200px) 50vw,
 				33vw"
@@ -214,19 +217,20 @@ const UploadPage = () => {
               className={styles.select}
             >
               <option value="choice">-- 선택하세요 --</option>
-              <optgroup
-                className={styles.label}
-              >
+              <optgroup className={styles.label}>
                 <option value="드로잉">드로잉</option>
                 <option value="성공 마인드">성공 마인드</option>
                 <option value="베이킹/디저트">베이킹</option>
-                <option value="money">금융,재테크</option>
-                <option value="startup">창업,부업</option>
-                <option value="programming">프로그래밍</option>
-                <option value="Exercise">운동</option>
-                <option value="life style">라이프스타일</option>
-                <option value="photo">사진</option>
-                <option value="music">음악</option>
+                <option value="금융/재테크">금융,재테크</option>
+                <option value="창업/부업">창업,부업</option>
+                <option value="프로그래밍">프로그래밍</option>
+                <option value="영어">영어</option>
+                <option value="공예">공예</option>
+                <option value="요리/음료">요리/음료</option>
+                <option value="마켓팅">마켓팅</option>
+                <option value="라이프 스타일">라이프 스타일</option>
+                <option value="사진/영상">사진/영상</option>
+                <option value="음악">음악</option>
               </optgroup>
             </select>
 
