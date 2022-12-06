@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -110,7 +111,15 @@ public class LikesService {
 
         likes.setContents(contents);
         likes.getLikesDetails().add(likesDetail);
-        likesRepository.likesCountUp(likes);
-        contentsRepository.likesCountForContentsUp(contents.getContentsId());
+        likes.setLikesCount(likes.getLikesCount() + 1);
+        likesRepository.save(likes);
+//        contentsRepository.likesCountForContentsUp(contents.getContentsId());
+    }
+
+    // 컨텐츠 좋아요 유무 찾기
+    public Boolean getContentLike(Contents contents, Users users) {
+
+        LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId());
+        return likesDetail.getLiked();
     }
 }

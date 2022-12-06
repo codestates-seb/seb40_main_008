@@ -33,14 +33,14 @@ public class LikesController {
     private final ContentsMapper contentsMapper;
     private final UsersService usersService;
 
-    @PatchMapping("/auth/{contents-id}/likes")
+    @PostMapping("/auth/{contents-id}/likes")
     public ResponseEntity likesContents(Principal principal,
                                         @PathVariable("contents-id") @Positive Long contentsId,
-                                        @Valid @RequestBody LikesDetailDto.Post post) {
+                                        @RequestParam(name = "liked", required = false, defaultValue = "true") Boolean liked) {
 
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
-        Likes likes = likesService.likesContents(contentsId, users, likesDetailMapper.postToEntity(post));
+        Likes likes = likesService.likesContents(contentsId, users, likesDetailMapper.postToEntity(new LikesDetailDto.Post(liked)));
 
         List<LikesDetail> likesDetails = likesService.findTrueLikes(likes);
 
