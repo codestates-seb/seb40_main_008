@@ -1,7 +1,7 @@
 import { getCookie } from 'cookies-next';
 import { UserInfoWithCoin } from '../../types/user/userinfo';
 
-export const getUserInfoClient = async () => {
+export const VerifyLoginClient = async () => {
 	const token = getCookie('accessToken');
 	const res = await fetch('https://pioneroroom.com/auth/userinfo', {
 		headers: {

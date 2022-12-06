@@ -1,10 +1,10 @@
-import React from 'react';
-import CategoryNavBar from '../../../components/CategoryNavBar/CategoryNavBar';
-import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
-import SearchResultFilter from '../../../components/Search/SearchResultFilter';
-import HomeClassesSection from '../../../components/Card/HomeClassesSection';
-import styles from './categorydetail.module.css';
-import { fixedCategoriesEng } from '../../../constants/fixedCategorys';
+import React from "react";
+import CategoryNavBar from "../../../components/CategoryNavBar/CategoryNavBar";
+import { ICategorySearchResult } from "../../../types/category_search/categorySearchType";
+import SearchResultFilter from "../../../components/Search/SearchResultFilter";
+import HomeClassesSection from "../../../components/Card/HomeClassesSection";
+import styles from "./categorydetail.module.css";
+import { fixedCategoriesEng } from "../../../constants/fixedCategorys";
 
 const getCategoryContents = async (
 	category: string,
@@ -28,7 +28,7 @@ const getCategoryContents = async (
 };
 
 const getSearchContents = async (searchVal: string, sortingMethod: string) => {
-	const sortCondition = sortingMethod === '' || sortingMethod === 'newest';
+	const sortCondition = sortingMethod === "" || sortingMethod === "newest";
 	try {
 		const response = await fetch(
 			sortCondition
@@ -45,29 +45,29 @@ const getSearchContents = async (searchVal: string, sortingMethod: string) => {
 
 const DetailCategoryPage = async ({ params: { category } }: any) => {
 	let contentsList;
-	const [categoryName, sortingMethod] = category.includes('-')
-		? category.split('-')
-		: [category, ''];
+	const [categoryName, sortingMethod] = category.includes("-")
+		? category.split("-")
+		: [category, ""];
 
 	if (!fixedCategoriesEng.includes(categoryName)) {
 		contentsList = await getSearchContents(categoryName, sortingMethod);
 	} else {
-		if (category.includes('-')) {
+		if (category.includes("-")) {
 			contentsList = await getCategoryContents(categoryName, sortingMethod);
 		} else {
-			contentsList = await getCategoryContents(category, 'popular');
+			contentsList = await getCategoryContents(category, "popular");
 		}
 	}
 
 	return (
 		<>
-			<CategoryNavBar />
+			<CategoryNavBar name={category} />
 			<div className={styles.filterWrapper}>
 				<SearchResultFilter category={category} />
 			</div>
 			<div className={styles.categorydetailWrapper}>
 				{contentsList.length === 0 ? (
-					<div className={styles.noclassWrapper}>해당하는 강좌가 없습니다.</div>
+					<div>해당하는 강좌가 없습니다.</div>
 				) : (
 					<HomeClassesSection contentsList={contentsList} />
 				)}

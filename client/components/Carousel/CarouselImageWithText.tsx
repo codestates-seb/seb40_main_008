@@ -30,6 +30,9 @@ const CarouselImageWithText = ({
 						alt={title + subtitle}
 						//fill = true 를 쓰려면 상위 div가 relative
 						fill={true}
+						sizes="(max-width: 768px) 100vw,
+						(max-width: 1200px) 50vw,
+						33vw"
 						style={{
 							objectFit: 'cover',
 						}}

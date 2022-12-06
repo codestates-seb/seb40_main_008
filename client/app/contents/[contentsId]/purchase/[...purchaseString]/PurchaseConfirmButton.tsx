@@ -44,6 +44,8 @@ const PurchaseConfirmButton = ({ contentId, remainingAmount }: Props) => {
 			console.error(e);
 		}
 	};
+	router.prefetch(`/contents/${contentId}`);
+	router.prefetch(`/contents`);
 
 	const handleToChargeCoin = () => {
 		router.push('/charge');

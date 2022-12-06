@@ -14,8 +14,7 @@ export async function patchWish(contentId: number, wish: boolean) {
 			`https://pioneroroom.com/auth/${contentId}/wish`,
 			requestOptions
 		);
-		const data = await response.json();
-		return data.status;
+		return response.status;
 	} catch (err) {
 		console.error(err);
 		return undefined;

@@ -8,6 +8,8 @@ import DelEditbtn from "../Buttons/DelEditbtn";
 import Link from "next/link";
 import Curriculumdelete from "../Buttons/Curriculumdelete";
 import Categories from "../../app/categories/page";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 // 수정, 삭제 버튼 logic 추가
 
 interface HomeContentProps {
@@ -67,7 +69,10 @@ const UploadClassSection = ({ contentsList }: HomeContentProps) => {
                       },
                     }}
                   >
-                    수정
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      width={15}
+                    />
                   </Link>
                   {/* </Link> */}
                   <Curriculumdelete
