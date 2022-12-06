@@ -40,16 +40,6 @@ const UploadClassPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      values.details === null ||
-      values.docsFile === null ||
-      values.title === null ||
-      values.videoFile === null
-    ) {
-      alert("모든 값을 입력해주세요");
-      return;
-    }
-
     formData.append("title", values.title);
     formData.append("details", values.details);
 

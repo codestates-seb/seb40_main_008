@@ -75,18 +75,6 @@ const UploadPage = () => {
   ) => {
     e.preventDefault();
 
-    if (
-      values.categories === null ||
-      values.details === null ||
-      values.price === null ||
-      values.title === null ||
-      values.thumbnail === null ||
-      values.tutorDetail === null
-    ) {
-      alert("모든 값을 입력해주세요");
-      return;
-    }
-
     formData.append("categories", values.categories);
     formData.append("details", values.details);
     formData.append("price", values.price);
@@ -132,15 +120,6 @@ const UploadPage = () => {
       });
     }
   };
-
-  // useEffect(() => {
-  //   console.log("formData: ", formData.get("thumbnail"));
-  // }, [imageFile]);
-
-  useEffect(() => {
-    console.log("밸루", values);
-    console.log("id", contentsId);
-  }, []);
 
   const handleClickFileInput = () => {
     fileInput.current?.click();
