@@ -5,7 +5,7 @@ import Image from "next/image";
 import { UploadChapterType, UploadImage } from "../../../types/uploadclass";
 import { useEffect, useMemo, useRef, useState } from "react";
 import OrangeButton from "../../../components/Buttons/orangeButton";
-import { redirect, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
@@ -68,6 +68,10 @@ const UploadChapterPage = () => {
       return;
     }
 
+    if (formData.get("thumbnail") === null) {
+      alert("썸네일을 바꿔주세요");
+    }
+
     formData.append("chapterOrder", values.chapterOrder);
     formData.append("title", values.title);
 
@@ -103,35 +107,20 @@ const UploadChapterPage = () => {
       });
     }
   };
-
-  useEffect(() => {
-    console.log("🚀 처음돌때", imageFile);
-    console.log("콘텐트아이디", contentId);
-  }, []);
-
   const handleClickFileInput = () => {
     fileInputRef.current?.click();
   };
 
   const uploadfile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
-    console.log("🚀 ~ file: page.tsx:89 ~ uploadfile ~ fileList", fileList);
     const fileInfo = fileList?.[0];
     formData.delete("thumbnail");
     setFileInfoData(fileInfo);
   };
 
-  useEffect(() => {
-    console.log("밸루", values);
-  }, []);
-
   // how to make File from url
 
   const setFileInfoData = (fileInfo: File | undefined) => {
-    console.log(
-      "🚀 ~ file: page.tsx:99 ~ setFileInfoData ~ fileInfo",
-      fileInfo
-    );
     if (!fileInfo) return;
 
     const url = URL.createObjectURL(fileInfo);
@@ -158,10 +147,6 @@ const UploadChapterPage = () => {
       );
     }
     imageFile.thumbnail;
-    console.log(
-      "🚀 ~ file: page.tsx:158 ~ showImage ~ imageFile.thumbnail",
-      imageFile.thumbnail
-    );
 
     return (
       <Image
