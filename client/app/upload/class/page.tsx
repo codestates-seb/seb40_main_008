@@ -39,13 +39,19 @@ const UploadClassPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert(JSON.stringify(values, null, 2));
+
+    if (
+      values.details === null ||
+      values.docsFile === null ||
+      values.title === null ||
+      values.videoFile === null
+    ) {
+      alert("모든 값을 입력해주세요");
+      return;
+    }
+
     formData.append("title", values.title);
     formData.append("details", values.details);
-
-    console.log("formData:video:: ", formData.getAll("videoFile"));
-    console.log("formData:docs:: ", formData.getAll("docsFile"));
-    console.log("formData:title:: ", formData.getAll("title"));
 
     fetch(`https://pioneroroom.com/auth/chapter/lecture/${chapterId}`, {
       method: "POST",
