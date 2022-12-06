@@ -59,6 +59,15 @@ const UploadChapterPage = () => {
     e.preventDefault();
     //alert(JSON.stringify(values, null, 2));
 
+    if (
+      values.chapterOrder === null ||
+      values.thumbnail === null ||
+      values.title === null
+    ) {
+      alert("모든 값을 입력해주세요");
+      return;
+    }
+
     formData.append("chapterOrder", values.chapterOrder);
     formData.append("title", values.title);
 
@@ -159,7 +168,7 @@ const UploadChapterPage = () => {
         className={styles.thumbnail}
         src={imageFile.thumbnail ?? "/"}
         alt={"img"}
-        width={288}
+        width={349}
         sizes="(max-width: 768px) 100vw,
 				(max-width: 1200px) 50vw,
 				33vw"
@@ -180,7 +189,6 @@ const UploadChapterPage = () => {
           <select
             id="chapterOrder"
             name="chapterOrder"
-            required
             value={values.chapterOrder ?? ""}
             onChange={handleOptionChange}
             className={styles.select}
@@ -199,7 +207,6 @@ const UploadChapterPage = () => {
           <input
             type="text"
             name="title"
-            required
             value={values.title ?? ""}
             onChange={handleChange}
             className={styles.chapternameinput}
@@ -209,7 +216,6 @@ const UploadChapterPage = () => {
             <p className={styles.title}>챕터 썸네일</p>
             <input
               type="file"
-              required
               accept="image/png, image/jpg, image/jpeg"
               name="thumbnail"
               ref={fileInputRef}

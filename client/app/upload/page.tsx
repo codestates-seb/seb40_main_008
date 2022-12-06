@@ -75,6 +75,18 @@ const UploadPage = () => {
   ) => {
     e.preventDefault();
 
+    if (
+      values.categories === null ||
+      values.details === null ||
+      values.price === null ||
+      values.title === null ||
+      values.thumbnail === null ||
+      values.tutorDetail === null
+    ) {
+      alert("모든 값을 입력해주세요");
+      return;
+    }
+
     formData.append("categories", values.categories);
     formData.append("details", values.details);
     formData.append("price", values.price);
@@ -133,8 +145,6 @@ const UploadPage = () => {
 
       formData.append("thumbnail", fileList[0]);
 
-      console.log("form get thumbnail", formData.get("thumbnail"));
-
       setImageFile({
         file: fileList[0],
         thumbnail: url,
@@ -161,8 +171,8 @@ const UploadPage = () => {
         sizes="(max-width: 768px) 100vw,
 				(max-width: 1200px) 50vw,
 				33vw"
-        width={300}
-        height={200}
+        width={290}
+        height={190}
         onClick={handleClickFileInput}
         style={{ objectFit: "contain", borderRadius: "4px" }}
       />
@@ -189,7 +199,6 @@ const UploadPage = () => {
           >
             <p className={styles.classtitle}>클래스명</p>
             <input
-              required
               type="text"
               name="title"
               value={values.title}
@@ -198,7 +207,6 @@ const UploadPage = () => {
             ></input>
             <p className={styles.title}>카테고리</p>
             <select
-              required
               id="categories"
               value={values.categories}
               name="categories"

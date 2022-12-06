@@ -40,6 +40,16 @@ const UploadClassPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (
+      values.details === null ||
+      values.docsFile === null ||
+      values.title === null ||
+      values.videoFile === null
+    ) {
+      alert("모든 값을 입력해주세요");
+      return;
+    }
+
     formData.append("title", values.title);
     formData.append("details", values.details);
 
@@ -99,7 +109,6 @@ const UploadClassPage = () => {
 
           <p className={styles.classtitle}>강의명</p>
           <input
-            required
             type="text"
             name="title"
             onChange={handleChange}
@@ -109,14 +118,12 @@ const UploadClassPage = () => {
           <h3 className={styles.title}>강의 업로드</h3>
           <div className={styles.filebox}>
             <input
-              required
               className={styles.uploadname}
               value={file}
               placeholder="첨부파일"
             />
             <label htmlFor="file">파일찾기</label>
             <input
-              required
               accept="video/*"
               name="videoFile"
               onChange={uploadVideofile}
@@ -129,7 +136,6 @@ const UploadClassPage = () => {
 
           <p className={styles.classtitle}>내용</p>
           <textarea
-            required
             name="details"
             onChange={handleTextChange}
             className={styles.lectureinput}
@@ -137,14 +143,12 @@ const UploadClassPage = () => {
 
           <div className={styles.filebox}>
             <input
-              required
               className={styles.uploadname}
               value={docfile}
               placeholder="첨부파일"
             />
             <label htmlFor="file2">파일찾기</label>
             <input
-              required
               accept=".pdf, .text/plain"
               name="docsFile"
               onChange={uploadDocsfile}
