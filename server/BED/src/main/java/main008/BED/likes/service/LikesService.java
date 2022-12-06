@@ -11,6 +11,7 @@ import main008.BED.likes.repository.LikesDetailRepository;
 import main008.BED.likes.repository.LikesRepository;
 import main008.BED.likes.service.statePattern.LikesButton;
 import main008.BED.users.entity.Users;
+import main008.BED.users.service.UsersService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class LikesService {
     private final ContentsRepository contentsRepository;
     private final LikesRepository likesRepository;
     private final LikesDetailRepository likesDetailRepository;
+    private final UsersService usersService;
     public static LikesButton likesButton = new LikesButton();
 
     public void createLikes(Contents contents) {
@@ -121,7 +123,13 @@ public class LikesService {
     }
 
     // 컨텐츠 좋아요 유무 찾기
-    public Boolean getContentLike(Contents contents, Users users) {
+    public Boolean getContentLike(Contents contents, Principal principal) {
+
+        if (principal == null) {
+            return false;
+        }
+
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
         LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId());
 
