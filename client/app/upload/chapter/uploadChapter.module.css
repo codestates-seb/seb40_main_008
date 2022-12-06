@@ -77,7 +77,9 @@
 }
 
 .uploadimg {
-  height: 240px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
   align-items: center;
   background-color: var(--faintwhite);
   width: 100%;

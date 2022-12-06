@@ -215,17 +215,11 @@ const UploadPage = () => {
             >
               <option value="choice">-- 선택하세요 --</option>
               <optgroup
-                label="----------------개발전용----------------"
                 className={styles.label}
               >
                 <option value="드로잉">드로잉</option>
                 <option value="성공 마인드">성공 마인드</option>
                 <option value="베이킹/디저트">베이킹</option>
-              </optgroup>
-              <optgroup
-                label="-------------선택하지 마세요------------"
-                className={styles.label}
-              >
                 <option value="money">금융,재테크</option>
                 <option value="startup">창업,부업</option>
                 <option value="programming">프로그래밍</option>
