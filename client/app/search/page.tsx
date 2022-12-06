@@ -10,14 +10,14 @@ import getSearchData from '../../components/Search/PopularKeyword';
 
 const SearchPage = async () => {
     // 인기 검색어(무한 fetching 문제 발생...)
-    // const popularKeyword = await getSearchData();
+    const popularKeyword = await getSearchData();
 
     return (
         <>
             <div className={styles.searchpageWrapper}>
                 <SearchBar />
 
-                {/* <div className={styles.title}>인기순</div>
+                <div className={styles.title}>인기순</div>
 
                 {popularKeyword.map((e: any, idx: number) => {
                     return (
@@ -28,7 +28,7 @@ const SearchPage = async () => {
                             </li>
                         </ol>
                     )
-                })} */}
+                })}
             </div>
             <TabNavigator activeLink={'search'} />
         </>
