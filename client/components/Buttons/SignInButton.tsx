@@ -50,7 +50,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 				</a>
 			</button>
 
-			<button className={styles.naverbtn}>
+			{/* <button className={styles.naverbtn}>
 				<a href="https://pioneroroom.com/oauth2/authorization/naver">
 					<div className={styles.naverbtnWrapper}>
 						<Image
@@ -65,7 +65,7 @@ const SignInButton = ({ isSignIn }: SignInButtonProps) => {
 						<p className={styles.btn_naver_p}>네이버 로그인</p>
 					</div>
 				</a>
-			</button>
+			</button> */}
 		</div>
 	);
 };

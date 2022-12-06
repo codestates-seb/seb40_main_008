@@ -116,14 +116,6 @@ const PurchaseStringPage = async ({ searchParams }: Props) => {
 							alignItems: 'center',
 						}}
 					>
-						<p
-							style={{
-								color: '#aaaaaa',
-								marginBottom: '8px',
-							}}
-						>
-							잔액이 마이너스일 경우, 충전하기
-						</p>
 					</div>
 					<PurchaseConfirmButton
 						contentId={contentId}

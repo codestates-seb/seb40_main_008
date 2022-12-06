@@ -45,19 +45,21 @@
   }
   
   .leftbtn {
-    color: white;
+    color: var(--faintwhite);;
     margin-right: 15px;
     border: 0;
     background-color: transparent;
     outline: 0;
+    cursor: pointer;
   }
 
   .rightbtn {
-    color: white;
+    color: var(--faintwhite);;
     margin-right: 15px;
     border: 0;
     background-color: transparent;
     outline: 0;
+    cursor: pointer;
   }
 
   .font {

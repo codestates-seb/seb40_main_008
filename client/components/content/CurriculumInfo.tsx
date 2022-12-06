@@ -108,10 +108,10 @@ const CurriculumInfo = ({
 															},
 														}}
 													>
-														<h4>{e.title}</h4>
+														<h4 style={{ paddingLeft: "10px", marginTop: "10px", fontWeight: "lighter" }}>{e.title}</h4>
 													</Link>
 												) : (
-													<h4>{e.title}</h4>
+													<h4 style={{ paddingLeft: "10px", marginTop: "10px", fontWeight: "lighter" }}>{e.title}</h4>
 												)}
 											</div>
 											<div>

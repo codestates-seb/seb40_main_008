@@ -42,7 +42,7 @@ const Categories = () => {
           </span>
           <span className={styles.categoryright}>
             <span className={styles.link}>
-              <Link style={{ color: "gray" }} href={"/categories/MUSIC"}>
+              <Link href={"/categories/MUSIC"}>
                 음악
               </Link>
             </span>
@@ -52,12 +52,12 @@ const Categories = () => {
               </Link>
             </span>
             <span className={styles.link}>
-              <Link style={{ color: "gray" }} href={"/categories/LIFE_STYLE"}>
+              <Link href={"/categories/LIFE_STYLE"}>
                 라이프스타일
               </Link>
             </span>
             <span className={styles.link}>
-              <Link style={{ color: "gray" }} href={"/categories/PHOTO_MEDIA"}>
+              <Link href={"/categories/PHOTO_MEDIA"}>
                 사진/영상
               </Link>
             </span>
@@ -69,13 +69,13 @@ const Categories = () => {
         <div className={styles.category}>
           <span className={styles.categoryleft}>
             <span className={styles.link}>
-              <Link style={{ color: "gray" }} href={"/categories/FINANCE"}>
+              <Link className={styles.link} href={"/categories/FINANCE"}>
                 금융/재테크
               </Link>
             </span>
             <span className={styles.link}>
               <Link
-                style={{ color: "gray" }}
+                className={styles.link}
                 href={"/categories/FOUNDED_SIDELINE"}
               >
                 창업/부업
@@ -91,33 +91,33 @@ const Categories = () => {
 
         <div className={styles.line}></div>
 
-        <div style={{ color: "gray" }} className={styles.category}>
+        <div className={styles.category}>
           <span className={styles.categoryleft}>
             <span className={styles.link}>
               <Link href={"/categories/PROGRAMMING"}>프로그래밍</Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/DATA_SCIENCE"}>데이터사이언스</Link>
+              <Link href={"/categories/DATA_SCIENCE"} style={{ color: "gray" }}>데이터사이언스</Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/PRODUCT_PLANNING"}>제품 기획</Link>
+              <Link href={"/categories/PRODUCT_PLANNING"} style={{ color: "gray" }}>제품 기획</Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/BUSINESS"}>비즈니스</Link>
+              <Link href={"/categories/BUSINESS"} style={{ color: "gray" }}>비즈니스</Link>
             </span>
           </span>
           <span className={styles.categoryright}>
             <span className={styles.link}>
-              <Link href={"/categories/PRODUCTIVITY"}>생산성</Link>
+              <Link href={"/categories/PRODUCTIVITY"} style={{ color: "gray" }}>생산성</Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/MARKETING"}>마케팅</Link>
+              <Link href={"/categories/MARKETING"} style={{ color: "gray" }}>마케팅</Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/design"}>디자인</Link>
+              <Link href={"/categories/design"} style={{ color: "gray" }}>디자인</Link>
             </span>
             <span className={styles.link}>
-              <Link href={"/categories/VIDEO_3D"}>영상/3D</Link>
+              <Link href={"/categories/VIDEO_3D"} style={{ color: "gray" }}>영상/3D</Link>
             </span>
           </span>
         </div>
