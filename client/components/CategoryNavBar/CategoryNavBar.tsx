@@ -17,6 +17,12 @@ const CategoryNavBar = ({ name }: CategoryProps) => {
   if (!hasWindow) {
     return null;
   }
+
+  if (name.includes('-')) {
+    const nameSplit = name.split('-')
+    name = nameSplit[0];
+  }
+
   return (
     <>
       {window.scrollY < 45 ? (
