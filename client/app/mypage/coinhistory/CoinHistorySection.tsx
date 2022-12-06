@@ -57,7 +57,7 @@ const CoinHistorySection = ({ data }: CoinHistorySectionProps) => {
               width={24}
               className={styles.coinfont}
             />
-            {data.totalCoin}
+            {data.totalCoin}원
           </div>
         </div>
 
