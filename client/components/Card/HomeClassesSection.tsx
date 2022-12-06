@@ -9,10 +9,6 @@ interface HomeContentProps {
 }
 
 const HomeClassesSection = ({ contentsList }: HomeContentProps) => {
-	console.log(
-		'🚀 ~ file: HomeClassesSection.tsx:12 ~ HomeClassesSection ~ contentsList',
-		contentsList
-	);
 	return (
 		<div className={styles.gridContainer}>
 			{contentsList.map((e) => (

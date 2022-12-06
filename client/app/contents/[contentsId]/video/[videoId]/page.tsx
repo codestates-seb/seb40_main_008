@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import BaseNavbar from '../../../../../components/BaseNavBar/BaseNavbar';
@@ -10,6 +11,9 @@ interface VideoIdPageProps {
 	params: {
 		videoId: string;
 		contentsId: string;
+	};
+	searchParams: {
+		status: string;
 	};
 }
 
@@ -33,13 +37,34 @@ const getVideoPageContent = async (contentsId: string, videoId: string) => {
 	}
 };
 
-const VideoIdPage = async ({ params }: VideoIdPageProps) => {
+const VideoIdPage = async ({ params, searchParams }: VideoIdPageProps) => {
 	const { videoId, contentsId } = params;
+	const { status } = searchParams;
+	console.log('🚀 ~ file: page.tsx:42 ~ VideoIdPage ~ status', status);
+
 	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(contentsId, videoId);
 
 	if (!userInfo) redirect(`/contents/${contentsId}`);
-
+	if (status === 'Unpaid_customer') {
+		return (
+			<>
+				<BaseNavbar page="back" />
+				<section
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						height: '100vh',
+						flexDirection: 'column',
+					}}
+				>
+					<h2>강의를 먼저 구매해주셔야 합니다</h2>
+					<Link href={`/contents/${contentsId}`}>뒤로가기</Link>
+				</section>
+			</>
+		);
+	}
 	return (
 		<>
 			<BaseNavbar page={'back'} />
