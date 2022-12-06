@@ -131,12 +131,13 @@ public class LikesService {
 
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
-        LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId());
-
-        if (likesDetail == null || likesDetail.getLiked() == null) {
+        if (likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId()) == null) {
+            
             return false;
-        }
+        } else {
+            LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId());
 
-        return likesDetail.getLiked();
+            return likesDetail.getLiked();
+        }
     }
 }
