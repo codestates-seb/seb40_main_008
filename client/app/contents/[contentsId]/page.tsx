@@ -2,14 +2,14 @@ import React from 'react';
 import BaseNavbar from '../../../components/BaseNavBar/BaseNavbar';
 import ContentInfo from '../../../components/content/ContentInfo';
 import ContentTabs from '../../../components/content/ContentTabs';
-import { IContent, ICurriculumContent } from '../../../types/contents';
+import { ContentsWithCurriculum, IContent, ICurriculumContent } from '../../../types/contents';
 import { cookies } from 'next/headers';
 import { ICategorySearchResult } from '../../../types/category_search/categorySearchType';
 import { ILoopIDList } from '../../../types/detailedContentIdListType';
 import verifyLogin from '../../../utils/VerifyLogin';
 import { getCookie } from 'cookies-next';
 
-const getContentInfo = async (contentsId: string): Promise<IContent> => {
+const getContentInfo = async (contentsId: string): Promise<ContentsWithCurriculum> => {
 	const token = cookies().get('accessToken')?.value;
 	const res = await fetch(`https://pioneroroom.com/contents/${contentsId}`, {
 		method: 'GET',
@@ -17,27 +17,13 @@ const getContentInfo = async (contentsId: string): Promise<IContent> => {
 			Authorization: `Bearer ${token}`,
 		},
 	});
-	const { contentInfo } = await res.json();
-	return contentInfo;
-};
 
-const getCurriculum = async (
-	contentsId: string
-): Promise<Array<ICurriculumContent>> => {
-	const token = cookies().get('accessToken')?.value;
-	const res = await fetch(`https://pioneroroom.com/contents/${contentsId}`, {
-		method: 'GET',
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
-	const { curriculumInfo } = await res.json();
-	return curriculumInfo;
+	const data = await res.json();
+	return data;
 };
 
 const ContentsIdPage = async ({ params }: any) => {
-	const contentInfo = await getContentInfo(params.contentsId);
-	const curriculumInfo = await getCurriculum(params.contentsId);
+	const {contentInfo, curriculumInfo} = await getContentInfo(params.contentsId);
 	const userInfo = await verifyLogin();
 	const uploadclassId = getUploadClassId(curriculumInfo);
 
@@ -54,16 +40,16 @@ const ContentsIdPage = async ({ params }: any) => {
 	);
 };
 
-// export async function generateStaticParams() {
-// 	const res = await fetch('https://pioneroroom.com/contents');
-// 	const posts: ILoopIDList[] = await res.json();
-// 	const arr = posts.map((post) => {
-// 		return {
-// 			contentsId: String(post.contentsId),
-// 		};
-// 	});
-// 	return arr;
-// }
+export async function generateStaticParams() {
+	const res = await fetch('https://pioneroroom.com/contents');
+	const posts: ILoopIDList[] = await res.json();
+	const arr = posts.map((post) => {
+		return {
+			contentsId: String(post.contentsId),
+		};
+	});
+	return arr;
+}
 
 export default ContentsIdPage;
 

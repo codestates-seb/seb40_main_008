@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import BaseNavbar from '../../../../../components/BaseNavBar/BaseNavbar';
@@ -12,9 +11,7 @@ interface VideoIdPageProps {
 		videoId: string;
 		contentsId: string;
 	};
-	searchParams: {
-		status: string;
-	};
+	searchParams?: any;
 }
 
 const getVideoPageContent = async (contentsId: string, videoId: string) => {
@@ -37,38 +34,22 @@ const getVideoPageContent = async (contentsId: string, videoId: string) => {
 	}
 };
 
+//BUG: PageProps searchParams type definition does not work
+// If it is required.
 const VideoIdPage = async ({ params, searchParams }: VideoIdPageProps) => {
 	const { videoId, contentsId } = params;
 	const { status } = searchParams;
-	console.log('🚀 ~ file: page.tsx:42 ~ VideoIdPage ~ status', status);
 
 	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(contentsId, videoId);
 
 	if (!userInfo) redirect(`/contents/${contentsId}`);
-	if (status === 'Unpaid_customer') {
-		return (
-			<>
-				<BaseNavbar page="back" />
-				<section
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						height: '100vh',
-						flexDirection: 'column',
-					}}
-				>
-					<h2>강의를 먼저 구매해주셔야 합니다</h2>
-					<Link href={`/contents/${contentsId}`}>뒤로가기</Link>
-				</section>
-			</>
-		);
-	}
+
 	return (
 		<>
 			<BaseNavbar page={'back'} />
 			<VideoPageSection
+				status={status}
 				data={data}
 				contentsId={contentsId}
 				uploadClassId={videoId}
@@ -79,23 +60,23 @@ const VideoIdPage = async ({ params, searchParams }: VideoIdPageProps) => {
 
 export default VideoIdPage;
 
-// export async function generateStaticParams() {
-//   const paramList: VideoIdPageProps['params'][] = [];
-//   const res = await fetch('https://pioneroroom.com/contents');
-//   const posts: ILoopIDList[] = await res.json();
-//   for (const post of posts) {
-//     const paramArr: any = [];
-//     if (!post.chapterList.length) continue;
-//     for (const chapter of post.chapterList) {
-//       if (!chapter.uploadClassList.length) continue;
-//       for (const videoId of chapter.uploadClassList) {
-//         paramArr.push({
-//           videoId: String(videoId),
-//           contentsId: String(post.contentsId),
-//         });
-//       }
-//     }
-//     paramList.push(...paramArr);
-//   }
-//   return paramList;
-// }
+export async function generateStaticParams() {
+	const paramList: VideoIdPageProps['params'][] = [];
+	const res = await fetch('https://pioneroroom.com/contents');
+	const posts: ILoopIDList[] = await res.json();
+	for (const post of posts) {
+		const paramArr: any = [];
+		if (!post.chapterList.length) continue;
+		for (const chapter of post.chapterList) {
+			if (!chapter.uploadClassList.length) continue;
+			for (const videoId of chapter.uploadClassList) {
+				paramArr.push({
+					videoId: String(videoId),
+					contentsId: String(post.contentsId),
+				});
+			}
+		}
+		paramList.push(...paramArr);
+	}
+	return paramList;
+}

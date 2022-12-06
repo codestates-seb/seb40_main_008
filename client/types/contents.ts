@@ -7,11 +7,17 @@ export interface IContent {
 	details: string;
 	grade: number;
 	price: number;
+	liked: boolean;
 	role: 'creator' | 'Unpaid_customer' | 'Paid_customer';
 	wished: boolean;
 	tutorName: string;
 	tutorDetail: string;
 }
+
+export type ContentsWithCurriculum = {
+	contentInfo: IContent;
+	curriculumInfo: ICurriculumContent[];
+};
 
 export interface Curriculum {
 	curriculumInfo?: ICurriculumContent[];
