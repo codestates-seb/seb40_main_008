@@ -131,11 +131,14 @@ public class LikesService {
 
         Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
-        if (likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId()) == null) {
-            
+        if (contents.getLikes().getLikesDetails().size() == 0) {
             return false;
         } else {
             LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId());
+
+            if (likesDetail.getLiked() == null) {
+                return false;
+            }
 
             return likesDetail.getLiked();
         }
