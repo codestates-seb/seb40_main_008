@@ -73,12 +73,16 @@ public class LikesService {
      * 동시 처리 성능 최하위이기 때문
      */
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Likes likesContents(Long contentsId, Users users, LikesDetail likesDetail) {
+    public Likes likesContents(Long contentsId, Users users, Boolean liked) {
 
         Contents contents = contentsRepository.findByContentsId(contentsId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.CONTENTS_NOT_FOUND));
 
         Likes likes = contents.getLikes();
+
+        LikesDetail likesDetail = new LikesDetail();
+        likesDetail.setLiked(false);
+        likesDetail.setLikes(likes);
 
         ifLikesHave(users, likes, contents, likesDetail);
 
@@ -120,6 +124,11 @@ public class LikesService {
     public Boolean getContentLike(Contents contents, Users users) {
 
         LikesDetail likesDetail = likesDetailRepository.findByUsersLikes(users.getUsersId(), contents.getLikes().getLikesId());
+
+        if (likesDetail == null || likesDetail.getLiked() == null) {
+            return false;
+        }
+
         return likesDetail.getLiked();
     }
 }
