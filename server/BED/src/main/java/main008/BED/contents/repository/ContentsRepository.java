@@ -65,17 +65,17 @@ public interface ContentsRepository extends JpaRepository<Contents, Long> {
      */
     @Modifying(clearAutomatically = true)
     @Query(value =
-            "UPDATE contents " +
-            "SET likes_Count = likes_Count + 1 " +
-            "WHERE contents.contents_id = :contents_id"
+            "UPDATE contents c " +
+            "SET c.likes_Count = likes_Count + 1 " +
+            "WHERE c.contents_id = :contents_id"
             , nativeQuery = true)
     void likesCountForContentsUp(Long contents_id);
 
     @Modifying(clearAutomatically = true) // nativeQuery = true : 기존 sql문 사용 가능하게 해줌
     @Query(value =
-            "UPDATE contents " +
-            "SET likes_Count = likes_Count - 1"+
-            "WHERE contents.contents_id = :contents_id"
+            "UPDATE contents c " +
+            "SET c.likes_Count = likes_Count - 1"+
+            "WHERE c.contents_id = :contents_id"
             , nativeQuery = true)
     void likesCountForContentsDown(Long contents_id);
 

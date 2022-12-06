@@ -21,8 +21,9 @@ class LikeStateFalse implements LikesState {
                           LikesRepository likesRepository, ContentsRepository contentsRepository) {
 
         likesDetail.setLiked(true);
-        likesRepository.likesCountUp(likes);
-        contentsRepository.likesCountForContentsUp(contents.getContentsId());
+        likes.setLikesCount(likes.getLikesCount() + 1);
+        likesRepository.save(likes);
+//        contentsRepository.likesCountForContentsUp(contents.getContentsId());
         likesButton.setLikeState(new LikeStateTrue());
     }
 }
@@ -34,8 +35,9 @@ class LikeStateTrue implements LikesState {
                           LikesRepository likesRepository, ContentsRepository contentsRepository) {
 
         likesDetail.setLiked(false);
-        likesRepository.likesCountDown(likes);
-        contentsRepository.likesCountForContentsDown(contents.getContentsId());
+        likes.setLikesCount(likes.getLikesCount() - 1);
+        likesRepository.save(likes);
+//        contentsRepository.likesCountForContentsDown(contents.getContentsId());
         likesButton.setLikeState(new LikeStateFalse());
     }
 }

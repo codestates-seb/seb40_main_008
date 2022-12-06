@@ -111,17 +111,19 @@ public interface ContentsMapper {
 
     default ContentsDto.ResponseInContent contentToResponseInContent(Contents contents,
                                                                      HashMap<String, String> roleAndWish,
-                                                                     ContentsService contentsService) {
+                                                                     ContentsService contentsService,
+                                                                     Boolean liked) {
 
         return new ContentsDto.ResponseInContent(
                 contents.getContentsId(),
                 contents.getTitle(),
                 contents.getThumbnail(),
-                contents.getLikesCount(),
+                contents.getLikes().getLikesCount(),
                 contents.getCategories(),
                 contentsService.calculateAvgStar(contents.getContentsId()),
                 contents.getPayment().getPrice(),
                 roleAndWish.get("role"),
+                liked,
                 Boolean.parseBoolean(roleAndWish.get("wished")),
                 contents.getUsers().getUserName(),
                 contents.getDetails(),

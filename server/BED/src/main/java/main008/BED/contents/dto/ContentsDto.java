@@ -63,6 +63,7 @@ public class ContentsDto {
         private double grade;
         private int price;
         private String role;
+        private boolean liked;
         private boolean wished;
         private String tutorName;
         private String details;

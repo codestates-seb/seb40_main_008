@@ -17,7 +17,7 @@ import main008.BED.converter.StringToCategoryEnum;
 import main008.BED.docs.mapper.DocsMapper;
 import main008.BED.dto.ContentsMultiResponseDto;
 import main008.BED.dto.PageInfo;
-import main008.BED.myClass.service.MyClassService;
+import main008.BED.likes.service.LikesService;
 import main008.BED.payment.dto.PaymentDto;
 import main008.BED.payment.entity.Payment;
 import main008.BED.payment.mapper.PaymentMapper;
@@ -58,7 +58,7 @@ public class ContentsController {
     private final PaymentMapper paymentMapper;
     private final ReviewMapper reviewMapper;
     private final UploadClassService uploadClassService;
-    private final StringToCategoryEnum stringToCategoryEnum;
+    private final LikesService likesService;
 
 
     // 컨텐츠 개설
@@ -111,15 +111,17 @@ public class ContentsController {
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
                                      Principal principal) {
 
+        Users users = usersService.findVerifiedUserByEmail(principal.getName());
 
         Contents contents = contentsService.readContent(contentsId);
 
         ChapterDto.CurriculumInContent curriculumInContent = chapterService.readCurriculumInContent(contentsId);
 
         HashMap<String, String> roleAndWish = contentsService.userRoleDivision(contents, principal);
+        Boolean liked = likesService.getContentLike(contents, users);
 
         ContentsDto.ResponseInContent responseInContent =
-                contentsMapper.contentToResponseInContent(contents, roleAndWish, contentsService);
+                contentsMapper.contentToResponseInContent(contents, roleAndWish, contentsService, liked);
 
         return new ResponseEntity<>(
                 new ContentsMultiResponseDto<>(responseInContent, curriculumInContent.getCurriculumInfo()), HttpStatus.OK);
