@@ -113,14 +113,12 @@ public class ContentsController {
     public ResponseEntity getContent(@PathVariable("contents-id") @Positive Long contentsId,
                                      Principal principal) {
 
-        Users users = usersService.findVerifiedUserByEmail(principal.getName());
-
         Contents contents = contentsService.readContent(contentsId);
 
         ChapterDto.CurriculumInContent curriculumInContent = chapterService.readCurriculumInContent(contentsId);
 
         HashMap<String, String> roleAndWish = contentsService.userRoleDivision(contents, principal);
-        Boolean liked = likesService.getContentLike(contents, users);
+        Boolean liked = likesService.getContentLike(contents, principal);
 
         ContentsDto.ResponseInContent responseInContent =
                 contentsMapper.contentToResponseInContent(contents, roleAndWish, contentsService, liked);
