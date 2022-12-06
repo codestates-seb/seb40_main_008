@@ -25,13 +25,13 @@
   width: 100px;
   height: 100px;
   background-color: black;
-  color: white;
+  color: var(--faintwhite);;
   top: 70%;
   z-index: 100;
 }
 
 .title {
-  color: white;
+  color: var(--faintwhite);;
   font-size: 24px;
   z-index: 100;
 }

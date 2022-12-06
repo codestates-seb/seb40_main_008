@@ -215,25 +215,16 @@ const UploadPage = () => {
 							className={styles.select}
 						>
 							<option value="choice">-- 선택하세요 --</option>
-							<optgroup
-								label="----------------개발전용----------------"
-								className={styles.label}
-							>
+							<optgroup className={styles.label}>
 								<option value="드로잉">드로잉</option>
 								<option value="성공 마인드">성공 마인드</option>
 								<option value="베이킹/디저트">베이킹</option>
-							</optgroup>
-							<optgroup
-								label="-------------선택하지 마세요------------"
-								className={styles.label}
-							>
-								<option value="money">금융,재테크</option>
-								<option value="startup">창업,부업</option>
-								<option value="programming">프로그래밍</option>
-								<option value="Exercise">운동</option>
-								<option value="life style">라이프스타일</option>
-								<option value="photo">사진</option>
-								<option value="music">음악</option>
+								<option value="금융/재테크">금융,재테크</option>
+								<option value="창업/부업">창업,부업</option>
+								<option value="프로그래밍">프로그래밍</option>
+								<option value="라이프 스타일">라이프스타일</option>
+								<option value="사진/영상">사진/영상</option>
+								<option value="음악">음악</option>
 							</optgroup>
 						</select>
 

@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import verifyLogin from '../../utils/VerifyLogin';
 import { ICategorySearchResult } from '../../types/category_search/categorySearchType';
+import BaseNavbar from '../../components/BaseNavBar/BaseNavbar';
 
 const getTakingClasses = async (): Promise<Array<ICategorySearchResult>> => {
 
@@ -68,6 +69,7 @@ const MyclassPage = async () => {
 
 	return (
 		<>
+			<BaseNavbar page={'back'} />
 			<div className={styles.myclassWrapper}>
 				<h1 className={styles.title}>내 클래스</h1>
 				<MyclassTab takingClasses={takingClasses} wishClasses={wishClasses} />
