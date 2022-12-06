@@ -36,7 +36,7 @@
 }
 
 .leftbtn {
-  color: white;
+  color: var(--faintwhite);;
   margin-left: 15px;
   border: 0;
   cursor: pointer;

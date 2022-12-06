@@ -45,7 +45,7 @@
   }
   
   .leftbtn {
-    color: white;
+    color: var(--faintwhite);;
     margin-right: 15px;
     border: 0;
     background-color: transparent;
@@ -54,7 +54,7 @@
   }
 
   .rightbtn {
-    color: white;
+    color: var(--faintwhite);;
     margin-right: 15px;
     border: 0;
     background-color: transparent;

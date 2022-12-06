@@ -8,8 +8,8 @@
 
 .line {
   display: flex;
-  color: white;
-  background: white;
+  color: var(--faintwhite);;
+  background: var(--faintwhite);;
   justify-content: space-between;
   align-items: "center";
   width: 84%;

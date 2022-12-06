@@ -60,7 +60,7 @@
   border: 0;
   outline: 0;
   background-color: transparent;
-  color: white;
+  color: var(--faintwhite);;
   padding-left: 10px;
   font-size: 16px;
   vertical-align: baseline;

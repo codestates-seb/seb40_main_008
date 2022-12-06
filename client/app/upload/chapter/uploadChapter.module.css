@@ -24,7 +24,7 @@
   height: 40px;
   width: 100%;
   color: black;
-  background-color: white;
+  background-color: var(--faintwhite);;
   border-radius: 10px;
 }
 .select {
@@ -76,7 +76,7 @@
 .uploadimg {
   height: 240px;
   align-items: center;
-  background-color: white;
+  background-color: var(--faintwhite);;
   width: 100%;
   margin-bottom: 80px;
   border-radius: 10px;
@@ -89,7 +89,7 @@
   font-size: 12px;
   border: 0;
   outline: 0;
-  color: white;
+  color: var(--faintwhite);;
   border-radius: 3px;
   cursor: pointer;
   box-shadow: 1px 1px gray;
