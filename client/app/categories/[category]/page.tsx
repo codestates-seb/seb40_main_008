@@ -78,10 +78,10 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 
 export default DetailCategoryPage;
 
-// export async function generateStaticParams() {
-//   return fixedCategoriesEng.map((e) => {
-//     return {
-//       category: e,
-//     };
-//   });
-// }
+export async function generateStaticParams() {
+  return fixedCategoriesEng.map((e) => {
+    return {
+      category: e,
+    };
+  });
+}

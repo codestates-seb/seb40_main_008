@@ -14,18 +14,14 @@ export const ContentCardFavoriteBtn = ({
 	contentInfo,
 }: ContentCardFavoriteProps) => {
 	const [like, setLike] = useState(contentInfo.liked);
-	console.log(
-		'🚀 ~ file: ContentCardFavoriteBtn.tsx:17 ~ contentInfo.liked',
-		contentInfo.liked
-	);
-	const token = getCookie('accessToken');
 	const [isLoading, setIsLoading] = useState(false);
-
+	const token = getCookie('accessToken');
 	const router = useRouter();
 
 	useEffect(() => {
 		setLike(contentInfo.wished);
 		setIsLoading(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [contentInfo.liked]);
 
 	const handlePost = () => {
@@ -50,7 +46,7 @@ export const ContentCardFavoriteBtn = ({
 		postLike();
 		if (!like) return;
 
-		const confirmRes = confirm('장바구니에서 삭제하시겠습니까?');
+		const confirmRes = confirm('좋아요를 취소하시겠습니다?');
 		if (confirmRes) {
 			postLike();
 		}

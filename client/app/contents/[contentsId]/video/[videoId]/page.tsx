@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import BaseNavbar from '../../../../../components/BaseNavBar/BaseNavbar';
+import { ILoopIDList } from '../../../../../types/detailedContentIdListType';
 import verifyLogin from '../../../../../utils/VerifyLogin';
 import VideoPageSection from './VideoPageSection';
 
@@ -38,7 +39,6 @@ const getVideoPageContent = async (contentsId: string, videoId: string) => {
 const VideoIdPage = async ({ params, searchParams }: VideoIdPageProps) => {
 	const { videoId, contentsId } = params;
 	const { status } = searchParams;
-	console.log('🚀 ~ file: page.tsx:41 ~ VideoIdPage ~ status', status);
 
 	const userInfo = await verifyLogin();
 	const data = await getVideoPageContent(contentsId, videoId);
@@ -60,23 +60,23 @@ const VideoIdPage = async ({ params, searchParams }: VideoIdPageProps) => {
 
 export default VideoIdPage;
 
-// export async function generateStaticParams() {
-//   const paramList: VideoIdPageProps['params'][] = [];
-//   const res = await fetch('https://pioneroroom.com/contents');
-//   const posts: ILoopIDList[] = await res.json();
-//   for (const post of posts) {
-//     const paramArr: any = [];
-//     if (!post.chapterList.length) continue;
-//     for (const chapter of post.chapterList) {
-//       if (!chapter.uploadClassList.length) continue;
-//       for (const videoId of chapter.uploadClassList) {
-//         paramArr.push({
-//           videoId: String(videoId),
-//           contentsId: String(post.contentsId),
-//         });
-//       }
-//     }
-//     paramList.push(...paramArr);
-//   }
-//   return paramList;
-// }
+export async function generateStaticParams() {
+	const paramList: VideoIdPageProps['params'][] = [];
+	const res = await fetch('https://pioneroroom.com/contents');
+	const posts: ILoopIDList[] = await res.json();
+	for (const post of posts) {
+		const paramArr: any = [];
+		if (!post.chapterList.length) continue;
+		for (const chapter of post.chapterList) {
+			if (!chapter.uploadClassList.length) continue;
+			for (const videoId of chapter.uploadClassList) {
+				paramArr.push({
+					videoId: String(videoId),
+					contentsId: String(post.contentsId),
+				});
+			}
+		}
+		paramList.push(...paramArr);
+	}
+	return paramList;
+}

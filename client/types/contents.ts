@@ -14,6 +14,11 @@ export interface IContent {
 	tutorDetail: string;
 }
 
+export type ContentsWithCurriculum = {
+	contentInfo: IContent;
+	curriculumInfo: ICurriculumContent[];
+};
+
 export interface Curriculum {
 	curriculumInfo?: ICurriculumContent[];
 }
