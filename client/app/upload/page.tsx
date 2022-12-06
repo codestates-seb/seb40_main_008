@@ -133,15 +133,6 @@ const UploadPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("formData: ", formData.get("thumbnail"));
-  // }, [imageFile]);
-
-  useEffect(() => {
-    console.log("밸루", values);
-    console.log("id", contentsId);
-  }, []);
-
   const handleClickFileInput = () => {
     fileInput.current?.click();
   };
@@ -153,8 +144,6 @@ const UploadPage = () => {
       const url = URL.createObjectURL(fileList[0]);
 
       formData.append("thumbnail", fileList[0]);
-
-      console.log("form get thumbnail", formData.get("thumbnail"));
 
       setImageFile({
         file: fileList[0],
@@ -182,8 +171,8 @@ const UploadPage = () => {
         sizes="(max-width: 768px) 100vw,
 				(max-width: 1200px) 50vw,
 				33vw"
-        width={300}
-        height={200}
+        width={290}
+        height={190}
         onClick={handleClickFileInput}
         style={{ objectFit: "contain", borderRadius: "4px" }}
       />
@@ -210,7 +199,6 @@ const UploadPage = () => {
           >
             <p className={styles.classtitle}>클래스명</p>
             <input
-              required
               type="text"
               name="title"
               value={values.title}
@@ -219,7 +207,6 @@ const UploadPage = () => {
             ></input>
             <p className={styles.title}>카테고리</p>
             <select
-              required
               id="categories"
               value={values.categories}
               name="categories"
@@ -227,18 +214,10 @@ const UploadPage = () => {
               className={styles.select}
             >
               <option value="choice">-- 선택하세요 --</option>
-              <optgroup
-                label="----------------개발전용----------------"
-                className={styles.label}
-              >
+              <optgroup className={styles.label}>
                 <option value="드로잉">드로잉</option>
                 <option value="성공 마인드">성공 마인드</option>
                 <option value="베이킹/디저트">베이킹</option>
-              </optgroup>
-              <optgroup
-                label="-------------선택하지 마세요------------"
-                className={styles.label}
-              >
                 <option value="money">금융,재테크</option>
                 <option value="startup">창업,부업</option>
                 <option value="programming">프로그래밍</option>

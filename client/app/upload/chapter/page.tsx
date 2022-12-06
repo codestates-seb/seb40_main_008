@@ -168,11 +168,11 @@ const UploadChapterPage = () => {
         className={styles.thumbnail}
         src={imageFile.thumbnail ?? "/"}
         alt={"img"}
-        width={288}
+        width={315}
         sizes="(max-width: 768px) 100vw,
 				(max-width: 1200px) 50vw,
 				33vw"
-        height={240}
+        height={200}
         onClick={handleClickFileInput}
         style={{ objectFit: "contain", borderRadius: "4px" }}
       />
@@ -189,7 +189,6 @@ const UploadChapterPage = () => {
           <select
             id="chapterOrder"
             name="chapterOrder"
-            required
             value={values.chapterOrder ?? ""}
             onChange={handleOptionChange}
             className={styles.select}
@@ -208,7 +207,6 @@ const UploadChapterPage = () => {
           <input
             type="text"
             name="title"
-            required
             value={values.title ?? ""}
             onChange={handleChange}
             className={styles.chapternameinput}
@@ -218,7 +216,6 @@ const UploadChapterPage = () => {
             <p className={styles.title}>챕터 썸네일</p>
             <input
               type="file"
-              required
               accept="image/png, image/jpg, image/jpeg"
               name="thumbnail"
               ref={fileInputRef}
