@@ -15,7 +15,7 @@ https://documenter.getpostman.com/view/22568988/2s8YmSrfq3
 
 <br/>
 
-## 🧑‍💻 MAIN-008 null(비어있음) 팀원 소개
+## 🧑‍💻 MAIN-008 8°F 팀원 소개
 
 <div> 
 
