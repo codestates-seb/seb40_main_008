@@ -1,41 +1,9 @@
-<<<<<<< HEAD
-.loginbtnWrapper{
-=======
 .loginbtnWrapper {
->>>>>>> main
 	display: flex;
 	flex-direction: column;
 	min-width: 250px;
 }
 
-<<<<<<< HEAD
-.googlebtn{
-	margin-top: 30px;
-	margin-bottom: 30px;
-	border-radius: 10px;
-	background-color:white;
-	border: none;
-}
-
-.kakaobtn{
-	margin-bottom: 30px;
-	border-radius: 10px;
-	background-color: #FEE500;
-	border: none;
-}
-
-.naverbtn{
-	margin-bottom: 30px;
-	border-radius: 10px;
-	background-color: #03C759;
-	border: none;
-}
-
-.adminbtn{
-	margin-bottom: 30px;
-	border-radius: 10px;
-	background-color: #FCB600;
-=======
 .googlebtn {
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -62,16 +30,11 @@
 	margin-bottom: 30px;
 	border-radius: 10px;
 	background-color: #fcb600;
->>>>>>> main
 	border: none;
 	color: black;
 }
 
-<<<<<<< HEAD
-.naverbtnWrapper{
-=======
 .naverbtnWrapper {
->>>>>>> main
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -81,11 +44,7 @@
 	padding-left: 55px;
 }
 
-<<<<<<< HEAD
-.kakaobtnWrapper{
-=======
 .kakaobtnWrapper {
->>>>>>> main
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -95,11 +54,7 @@
 	padding-left: 65px;
 }
 
-<<<<<<< HEAD
-.googlebtnWrapper{
-=======
 .googlebtnWrapper {
->>>>>>> main
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -109,11 +64,7 @@
 	padding-left: 65px;
 }
 
-<<<<<<< HEAD
-.adminbtnWrapper{
-=======
 .adminbtnWrapper {
->>>>>>> main
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -122,17 +73,6 @@
 	height: 55px;
 }
 
-<<<<<<< HEAD
-.googlelogo{
-	margin-right: 10px;
-}
-
-.kakaologo{
-	margin-right: 10px;
-}
-
-.adminlogo{
-=======
 .googlelogo {
 	margin-right: 10px;
 }
@@ -142,7 +82,6 @@
 }
 
 .adminlogo {
->>>>>>> main
 	margin-right: 10px;
 }
 
@@ -150,12 +89,6 @@
 	color: black;
 }
 
-<<<<<<< HEAD
-.btn_naver_p{
-	color: white;
-}
-=======
 .btn_naver_p {
 	color: white;
 }
->>>>>>> main
