@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"devTurbo": "next dev --turbo",
+		"export": "next export",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
