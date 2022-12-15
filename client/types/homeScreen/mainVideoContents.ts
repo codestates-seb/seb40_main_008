@@ -1,8 +1,4 @@
-export interface HomeContent {
-	contentsList: ICategorySearchResult[];
-}
-
-export interface ICategorySearchResult {
+export interface Content {
 	contentsId: number;
 	title: string;
 	thumbnail: string;
@@ -13,19 +9,5 @@ export interface ICategorySearchResult {
 export interface Users {
 	usersId: number;
 	userName: string;
-	profileImage: string;
+	profileImage?: string;
 }
-
-// export interface Content {
-// 	contentsId: number;
-// 	title: string;
-// 	thumbnail: string;
-// 	categories: string;
-// 	users: Users;
-// }
-
-// export interface Users {
-// 	usersId: number;
-// 	userName: string;
-// 	profileImage?: string;
-// }
