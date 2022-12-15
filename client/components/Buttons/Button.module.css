@@ -1,40 +1,40 @@
-.loginbtnWrapper{
+.loginbtnWrapper {
 	display: flex;
 	flex-direction: column;
 	min-width: 250px;
 }
 
-.googlebtn{
+.googlebtn {
 	margin-top: 30px;
 	margin-bottom: 30px;
 	border-radius: 10px;
-	background-color:white;
+	background-color: white;
 	border: none;
 }
 
-.kakaobtn{
+.kakaobtn {
 	margin-bottom: 30px;
 	border-radius: 10px;
-	background-color: #FEE500;
+	background-color: #fee500;
 	border: none;
 }
 
-.naverbtn{
+.naverbtn {
 	margin-bottom: 30px;
 	border-radius: 10px;
-	background-color: #03C759;
+	background-color: #03c759;
 	border: none;
 }
 
-.adminbtn{
+.adminbtn {
 	margin-bottom: 30px;
 	border-radius: 10px;
-	background-color: #FCB600;
+	background-color: #fcb600;
 	border: none;
 	color: black;
 }
 
-.naverbtnWrapper{
+.naverbtnWrapper {
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -44,7 +44,7 @@
 	padding-left: 55px;
 }
 
-.kakaobtnWrapper{
+.kakaobtnWrapper {
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -54,7 +54,7 @@
 	padding-left: 65px;
 }
 
-.googlebtnWrapper{
+.googlebtnWrapper {
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -64,7 +64,7 @@
 	padding-left: 65px;
 }
 
-.adminbtnWrapper{
+.adminbtnWrapper {
 	font-weight: bold;
 	font-size: 15px;
 	display: flex;
@@ -73,15 +73,15 @@
 	height: 55px;
 }
 
-.googlelogo{
+.googlelogo {
 	margin-right: 10px;
 }
 
-.kakaologo{
+.kakaologo {
 	margin-right: 10px;
 }
 
-.adminlogo{
+.adminlogo {
 	margin-right: 10px;
 }
 
@@ -89,6 +89,6 @@
 	color: black;
 }
 
-.btn_naver_p{
+.btn_naver_p {
 	color: white;
 }

@@ -1,71 +1,71 @@
 .nav {
-  display: flex;
-  position: absolute;
-  top: 0;
-  margin: 0 auto;
-  width: 100%;
-  max-width: var(--max-width);
-  color: #f3f3f3;
-  height: 50px;
-  background-color: transparent;
-  padding: 0 20px;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 1;
-  animation: fadein 400ms;
+	display: flex;
+	position: absolute;
+	top: 0;
+	margin: 0 auto;
+	width: 100%;
+	max-width: var(--max-width);
+	color: #f3f3f3;
+	height: 50px;
+	background-color: transparent;
+	padding: 0 20px;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 1;
+	animation: fadein 400ms;
 }
 
 @keyframes fadein {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -100%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0);
-  }
+	0% {
+		opacity: 0;
+		transform: translate3d(0, -100%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translateZ(0);
+	}
 }
 
 .firstNav {
-  background-color: transparent;
-  display: flex;
-  position: fixed;
-  top: 0;
-  margin: 0 auto;
-  width: 100%;
-  max-width: var(--max-width);
-  color: #f3f3f3;
-  height: 50px;
-  padding: 0 20px;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 1;
-  animation: fadein 400ms;
+	background-color: transparent;
+	display: flex;
+	position: fixed;
+	top: 0;
+	margin: 0 auto;
+	width: 100%;
+	max-width: var(--max-width);
+	color: #f3f3f3;
+	height: 50px;
+	padding: 0 20px;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 1;
+	animation: fadein 400ms;
 }
 
 .change_nav {
-  display: none;
+	display: none;
 }
 
 .font {
-  width: 24px;
-  height: 24px;
+	width: 24px;
+	height: 24px;
 }
 .logowrapper {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
 .logo {
-  border: 0;
-  outline: 0;
-  background-color: transparent;
-  color: var(--faintwhite);;
-  padding-left: 10px;
-  font-size: 16px;
-  vertical-align: baseline;
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+	color: var(--faintwhite);
+	padding-left: 10px;
+	font-size: 16px;
+	vertical-align: baseline;
 }
 .login {
-  vertical-align: top;
-  font-size: 15.5px;
+	vertical-align: top;
+	font-size: 15.5px;
 }

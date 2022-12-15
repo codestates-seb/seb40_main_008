@@ -1,50 +1,50 @@
 .baseNav {
-  display: flex;
-  height: 45px;
-  width: 100%;
-  margin: 0 auto;
-  background-color: #0a191f;
-  position: fixed;
-  top: 0;
-  z-index: 1;
-  animation: fadein 400ms;
+	display: flex;
+	height: 45px;
+	width: 100%;
+	margin: 0 auto;
+	background-color: #0a191f;
+	position: fixed;
+	top: 0;
+	z-index: 1;
+	animation: fadein 400ms;
 }
 @keyframes fadein {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -100%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0);
-  }
+	0% {
+		opacity: 0;
+		transform: translate3d(0, -100%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translateZ(0);
+	}
 }
 
 .firstNav {
-  display: flex;
-  height: 45px;
-  width: 100%;
-  margin: 0 auto;
-  background-color: transparent;
-  position: fixed;
-  z-index: 1;
-  top: 0;
+	display: flex;
+	height: 45px;
+	width: 100%;
+	margin: 0 auto;
+	background-color: transparent;
+	position: fixed;
+	z-index: 1;
+	top: 0;
 }
 
 .change_nav {
-  display: none;
+	display: none;
 }
 
 .leftbtn {
-  color: var(--faintwhite);;
-  margin-left: 15px;
-  border: 0;
-  cursor: pointer;
-  background-color: transparent;
-  outline: 0;
+	color: var(--faintwhite);
+	margin-left: 15px;
+	border: 0;
+	cursor: pointer;
+	background-color: transparent;
+	outline: 0;
 }
 .font {
-  width: 40px;
-  height: 24px;
-  font-size: 24px;
+	width: 40px;
+	height: 24px;
+	font-size: 24px;
 }

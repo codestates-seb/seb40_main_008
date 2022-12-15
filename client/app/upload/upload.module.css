@@ -1,144 +1,144 @@
 .uploadpage {
-  display: flex;
-  flex-direction: column;
-  margin-top: 60px;
-  position: relative;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	margin-top: 60px;
+	position: relative;
+	height: 100%;
 }
 .form {
-  margin: 0px auto;
+	margin: 0px auto;
 }
 .classtitle {
-  margin: 0;
+	margin: 0;
 
-  margin-bottom: 8px;
+	margin-bottom: 8px;
 }
 .title {
-  margin: 0;
+	margin: 0;
 
-  margin-top: 12px;
-  margin-bottom: 8px;
+	margin-top: 12px;
+	margin-bottom: 8px;
 }
 .classnameinput {
-  height: 35px;
-  width: 300px;
-  color: black;
-  background-color: var(--faintwhite);
-  border-radius: 10px;
-  padding-left: 10px;
+	height: 35px;
+	width: 300px;
+	color: black;
+	background-color: var(--faintwhite);
+	border-radius: 10px;
+	padding-left: 10px;
 }
 .select {
-  /* 생략 */
-  height: 35px;
-  width: 100%;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #444;
-  background-color: #fff;
-  padding: 0.6em 1.4em 0.5em 0.8em;
-  margin: 0;
-  border: 1px solid #aaa;
-  border-radius: 10px;
-  z-index: 3;
+	/* 생략 */
+	height: 35px;
+	width: 100%;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #444;
+	background-color: #fff;
+	padding: 0.6em 1.4em 0.5em 0.8em;
+	margin: 0;
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	z-index: 3;
 }
 
 .introduceClass,
 .introduceInstructor {
-  height: 100px;
-  width: 300px;
-  padding: 5px;
-  color: black;
-  background-color: var(--faintwhite);
-  border-radius: 10px;
-  padding-left: 10px;
+	height: 100px;
+	width: 300px;
+	padding: 5px;
+	color: black;
+	background-color: var(--faintwhite);
+	border-radius: 10px;
+	padding-left: 10px;
 }
 
 .filebox {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 .filebox label {
-  display: inline-block;
-  margin-left: 10px;
-  margin-top: 11px;
-  color: #999;
-  font-size: inherit;
-  line-height: normal;
-  height: 25px;
-  width: 25px;
-  text-align: center;
-  vertical-align: middle;
-  background-color: #fdfdfd;
-  cursor: pointer;
-  border: 1px solid #ebebeb;
-  border-bottom-color: #e2e2e2;
-  border-radius: 2em;
+	display: inline-block;
+	margin-left: 10px;
+	margin-top: 11px;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	height: 25px;
+	width: 25px;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: 2em;
 }
 .thumbnail {
-  padding: 5px;
+	padding: 5px;
 }
-.filebox input[type="file"] {
-  /* 파일 필드 숨기기 */
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+.filebox input[type='file'] {
+	/* 파일 필드 숨기기 */
+	position: absolute;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
 }
 
 .uploadimg {
-  height: 200px;
-  align-items: center;
-  background-color: var(--faintwhite);
-  width: 300px;
-  border-radius: 10px;
+	height: 200px;
+	align-items: center;
+	background-color: var(--faintwhite);
+	width: 300px;
+	border-radius: 10px;
 }
 .uploadbtn {
-  margin-left: 10px;
-  height: 25px;
-  width: 40px;
-  margin-top: 5px;
-  font-size: 12px;
-  border: 0;
-  outline: 0;
-  color: var(--faintwhite);
-  border-radius: 3px;
-  cursor: pointer;
-  box-shadow: 1px 1px gray;
-  background-color: #f2952f;
+	margin-left: 10px;
+	height: 25px;
+	width: 40px;
+	margin-top: 5px;
+	font-size: 12px;
+	border: 0;
+	outline: 0;
+	color: var(--faintwhite);
+	border-radius: 3px;
+	cursor: pointer;
+	box-shadow: 1px 1px gray;
+	background-color: #f2952f;
 }
 .openclassbtn {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 300px;
-  height: 50px;
-  border-radius: 10px;
-  color: var(--faintwhite);
-  font-size: 16px;
-  box-shadow: 1px 1px gray;
-  background-color: #f2952f;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 300px;
+	height: 50px;
+	border-radius: 10px;
+	color: var(--faintwhite);
+	font-size: 16px;
+	box-shadow: 1px 1px gray;
+	background-color: #f2952f;
 }
 
 .classPrice {
-  height: 35px;
-  width: 300px;
-  color: black;
-  background-color: var(--faintwhite);
-  border-radius: 10px;
-  padding-left: 10px;
+	height: 35px;
+	width: 300px;
+	color: black;
+	background-color: var(--faintwhite);
+	border-radius: 10px;
+	padding-left: 10px;
 }
 
 .alertMessage {
-  color: darkred;
+	color: darkred;
 }
 
 /* Chrome, Safari, Edge, Opera */
 .classPrice::-webkit-outer-spin-button,
 .classPrice::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 /* Firefox */
-.classPrice[type="number"] {
-  -moz-appearance: textfield;
+.classPrice[type='number'] {
+	-moz-appearance: textfield;
 }
