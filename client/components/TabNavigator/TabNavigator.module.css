@@ -1,33 +1,33 @@
 .tab {
-  display: flex;
-  flex-direction: row;
-  position: fixed;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-  max-width: var(--max-width);
-  height: 54px;
-  background: var(--background-color);
-  bottom: 0;
+	display: flex;
+	flex-direction: row;
+	position: fixed;
+	align-items: center;
+	justify-content: space-around;
+	width: 100%;
+	max-width: var(--max-width);
+	height: 54px;
+	background: var(--background-color);
+	bottom: 0;
 }
 
 .Icon {
-  width: 20px;
-  height: 20px;
+	width: 20px;
+	height: 20px;
 }
 .font {
-  font-size: 0.625rem;
-  margin: 0;
+	font-size: 0.625rem;
+	margin: 0;
 }
 
 .tabItem {
-  color: #ababab;
-  width: 50px;
-  flex-direction: column;
-  margin: 0 auto;
-  text-align: center;
+	color: #ababab;
+	width: 50px;
+	flex-direction: column;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .active {
-  color: var(--faintwhite);;
+	color: var(--faintwhite);
 }
