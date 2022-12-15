@@ -1,0 +1,51 @@
+.TitleWrapper {
+  margin-top: 81px;
+  margin-bottom: 30px;
+  position: relative;
+  align-items: center;
+  text-align: center;
+}
+
+.ChargeWrapper {
+  display: flex;
+  position: relative;
+  margin-top: 90px;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  margin-bottom: 200px;
+}
+.charge {
+  display: flex;
+  width: 100%;
+  padding: 35px 80px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coinwrap {
+  display: flex;
+  align-items: center;
+}
+
+.price {
+  font-size: 20px;
+}
+
+.coinfont {
+  margin-right: 10px;
+}
+
+.chargeBtn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 50px;
+  border-radius: 5px;
+  outline: 0;
+  border: 0;
+  color: var(--faintwhite);
+  background: transparent;
+  font-size: 16px;
+  font-weight: bold;
+}

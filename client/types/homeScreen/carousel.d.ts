@@ -3,8 +3,9 @@ export interface Carousel {
 }
 
 export interface CarouselInfo {
-	id: number;
-	src: string;
+	carouselId: number;
+	imageUrl: string;
 	title: string;
-	subtitle: string;
+	subTitle: string;
+	redirectUrl: string;
 }

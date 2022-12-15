@@ -1,0 +1,70 @@
+.myuploadclassWrapper {
+    width: 100%;
+    margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumnailImg {
+    margin-top: 40px;
+    width: 300px;
+    height: 215px;
+    position: relative;
+    display: block;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.classinfoWrapper_line1 {
+    margin-top: 20px;
+    width: 300px;
+}
+
+.classtitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--faintwhite);
+}
+
+.classinfoWrapper_line2 {
+    margin-top: 10px;
+    width: 300px;
+}
+
+.category_tutor {
+    font-size: 14px;
+    color: var(--faintwhite);
+}
+
+.classinfoWrapper_line3 {
+    width: 300px;
+}
+
+.btnWrapper {
+    display: flex;
+    justify-content: right;
+}
+
+.noUploadclass {
+    font-size: 20px;
+    font-weight: bold;
+    height: 100vh;
+    margin-top: 45px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666666;
+}
+
+.noclassWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #666666;
+    font-size: 20px;
+    font-weight: bold;
+}

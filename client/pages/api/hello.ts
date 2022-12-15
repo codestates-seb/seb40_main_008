@@ -1,12 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getToken } from 'next-auth/jwt';
+import { deleteCookie, removeCookies } from 'cookies-next';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	console.log('req', req.cookies);
-	const token = await getToken({ req, secret: process.env.JWT_SECRET as string });
-
-	console.log('🚀 ~ file: hello.ts ~ line 6 ~ handler ~ token', token);
-	console.log('json web token', JSON.stringify(token, null, 2));
-
-	res.status(200).json({ text: 'Hello' });
+export default async function handler(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
+	// deleteCookie('accessToken', { res, req });
+	removeCookies('accessToken', { res, req });
+	res.status(200).json({ message: 'success' });
+	console.log('🚀 ~ file: hello.ts:14 ~ res', res);
+	return res;
 }

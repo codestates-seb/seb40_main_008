@@ -1,0 +1,109 @@
+{
+	"userInfo": {
+		"usersId": 1,
+		"email": "ghldhfltlqjaeks@nate.com",
+		"userName": "방승일",
+		"profileImage": "http://k.kakaocdn.net/dn/rdCzw/btrQYskVZLG/E0CALEYHql7MbDVNr8Wm81/img_640x640.jpg"
+	},
+	"title": "java4",
+	"video": "https://s3.ap-northeast-2.amazonaws.com/s3-main-008/UploadClass/video/867bfd69-4eb0-42a3-b022-5056e983a9b8_mov_bbb.mp4",
+	"docsInfo": {
+		"docsId": 1,
+		"details": "test_pdf",
+		"name": "test.pdf"
+	},
+	"reviewInfo": [
+		{
+			"usersId": 2,
+			"reviewId": 1,
+			"starRate": 3,
+			"comments": "이것은 새로운 리뷰이다",
+			"createdAt": "2022-12-01T11:07:48.577521+09:00",
+			"modifiedAt": "2022-12-01T11:07:51.366907+09:00",
+			"profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg"
+		},
+		{
+			"usersId": 2,
+			"reviewId": 2,
+			"starRate": 3,
+			"comments": "이것은 새로운 리뷰이다",
+			"createdAt": "2022-12-01T11:07:48.577521+09:00",
+			"profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
+			"modifiedAt": "2022-12-01T11:07:51.366907+09:00"
+		},
+		{
+			"usersId": 2,
+			"reviewId": 3,
+			"starRate": 3,
+			"comments": "이것은 새로운 리뷰이다",
+			"createdAt": "2022-12-01T11:07:48.577521+09:00",
+			"profileImage": "https://phinf.pstatic.net/contact/20201201_224/1606755708488FIXDC_JPEG/IMG_5275.jpg",
+			"modifiedAt": "2022-12-01T11:07:51.366907+09:00"
+		}
+	],
+	"bookmarkInfo": [
+		{
+			"usersId": 2,
+			"bookmarkId": 2,
+			"memo": "메모하기 입니다.",
+			"createdAt": "2022-12-01T11:08:22.662882+09:00",
+			"modifiedAt": null,
+			"timeLine": "04:29"
+		},
+		{
+			"usersId": 2,
+			"bookmarkId": 1,
+			"memo": "메모하기 입니다.",
+			"createdAt": "2022-12-01T11:08:22.662882+09:00",
+			"modifiedAt": null,
+			"timeLine": "00:02"
+		}
+	],
+	"curriculumInfo": [
+		{
+			"chapterId": 1,
+			"chapterOrder": "CHAPTER.01",
+			"title": "Part.01",
+			"uploadClassList": [
+				{
+					"uploadClassId": 1,
+					"title": "test_video"
+				},
+				{
+					"uploadClassId": 2,
+					"title": "아나까나 까나리"
+				},
+				{
+					"uploadClassId": 3,
+					"title": "까나키퍼웨이"
+				}
+			]
+		},
+		{
+			"chapterId": 2,
+			"chapterOrder": "CHAPTER.02",
+			"title": "파트장님",
+			"uploadClassList": [
+				{
+					"uploadClassId": 2,
+					"title": "빅맥 vs 1955"
+				},
+				{
+					"uploadClassId": 3,
+					"title": "메로나 vs 구구콘"
+				}
+			]
+		},
+		{
+			"chapterId": 3,
+			"chapterOrder": "CHAPTER.03",
+			"title": "Part.03",
+			"uploadClassList": [
+				{
+					"uploadClassId": 3,
+					"title": "test_video"
+				}
+			]
+		}
+	]
+}

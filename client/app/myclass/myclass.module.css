@@ -1,0 +1,12 @@
+.myclassWrapper {
+    margin-top: 50px;
+    height: 100vh;
+}
+
+.title {
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--faintwhite);
+}

@@ -1,0 +1,102 @@
+.uploadpage {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  padding: 0 30px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.form {
+  margin: 0px auto;
+  width: 100%;
+}
+.classtitle {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.title {
+  margin: 0;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+.thumbnail {
+  padding: 4px;
+}
+.chapternameinput {
+  height: 40px;
+  width: 100%;
+  color: black;
+  background-color: var(--faintwhite);
+  border-radius: 10px;
+}
+.select {
+  /* 생략 */
+  height: 40px;
+  width: 100%;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #444;
+  background-color: #fff;
+  padding: 0.6em 1.4em 0.5em 0.8em;
+  margin: 0;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  z-index: 3;
+}
+
+.filebox {
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+}
+.filebox label {
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 11px;
+  color: #999;
+  font-size: inherit;
+  line-height: normal;
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: 2em;
+}
+.filebox input[type="file"] {
+  /* 파일 필드 숨기기 */
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.uploadimg {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--faintwhite);
+  width: 100%;
+  margin-bottom: 80px;
+  border-radius: 10px;
+}
+.uploadbtn {
+  margin-left: 10px;
+  height: 25px;
+  width: 40px;
+
+  font-size: 12px;
+  border: 0;
+  outline: 0;
+  color: var(--faintwhite);
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 1px 1px gray;
+  background-color: #f2952f;
+}

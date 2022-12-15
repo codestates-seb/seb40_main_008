@@ -1,0 +1,23 @@
+.searchpageWrapper {
+    height: 100vh;
+}
+
+.title {
+    margin-left: 20px;
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.li {
+    list-style: none;
+    margin-left: 20px;
+    margin-top: 30px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.num {
+    color: #F2952F;
+    margin-right: 12px;
+}

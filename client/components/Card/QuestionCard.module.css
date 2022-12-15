@@ -1,10 +1,10 @@
 .linkCard {
-  width: 100%;
-  position: relative;
-  border: 1px solid white;
-  background: var(--background-color);
+	width: 100%;
+	position: relative;
+	border: 1px solid var(--faintwhite);
+	background: var(--background-color);
 }
 
 .top {
-  margin-top: 56px;
+	margin-top: 50px;
 }
