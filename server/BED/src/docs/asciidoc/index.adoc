@@ -1,0 +1,175 @@
+= CLASS 4989 API 문서
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+SEB40_main008_BE
+
+v1.0.0 2022.11.15
+
+***
+== MainPage 홈화면
+=== MainPage (로그인 전)
+.curl-request
+include::{snippets}/get-notLoginHome/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-notLoginHome/http-request.adoc[]
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-notLoginHome/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-notLoginHome/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-notLoginHome/response-body.adoc[]
+
+=== MainPage (로그인 후)
+.curl-request
+include::{snippets}/get-LoginHome/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-LoginHome/http-request.adoc[]
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-LoginHome/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-LoginHome/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-LoginHome/response-body.adoc[]
+
+== My Page 마이 페이지 (엔드포인트 변경 예정)
+.curl-request
+include::{snippets}/get-mypage/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-mypage/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-mypage/path-parameters.adoc[]
+  (Table3 추후 변경 예정)
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-mypage/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-mypage/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-mypage/response-body.adoc[]
+
+== MyUploadClass 내가 올린 클래스 (엔드포인트 변경 예정)
+.curl-request
+include::{snippets}/get-myuploadclass/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-myuploadclass/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-myuploadclass/path-parameters.adoc[]
+  (Table5 추후 변경 예정)
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-myuploadclass/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-myuploadclass/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-myuploadclass/response-body.adoc[]
+
+== UploadContents 강좌 개설하기 (엔드포인트 변경 예정)
+.curl-request
+include::{snippets}/post-contents/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-contents/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/post-contents/path-parameters.adoc[]
+ (Table7 추후 변경 예정)
+
+.request-fields
+include::{snippets}/post-contents/request-fields.adoc[]
+
+.request-body
+include::{snippets}/post-contents/request-body.adoc[]
+
+.http-response
+include::{snippets}/post-contents/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-contents/response-fields.adoc[]
+
+.response-body
+include::{snippets}/post-contents/response-body.adoc[]
+
+== WishContents 강좌 찜하기 및 찜 취소 (엔드포인트 변경 예정)
+.curl-request
+include::{snippets}/post-wish/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-wish/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/post-wish/path-parameters.adoc[]
+ (Table10 추후 변경 예정)
+
+.request-fields
+include::{snippets}/post-wish/request-fields.adoc[]
+
+.request-body
+include::{snippets}/post-wish/request-body.adoc[]
+
+.http-response
+include::{snippets}/post-wish/http-response.adoc[]
+
+.response-fields
+ Null
+
+.response-body
+include::{snippets}/post-wish/response-body.adoc[]
+
+== MyClass 내클래스 (엔트포인트 변경 예정)
+=== MyWishClass 내가 찜한 클래스
+.curl-request
+include::{snippets}/get-mywishclass/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-mywishclass/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-mywishclass/path-parameters.adoc[]
+ (Table12 추후 변경 예정)
+
+.request-fields
+ Null
+
+.request-body
+ Null
+
+.http-response
+include::{snippets}/get-mywishclass/http-response.adoc[]
+
+.response-fields
+include::{snippets}/get-mywishclass/response-fields.adoc[]
+
+.response-body
+include::{snippets}/get-mywishclass/response-body.adoc[]
