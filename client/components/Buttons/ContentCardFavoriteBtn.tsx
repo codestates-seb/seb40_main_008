@@ -6,6 +6,7 @@ import styles from '../content/ContentInfo.module.css';
 import { getCookie } from 'cookies-next';
 import { IContent } from '../../types/contents';
 import { useRouter } from 'next/navigation';
+import catchfetch from '../../catchfetch';
 interface ContentCardFavoriteProps {
 	contentInfo: IContent;
 }
@@ -28,7 +29,7 @@ export const ContentCardFavoriteBtn = ({
 		async function postLike() {
 			setIsLoading(true);
 			try {
-				const res = await fetch(
+				const res = await catchfetch(
 					`https://pioneroroom.com/auth/${contentInfo.contentsId}/likes`,
 					{
 						method: 'POST',
@@ -40,19 +41,14 @@ export const ContentCardFavoriteBtn = ({
 						}),
 					}
 				);
+				console.log("🚀 ~ file: ContentCardFavoriteBtn.tsx:43 ~ postLike ~ res", res)
 				if (res.ok) {
 					router.refresh();
 				} else {
-					throw new Error('좋아요를 누를수가 업다');
+					throw new Error('요청 실패하였습니다.');
 				}
-			} catch (error) {
-				console.error('trycatch :', error);
-				fetch(`http://localhost:3000/api/error/catch_error`, {
-					method: 'POST',
-					body: JSON.stringify({
-						error: error,
-					}),
-				});
+			} catch (err) {
+				console.error(err);
 			}
 		}
 
