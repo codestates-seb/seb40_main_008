@@ -60,23 +60,23 @@ const VideoIdPage = async ({ params, searchParams }: VideoIdPageProps) => {
 
 export default VideoIdPage;
 
-export async function generateStaticParams() {
-	const paramList: VideoIdPageProps['params'][] = [];
-	const res = await fetch('https://pioneroroom.com/contents');
-	const posts: ILoopIDList[] = await res.json();
-	for (const post of posts) {
-		const paramArr: any = [];
-		if (!post.chapterList.length) continue;
-		for (const chapter of post.chapterList) {
-			if (!chapter.uploadClassList.length) continue;
-			for (const videoId of chapter.uploadClassList) {
-				paramArr.push({
-					videoId: String(videoId),
-					contentsId: String(post.contentsId),
-				});
-			}
-		}
-		paramList.push(...paramArr);
-	}
-	return paramList;
-}
+// export async function generateStaticParams() {
+// 	const paramList: VideoIdPageProps['params'][] = [];
+// 	const res = await fetch('https://pioneroroom.com/contents');
+// 	const posts: ILoopIDList[] = await res.json();
+// 	for (const post of posts) {
+// 		const paramArr: any = [];
+// 		if (!post.chapterList.length) continue;
+// 		for (const chapter of post.chapterList) {
+// 			if (!chapter.uploadClassList.length) continue;
+// 			for (const videoId of chapter.uploadClassList) {
+// 				paramArr.push({
+// 					videoId: String(videoId),
+// 					contentsId: String(post.contentsId),
+// 				});
+// 			}
+// 		}
+// 		paramList.push(...paramArr);
+// 	}
+// 	return paramList;
+// }
