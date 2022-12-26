@@ -39,9 +39,9 @@ export const ContentCardFavoriteBtn = ({
 						body: JSON.stringify({
 							liked: !like,
 						}),
-					}
+					},
+					'좋아요 버튼'
 				);
-				console.log("🚀 ~ file: ContentCardFavoriteBtn.tsx:43 ~ postLike ~ res", res)
 				if (res.ok) {
 					router.refresh();
 				} else {

@@ -1,21 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { deleteCookie, removeCookies } from 'cookies-next';
+import { Client, GatewayIntentBits, TextChannel } from 'discord.js';
+
+const client = new Client({
+	intents: [GatewayIntentBits.DirectMessages],
+});
 
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	console.log('res: ', res);
-	console.log('catch_error: ', req);
-	const body = JSON.parse(req.body);
-	console.log('body_error: ', body.error);
+	const isLoggedIn = await client.login(process.env.DISCORD_APPLICATION_ID);
+	client.on('ready', () => {
+		client.channels.fetch('1032546542579634222').then((channel) => {
+			if (!channel) return;
+			const textChannel = channel as TextChannel;
+			const body = JSON.parse(req.body);
+			textChannel.send(
+				'ERROR: ' + body.error + '\n' + 'STATUS_CODE: ' + body.statusCode
+			);
+		});
+	});
 
 	res.status(200).json({ message: 'success' });
 }
-
-/**
- * url: request.url
- * time: request.
- * errorMsg:
- * statusCode:
- */
