@@ -79,11 +79,13 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 };
 
 export default DetailCategoryPage;
-
 // export async function generateStaticParams() {
-//   return fixedCategoriesEng.map((e) => {
-//     return {
-//       category: e,
-//     };
-//   });
+// 	const res = await fetch('https://pioneroroom.com/contents');
+// 	const posts: ILoopIDList[] = await res.json();
+// 	const arr = posts.map((post) => {
+// 		return {
+// 			contentsId: String(post.contentsId),
+// 		};
+// 	});
+// 	return arr;
 // }

@@ -27,22 +27,35 @@ export const ContentCardFavoriteBtn = ({
 	const handlePost = () => {
 		async function postLike() {
 			setIsLoading(true);
-			const res = await fetch(
-				`https://pioneroroom.com/auth/${contentInfo.contentsId}/likes`,
-				{
-					method: 'POST',
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({
-						liked: !like,
-					}),
+			try {
+				const res = await fetch(
+					`https://pioneroroom.com/auth/${contentInfo.contentsId}/likes`,
+					{
+						method: 'POST',
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+						body: JSON.stringify({
+							liked: !like,
+						}),
+					}
+				);
+				if (res.ok) {
+					router.refresh();
+				} else {
+					throw new Error('좋아요를 누를수가 업다');
 				}
-			);
-			if (res.ok) {
-				router.refresh();
+			} catch (error) {
+				console.error('trycatch :', error);
+				fetch(`http://localhost:3000/api/error/catch_error`, {
+					method: 'POST',
+					body: JSON.stringify({
+						error: error,
+					}),
+				});
 			}
 		}
+
 		postLike();
 		if (!like) return;
 
