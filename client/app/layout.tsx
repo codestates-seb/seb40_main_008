@@ -4,6 +4,7 @@ import SessionContainer from '../components/Providers/SessionProvider';
 import { getSession } from '../utils/helper/session';
 import { cookies, headers } from 'next/headers';
 import Header from './Header';
+import ServiceWorker from './ServiceWorker';
 
 // const noto = Noto_Sans_KR({
 // 	weight: '400',
@@ -21,6 +22,7 @@ const RootLayout = async ({ children }: any) => {
 			<Header />
 			<body>
 				{/* <SessionContainer session={session}>{children}</SessionContainer> */}
+				<ServiceWorker />
 				{children}
 			</body>
 		</html>

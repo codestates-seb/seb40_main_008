@@ -18,10 +18,14 @@ const Header = ({ children, ...props }: HeaderProp) => {
 
 			<link rel="manifest" href="/manifest.json" />
 			<link
-				rel="mask-icon"
+				rel="apple-touch-icon"
 				href="/icons/android-chrome-192x192.png"
 				color="#5bbad5"
 			/>
+
+			<link rel="apple-touch-icon" sizes="384x384" href="/icons/384.png" />
+			<link rel="apple-touch-icon" sizes="512x512" href="/icons/512.png" />
+
 			<link rel="shortcut icon" href="/favicon.ico" />
 			<meta
 				name="class4989:image"

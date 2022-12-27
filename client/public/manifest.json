@@ -9,19 +9,20 @@
 			"purpose": "any maskable"
 		},
 		{
-			"src": "/icons/android-chrome-384x384.png",
+			"src": "/icons/384.png",
 			"sizes": "384x384",
 			"type": "image/png"
 		},
 		{
-			"src": "/icons/icon-512x512.png",
+			"src": "/icons/512.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		}
 	],
 	"theme_color": "#FFFFFF",
 	"background_color": "#FFFFFF",
+	"scope": "/",
 	"start_url": "/",
 	"display": "standalone",
-	"orientation": "portrait"
+	"orientation": "landscape"
 }
