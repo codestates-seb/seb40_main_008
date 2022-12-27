@@ -6,6 +6,7 @@ import styles from '../content/ContentInfo.module.css';
 import { getCookie } from 'cookies-next';
 import { IContent } from '../../types/contents';
 import { useRouter } from 'next/navigation';
+import catchfetch from '../../catchfetch';
 interface ContentCardFavoriteProps {
 	contentInfo: IContent;
 }
@@ -27,22 +28,30 @@ export const ContentCardFavoriteBtn = ({
 	const handlePost = () => {
 		async function postLike() {
 			setIsLoading(true);
-			const res = await fetch(
-				`https://pioneroroom.com/auth/${contentInfo.contentsId}/likes`,
-				{
-					method: 'POST',
-					headers: {
-						Authorization: `Bearer ${token}`,
+			try {
+				const res = await catchfetch(
+					`https://pioneroroom.com/auth/${contentInfo.contentsId}/likes`,
+					{
+						method: 'POST',
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+						body: JSON.stringify({
+							liked: !like,
+						}),
 					},
-					body: JSON.stringify({
-						liked: !like,
-					}),
+					'좋아요 버튼'
+				);
+				if (res.ok) {
+					router.refresh();
+				} else {
+					throw new Error('요청 실패하였습니다.');
 				}
-			);
-			if (res.ok) {
-				router.refresh();
+			} catch (err) {
+				console.error(err);
 			}
 		}
+
 		postLike();
 		if (!like) return;
 

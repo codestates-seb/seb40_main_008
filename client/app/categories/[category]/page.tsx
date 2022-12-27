@@ -67,7 +67,9 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 			</div>
 			<div className={styles.categorydetailWrapper}>
 				{contentsList.length === 0 ? (
-					<div className={styles.noclassWrapper}>해당하는 강좌가 없습니다.</div>
+					<div className={styles.noclassWrapper}>
+						해당하는 강좌가 없습니다.
+					</div>
 				) : (
 					<HomeClassesSection contentsList={contentsList} />
 				)}
@@ -77,11 +79,13 @@ const DetailCategoryPage = async ({ params: { category } }: any) => {
 };
 
 export default DetailCategoryPage;
-
-export async function generateStaticParams() {
-  return fixedCategoriesEng.map((e) => {
-    return {
-      category: e,
-    };
-  });
-}
+// export async function generateStaticParams() {
+// 	const res = await fetch('https://pioneroroom.com/contents');
+// 	const posts: ILoopIDList[] = await res.json();
+// 	const arr = posts.map((post) => {
+// 		return {
+// 			contentsId: String(post.contentsId),
+// 		};
+// 	});
+// 	return arr;
+// }
