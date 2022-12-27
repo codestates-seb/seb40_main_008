@@ -3,6 +3,10 @@ const { truncate } = require('fs');
 /** @type {import('next').NextConfig} */
 const withPwa = require('next-pwa')({
 	dest: 'public',
+	fallbacks: {
+		document: '/_offline',
+	},
+	swSrc: 'service-worker.js',
 });
 
 const settings = {
@@ -22,29 +26,4 @@ const settings = {
 	},
 };
 
-/*
-const settings = {
-	// BUG: Strict mode true makes video streaming network be severed during request.
-	// reactStrictMode: true,
-	reactStrictMode: false,
-	swcMinify: true,
-	experimental: { appDir: true },
-	// fontLoaders is not a proper key
-	// fontLoaders: [{ loader: '@next/font/google' }],
-	images: {
-		remotePatterns: [
-			{
-				protocol: 'https',
-				hostname: '**',
-			},
-		],
-	},
-};
-*/
-
-// module.exports =
-// 	process.env.NODE_ENV === 'development' ? settings : withPwa(settings);
-
-module.exports = settings;
-
-//picsum.photos/seed/picsum/200/300
+module.exports = withPwa(settings);
